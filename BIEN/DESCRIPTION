@@ -1,0 +1,23 @@
+Package: BIEN
+Title: Tools for Accessing the Botanical Ecology and Information Network Database
+Version: 1.0.0
+Authors@R: person("Brian", "Maitner", email = "bmaitner@gmail.com", role = c("aut", "cre"))
+Description: Provides Tools for Accessing the Botanical Information and Ecology Network Database (See Http://Bien.nceas.ucsb.edu/Bien/ for more Information).
+Depends:
+    R (>= 3.2.1),
+    RPostgreSQL
+License: MIT + file LICENSE
+LazyData: true
+Imports:
+    maptools,
+    rgeos,
+    rgdal,
+    sp,
+    DBI,
+    ape,
+    methods
+Suggests:
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 5.0.1
