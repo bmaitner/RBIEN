@@ -1996,6 +1996,7 @@ BIEN_trait_mean<-function(species,trait, ...){
   }#i loop
   
   colnames(output_data)[1]<-"species"
+  output_data<-as.data.frame(output_data)
   return(output_data)
   
 }
@@ -2829,7 +2830,7 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
 #' @param ... Additional arguments passed to BIEN_sql
-#' @return A dataframe containing all data from the specified datasource.
+#' @return A dataframe containing all data from the specified plot(s).
 #' @examples \dontrun{
 #' BIEN_plot_name("SR-1")}
 #' @family plot functions
@@ -3348,6 +3349,67 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
   
 }
 
+##########################
+
+#'Download occurrence points without metadata.
+#'
+#'.BIEN_occurrence_genus_sdm returns occurrence points withou the recommended metadata and attribution information.
+#' @param genus A single genus or vector of genera.
+#' @param cultivated Return known cultivated records as well?  Default is FALSE.
+#' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
+#' @param ... Additional arguments passed to BIEN_sql
+#' @return Dataframe containing species, latitude and longitude.
+#' @note We strongly recomend BIEN_occurrence_genus as an alternative to this function in most instances.
+#' @examples \dontrun{
+#' Abies_points<-.BIEN_occurrence_genus_sdm("Abies")
+#' }
+
+.BIEN_occurrence_genus_sdm<-function(genus, cultivated=FALSE, print.query=FALSE,...){
+  is_log(cultivated) 
+  is_char(genus)
+  is_log(print.query)
+  
+  #set conditions for query
+  
+  if(!cultivated){
+    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
+  }else{
+    cultivated_query<-""
+  }
+  
+  
+  
+  # set the query
+  query <- paste("SELECT scrubbed_genus, latitude, longitude 
+                 FROM view_full_occurrence_individual WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ")",paste(cultivated_query),  "
+                 AND higher_plant_group IS NOT NULL 
+                 AND latitude IS NOT NULL 
+                 AND longitude IS NOT NULL
+                 AND (is_geovalid = 1 OR is_geovalid IS NULL) 
+                 ORDER BY scrubbed_genus;")
+  
+  # create query to retrieve
+  if(print.query){
+    query<-gsub(pattern = "\n",replacement = "",query)
+    query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
+    print(query)
+  }
+  return(BIEN_sql(query, ...))
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 ############################
 
 ############################
@@ -3366,7 +3428,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to BIEN_sql
-#' @return Dataframe containing occurrence records for the specified species.
+#' @return Dataframe containing stem data for the specified species.
 #' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 #' @examples \dontrun{
 #' BIEN_stem_species("Abies amabilis")
@@ -3465,3 +3527,231 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
   }
 
 
+#######################
+
+#'Extract stem data for specified families from BIEN
+#'
+#'BIEN_stem_family downloads occurrence records for specific families from the BIEN database.
+#' @param family A single family, or a vector of families. Families should be capitalized.
+#' @param cultivated Return known cultivated records as well?  Default is FALSE.
+#' @param only.new.world Return only records from the New World?  Default is true
+#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
+#' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
+#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
+#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
+#' @param ... Additional arguments passed to BIEN_sql
+#' @return Dataframe containing stem data for the specified families.
+#' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
+#' @examples \dontrun{
+#' BIEN_stem_family(family = "Marantaceae")
+#' family_vector<-c("Marantaceae", "Buxaceae")
+#' BIEN_stem_family(family = family_vector)
+#' BIEN_stem_family(family = family_vector, all.taxonomy=TRUE, native.status=T)}
+#' @family stem functions
+BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, print.query = FALSE, native.status = FALSE, political.boundaries = FALSE, all.metadata = F, ...){
+  is_log(all.metadata)
+  is_log(cultivated)
+  is_log(only.new.world)
+  is_log(all.taxonomy)
+  is_char(family)
+  is_log(print.query)
+  is_log(native.status)
+  is_log(political.boundaries)
+  
+  #set conditions for query
+  
+  if(!cultivated){
+    cultivated_query<-"AND (analytical_stem.is_cultivated = 0 OR analytical_stem.is_cultivated IS NULL)"
+    cultivated_select<-""
+  }else{
+    cultivated_query<-""
+    cultivated_select<-",analytical_stem.is_cultivated,view_full_occurrence_individual.is_cultivated_in_region"
+  }
+  
+  if(!only.new.world){
+    newworld_query<-""
+    newworld_select<-",analytical_stem.is_new_world"
+  }else{
+    newworld_query<-"AND analytical_stem.is_new_world = 1 "
+    newworld_select<-""
+  }
+  
+  if(!all.taxonomy){
+    taxon_select<-""
+  }else{
+    taxon_select<-"analytical_stem.verbatim_family,analytical_stem.verbatim_scientific_name,analytical_stem.family_matched,analytical_stem.name_matched,analytical_stem.name_matched_author,analytical_stem.higher_plant_group,analytical_stem.taxonomic_status,analytical_stem.scrubbed_author,"
+  }
+  
+  if(!native.status){
+    native_select<-""
+  }else{
+    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
+  }
+  
+  if(!political.boundaries){
+    political_select<-""
+  }else{
+    political_select<-"analytical_stem.country,analytical_stem.state_province,analytical_stem.county,analytical_stem.locality,"
+  }
+  
+  if(native.status | cultivated){
+    vfoi_join<-" JOIN view_full_occurrence_individual ON (analytical_stem.taxonobservation_id  = view_full_occurrence_individual.taxonobservation_id)"}else{
+      vfoi_join<-""  
+    }
+  
+  if(!all.metadata){
+    md_select<-""
+  }else{
+    md_select<-",plot_metadata.methodology_reference,plot_metadata.methodology_description,growth_forms_included_all, growth_forms_included_trees, growth_forms_included_shrubs, growth_forms_included_lianas,
+    growth_forms_included_herbs, growth_forms_included_epiphytes, growth_forms_included_notes, taxa_included_all, taxa_included_seed_plants, taxa_included_ferns_lycophytes,
+    taxa_included_bryophytes,taxa_included_exclusions"
+  }
+  
+  # set the query
+  #query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,analytical_stem.collection_code",paste(cultivated_select,newworld_select),"FROM analytical_stem LEFT JOIN plot_metadata ON (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",vfoi_join ," WHERE analytical_stem.scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL) ORDER BY analytical_stem.scrubbed_species_binomial;")
+  
+  query <- paste("SELECT analytical_stem.scrubbed_family, analytical_stem.scrubbed_genus,analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
+                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
+                 plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
+                 analytical_stem.collection_code",paste(cultivated_select,newworld_select,md_select),"
+                 FROM 
+                 (SELECT * FROM analytical_stem WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ")) AS analytical_stem 
+                 JOIN plot_metadata ON 
+                 (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
+                 vfoi_join ," 
+                 WHERE analytical_stem.scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ")",
+                 paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)
+                 ORDER BY analytical_stem.scrubbed_genus, analytical_stem.scrubbed_species_binomial;")
+  
+  BIEN_sql(query)
+  
+  
+  
+  # create query to retrieve
+  if(print.query){
+    query<-gsub(pattern = "\n",replacement = "",query)
+    query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
+    print(query)
+  }
+  return(BIEN_sql(query, ...))
+  
+  }
+
+#######################################
+
+#'Extract stem data for specified genera from BIEN
+#'
+#'BIEN_stem_genus downloads occurrence records for specific genera from the BIEN database.
+#' @param genus A single genus, or a vector of genera. Genera should be capitalized.
+#' @param cultivated Return known cultivated records as well?  Default is FALSE.
+#' @param only.new.world Return only records from the New World?  Default is true
+#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
+#' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
+#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
+#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
+#' @param ... Additional arguments passed to BIEN_sql
+#' @return Dataframe containing stem data for the specified genera.
+#' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
+#' @examples \dontrun{
+#' BIEN_stem_genus(genus = "Tovomita")
+#' genus_vector<-c("Tovomita", "Myrcia")
+#' BIEN_stem_genus(genus = genus_vector)
+#' BIEN_stem_genus(genus = genus_vector, all.taxonomy=TRUE)}
+#' @family stem functions
+BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, print.query = FALSE, native.status = FALSE, political.boundaries = FALSE, all.metadata = F, ...){
+  is_log(all.metadata)
+  is_log(cultivated)
+  is_log(only.new.world)
+  is_log(all.taxonomy)
+  is_char(genus)
+  is_log(print.query)
+  is_log(native.status)
+  is_log(political.boundaries)
+  
+  #set conditions for query
+  
+  if(!cultivated){
+    cultivated_query<-"AND (analytical_stem.is_cultivated = 0 OR analytical_stem.is_cultivated IS NULL)"
+    cultivated_select<-""
+  }else{
+    cultivated_query<-""
+    cultivated_select<-",analytical_stem.is_cultivated,view_full_occurrence_individual.is_cultivated_in_region"
+  }
+  
+  if(!only.new.world){
+    newworld_query<-""
+    newworld_select<-",analytical_stem.is_new_world"
+  }else{
+    newworld_query<-"AND analytical_stem.is_new_world = 1 "
+    newworld_select<-""
+  }
+  
+  if(!all.taxonomy){
+    taxon_select<-""
+  }else{
+    taxon_select<-"analytical_stem.verbatim_family,analytical_stem.verbatim_scientific_name,analytical_stem.family_matched,analytical_stem.name_matched,analytical_stem.name_matched_author,analytical_stem.higher_plant_group,analytical_stem.taxonomic_status,analytical_stem.scrubbed_family,analytical_stem.scrubbed_author,"
+  }
+  
+  if(!native.status){
+    native_select<-""
+  }else{
+    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
+  }
+  
+  if(!political.boundaries){
+    political_select<-""
+  }else{
+    political_select<-"analytical_stem.country,analytical_stem.state_province,analytical_stem.county,analytical_stem.locality,"
+  }
+  
+  if(native.status | cultivated){
+    vfoi_join<-" JOIN view_full_occurrence_individual ON (analytical_stem.taxonobservation_id  = view_full_occurrence_individual.taxonobservation_id)"}else{
+      vfoi_join<-""  
+    }
+  
+  if(!all.metadata){
+    md_select<-""
+  }else{
+    md_select<-",plot_metadata.methodology_reference,plot_metadata.methodology_description,growth_forms_included_all, growth_forms_included_trees, growth_forms_included_shrubs, growth_forms_included_lianas,
+    growth_forms_included_herbs, growth_forms_included_epiphytes, growth_forms_included_notes, taxa_included_all, taxa_included_seed_plants, taxa_included_ferns_lycophytes,
+    taxa_included_bryophytes,taxa_included_exclusions"
+  }
+  
+  # set the query
+  #query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,analytical_stem.collection_code",paste(cultivated_select,newworld_select),"FROM analytical_stem LEFT JOIN plot_metadata ON (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",vfoi_join ," WHERE analytical_stem.scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL) ORDER BY analytical_stem.scrubbed_species_binomial;")
+  
+  query <- paste("SELECT analytical_stem.scrubbed_genus,analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
+                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
+                 plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
+                 analytical_stem.collection_code",paste(cultivated_select,newworld_select,md_select),"
+                 FROM 
+                 (SELECT * FROM analytical_stem WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ")) AS analytical_stem 
+                 JOIN plot_metadata ON 
+                 (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
+                 vfoi_join ," 
+                 WHERE analytical_stem.scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ")",
+                 paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)
+                 ORDER BY analytical_stem.scrubbed_genus, analytical_stem.scrubbed_species_binomial;")
+  
+  BIEN_sql(query)
+  
+  #system.time(v1<-BIEN_sql("  SELECT scrubbed_species_binomial FROM (SELECT * FROM analytical_stem WHERE scrubbed_species_binomial in ('Abies lasiocarpa')) a LEFT JOIN plot_metadata ON (a.plot_metadata_id= plot_metadata.plot_metadata_id)  "))
+  
+  
+  
+  
+  # create query to retrieve
+  if(print.query){
+    query<-gsub(pattern = "\n",replacement = "",query)
+    query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
+    print(query)
+  }
+  
+  return(BIEN_sql(query, ...))
+  
+  }
+
+
+##########################
