@@ -23,7 +23,7 @@ We try to make this package as easy and intuitive to use as possible, but it is 
 Particularly useful are the "Function Names" and "Function Directory" sections.
 
 ```{r, message=F,warning=FALSE, results='hide'}
-vignette("BRI")
+vignette("BIEN")
 ```
 
 The function names follow a consistent naming strategy, and mostly consist of 3 parts:
@@ -306,11 +306,11 @@ BIEN_trait_list()
 
 ```
 
-If we're interested in Specific Leaf Area, we see that this is called "Specific leaf area (SLA)" in the database.  Now that we know the proper spelling, we can use the function `BIEN_trait_trait` to download all observations of that trait.
+If we're interested in leaf lifespan, we see that this is called "Leaf lifespan (LLS)" in the database.  Now that we know the proper spelling, we can use the function `BIEN_trait_trait` to download all observations of that trait.
 
 ```{r}
 
-SLA <- BIEN_trait_trait(trait = "Specific leaf area (SLA)")
+LLS <- BIEN_trait_trait(trait = "Leaf lifespan (LLS)")
 
 ```
 
@@ -396,7 +396,13 @@ The arguments for this function are the same that we have seen in the occurrence
 
 **Example 8: Stem data **
 
+If we'd like stem data for the species *Cupressus arizonica*
 
+```{r}
+
+Cupressus_arizonica_stems<-BIEN_stem_species("Cupressus arizonica")
+
+```
 
 
 
