@@ -28,7 +28,7 @@ BIEN_plot_name(plot.name, cultivated = FALSE, only.new.world = TRUE,
 \item{...}{Additional arguments passed to BIEN_sql}
 }
 \value{
-A dataframe containing all data from the specified datasource.
+A dataframe containing all data from the specified plot(s).
 }
 \description{
 BIEN_plot_name downloads all plot data for a set of plot names.

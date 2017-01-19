@@ -28,7 +28,7 @@ BIEN_stem_species(species, cultivated = FALSE, only.new.world = TRUE,
 \item{...}{Additional arguments passed to BIEN_sql}
 }
 \value{
-Dataframe containing occurrence records for the specified species.
+Dataframe containing stem data for the specified species.
 }
 \description{
 BIEN_stem_species downloads occurrence records for specific species from the BIEN database.
@@ -42,5 +42,9 @@ BIEN_stem_species("Abies amabilis")
 species_vector<-c("Abies amabilis", "Acer nigrum")
 BIEN_stem_species(species_vector)
 BIEN_stem_species(species_vector,all.taxonomy=TRUE)}
+}
+\seealso{
+Other stem functions: \code{\link{BIEN_stem_family}},
+  \code{\link{BIEN_stem_genus}}
 }
 

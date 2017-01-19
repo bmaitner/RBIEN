@@ -25,7 +25,7 @@ Data quality - All data are presented ‘as is’.  Default BIEN downloads retur
 Hybrids - Hybrid species are assigned the specific epithet "x" by the TNRS.  To view the full name information for these occurrences, set "all.taxonomy = TRUE".
 
 ##Database connection issues
-Some institution and computer programs (e.g. some antivirus programs) block the SQL connections that this package relies on.  While we are exploring ways around this issue, at present the simplest method is to use the package on a computer/network that doesn't block SQL connections.
+Some institutions and computer programs (e.g. some antivirus programs) block the SQL connections that this package relies on.  While we are exploring ways around this issue, at present the simplest method is to use the package on a computer/network that doesn't block SQL connections.
 
 
 ##Function Names
