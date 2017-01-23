@@ -6,6 +6,10 @@ BIEN 1.1.0
 * Added BIEN_stem_family
 * Added BIEN_stem_genus
 
+## OTHER NEWS
+
+* Added testing via "testthat" package
+
 
 
 ===============
