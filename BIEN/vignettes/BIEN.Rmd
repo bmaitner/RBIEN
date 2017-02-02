@@ -36,6 +36,7 @@ Function names in the BIEN package follow a naming convention which was designed
 * Functions to download trait data begin with the prefix "BIEN_trait_"
 * Functions to download species lists (or other li) begin with the prefix "BIEN_list_"
 * Functions to download plot data begin with the prefic "BIEN_plot_"
+* Functions to download stem data begin with the prefic "BIEN_stem_"
 * Functions to download taxonomic information begin with the prefix "BIEN_taxonomy_"
 * Functions to download phylogenies begin with the prefix "BIEN_phylogeny_"
 * Functions to access metadata begin with the prefix "BIEN_metadata_"
@@ -87,8 +88,10 @@ For full information on each function, see the associated help file.
 * `BIEN_plot_list_sampling_protocols` List all available sampling protocols.
 * `BIEN_plot_sampling_protocol` Downloads all plot data using a specified sampling protocol.
 
-###BIEN_sql function
-* `BIEN_sql` Submits a user-supplied postgresql query to the BIEN database.
+###BIEN_stem functions
+* `BIEN_stem_species` Downloads all stem data for given species.
+* `BIEN_stem_genus` Downloads all stem data for given genera.
+* `BIEN_stem_family` Downloads all stem data for given families.
 
 ###BIEN_taxonomy functions
 * `BIEN_taxonomy_species` Downloads all taxonomic information for given species.

@@ -23,7 +23,7 @@ BIEN_ranges_shapefile(shapefile, directory = NULL,
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 All range maps that intersect the user-supplied shapfile.

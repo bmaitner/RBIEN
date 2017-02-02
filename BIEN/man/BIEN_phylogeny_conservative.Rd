@@ -7,7 +7,7 @@
 BIEN_phylogeny_conservative(...)
 }
 \arguments{
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 A phylo object containing the BIEN conservative phylogeny

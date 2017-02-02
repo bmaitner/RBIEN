@@ -14,7 +14,7 @@ BIEN_phylogeny_complete(n_phylogenies = 1, seed = NULL, replicates = NULL,
 
 \item{replicates}{The specific replicated phylogenies to return.  Should be a numeric vector of integers between 1 and 100.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 A phylo or multiphylo object containing the specified phylogenies

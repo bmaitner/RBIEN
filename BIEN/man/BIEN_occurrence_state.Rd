@@ -28,7 +28,7 @@ BIEN_occurrence_state(country, state, cultivated = FALSE,
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Dataframe containing occurrence records for the specified states/provinces.

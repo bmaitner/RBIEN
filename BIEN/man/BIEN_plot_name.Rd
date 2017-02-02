@@ -25,7 +25,7 @@ BIEN_plot_name(plot.name, cultivated = FALSE, only.new.world = TRUE,
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 A dataframe containing all data from the specified plot(s).

@@ -24,7 +24,7 @@ BIEN_ranges_intersect_species(species, directory = NULL,
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Range maps for all available species that intersect the range of the focal species.

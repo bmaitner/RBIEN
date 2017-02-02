@@ -26,7 +26,7 @@ BIEN_plot_sampling_protocol(sampling_protocol, cultivated = FALSE,
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 A dataframe containing all data from the specified datasource.

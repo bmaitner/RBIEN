@@ -32,7 +32,7 @@ BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Dataframe containing occurrence records for the specified area.

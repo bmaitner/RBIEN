@@ -9,7 +9,7 @@ BIEN_plot_metadata(print.query = FALSE, ...)
 \arguments{
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 A dataframe containing plot metadata.

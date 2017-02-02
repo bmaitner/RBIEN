@@ -11,7 +11,7 @@ BIEN_taxonomy_family(family, print.query = FALSE, ...)
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Dataframe containing taxonomic information for the specified families.

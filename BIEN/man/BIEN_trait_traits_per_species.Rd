@@ -9,7 +9,7 @@ BIEN_trait_traits_per_species(print.query = FALSE, ...)
 \arguments{
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Returns a dataframe containing the number of trait records for each species in the BIEN database.

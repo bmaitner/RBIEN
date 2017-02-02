@@ -9,7 +9,7 @@ BIEN_occurrence_records_per_species(print.query = FALSE, ...)
 \arguments{
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 A dataframe listing the number of geovalidated occurrence records for each species in the BIEN database.

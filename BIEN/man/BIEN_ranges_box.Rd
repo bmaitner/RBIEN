@@ -29,7 +29,7 @@ BIEN_ranges_box(min.lat, max.lat, min.long, max.long, directory = NULL,
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Range maps for all available species within the specified bounding box.

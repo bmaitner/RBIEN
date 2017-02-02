@@ -20,7 +20,7 @@ BIEN_list_county(country, state, county, cultivated = FALSE,
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Dataframe containing species list(s) for the specified states/provinces.

@@ -20,7 +20,7 @@ BIEN_ranges_genus(genus, directory = NULL, matched = TRUE,
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Range maps for all available species within the specified genera.

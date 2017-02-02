@@ -12,7 +12,7 @@
 
 <meta name="author" content="Brian Maitner" />
 
-<meta name="date" content="2017-01-07" />
+<meta name="date" content="2017-02-02" />
 
 <title>BIEN R package</title>
 
@@ -32,7 +32,7 @@
 
 <h1 class="title toc-ignore">BIEN R package</h1>
 <h4 class="author"><em>Brian Maitner</em></h4>
-<h4 class="date"><em>2017-01-07</em></h4>
+<h4 class="date"><em>2017-02-02</em></h4>
 
 
 
@@ -62,6 +62,7 @@
 <li>Functions to download trait data begin with the prefix “BIEN_trait_”</li>
 <li>Functions to download species lists (or other li) begin with the prefix “BIEN_list_”</li>
 <li>Functions to download plot data begin with the prefic “BIEN_plot_”</li>
+<li>Functions to download stem data begin with the prefic “BIEN_stem_”</li>
 <li>Functions to download taxonomic information begin with the prefix “BIEN_taxonomy_”</li>
 <li>Functions to download phylogenies begin with the prefix “BIEN_phylogeny_”</li>
 <li>Functions to access metadata begin with the prefix “BIEN_metadata_”</li>
@@ -132,10 +133,12 @@
 <li><code>BIEN_plot_sampling_protocol</code> Downloads all plot data using a specified sampling protocol.</li>
 </ul>
 </div>
-<div id="bien_sql-function" class="section level3">
-<h3>BIEN_sql function</h3>
+<div id="bien_stem-functions" class="section level3">
+<h3>BIEN_stem functions</h3>
 <ul>
-<li><code>BIEN_sql</code> Submits a user-supplied postgresql query to the BIEN database.</li>
+<li><code>BIEN_stem_species</code> Downloads all stem data for given species.</li>
+<li><code>BIEN_stem_genus</code> Downloads all stem data for given genera.</li>
+<li><code>BIEN_stem_family</code> Downloads all stem data for given families.</li>
 </ul>
 </div>
 <div id="bien_taxonomy-functions" class="section level3">

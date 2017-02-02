@@ -13,7 +13,7 @@ BIEN_trait_traitbyfamily(trait, family, print.query = FALSE, ...)
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 A dataframe of all data matching the specified trait(s) and family/families.

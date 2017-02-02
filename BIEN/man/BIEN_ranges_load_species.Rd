@@ -11,7 +11,7 @@ BIEN_ranges_load_species(species, print.query = FALSE, ...)
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 A SpatialPolygonsDataFrame containing range maps for the specified species.

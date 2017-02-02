@@ -13,7 +13,7 @@ BIEN_metadata_match_data(old, new, return = "identical")
 
 \item{return}{What information should be returned?  Current options are: "identical" (Logical, are the two dataframes identical?), "additions" (numeric, which rows are new?), "deletions" (numeric, which rows are no longer present?), "logical" (logical, which elements of the old dataframe are in the new one?).}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Logical of varying length (depending on choice of "return" parameter)

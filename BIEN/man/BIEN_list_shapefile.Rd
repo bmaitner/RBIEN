@@ -16,7 +16,7 @@ BIEN_list_shapefile(shapefile, cultivated = FALSE, only.new.world = TRUE,
 
 \item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 Dataframe containing a list of all species with occurrences in the supplied shapefile.

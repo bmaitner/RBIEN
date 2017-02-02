@@ -33,7 +33,7 @@ NULL
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing occurrence records for the specified species.
 #' @examples \dontrun{
 #' BIEN_occurrence_species("Abies amabilis")
@@ -104,7 +104,7 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,a
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 ##############
@@ -196,7 +196,7 @@ BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TR
   #query = rangeQuery
   #print(query)
   # create query to retrieve
-  df <- BIEN_sql(query)
+  df <- .BIEN_sql(query)
   
   if(print.query){
     query<-gsub(pattern = "\n",replacement = "",query)
@@ -222,7 +222,7 @@ BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TR
 #' @param cultivated Return cultivated records as well?  Default is FALSE.
 #' @param only.new.world Return only records from the New World?  Default is true
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing species list(s) for the specified country or countries.
 #' @examples \dontrun{
 #' BIEN_list_country("Canada")
@@ -264,7 +264,7 @@ BIEN_list_country<-function(country,cultivated=FALSE,only.new.world=TRUE,print.q
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -278,7 +278,7 @@ BIEN_list_country<-function(country,cultivated=FALSE,only.new.world=TRUE,print.q
 #' @param cultivated Return cultivated records as well?  Default is FALSE.
 #' @param only.new.world Return only records from the New World?  Default is true
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing species list(s) for the specified states/provinces.
 #' @examples \dontrun{
 #' BIEN_list_state("United States","Michigan")
@@ -350,7 +350,7 @@ BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,pri
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -365,7 +365,7 @@ BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,pri
 #' @param cultivated Return cultivated records as well?  Default is FALSE.
 #' @param only.new.world Return only records from the New World?  Default is true
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing species list(s) for the specified states/provinces.
 #' @note This function requires you supply either 1) a single state and country with one or more counties, or 2) vectors of equal length for each political level.
 #' @examples \dontrun{
@@ -444,7 +444,7 @@ BIEN_list_county<-function(country,state,county,cultivated=FALSE,only.new.world=
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -455,7 +455,7 @@ BIEN_list_county<-function(country,state,county,cultivated=FALSE,only.new.world=
 #'
 #'BIEN_list_all produces a list of all species in the BIEN database.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing a list of all species in the BIEN database.
 #' @examples \dontrun{
 #' species_list<-BIEN_list_all()}
@@ -470,7 +470,7 @@ BIEN_list_all<-function(print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 ###########################
@@ -482,7 +482,7 @@ BIEN_list_all<-function(print.query=FALSE, ...){
 #' @param cultivated Return cultivated records as well?  Default is FALSE.
 #' @param only.new.world Return only records from the New World?  Default is true
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing a list of all species with occurrences in the supplied shapefile.
 #' @note We recommend using the function readOGR() in the rgdal package to read in shapefiles.  Other methods may cause problems related to handling holes in polygons.
 #' @examples \dontrun{
@@ -529,7 +529,7 @@ BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,pri
   #query = rangeQuery
   #print(query)
   # create query to retrieve
-  df <- BIEN_sql(query)
+  df <- .BIEN_sql(query)
   
   if(print.query){
     query<-gsub(pattern = "\n",replacement = "",query)
@@ -562,7 +562,7 @@ BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,pri
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
 #' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing occurrence records for the specified genera.
 #' @examples \dontrun{
 #' BIEN_occurrence_genus("Abutilon")
@@ -632,7 +632,7 @@ BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.t
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 ############################
@@ -648,7 +648,7 @@ BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.t
 #' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing occurrence records for the specified family/families.
 #' @examples \dontrun{
 #' BIEN_occurrence_family("Theaceae")
@@ -719,7 +719,7 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,pri
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -738,7 +738,7 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,pri
 #' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @note This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
 #' @return Dataframe containing occurrence records for the specified states/provinces.
 #' @examples \dontrun{
@@ -847,7 +847,7 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -864,7 +864,7 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
 #' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing occurrence records for the specified country.
 #' @examples \dontrun{
 #' library(RPostgreSQL)
@@ -934,7 +934,7 @@ BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,p
     print(query)
   }
   
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -953,7 +953,7 @@ BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,p
 #' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @note This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
 #' @return Dataframe containing occurrence records for the specified states/provinces.
 #' @examples \dontrun{
@@ -1070,7 +1070,7 @@ BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -1090,7 +1090,7 @@ BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.
 #' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing occurrence records for the specified area.
 #' @examples \dontrun{
 #' output_test<-
@@ -1161,7 +1161,7 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -1176,7 +1176,7 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
 #' @param match_names_only Check for range maps for the species specified without downloading range maps. Default is FALSE.
 #' @param include.gid Should the files returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Range maps for specified species.
 #' @examples \dontrun{
 #' species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
@@ -1222,7 +1222,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
     query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species;")
     
     # create query to retrieve
-    df <- BIEN_sql(query, ...)
+    df <- .BIEN_sql(query, ...)
     
     if(print.query){
       query<-gsub(pattern = "\n",replacement = "",query)
@@ -1280,7 +1280,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
     query = rangeQuery
     #print(query)
     # create query to retrieve
-    df <- BIEN_sql(query, ...)
+    df <- .BIEN_sql(query, ...)
     
     if(print.query){
       query<-gsub(pattern = "\n",replacement = "",query)
@@ -1311,7 +1311,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #' @param match_names_only Check for range maps for the genera specified without downloading range maps. Default is FALSE.
 #' @param include.gid Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Range maps for all available species within the specified genera.
 #' @examples \dontrun{
 #' genus_vector<-c("Abies","Acer")
@@ -1358,7 +1358,7 @@ if(match_names_only==FALSE){
     query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE species ~ '",paste(genus,collapse="|"),"' ORDER BY species;",sep="")
 
     # create query to retrieve
-    df <- BIEN_sql(query, ...)
+    df <- .BIEN_sql(query, ...)
 
     if(print.query){
       query<-gsub(pattern = "\n",replacement = "",query)
@@ -1417,7 +1417,7 @@ if(match_names_only==FALSE){
 
     #print(query)
     # create query to retrieve
-    df <- BIEN_sql(query, ...)
+    df <- .BIEN_sql(query, ...)
 
     if(print.query){
       query<-gsub(pattern = "\n",replacement = "",query)
@@ -1450,7 +1450,7 @@ if(match_names_only==FALSE){
 #' @param crop.ranges Should the range maps be cropped to the GIS bounding box?  Default is FALSE.
 #' @param include.gid Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Range maps for all available species within the specified bounding box.
 #' @examples \dontrun{
 #' testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
@@ -1484,7 +1484,7 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
     }
     
     # create query to retrieve
-    df <- BIEN_sql(query, ...)
+    df <- .BIEN_sql(query, ...)
     
     if(print.query){
       query<-gsub(pattern = "\n",replacement = "",query)
@@ -1550,7 +1550,7 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
     #query = rangeQuery
     #print(query)
     # create query to retrieve
-    df <- BIEN_sql(query, ...)
+    df <- .BIEN_sql(query, ...)
     
     if(print.query){
       query<-gsub(pattern = "\n",replacement = "",query)
@@ -1578,7 +1578,7 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
 #' @param return.species.list Should a species list be returned?  Only meaningful when maps are being downloaded.
 #' @param include.gid Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Range maps for all available species that intersect the range of the focal species.
 #' @examples \dontrun{
 #' testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
@@ -1621,7 +1621,7 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
     query<- paste("SELECT b.species AS focal_species, a.species AS intersecting_species,a.species,a.gid, ST_AsText(a.geom) AS geom FROM ranges AS a, (SELECT species, geom FROM ranges WHERE species in (",paste(shQuote(species, type = "sh"),collapse = ', '),")) b WHERE", focal.query," ST_Intersects(a.geom, b.geom);")  
     
     # create query to retrieve
-    df <- BIEN_sql(query, ...)
+    df <- .BIEN_sql(query, ...)
     
     if(print.query){
       query<-gsub(pattern = "\n",replacement = "",query)
@@ -1682,7 +1682,7 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
     #query = rangeQuery
     #print(query)
     # create query to retrieve
-    df <- BIEN_sql(query, ...)
+    df <- .BIEN_sql(query, ...)
     
     if(print.query){
       query<-gsub(pattern = "\n",replacement = "",query)
@@ -1711,7 +1711,7 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
 #' @param crop.ranges Should the returned shapefiles be cropped to the supplied shapefile?
 #' @param include.gid Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return All range maps that intersect the user-supplied shapfile.
 #' @note We recommend using the function readOGR() in the rgdal package to read in shapefiles.  Other methods may cause problems related to handling holes in polygons.
 #' @examples \dontrun{
@@ -1750,7 +1750,7 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species_names_only=FA
     }
     
     # create query to retrieve
-    df <- BIEN_sql(query)
+    df <- .BIEN_sql(query)
     
     if(print.query){
       print(query)
@@ -1804,7 +1804,7 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species_names_only=FA
     query<-paste("SELECT species FROM ranges WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom)")  
     
     # create query to retrieve
-    df <- BIEN_sql(query)
+    df <- .BIEN_sql(query)
     
     if(print.query){
       query<-gsub(pattern = "\n",replacement = "",query)
@@ -1828,7 +1828,7 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species_names_only=FA
 #'BIEN_ranges_load_species returns spatial data for the specified species.
 #' @param species A single species or a vector of species.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A SpatialPolygonsDataFrame containing range maps for the specified species.
 #' @examples \dontrun{
 #' species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
@@ -1853,8 +1853,8 @@ BIEN_ranges_load_species<-function(species,print.query=FALSE, ...){
   query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species;")
   
   # create query to retrieve
-  df <- BIEN_sql(query, ...)
-  #df <- BIEN_sql(query)
+  df <- .BIEN_sql(query, ...)
+  #df <- .BIEN_sql(query)
   
   
   
@@ -1903,7 +1903,7 @@ BIEN_ranges_load_species<-function(species,print.query=FALSE, ...){
 #'BIEN_trait_species extracts trait data for the species specified.
 #' @param species A single species or a vector of species.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe of all available trait data for the given species.
 #' @examples \dontrun{
 #' BIEN_trait_species("Poa annua")
@@ -1922,7 +1922,7 @@ BIEN_trait_species<-function(species,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 ############################
@@ -1931,7 +1931,7 @@ BIEN_trait_species<-function(species,print.query=FALSE, ...){
 #'BIEN_trait_mean Estimates species mean values for a given trait, using Genus or Family level data where Species level data is absent.
 #' @param species A single species or a vector of species.
 #' @param trait A single trait.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe of estimated trait means and associated metadata for the given species.
 #' @examples \dontrun{
 #' BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="Height") }
@@ -1948,7 +1948,7 @@ BIEN_trait_mean<-function(species,trait, ...){
   query <- paste("SELECT DISTINCT scrubbed_family,scrubbed_genus,scrubbed_species_binomial FROM bien_taxonomy WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") or scrubbed_genus in (", paste(shQuote(genera, type = "sh"),collapse = ', '), ");")
   
   
-  taxonomy_for_traits <- BIEN_sql(query, ...)
+  taxonomy_for_traits <- .BIEN_sql(query, ...)
   if(length(taxonomy_for_traits)==0){stop("Taxonomic data missing, check species name(s)")}
   
   
@@ -1957,7 +1957,7 @@ BIEN_trait_mean<-function(species,trait, ...){
   
   query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND (family in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_family)  , type = "sh"),collapse = ', '), ") or  genus in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_genus)  , type = "sh"),collapse = ', '), ")) ORDER BY family,taxon,trait_name;")
   
-  traits_df <- BIEN_sql(query, ...)
+  traits_df <- .BIEN_sql(query, ...)
   
   #finally, choose the best available trait data
   
@@ -2007,7 +2007,7 @@ BIEN_trait_mean<-function(species,trait, ...){
 #'BIEN_trait_trait downloads all measurements of the trait(s) specified.
 #' @param trait A single trait or a vector of traits.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe of all available trait data for the given trait(s).
 #' @examples \dontrun{
 #' BIEN_trait_trait("Height")
@@ -2026,7 +2026,7 @@ BIEN_trait_trait<-function(trait,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 ############################
@@ -2037,7 +2037,7 @@ BIEN_trait_trait<-function(trait,print.query=FALSE, ...){
 #' @param species A single species or a vector of species.
 #' @param trait A single trait or a vector of traits.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe of all data matching the specified trait(s) and species.
 #' @examples \dontrun{
 #' BIEN_trait_traitbyspecies(trait = "Height", species = "Carex capitata")
@@ -2058,7 +2058,7 @@ BIEN_trait_traitbyspecies<-function(trait,species,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 ###########################
@@ -2069,7 +2069,7 @@ BIEN_trait_traitbyspecies<-function(trait,species,print.query=FALSE, ...){
 #' @param genus A single genus or a vector of genera.
 #' @param trait A single trait or a vector of traits.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe of all data matching the specified trait(s) and genus/genera.
 #' @examples \dontrun{
 #' BIEN_trait_traitbygenus(trait = "Height", genus = "Carex")
@@ -2090,7 +2090,7 @@ BIEN_trait_traitbygenus<-function(trait,genus,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 ###########################
@@ -2101,7 +2101,7 @@ BIEN_trait_traitbygenus<-function(trait,genus,print.query=FALSE, ...){
 #' @param family A single family or a vector of families.
 #' @param trait A single trait or a vector of traits.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe of all data matching the specified trait(s) and family/families.
 #' @examples \dontrun{
 #' BIEN_trait_traitbyfamily(trait = "Height", family = "Poaceae")
@@ -2122,7 +2122,7 @@ BIEN_trait_traitbyfamily<-function(trait,family,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 ############################
@@ -2132,7 +2132,7 @@ BIEN_trait_traitbyfamily<-function(trait,family,print.query=FALSE, ...){
 #'BIEN_trait_genus extracts entries that contain the specified genera.
 #' @param genus A single genus or a vector of genera.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe of all data matching the specified genera.
 #' @examples \dontrun{
 #' BIEN_trait_genus("Acer")
@@ -2151,7 +2151,7 @@ BIEN_trait_genus<-function(genus,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -2162,7 +2162,7 @@ BIEN_trait_genus<-function(genus,print.query=FALSE, ...){
 #'BIEN_trait_family extracts all trait data for the specified families.
 #' @param family A single family or a vector of families.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe of all data matching the specified families.
 #' @examples \dontrun{
 #' BIEN_trait_family("Poaceae")
@@ -2181,7 +2181,7 @@ BIEN_trait_family<-function(family,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -2191,7 +2191,7 @@ BIEN_trait_family<-function(family,print.query=FALSE, ...){
 #'
 #'BIEN_trait_list produces a dataframe of all available types of trait data.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe containing all currently available types of trait data and details on measurement.
 #' @examples \dontrun{
 #' BIEN_trait_list()}
@@ -2207,7 +2207,7 @@ BIEN_trait_list<-function(print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -2217,7 +2217,7 @@ BIEN_trait_list<-function(print.query=FALSE, ...){
 #'
 #'BIEN_occurrence_records_per_species downloads a count of the number of geovalidated occurence records for each species in the BIEN database.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe listing the number of geovalidated occurrence records for each species in the BIEN database.
 #' @examples \dontrun{
 #' occurrence_counts<-BIEN_occurrence_records_per_species()}
@@ -2233,7 +2233,7 @@ BIEN_occurrence_records_per_species<-function(print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -2242,7 +2242,7 @@ BIEN_occurrence_records_per_species<-function(print.query=FALSE, ...){
 #'
 #'BIEN_trait_traits_per_species downloads a count of the number of records for each trait for each species in the BIEN database.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Returns a dataframe containing the number of trait records for each species in the BIEN database.
 #' @examples \dontrun{
 #' trait_observation_counts<-BIEN_trait_traits_per_species()}
@@ -2257,7 +2257,7 @@ BIEN_trait_traits_per_species<-function(print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -2305,7 +2305,7 @@ is_num <- function(x) {
 ####################################
 #'Run an SQL query on the BIEN database.
 #'
-#'BIEN_sql allows users to supply their own PostgreSQL query.
+#'.BIEN_sql allows users to supply their own PostgreSQL query.
 #' @param query A PostgreSQL query.
 #' @param view_full_occurrence_individual Alternative value to be substituted for "view_full_occurrence_individual" in queries when not NULL.
 #' @param agg_traits Alternative value to be substituted for "agg_traits" in queries when not NULL.
@@ -2317,9 +2317,9 @@ is_num <- function(x) {
 #' @param bien_metadata Alternative value to be substituted for "bien_metadata" in queries when not NULL.
 #' @return A dataframe returned by the query.
 #' @examples \dontrun{
-#' BIEN_sql("SELECT DISTINCT country, scrubbed_species_binomial FROM view_full_occurrence_individual 
+#' .BIEN_sql("SELECT DISTINCT country, scrubbed_species_binomial FROM view_full_occurrence_individual 
 #' WHERE country in ( 'United States' );")}
-BIEN_sql<-function(query,view_full_occurrence_individual=NULL,agg_traits=NULL,species_by_political_division=NULL,
+.BIEN_sql<-function(query,view_full_occurrence_individual=NULL,agg_traits=NULL,species_by_political_division=NULL,
                    bien_species_all=NULL,ranges=NULL,bien_taxonomy=NULL,phylogeny=NULL,bien_metadata=NULL){
   is_char(query)
   
@@ -2382,7 +2382,7 @@ BIEN_sql<-function(query,view_full_occurrence_individual=NULL,agg_traits=NULL,sp
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe containing all data from the specified datasource.
 #' @examples \dontrun{
 #' BIEN_plot_datasource("SALVIAS")}
@@ -2458,7 +2458,7 @@ BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -2467,14 +2467,14 @@ BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
 #'List available datasources.
 #'
 #'BIEN_plot_list_datasource list all plot datasources in the BIEN database.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A vector of available datasources.
 #' @examples \dontrun{
 #' BIEN_plot_list_datasource()}
 #' @family plot functions
 BIEN_plot_list_datasource<-function(...){
   query <- paste("SELECT DISTINCT datasource FROM plot_metadata;")
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -2490,7 +2490,7 @@ BIEN_plot_list_datasource<-function(...){
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe containing all data from the specified countries.
 #' @examples \dontrun{
 #' BIEN_plot_country("Costa Rica")
@@ -2573,7 +2573,7 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
   }
 ###############################
@@ -2589,7 +2589,7 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @note This function requires you supply either 1) a single country with one or states, or 2) vectors of equal length for each political level.
 #' @return A dataframe containing all data from the specified states.
 #' @examples \dontrun{
@@ -2702,7 +2702,7 @@ BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
   }
 
@@ -2711,14 +2711,14 @@ BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all
 #'List available sampling protocols.
 #'
 #'BIEN_plot_list_sampling_protocols list all available sampling protocols.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A vector of available sampling protocols.
 #' @examples \dontrun{
 #' BIEN_plot_list_sampling_protocols()}
 #' @family plot functions
 BIEN_plot_list_sampling_protocols<-function(...){
   query <- paste("SELECT DISTINCT sampling_protocol FROM plot_metadata;")
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -2734,7 +2734,7 @@ BIEN_plot_list_sampling_protocols<-function(...){
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe containing all data from the specified datasource.
 #' @examples \dontrun{
 #' BIEN_plot_sampling_protocol("Point-intercept")}
@@ -2814,7 +2814,7 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 #################################
@@ -2829,7 +2829,7 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe containing all data from the specified plot(s).
 #' @examples \dontrun{
 #' BIEN_plot_name("SR-1")}
@@ -2908,7 +2908,7 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -2924,7 +2924,7 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe containing all data from the specified dataset.
 #' @examples \dontrun{
 #' BIEN_plot_dataset("Gentry Transect Dataset")}
@@ -3001,7 +3001,7 @@ BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.tax
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -3011,7 +3011,7 @@ BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.tax
 #'
 #'BIEN_plot_metadata downloads the plot metadata table. 
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A dataframe containing plot metadata.
 #' @examples \dontrun{
 #' BIEN_plot_metadata()}
@@ -3028,7 +3028,7 @@ BIEN_plot_metadata<-function(print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -3044,7 +3044,7 @@ BIEN_plot_metadata<-function(print.query=FALSE, ...){
 #'BIEN_taxonomy_species downloads a dataframe of all taxonomic information for given species.
 #' @param species A single species or a vector of species.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing taxonomic information for the specified species.
 #' @examples \dontrun{
 #' BIEN_taxonomy_species("Cannabis sativa")
@@ -3072,7 +3072,7 @@ BIEN_taxonomy_species<-function(species,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 #################
@@ -3081,7 +3081,7 @@ BIEN_taxonomy_species<-function(species,print.query=FALSE, ...){
 #'BIEN_taxonomy_genus downloads a dataframe of all taxonomic information for given genera.
 #' @param genus A single genus or a vector of genera.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing taxonomic information for the specified genera.
 #' @examples \dontrun{
 #' BIEN_taxonomy_genus("Acer")
@@ -3108,7 +3108,7 @@ BIEN_taxonomy_genus<-function(genus,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -3119,7 +3119,7 @@ BIEN_taxonomy_genus<-function(genus,print.query=FALSE, ...){
 #'BIEN_taxonomy_family downloads a dataframe of all taxonomic information for given families.
 #' @param family A single family or a vector of families.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing taxonomic information for the specified families.
 #' @examples \dontrun{
 #' BIEN_taxonomy_family("Orchidaceae")
@@ -3146,7 +3146,7 @@ BIEN_taxonomy_family<-function(family,print.query=FALSE, ...){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
 
 }
 
@@ -3161,7 +3161,7 @@ BIEN_taxonomy_family<-function(family,print.query=FALSE, ...){
 #' @param n_phylogenies The number of phylogenies to download.  Should be an integer between 1 and 100.  Default is 1.
 #' @param seed Argument passed to set.seed.  Useful for replicating work with random phylogeny sets.
 #' @param replicates The specific replicated phylogenies to return.  Should be a numeric vector of integers between 1 and 100.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A phylo or multiphylo object containing the specified phylogenies
 #' @examples \dontrun{
 #' phylos<-BIEN_phylogeny_complete(n_phylogenies = 10,seed = 1)
@@ -3176,7 +3176,7 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
     replicates<-replicates[which(replicates%in%1:100)]
     query<-paste("SELECT * FROM phylogeny WHERE phylogeny_version = 'BIEN_2016_complete' AND replicate in (", paste(shQuote(replicates, type = "sh"),collapse = ', '),")"  )
     
-    df<-BIEN_sql(query, ...)
+    df<-.BIEN_sql(query, ...)
     
     tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
     
@@ -3204,7 +3204,7 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
   
   query<-paste("SELECT * FROM phylogeny WHERE phylogeny_version = 'BIEN_2016_complete' AND replicate in (", paste(shQuote(phylo_sample, type = "sh"),collapse = ', '),")"  )
   
-  df<-BIEN_sql(query, ...)
+  df<-.BIEN_sql(query, ...)
   
   tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
   
@@ -3216,7 +3216,7 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
 #'Download the conservative BIEN phylogeny
 #'
 #'BIEN_phylogeny_conservative downloads the conservative BIEN phylogeny, which only includes species with molecular data available.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A phylo object containing the BIEN conservative phylogeny
 #' @examples \dontrun{
 #' BIEN_phylo<-BIEN_phylogeny_conservative()}
@@ -3225,7 +3225,7 @@ BIEN_phylogeny_conservative<-function(...){
   
   query<-paste("SELECT * FROM phylogeny WHERE phylogeny_version = 'BIEN_2016_conservative' ;"  )
   
-  df<-BIEN_sql(query, ...)
+  df<-.BIEN_sql(query, ...)
   
   tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
   
@@ -3240,14 +3240,14 @@ BIEN_phylogeny_conservative<-function(...){
 #'Download the current BIEN database version and release date
 #'
 #'BIEN_metadata_database_version downloads the current version number and release date for the BIEN database.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return A data frame containing the current version number and release date for the BIEN database.
 #' @family metadata functions
 #' @examples \dontrun{
 #' BIEN_metadata_database_version()}
 BIEN_metadata_database_version<-function(...){
   query<-"SELECT db_version, db_release_date FROM bien_metadata a JOIN (SELECT MAX(bien_metadata_id) as max_id FROM bien_metadata) AS b ON a.bien_metadata_id=b.max_id;"
-  BIEN_sql(query, ...)
+  .BIEN_sql(query, ...)
 }
 
 
@@ -3260,7 +3260,7 @@ BIEN_metadata_database_version<-function(...){
 #' @param old A dataframe that is to be compared to a (typically) newer dataframe.
 #' @param new A dataframe that is to be compared to a (typically) older dataframe.
 #' @param return What information should be returned?  Current options are: "identical" (Logical, are the two dataframes identical?), "additions" (numeric, which rows are new?), "deletions" (numeric, which rows are no longer present?), "logical" (logical, which elements of the old dataframe are in the new one?).
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Logical of varying length (depending on choice of "return" parameter)
 #' @note Since comparisons are done by row (except when using return="identical"), this function may fail to flag additions or deletions if they are exact duplicates of existing rows.
 #' @family metadata functions
@@ -3308,7 +3308,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #' @param species A single species or vector of species.
 #' @param cultivated Return known cultivated records as well?  Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing species, latitude and longitude.
 #' @note We strongly recomend BIEN_occurrence_species as an alternative to this function in most instances.
 #' @examples \dontrun{
@@ -3345,7 +3345,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -3357,7 +3357,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #' @param genus A single genus or vector of genera.
 #' @param cultivated Return known cultivated records as well?  Default is FALSE.
 #' @param print.query Should the PostgreSQL query be printed? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing species, latitude and longitude.
 #' @note We strongly recomend BIEN_occurrence_genus as an alternative to this function in most instances.
 #' @examples \dontrun{
@@ -3394,7 +3394,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
 }
 
@@ -3427,7 +3427,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing stem data for the specified species.
 #' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 #' @examples \dontrun{
@@ -3511,9 +3511,9 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
                  paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)
                  ORDER BY analytical_stem.scrubbed_species_binomial;")
   
-  BIEN_sql(query)
+  .BIEN_sql(query)
   
-  #system.time(v1<-BIEN_sql("  SELECT scrubbed_species_binomial FROM (SELECT * FROM analytical_stem WHERE scrubbed_species_binomial in ('Abies lasiocarpa')) a LEFT JOIN plot_metadata ON (a.plot_metadata_id= plot_metadata.plot_metadata_id)  "))
+  #system.time(v1<-.BIEN_sql("  SELECT scrubbed_species_binomial FROM (SELECT * FROM analytical_stem WHERE scrubbed_species_binomial in ('Abies lasiocarpa')) a LEFT JOIN plot_metadata ON (a.plot_metadata_id= plot_metadata.plot_metadata_id)  "))
   
   
   
@@ -3522,7 +3522,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
   if(print.query){
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
   }
 
@@ -3540,7 +3540,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing stem data for the specified families.
 #' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 #' @examples \dontrun{
@@ -3624,7 +3624,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
                  paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)
                  ORDER BY analytical_stem.scrubbed_genus, analytical_stem.scrubbed_species_binomial;")
   
-  BIEN_sql(query)
+  .BIEN_sql(query)
   
   
   
@@ -3634,7 +3634,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
     print(query)
   }
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
   }
 
@@ -3651,7 +3651,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to .BIEN_sql
 #' @return Dataframe containing stem data for the specified genera.
 #' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 #' @examples \dontrun{
@@ -3735,9 +3735,9 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
                  paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)
                  ORDER BY analytical_stem.scrubbed_genus, analytical_stem.scrubbed_species_binomial;")
   
-  BIEN_sql(query)
+  .BIEN_sql(query)
   
-  #system.time(v1<-BIEN_sql("  SELECT scrubbed_species_binomial FROM (SELECT * FROM analytical_stem WHERE scrubbed_species_binomial in ('Abies lasiocarpa')) a LEFT JOIN plot_metadata ON (a.plot_metadata_id= plot_metadata.plot_metadata_id)  "))
+  #system.time(v1<-.BIEN_sql("  SELECT scrubbed_species_binomial FROM (SELECT * FROM analytical_stem WHERE scrubbed_species_binomial in ('Abies lasiocarpa')) a LEFT JOIN plot_metadata ON (a.plot_metadata_id= plot_metadata.plot_metadata_id)  "))
   
   
   
@@ -3749,7 +3749,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
     print(query)
   }
   
-  return(BIEN_sql(query, ...))
+  return(.BIEN_sql(query, ...))
   
   }
 

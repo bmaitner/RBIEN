@@ -7,7 +7,7 @@
 BIEN_plot_list_datasource(...)
 }
 \arguments{
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to .BIEN_sql}
 }
 \value{
 A vector of available datasources.
