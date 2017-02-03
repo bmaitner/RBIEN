@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Setup
 
 ```{r message=F,warning=FALSE, results='hide'}
-library(BRI)
+library(BIEN)
 library(ape) #Package for working with phylogenies in R
 library(maps) #Useful for making quick maps of occurrences
 library(sp) # A package for spatial data
@@ -35,7 +35,7 @@ The function names follow a consistent naming strategy, and mostly consist of 3 
 As a complete example, the function `BIEN_occurrence_species` returns occurrence records for a given species (or set of species).
 
 # Function Families
-Currently we have 10 function families in RBIEN.  These are sets of functions that access a given type of data.
+Currently we have 9 function families in RBIEN.  These are sets of functions that access a given type of data.
 
 1. occurrence records (BIEN_occurrence_...)
 2. range maps (BIEN_ranges_...)
@@ -46,7 +46,6 @@ Currently we have 10 function families in RBIEN.  These are sets of functions th
 7. stem data (BIEN_stem_...)
 8. species lists (BIEN_list_...)
 9. metadata (BIEN_metadata_...)
-10. custom queries (BIEN_sql)
 
 
 We'll walk through each of the function families and take a look at some the options available within each.
@@ -457,42 +456,6 @@ BIEN_metadata_database_version()
 
 ```
 
-
-# Custom Queries
-We recommend avoiding custom queries where possible.  If you have an idea for a new function/functionality, contacting the package maintainer or submitting a note on the Github site for the package may be a better idea.  However, if you need to write your own SQL query, we recommend that you familiarize yourself with both postgresql and the BIEN database structure first.  Most of our functions have the argument "print.query" which will display the SQL query that the function utilized.  These queries can provide a starting point for custum queries (by adding or omitting parts of them).  These queries can then be executed using the function `BIEN_sql`.
-
-1. `BIEN_sql` This function returns the results of a postgresql query.  This function is typically used as an internal function, but can be used for writing custom queries.
-
-Arguments:
-
-The argument "query" is the only one likely to be of use to users.  The other arguments are included for primarily for developmental purposes.
-
-**Example 11: Writing your own query **
-Let's return to our example from above where we downloaded the occurrence records for *Xanthium strumarium*.  Let's take a look at the query that underlies that:
-
-```{r}
-
-Xanthium_strumarium <- BIEN_occurrence_species(species = "Xanthium strumarium",print.query = T)
-
-```
-
-We see that our query looks like this:
-
-"SELECT scrubbed_species_binomial, latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code FROM view_full_occurrence_individual WHERE scrubbed_species_binomial in ( 'Xanthium strumarium' ) AND (is_cultivated = 0 OR is_cultivated IS NULL) AND is_new_world = 1 AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY scrubbed_species_binomial;"
-
-Now, if we want to modify this to be more restrictive and only include occurrences that could be geovalidated and are not cultivated, that simply involves a few changes:
-
-"SELECT scrubbed_species_binomial, latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code FROM view_full_occurrence_individual WHERE scrubbed_species_binomial in ( 'Xanthium strumarium' ) AND (is_cultivated = 0 ) AND is_new_world = 1 AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 ) ORDER BY scrubbed_species_binomial;"
-
-We can now submit this new but of code using `BIEN_sql`
-
-```{r}
-
-Xanthium_strumarium_modified <- BIEN_sql(query = "SELECT scrubbed_species_binomial, latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code FROM view_full_occurrence_individual WHERE scrubbed_species_binomial in ( 'Xanthium strumarium' ) AND (is_cultivated = 0 ) AND is_new_world = 1 AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 ) ORDER BY scrubbed_species_binomial;")
-
-#This query only returns a fraction of the records the default query does, but for some purposes we may only want the highest quality records.
-
-```
 
 # Combining Queries
 **Example 12: Putting it all together **

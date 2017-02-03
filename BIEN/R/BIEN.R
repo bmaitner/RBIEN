@@ -2305,7 +2305,7 @@ is_num <- function(x) {
 ####################################
 #'Run an SQL query on the BIEN database.
 #'
-#'.BIEN_sql allows users to supply their own PostgreSQL query.
+#'.BIEN_sql is an internal function used to submit SQL queries.
 #' @param query A PostgreSQL query.
 #' @param view_full_occurrence_individual Alternative value to be substituted for "view_full_occurrence_individual" in queries when not NULL.
 #' @param agg_traits Alternative value to be substituted for "agg_traits" in queries when not NULL.
