@@ -4,12 +4,10 @@
 \alias{BIEN_plot_metadata}
 \title{Download plot metadata}
 \usage{
-BIEN_plot_metadata(print.query = FALSE, ...)
+BIEN_plot_metadata(...)
 }
 \arguments{
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe containing plot metadata.

@@ -11,7 +11,7 @@ BIEN_trait_mean(species, trait, ...)
 
 \item{trait}{A single trait.}
 
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of estimated trait means and associated metadata for the given species.

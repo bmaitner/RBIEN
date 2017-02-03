@@ -4,14 +4,12 @@
 \alias{BIEN_taxonomy_family}
 \title{Extract taxonomic information for families}
 \usage{
-BIEN_taxonomy_family(family, print.query = FALSE, ...)
+BIEN_taxonomy_family(family, ...)
 }
 \arguments{
 \item{family}{A single family or a vector of families.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing taxonomic information for the specified families.

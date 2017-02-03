@@ -5,9 +5,8 @@
 \title{Extract occurrence data for specified shapefile}
 \usage{
 BIEN_occurrence_shapefile(shapefile, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, print.query = FALSE,
-  native.status = FALSE, observation.type = FALSE,
-  political.boundaries = FALSE, ...)
+  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
+  observation.type = FALSE, political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{shapefile}{An object of class SpatialPolygonsDataFrame.  Note that the polygon must be in WGS84.}
@@ -17,8 +16,6 @@ BIEN_occurrence_shapefile(shapefile, cultivated = FALSE,
 \item{only.new.world}{Return only records from the New World?  Default is true}
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
-
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 

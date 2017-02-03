@@ -5,8 +5,8 @@
 \title{Extract occurrence data from BIEN for specified genera}
 \usage{
 BIEN_occurrence_genus(genus, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE, print.query = FALSE,
-  observation.type = FALSE, political.boundaries = FALSE, ...)
+  all.taxonomy = FALSE, native.status = FALSE, observation.type = FALSE,
+  political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{genus}{A single genus, or a vector of genera. Genera should be capitalized.}
@@ -19,13 +19,11 @@ BIEN_occurrence_genus(genus, cultivated = FALSE, only.new.world = TRUE,
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing occurrence records for the specified genera.

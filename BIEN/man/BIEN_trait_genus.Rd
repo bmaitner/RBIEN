@@ -4,14 +4,12 @@
 \alias{BIEN_trait_genus}
 \title{Download trait data for given genera.}
 \usage{
-BIEN_trait_genus(genus, print.query = FALSE, ...)
+BIEN_trait_genus(genus, ...)
 }
 \arguments{
 \item{genus}{A single genus or a vector of genera.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of all data matching the specified genera.

@@ -4,14 +4,12 @@
 \alias{BIEN_trait_species}
 \title{Download trait data for given species.}
 \usage{
-BIEN_trait_species(species, print.query = FALSE, ...)
+BIEN_trait_species(species, ...)
 }
 \arguments{
 \item{species}{A single species or a vector of species.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of all available trait data for the given species.

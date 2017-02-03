@@ -4,14 +4,12 @@
 \alias{BIEN_taxonomy_genus}
 \title{Extract taxonomic information for genera}
 \usage{
-BIEN_taxonomy_genus(genus, print.query = FALSE, ...)
+BIEN_taxonomy_genus(genus, ...)
 }
 \arguments{
 \item{genus}{A single genus or a vector of genera.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing taxonomic information for the specified genera.

@@ -5,8 +5,8 @@
 \title{Extract species occurrences by family.}
 \usage{
 BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = TRUE,
-  print.query = FALSE, observation.type = FALSE, all.taxonomy = FALSE,
-  native.status = FALSE, political.boundaries = FALSE, ...)
+  observation.type = FALSE, all.taxonomy = FALSE, native.status = FALSE,
+  political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{family}{A single family or a vector of families.}
@@ -14,8 +14,6 @@ BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = TRUE,
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
-
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
 
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 
@@ -25,7 +23,7 @@ BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = TRUE,
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing occurrence records for the specified family/families.

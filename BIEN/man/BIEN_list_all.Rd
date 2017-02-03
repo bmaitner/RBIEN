@@ -4,12 +4,10 @@
 \alias{BIEN_list_all}
 \title{Extract a list of all species in the BIEN database.}
 \usage{
-BIEN_list_all(print.query = FALSE, ...)
+BIEN_list_all(...)
 }
 \arguments{
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing a list of all species in the BIEN database.

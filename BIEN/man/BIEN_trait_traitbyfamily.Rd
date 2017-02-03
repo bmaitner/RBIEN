@@ -4,16 +4,14 @@
 \alias{BIEN_trait_traitbyfamily}
 \title{Download trait data for given families and traits.}
 \usage{
-BIEN_trait_traitbyfamily(trait, family, print.query = FALSE, ...)
+BIEN_trait_traitbyfamily(trait, family, ...)
 }
 \arguments{
 \item{trait}{A single trait or a vector of traits.}
 
 \item{family}{A single family or a vector of families.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of all data matching the specified trait(s) and family/families.

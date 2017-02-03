@@ -5,7 +5,7 @@
 \title{Extract a list of species within a given shapefile.}
 \usage{
 BIEN_list_shapefile(shapefile, cultivated = FALSE, only.new.world = TRUE,
-  print.query = FALSE, ...)
+  ...)
 }
 \arguments{
 \item{shapefile}{An object of class SpatialPolygonsDataFrame.  Note that the polygon must be in WGS84.}
@@ -14,9 +14,7 @@ BIEN_list_shapefile(shapefile, cultivated = FALSE, only.new.world = TRUE,
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing a list of all species with occurrences in the supplied shapefile.

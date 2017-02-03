@@ -4,16 +4,14 @@
 \alias{BIEN_trait_traitbyspecies}
 \title{Download trait data for given species and trait.}
 \usage{
-BIEN_trait_traitbyspecies(trait, species, print.query = FALSE, ...)
+BIEN_trait_traitbyspecies(trait, species, ...)
 }
 \arguments{
 \item{trait}{A single trait or a vector of traits.}
 
 \item{species}{A single species or a vector of species.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of all data matching the specified trait(s) and species.

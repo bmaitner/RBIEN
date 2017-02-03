@@ -4,12 +4,10 @@
 \alias{BIEN_occurrence_records_per_species}
 \title{Count the number of (geoValid) occurrence records for each species in BIEN}
 \usage{
-BIEN_occurrence_records_per_species(print.query = FALSE, ...)
+BIEN_occurrence_records_per_species(...)
 }
 \arguments{
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe listing the number of geovalidated occurrence records for each species in the BIEN database.

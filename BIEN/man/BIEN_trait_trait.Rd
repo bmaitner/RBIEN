@@ -4,14 +4,12 @@
 \alias{BIEN_trait_trait}
 \title{Download all measurements of a specific trait(s).}
 \usage{
-BIEN_trait_trait(trait, print.query = FALSE, ...)
+BIEN_trait_trait(trait, ...)
 }
 \arguments{
 \item{trait}{A single trait or a vector of traits.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe of all available trait data for the given trait(s).

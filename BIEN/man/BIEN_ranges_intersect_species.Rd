@@ -6,8 +6,7 @@
 \usage{
 BIEN_ranges_intersect_species(species, directory = NULL,
   species.names.only = FALSE, include.focal = TRUE,
-  return.species.list = TRUE, include.gid = FALSE, print.query = FALSE,
-  ...)
+  return.species.list = TRUE, include.gid = FALSE, ...)
 }
 \arguments{
 \item{species}{Focal species (or a vector of species) for which to extract intersecting ranges.}
@@ -22,9 +21,7 @@ BIEN_ranges_intersect_species(species, directory = NULL,
 
 \item{include.gid}{Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Range maps for all available species that intersect the range of the focal species.

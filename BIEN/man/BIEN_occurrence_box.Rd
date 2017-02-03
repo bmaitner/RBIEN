@@ -6,8 +6,7 @@
 \usage{
 BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
   only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  observation.type = FALSE, political.boundaries = TRUE,
-  print.query = FALSE, ...)
+  observation.type = FALSE, political.boundaries = TRUE, ...)
 }
 \arguments{
 \item{min.lat}{Minimum latitude}
@@ -30,9 +29,7 @@ BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing occurrence records for the specified area.

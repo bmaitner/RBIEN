@@ -4,12 +4,10 @@
 \alias{BIEN_trait_list}
 \title{List all available types of trait data}
 \usage{
-BIEN_trait_list(print.query = FALSE, ...)
+BIEN_trait_list(...)
 }
 \arguments{
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe containing all currently available types of trait data and details on measurement.

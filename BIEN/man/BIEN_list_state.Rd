@@ -5,7 +5,7 @@
 \title{Extract a species list by state/province}
 \usage{
 BIEN_list_state(country, state, cultivated = FALSE, only.new.world = TRUE,
-  print.query = FALSE, ...)
+  ...)
 }
 \arguments{
 \item{country}{A single country or a vector of countries equal in length to the vector of states/provinces.}
@@ -16,9 +16,7 @@ BIEN_list_state(country, state, cultivated = FALSE, only.new.world = TRUE,
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing species list(s) for the specified states/provinces.

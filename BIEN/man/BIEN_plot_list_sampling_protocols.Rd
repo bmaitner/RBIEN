@@ -7,7 +7,7 @@
 BIEN_plot_list_sampling_protocols(...)
 }
 \arguments{
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A vector of available sampling protocols.

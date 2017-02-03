@@ -4,8 +4,7 @@
 \alias{BIEN_list_country}
 \title{Extract species list by country}
 \usage{
-BIEN_list_country(country, cultivated = FALSE, only.new.world = TRUE,
-  print.query = FALSE, ...)
+BIEN_list_country(country, cultivated = FALSE, only.new.world = TRUE, ...)
 }
 \arguments{
 \item{country}{A single country or a vector of countries.}
@@ -14,9 +13,7 @@ BIEN_list_country(country, cultivated = FALSE, only.new.world = TRUE,
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing species list(s) for the specified country or countries.

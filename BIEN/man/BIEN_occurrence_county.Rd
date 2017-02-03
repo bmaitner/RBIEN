@@ -5,9 +5,8 @@
 \title{Extract species occurrence records by county.}
 \usage{
 BIEN_occurrence_county(country, state, county, cultivated = FALSE,
-  only.new.world = TRUE, print.query = FALSE, all.taxonomy = FALSE,
-  native.status = FALSE, observation.type = FALSE,
-  political.boundaries = FALSE, ...)
+  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
+  observation.type = FALSE, political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{country}{A single country or vector of countries.}
@@ -20,8 +19,6 @@ BIEN_occurrence_county(country, state, county, cultivated = FALSE,
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
@@ -30,7 +27,7 @@ BIEN_occurrence_county(country, state, county, cultivated = FALSE,
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing occurrence records for the specified states/provinces.

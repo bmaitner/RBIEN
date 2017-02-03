@@ -5,7 +5,7 @@
 \title{Download plot data from a given datasource.}
 \usage{
 BIEN_plot_datasource(datasource, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, print.query = FALSE, native.status = FALSE,
+  all.taxonomy = FALSE, native.status = FALSE,
   political.boundaries = FALSE, all.metadata = FALSE, ...)
 }
 \arguments{
@@ -17,15 +17,13 @@ BIEN_plot_datasource(datasource, cultivated = FALSE, only.new.world = TRUE,
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A dataframe containing all data from the specified datasource.

@@ -5,7 +5,7 @@
 \title{Download range maps for given genus.}
 \usage{
 BIEN_ranges_genus(genus, directory = NULL, matched = TRUE,
-  match_names_only = FALSE, include.gid = FALSE, print.query = FALSE, ...)
+  match_names_only = FALSE, include.gid = FALSE, ...)
 }
 \arguments{
 \item{genus}{A single genus or a vector of genera.}
@@ -18,9 +18,7 @@ BIEN_ranges_genus(genus, directory = NULL, matched = TRUE,
 
 \item{include.gid}{Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.}
 
-\item{print.query}{Should the PostgreSQL query be printed? The default value is FALSE.}
-
-\item{...}{Additional arguments passed to .BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Range maps for all available species within the specified genera.
