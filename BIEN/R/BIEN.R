@@ -111,7 +111,7 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,a
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param ... Additional arguments passed to BIEN_sql
+#' @param ... Additional arguments passed to internal functions.
 #' @return Dataframe containing occurrence records for the specified species.
 #' @examples \dontrun{
 #' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
@@ -1681,6 +1681,26 @@ BIEN_ranges_load_species<-function(species, ...){
   
 }
 
+###############################
+#'List available range maps
+#'
+#'BIEN_ranges_list a data.frame containing listing all range maps currently available.
+#' @param ... Additional arguments passed to internal functions.
+#' @return A data.frame containing the available species and their associated GIDs.
+#' @examples \dontrun{
+#' available_maps<-BIEN_ranges_list()}
+#' @family range functions
+#' @family metadata functions
+BIEN_ranges_list<-function( ...){
+  
+  # set the query
+  query <- paste("SELECT species,gid FROM ranges ORDER BY species;")
+  
+  # create query to retrieve
+  return(.BIEN_sql(query, ...))
+
+}
+
 
 
 ########################################
@@ -1948,18 +1968,28 @@ BIEN_trait_list<-function( ...){
 #'Count the number of (geoValid) occurrence records for each species in BIEN
 #'
 #'BIEN_occurrence_records_per_species downloads a count of the number of geovalidated occurence records for each species in the BIEN database.
+#' @param species A single species, or vector of species.  If NULL, the default, it will return counts for all species.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe listing the number of geovalidated occurrence records for each species in the BIEN database.
 #' @examples \dontrun{
 #' occurrence_counts<-BIEN_occurrence_records_per_species()}
 #' @family occurrence functions
-BIEN_occurrence_records_per_species<-function( ...){
-
-# set the query
-  query<-paste("SELECT DISTINCT scrubbed_species_binomial,count(*) FROM view_full_occurrence_individual WHERE is_geovalid = 1 GROUP BY scrubbed_species_binomial")
+BIEN_occurrence_records_per_species<-function(species=NULL, ...){
+  
+  if(is.null(species)){    
+    # set the query
+    query<-paste("SELECT DISTINCT scrubbed_species_binomial,count(*) FROM view_full_occurrence_individual WHERE is_geovalid = 1 GROUP BY scrubbed_species_binomial;")
+  }
+  
+  if(is.character(species)){
+    query<-paste("SELECT scrubbed_species_binomial,count(*) 
+                 FROM view_full_occurrence_individual 
+                 WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") AND is_geovalid = 1 
+                 GROUP BY scrubbed_species_binomial;")
+  }
 
   return(.BIEN_sql(query, ...))
-
+  
 }
 
 ###############################################

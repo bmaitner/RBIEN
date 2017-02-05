@@ -44,6 +44,7 @@ BIEN_ranges_box(42,43,-85,-84,directory = testwd)}
 \seealso{
 Other range functions: \code{\link{BIEN_ranges_genus}},
   \code{\link{BIEN_ranges_intersect_species}},
+  \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_load_species}},
   \code{\link{BIEN_ranges_shapefile}},
   \code{\link{BIEN_ranges_species}}

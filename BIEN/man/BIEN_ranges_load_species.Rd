@@ -34,6 +34,7 @@ plot(abies_maps[1,], add = T, col ="light green")}
 Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_genus}},
   \code{\link{BIEN_ranges_intersect_species}},
+  \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_shapefile}},
   \code{\link{BIEN_ranges_species}}
 }

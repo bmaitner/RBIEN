@@ -23,7 +23,7 @@ BIEN_occurrence_shapefile(shapefile, cultivated = FALSE,
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
-\item{...}{Additional arguments passed to BIEN_sql}
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Dataframe containing occurrence records for the specified species.

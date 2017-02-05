@@ -4,9 +4,11 @@
 \alias{BIEN_occurrence_records_per_species}
 \title{Count the number of (geoValid) occurrence records for each species in BIEN}
 \usage{
-BIEN_occurrence_records_per_species(...)
+BIEN_occurrence_records_per_species(species = NULL, ...)
 }
 \arguments{
+\item{species}{A single species, or vector of species.  If NULL, the default, it will return counts for all species.}
+
 \item{...}{Additional arguments passed to internal functions.}
 }
 \value{

@@ -21,7 +21,8 @@ BIEN_plot_metadata()}
 }
 \seealso{
 Other metadata functions: \code{\link{BIEN_metadata_database_version}},
-  \code{\link{BIEN_metadata_match_data}}
+  \code{\link{BIEN_metadata_match_data}},
+  \code{\link{BIEN_ranges_list}}
 
 Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_dataset}},
