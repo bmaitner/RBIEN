@@ -32,7 +32,8 @@ BIEN_metadata_match_data(old,new,return="identical")
 BIEN_metadata_match_data(old,new,return="additions")}
 }
 \seealso{
-Other metadata functions: \code{\link{BIEN_metadata_database_version}},
+Other metadata functions: \code{\link{BIEN_metadata_citation}},
+  \code{\link{BIEN_metadata_database_version}},
   \code{\link{BIEN_plot_metadata}},
   \code{\link{BIEN_ranges_list}}
 }

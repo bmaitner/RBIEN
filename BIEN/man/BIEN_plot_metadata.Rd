@@ -20,7 +20,8 @@ BIEN_plot_metadata downloads the plot metadata table.
 BIEN_plot_metadata()}
 }
 \seealso{
-Other metadata functions: \code{\link{BIEN_metadata_database_version}},
+Other metadata functions: \code{\link{BIEN_metadata_citation}},
+  \code{\link{BIEN_metadata_database_version}},
   \code{\link{BIEN_metadata_match_data}},
   \code{\link{BIEN_ranges_list}}
 

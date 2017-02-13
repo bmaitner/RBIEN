@@ -20,7 +20,8 @@ BIEN_ranges_list a data.frame containing listing all range maps currently availa
 available_maps<-BIEN_ranges_list()}
 }
 \seealso{
-Other metadata functions: \code{\link{BIEN_metadata_database_version}},
+Other metadata functions: \code{\link{BIEN_metadata_citation}},
+  \code{\link{BIEN_metadata_database_version}},
   \code{\link{BIEN_metadata_match_data}},
   \code{\link{BIEN_plot_metadata}}
 
