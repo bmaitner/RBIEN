@@ -49,6 +49,7 @@ For full information on each function, see the associated help file.
 ###BIEN_metadata functions
 * `BIEN_metadata_database_version` Returns the BIEN database version number and release date
 * `BIEN_metadata_match_data` Compares the stored results of two (old vs new) queries to check for additions or deletions.
+* `BIEN_metadata_citation` Generates information needed to cite data downloaded from BIEN.
 
 ###BIEN_list functions
 * `BIEN_list_all` Lists all species present in the BIEN database
