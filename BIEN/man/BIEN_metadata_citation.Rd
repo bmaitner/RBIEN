@@ -8,21 +8,23 @@ BIEN_metadata_citation(dataframe = NULL, bibtex_file = NULL,
   acknowledgement_file = NULL)
 }
 \arguments{
-\item{dataframe}{A data.frame of occurrence, plot or stem observations downloaded from the BIEN R package.}
+\item{dataframe}{A data.frame of occurrence data downloaded from the BIEN R package.}
 
-\item{bibtex_file}{Output location for bibtex citations.}
+\item{bibtex_file}{Output file for writing bibtex citations.}
 
-\item{acknowledgement_file}{Output location for acknowledgement text.}
+\item{acknowledgement_file}{Output file for writing acknowledgements.}
 }
 \value{
-A list object containing information needed for data attribution.
+A list object containing information needed for data attribution.  Full information for herbaria is available at http://sweetgum.nybg.org/science/ih/
 }
 \description{
 BIEN_metadata_citation guides a user through the proper documentation for data downloaded from the BIEN database.
 }
 \examples{
 \dontrun{
-BIEN_metadata_citation()}
+BIEN_metadata_citation()#If you are referencing the phylogeny or range maps.
+Xanthium_data<-BIEN_occurrence_species("Xanthium strumarium")
+citations<-BIEN_metadata_citation(dataframe=Xanthium_data)#If you are referencing occurrence data}
 }
 \seealso{
 Other metadata functions: \code{\link{BIEN_metadata_database_version}},

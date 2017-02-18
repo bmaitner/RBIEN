@@ -2991,15 +2991,18 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 
 ################################
 
+
 #'Generate citations for data extracted from BIEN.
 #'
 #'BIEN_metadata_citation guides a user through the proper documentation for data downloaded from the BIEN database.
-#' @param dataframe A data.frame of occurrence, plot or stem observations downloaded from the BIEN R package.
-#' @param bibtex_file Output location for bibtex citations.
-#' @param acknowledgement_file Output location for acknowledgement text.
-#' @return A list object containing information needed for data attribution.
+#' @param dataframe A data.frame of occurrence data downloaded from the BIEN R package.
+#' @param bibtex_file Output file for writing bibtex citations.
+#' @param acknowledgement_file Output file for writing acknowledgements.
+#' @return A list object containing information needed for data attribution.  Full information for herbaria is available at http://sweetgum.nybg.org/science/ih/
 #' @examples \dontrun{
-#' BIEN_metadata_citation()}
+#' BIEN_metadata_citation()#If you are referencing the phylogeny or range maps.
+#' Xanthium_data<-BIEN_occurrence_species("Xanthium strumarium")
+#' citations<-BIEN_metadata_citation(dataframe=Xanthium_data)#If you are referencing occurrence data}
 #' @family metadata functions
 BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement_file=NULL){
   
@@ -3046,7 +3049,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
     citation[[2]]<-gsub(citation[[2]],pattern = "url", replacement = "\nurl")
     citation[[2]]<-gsub(citation[[2]],pattern = "journal", replacement = "\njournal")
     citation[[2]]<-gsub(citation[[2]],pattern = "note", replacement = "\nnote")
-    
+    citation[[2]]<-iconv(citation[[2]],to="ASCII//TRANSLIT")
     
     citation[[3]]<-paste("We acknowledge the herbaria that contributed data to this work: ",paste(unique(sources$source_name[which(sources$is_herbarium==1)]),collapse = ", "),".",collapse = "",sep="")
     
@@ -3055,26 +3058,20 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
     names(citation)<-c("general information","references","acknowledgements","data owners to contact")
     
     
-    
+    #Write acknowledgements    
     if(nrow(citation[[4]])==0){citation[[4]]<-NULL}
     
     if(!is.null(acknowledgement_file)){
       
       if(length(unique(sources$source_name[which(sources$is_herbarium==1)]))>0){
         writeLines(text = citation$acknowledgements,con = acknowledgement_file)}else{
-          message("No herbaria found, not generating an herbarium acknowledgement file.")
+          message("No herbarium records found, not generating an herbarium acknowledgement file.")
           
         }  
       
-      
     }
     
-    
-    #
-    
-    sources$datasource_id[which(sources$access_conditions=='contact authors')]
-    
-    #
+    #Write author contact warning and info        
     
     if("contact authors"%in%sources$access_conditions){
       affected_datasource_id<-sources$datasource_id[which(sources$access_conditions=='contact authors')]
@@ -3110,15 +3107,16 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
   }#if dataframe is null
   
   
-  
+  #Write bibtex output  
   if(!is.null(bibtex_file)){
     
     writeLines(text = citation[[2]],con=bibtex_file)  
     
+    
   }
   
   
-  
+  #Return the citation list  
   
   return(citation)    
   
