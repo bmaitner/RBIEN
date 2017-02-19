@@ -14,9 +14,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r message=F,warning=FALSE, results='hide'}
 
 #If you haven't already installed BIEN, do so now.
-#install.packages(pkgs = "BIEN",repos = "https://cloud.r-project.org")
+install.packages(pkgs = "devtools",repos = "https://cloud.r-project.org")
+library(devtools)
 
-
+install_github(repo = "bmaitner/RBIEN/BIEN")
 library(BIEN)
 ```
 

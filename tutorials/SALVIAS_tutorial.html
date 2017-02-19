@@ -126,10 +126,13 @@ $(document).ready(function () {
 
 <div id="setup" class="section level1">
 <h1>Setup</h1>
-<pre class="r"><code>install.packages(pkgs = &quot;BIEN&quot;,repos = &quot;https://cloud.r-project.org&quot;)
-library(BIEN)
-#library(maps) #Useful for making quick maps of occurrences
-#library(sp) # A package for spatial data</code></pre>
+<pre class="r"><code>#If you haven't already installed BIEN, do so now.
+#install.packages(pkgs = &quot;BIEN&quot;,repos = &quot;https://cloud.r-project.org&quot;)
+install.packages(pkgs = &quot;devtools&quot;,repos = &quot;https://cloud.r-project.org&quot;)
+library(devtools)
+install_github(repo = &quot;bmaitner/RBIEN/BIEN&quot;)
+
+library(BIEN)</code></pre>
 </div>
 <div id="downloading-salvias-data-with-bien" class="section level1">
 <h1>Downloading SALVIAS data with BIEN</h1>
@@ -145,6 +148,11 @@ library(BIEN)
 <p>See <code>?BIEN_plot_datasource</code> for more information</p>
 <p>To download the SALVIAS dataset with all of the additional information:</p>
 <pre class="r"><code>salvias_data_full &lt;- BIEN_plot_datasource(datasource = &quot;SALVIAS&quot;,cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,political.boundaries = T,all.metadata = T)</code></pre>
+<p>If you would additionally like the stem measurements associated with the SALVIAS database, use the function <code>BIEN_stem_datasource</code>.</p>
+<pre class="r"><code>salvias_stem_data &lt;- BIEN_stem_datasource(&quot;SALVIAS&quot;)</code></pre>
+<p>As with the <code>BIEN_plot_datasource</code> there are a number of additional data available.</p>
+<p>Note, however, that setting <em>native.status</em> or <em>cultivated</em> to <strong>TRUE</strong> will greatly increase the amount of time the query takes.</p>
+<pre class="r"><code>salvias_stem_data_full &lt;- BIEN_stem_datasource(datasource = &quot;SALVIAS&quot;,cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,political.boundaries = T,all.metadata = T)</code></pre>
 </div>
 
 
