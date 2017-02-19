@@ -42,7 +42,8 @@ BIEN_stem_genus(genus = genus_vector)
 BIEN_stem_genus(genus = genus_vector, all.taxonomy=TRUE)}
 }
 \seealso{
-Other stem functions: \code{\link{BIEN_stem_family}},
+Other stem functions: \code{\link{BIEN_stem_datasource}},
+  \code{\link{BIEN_stem_family}},
   \code{\link{BIEN_stem_species}}
 }
 

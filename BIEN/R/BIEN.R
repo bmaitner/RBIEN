@@ -3510,5 +3510,101 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
   
   }
 
+###########
+
+#'Extract stem data for a given datasource from BIEN
+#'
+#'BIEN_stem_datasource downloads occurrence records for specific datasources from the BIEN database.
+#' @param datasource A single datasource, or a vector of datasources.
+#' @param cultivated Return known cultivated records as well?  Default is FALSE.
+#' @param only.new.world Return only records from the New World?  Default is true
+#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
+#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
+#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
+#' @param ... Additional arguments passed to internal functions.
+#' @return Dataframe containing stem data for the specified datasource.
+#' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
+#' @examples \dontrun{
+#' BIEN_stem_datasource(datasource = "SALVIAS")}
+#' @family stem functions
+BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE, political.boundaries = FALSE, all.metadata = F, ...){
+  is_log(all.metadata)
+  is_log(cultivated)
+  is_log(only.new.world)
+  is_log(all.taxonomy)
+  is_char(datasource)
+  is_log(native.status)
+  is_log(political.boundaries)
+  
+  #set conditions for query
+  
+  if(!cultivated){
+    cultivated_query<-"AND (analytical_stem.is_cultivated = 0 OR analytical_stem.is_cultivated IS NULL)"
+    cultivated_select<-""
+  }else{
+    cultivated_query<-""
+    cultivated_select<-",analytical_stem.is_cultivated,view_full_occurrence_individual.is_cultivated_in_region"
+  }
+  
+  if(!only.new.world){
+    newworld_query<-""
+    newworld_select<-",analytical_stem.is_new_world"
+  }else{
+    newworld_query<-"AND analytical_stem.is_new_world = 1 "
+    newworld_select<-""
+  }
+  
+  if(!all.taxonomy){
+    taxon_select<-""
+  }else{
+    taxon_select<-"analytical_stem.verbatim_family,analytical_stem.verbatim_scientific_name,analytical_stem.family_matched,analytical_stem.name_matched,analytical_stem.name_matched_author,analytical_stem.higher_plant_group,analytical_stem.taxonomic_status,analytical_stem.scrubbed_family,analytical_stem.scrubbed_author,"
+  }
+  
+  if(!native.status){
+    native_select<-""
+  }else{
+    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
+  }
+  
+  if(!political.boundaries){
+    political_select<-""
+  }else{
+    political_select<-"analytical_stem.country,analytical_stem.state_province,analytical_stem.county,analytical_stem.locality,"
+  }
+  
+  if(native.status | cultivated){
+    vfoi_join<-" JOIN view_full_occurrence_individual ON (analytical_stem.taxonobservation_id  = view_full_occurrence_individual.taxonobservation_id)"}else{
+      vfoi_join<-""  
+    }
+  
+  if(!all.metadata){
+    md_select<-""
+  }else{
+    md_select<-",plot_metadata.methodology_reference,plot_metadata.methodology_description,growth_forms_included_all, growth_forms_included_trees, growth_forms_included_shrubs, growth_forms_included_lianas,
+    growth_forms_included_herbs, growth_forms_included_epiphytes, growth_forms_included_notes, taxa_included_all, taxa_included_seed_plants, taxa_included_ferns_lycophytes,
+    taxa_included_bryophytes,taxa_included_exclusions"
+  }
+  
+  # set the query
+  #query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,analytical_stem.collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select),"FROM analytical_stem LEFT JOIN plot_metadata ON (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",vfoi_join ," WHERE analytical_stem.scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL) ORDER BY analytical_stem.scrubbed_species_binomial;")
+  
+  query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
+                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
+                 plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
+                 analytical_stem.collection_code,analytical_stem.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+                 FROM 
+                 (SELECT * FROM analytical_stem WHERE datasource in (", paste(shQuote(datasource, type = "sh"),collapse = ', '), ")) AS analytical_stem 
+                 JOIN plot_metadata ON 
+                 (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
+                 vfoi_join ," 
+                 WHERE analytical_stem.datasource in (", paste(shQuote(datasource, type = "sh"),collapse = ', '), ")",
+                 paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)
+                 ORDER BY analytical_stem.scrubbed_species_binomial;")
+  
+  return(.BIEN_sql(query, ...))
+  
+  }
+
 
 ##########################

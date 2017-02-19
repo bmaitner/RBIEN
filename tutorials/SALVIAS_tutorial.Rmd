@@ -1,0 +1,68 @@
+---
+title: "RBIEN SALVIAS Tutorial"
+author: "Brian Maitner"
+date: "February 17, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Setup
+
+```{r message=F,warning=FALSE, results='hide'}
+
+#If you haven't already installed BIEN, do so now.
+#install.packages(pkgs = "BIEN",repos = "https://cloud.r-project.org")
+
+
+library(BIEN)
+```
+
+# Downloading SALVIAS data with BIEN
+Downloading the SALVIAS data with the BIEN package is done using the function `BIEN_plot_datasource`
+```{r, message=F,warning=FALSE, results='hide'}
+
+salvias_data <- BIEN_plot_datasource("SALVIAS")
+
+```
+
+If you would like additional information than is included in the default query, there are a number of options, including:
+
+* Additional taxonomic information
+
+* Additonal plot metadata
+
+* Information on native status of species
+
+* Information on the political regions that a record falls in
+
+See `?BIEN_plot_datasource` for more information
+
+To download the SALVIAS dataset with all of the additional information:
+
+```{r, message=F,warning=FALSE, results='hide'}
+
+salvias_data_full <- BIEN_plot_datasource(datasource = "SALVIAS",cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,political.boundaries = T,all.metadata = T)
+
+
+```
+
+If you would additionally like the stem measurements associated with the SALVIAS database, use the function `BIEN_stem_datasource`.
+
+```{r, message=F,warning=FALSE, results='hide'}
+
+salvias_stem_data <- BIEN_stem_datasource("SALVIAS")
+
+```
+
+As with the `BIEN_plot_datasource` there are a number of additional data available.
+
+Note, however, that setting *native.status* or *cultivated* to **TRUE** will greatly increase the amount of time the query takes.
+
+```{r, message=F,warning=FALSE, results='hide'}
+
+salvias_stem_data_full <- BIEN_stem_datasource(datasource = "SALVIAS",cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,political.boundaries = T,all.metadata = T)
+```
+

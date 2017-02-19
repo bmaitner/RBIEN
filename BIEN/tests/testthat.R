@@ -16,6 +16,10 @@ expect_that(BIEN_list_state(country = "United States",state = "Rhode Island"),is
 test_that("Metadata functions return a dataframe",{
 expect_that(BIEN_metadata_database_version(),is_a("data.frame"))
 })
+test_that("Metadata_citation function returns a list",{
+  expect_that(BIEN_metadata_citation(),is_a("list"))
+})
+
 
 
 #Occurrence tests
