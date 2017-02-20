@@ -3310,7 +3310,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
   #query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,analytical_stem.collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select),"FROM analytical_stem LEFT JOIN plot_metadata ON (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",vfoi_join ," WHERE analytical_stem.scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL) ORDER BY analytical_stem.scrubbed_species_binomial;")
   
   query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
-                analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
+                analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id,analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
                  plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
                  analytical_stem.collection_code,analytical_stem.datasource_id",paste(cultivated_select,newworld_select,md_select),"
                  FROM 
@@ -3410,7 +3410,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
   #query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,analytical_stem.collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select),"FROM analytical_stem LEFT JOIN plot_metadata ON (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",vfoi_join ," WHERE analytical_stem.scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL) ORDER BY analytical_stem.scrubbed_species_binomial;")
   
   query <- paste("SELECT analytical_stem.scrubbed_family, analytical_stem.scrubbed_genus,analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
-                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
+                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
                  plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
                  analytical_stem.collection_code,analytical_stem.datasource_id",paste(cultivated_select,newworld_select,md_select),"
                  FROM 
@@ -3509,7 +3509,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
   #query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,analytical_stem.collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select),"FROM analytical_stem LEFT JOIN plot_metadata ON (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",vfoi_join ," WHERE analytical_stem.scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL) ORDER BY analytical_stem.scrubbed_species_binomial;")
   
   query <- paste("SELECT analytical_stem.scrubbed_genus,analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
-                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
+                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
                  plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
                  analytical_stem.collection_code,analytical_stem.datasource_id",paste(cultivated_select,newworld_select,md_select),"
                  FROM 
@@ -3604,8 +3604,9 @@ BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
   # set the query
   #query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,analytical_stem.collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select),"FROM analytical_stem LEFT JOIN plot_metadata ON (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",vfoi_join ," WHERE analytical_stem.scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query),  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL) ORDER BY analytical_stem.scrubbed_species_binomial;")
   
-  query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
-                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
+  query <- paste("SELECT analytical_stem.plot_name,analytical_stem.subplot, analytical_stem.elevation_m, analytical_stem.plot_area_ha,analytical_stem.sampling_protocol,
+                 analytical_stem.recorded_by,analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
+                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
                  plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
                  analytical_stem.collection_code,analytical_stem.datasource_id",paste(cultivated_select,newworld_select,md_select),"
                  FROM 
@@ -3619,7 +3620,7 @@ BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
   
   return(.BIEN_sql(query, ...))
   
-  }
+}
 
 
 ##########################
