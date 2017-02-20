@@ -3094,10 +3094,25 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
   
   if(is.null(dataframe)){
     
-    
     citation<-list()
-    citation[[1]]<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information."
+    citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
+    The references in this list should be added to any publication using these data.  This is most easily done by specifying a bibtex_file and importing the bibtex formatted references into a reference manager.
+    The acknowledgements in this list should be pasted into the acknowledgements of any resulting publications.
+    Be sure to check for a 'data owners to contact' section in this list, as any authors listed there need to be contacted prior to publishing with their data."
+    citation[[1]]<-gsub(pattern = "\n",replacement = "",citation[[1]])
+    
+    
+    #Cleaning up the bibtex so that it loads properly into reference managers.  Better too many new lines than not enough...for some reason...
     citation[[2]]<-c(BIEN_cite,R_package_cite)
+    citation[[2]]<-gsub(citation[[2]],pattern = "author", replacement = "\nauthor")
+    citation[[2]]<-gsub(citation[[2]],pattern = "title", replacement = "\ntitle")
+    citation[[2]]<-gsub(citation[[2]],pattern = "year", replacement = "\nyear")
+    citation[[2]]<-gsub(citation[[2]],pattern = "organization", replacement = "\norganization")
+    citation[[2]]<-gsub(citation[[2]],pattern = "address", replacement = "\naddress")
+    citation[[2]]<-gsub(citation[[2]],pattern = "url", replacement = "\nurl")
+    citation[[2]]<-gsub(citation[[2]],pattern = "journal", replacement = "\njournal")
+    citation[[2]]<-gsub(citation[[2]],pattern = "note", replacement = "\nnote")
+    citation[[2]]<-iconv(citation[[2]],to="ASCII//TRANSLIT")
     names(citation)<-c("general information","references")
     
     
