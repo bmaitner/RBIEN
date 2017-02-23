@@ -3039,7 +3039,6 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
     dl_cites<-unique(sources$source_citation[which(!is.na(sources$source_citation))])
     dl_cites<-gsub(dl_cites,pattern = '"@',replacement = '@')
     dl_cites<-gsub(dl_cites,pattern = '" @',replacement = '@')
-    dl_cites<-gsub(dl_cites,pattern = '}"',replacement = '}')
     citation[[2]]<-c(BIEN_cite,R_package_cite,dl_cites)
     citation[[2]]<-gsub(citation[[2]],pattern = "author", replacement = "\nauthor")
     citation[[2]]<-gsub(citation[[2]],pattern = "title", replacement = "\ntitle")
@@ -3050,6 +3049,9 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
     citation[[2]]<-gsub(citation[[2]],pattern = "journal", replacement = "\njournal")
     citation[[2]]<-gsub(citation[[2]],pattern = "note", replacement = "\nnote")
     citation[[2]]<-iconv(citation[[2]],to="ASCII//TRANSLIT")
+    citation[[2]]<-gsub(citation[[2]],pattern = '\n}\"', replacement = '\n}')
+    citation[[2]]<-gsub(citation[[2]],pattern = '\"\\\nurl', replacement = '\"\\url',fixed = T)
+    
     
     citation[[3]]<-paste("We acknowledge the herbaria that contributed data to this work: ",paste(unique(sources$source_name[which(sources$is_herbarium==1)]),collapse = ", "),".",collapse = "",sep="")
     
@@ -3076,9 +3078,11 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
     if("contact authors"%in%sources$access_conditions){
       affected_datasource_id<-sources$datasource_id[which(sources$access_conditions=='contact authors')]
       n_affected_records<-length(which(dataframe$datasource_id%in%affected_datasource_id))
-      pct_affected_records<-round(x = n_affected_records/(length(which(!dataframe$datasource_id%in%affected_datasource_id))+n_affected_records)*100,digits = 2)
+      pct_affected_records<-round(x =( n_affected_records/(length(which(!dataframe$datasource_id%in%affected_datasource_id))+n_affected_records))*100,digits = 2)
+      
       n_affected_sources<-nrow(citation$`data owners to contact`)
       pct_affected_sources<-round(x = (n_affected_sources/nrow(sources))*100,digits = 2)
+      
       message(paste("NOTE: You have references that require you to contact the data owners before publication.  This applies to ",
                     n_affected_records, " records (",pct_affected_records,"%) from ",n_affected_sources," sources (",pct_affected_sources,"%).",sep=""))
       
