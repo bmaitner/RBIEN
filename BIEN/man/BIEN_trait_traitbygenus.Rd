@@ -4,12 +4,17 @@
 \alias{BIEN_trait_traitbygenus}
 \title{Download trait data for given genus/genera and trait(s).}
 \usage{
-BIEN_trait_traitbygenus(trait, genus, ...)
+BIEN_trait_traitbygenus(genus, trait, all.taxonomy = FALSE,
+  political.boundaries = FALSE, ...)
 }
 \arguments{
+\item{genus}{A single genus or a vector of genera.}
+
 \item{trait}{A single trait or a vector of traits.}
 
-\item{genus}{A single genus or a vector of genera.}
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
+
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -21,8 +26,8 @@ BIEN_trait_traitbygenus extracts entries that contain the specified genus/genera
 }
 \examples{
 \dontrun{
-BIEN_trait_traitbygenus(trait = "Height", genus = "Carex")
-trait_vector<-c("Height", "Leaf dry mass")
+BIEN_trait_traitbygenus(trait = "whole plant height", genus = "Carex")
+trait_vector<-c("whole plant height", "leaf area")
 genus_vector<-c("Carex","Betula")
 BIEN_trait_traitbygenus(trait=trait_vector,genus=genus_vector)}
 }

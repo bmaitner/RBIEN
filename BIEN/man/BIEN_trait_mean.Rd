@@ -21,7 +21,7 @@ BIEN_trait_mean Estimates species mean values for a given trait, using Genus or 
 }
 \examples{
 \dontrun{
-BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="Height") }
+BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="leaf dry mass per leaf fresh mass") }
 }
 \seealso{
 Other trait functions: \code{\link{BIEN_trait_family}},

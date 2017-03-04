@@ -4,10 +4,15 @@
 \alias{BIEN_trait_trait}
 \title{Download all measurements of a specific trait(s).}
 \usage{
-BIEN_trait_trait(trait, ...)
+BIEN_trait_trait(trait, all.taxonomy = FALSE, political.boundaries = FALSE,
+  ...)
 }
 \arguments{
 \item{trait}{A single trait or a vector of traits.}
+
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
+
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -19,8 +24,8 @@ BIEN_trait_trait downloads all measurements of the trait(s) specified.
 }
 \examples{
 \dontrun{
-BIEN_trait_trait("Height")
-trait_vector<-c("Height", "Leaf dry mass")
+BIEN_trait_trait("whole plant height")
+trait_vector<-c("whole plant height", "leaf dry mass per leaf fresh mass")
 BIEN_trait_trait(trait_vector)}
 }
 \seealso{

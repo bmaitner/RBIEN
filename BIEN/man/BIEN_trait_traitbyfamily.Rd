@@ -4,12 +4,17 @@
 \alias{BIEN_trait_traitbyfamily}
 \title{Download trait data for given families and traits.}
 \usage{
-BIEN_trait_traitbyfamily(trait, family, ...)
+BIEN_trait_traitbyfamily(family, trait, all.taxonomy = FALSE,
+  political.boundaries = FALSE, ...)
 }
 \arguments{
+\item{family}{A single family or a vector of families.}
+
 \item{trait}{A single trait or a vector of traits.}
 
-\item{family}{A single family or a vector of families.}
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
+
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
@@ -21,8 +26,8 @@ BIEN_trait_traitbyfamily extracts entries that contain the specified families an
 }
 \examples{
 \dontrun{
-BIEN_trait_traitbyfamily(trait = "Height", family = "Poaceae")
-trait_vector<-c("Height", "Leaf dry mass")
+BIEN_trait_traitbyfamily(trait = "whole plant height", family = "Poaceae")
+trait_vector<-c("whole plant height", "leaf fresh mass")
 family_vector<-c("Orchidaceae","Poaceae")
 BIEN_trait_traitbyfamily(trait=trait_vector,family=family_vector)}
 }

@@ -4,10 +4,15 @@
 \alias{BIEN_trait_genus}
 \title{Download trait data for given genera.}
 \usage{
-BIEN_trait_genus(genus, ...)
+BIEN_trait_genus(genus, all.taxonomy = FALSE, political.boundaries = FALSE,
+  ...)
 }
 \arguments{
 \item{genus}{A single genus or a vector of genera.}
+
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
+
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

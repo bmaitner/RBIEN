@@ -4,10 +4,15 @@
 \alias{BIEN_trait_species}
 \title{Download trait data for given species.}
 \usage{
-BIEN_trait_species(species, ...)
+BIEN_trait_species(species, all.taxonomy = FALSE,
+  political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{species}{A single species or a vector of species.}
+
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
+
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

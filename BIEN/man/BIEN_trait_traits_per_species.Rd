@@ -4,9 +4,11 @@
 \alias{BIEN_trait_traits_per_species}
 \title{Count the number of trait observations for each species in the BIEN database}
 \usage{
-BIEN_trait_traits_per_species(...)
+BIEN_trait_traits_per_species(species = NULL, ...)
 }
 \arguments{
+\item{species}{Optional species or vector of species.  If left blank, returns counts for all species.}
+
 \item{...}{Additional arguments passed to internal functions.}
 }
 \value{

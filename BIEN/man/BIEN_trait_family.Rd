@@ -4,10 +4,15 @@
 \alias{BIEN_trait_family}
 \title{Download trait data for given families.}
 \usage{
-BIEN_trait_family(family, ...)
+BIEN_trait_family(family, all.taxonomy = FALSE,
+  political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{family}{A single family or a vector of families.}
+
+\item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
+
+\item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

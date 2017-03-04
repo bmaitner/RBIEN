@@ -1706,10 +1706,13 @@ BIEN_ranges_list<-function( ...){
 ########################################
 ########################################
 
+
 #'Download trait data for given species.
 #'
 #'BIEN_trait_species extracts trait data for the species specified.
 #' @param species A single species or a vector of species.
+#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
+#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe of all available trait data for the given species.
 #' @examples \dontrun{
@@ -1717,16 +1720,46 @@ BIEN_ranges_list<-function( ...){
 #' species_vector<-c("Poa annua","Juncus trifidus")
 #' BIEN_trait_species(species_vector)}
 #' @family trait functions
-BIEN_trait_species<-function(species, ...){
+BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(species)
-  
+  is_log(all.taxonomy)
+  is_log(political.boundaries)
   # set the query
-  query <- paste("SELECT * FROM agg_traits WHERE taxon in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY taxon;")
-
+  
+  if(political.boundaries){
+    political_select <- "region, country, stateproving, lower_political, locality_description"  
+  }else{
+    political_select <- ""  
+    
+  }
+  
+  if(all.taxonomy){
+    taxonomy_select <- "verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
+    higher_plant_group, tnrs_warning, matched_taxonomic_status, scrubbed_taxonomic_status, scrubbed_family, scrubbed_genus, 
+    scrubbed_specific_epithet, scrubbed_taxon_name_no_author, scrubbed_taxon_canonical, 
+    scrubbed_author, scrubbed_taxon_name_with_author, scrubbed_species_binomial_with_morphospecies"
+    
+  }else{
+    taxonomy_select <- ""  
+    
+  }
+  
+  
+  
+  query <- paste("SELECT 
+                  scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 political_select, taxonomy_select,
+                 "FROM agg_traits WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
+  
+  
+  
+  
   return(.BIEN_sql(query, ...))
-
+  
 }
+
 ############################
+
 #'Calculates species mean values for a given trait, using Genus or Family level data where Species level data is lacking.
 #'
 #'BIEN_trait_mean Estimates species mean values for a given trait, using Genus or Family level data where Species level data is absent.
@@ -1735,13 +1768,18 @@ BIEN_trait_species<-function(species, ...){
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe of estimated trait means and associated metadata for the given species.
 #' @examples \dontrun{
-#' BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="Height") }
+#' BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="leaf dry mass per leaf fresh mass") }
 #' @family trait functions
 BIEN_trait_mean<-function(species,trait, ...){
   
   #first, get taxonomic info for the species
   is_char(trait)
   is_char(species)
+  
+  #make sure trait exists
+  traits_available<-BIEN_trait_list()
+  if(!trait%in%traits_available$trait_name){stop("Trait not found.")}
+  
   
   # create query to retreive taxonomic info
   genera<-unlist(lapply(X = strsplit(species," "),FUN = function(x){x[1]}))
@@ -1756,9 +1794,10 @@ BIEN_trait_mean<-function(species,trait, ...){
   #then, query the various taxonomic levels to get trait data
   #old query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND family in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_family)  , type = "sh"),collapse = ', '), ") ORDER BY family,taxon,trait_name;")
   
-  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND (family in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_family)  , type = "sh"),collapse = ', '), ") or  genus in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_genus)  , type = "sh"),collapse = ', '), ")) ORDER BY family,taxon,trait_name;")
+  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND (scrubbed_family in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_family)  , type = "sh"),collapse = ', '), ") or  scrubbed_genus in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_genus)  , type = "sh"),collapse = ', '), ")) ORDER BY scrubbed_family,scrubbed_species_binomial,trait_name;")
   
   traits_df <- .BIEN_sql(query, ...)
+  if(length(traits_df)==0){stop("No matching trait data for these taxa.")}
   
   #finally, choose the best available trait data
   
@@ -1766,15 +1805,15 @@ BIEN_trait_mean<-function(species,trait, ...){
   for(i in 1:length(species)){
     
     species_i_data<-list()
-    species_i_data[[1]]<-traits_df$trait_value[which(traits_df$taxon==species[i])]
-    species_i_data[[2]]<-traits_df$trait_value[which(traits_df$genus==taxonomy_for_traits$scrubbed_genus[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])]
+    species_i_data[[1]]<-traits_df$trait_value[which(traits_df$scrubbed_species_binomial==species[i])]
+    species_i_data[[2]]<-traits_df$trait_value[which(traits_df$scrubbed_genus==taxonomy_for_traits$scrubbed_genus[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])]
     if(length(species_i_data[[2]])==0){
-      species_i_data[[2]]<-traits_df$trait_value[which(traits_df$genus==strsplit(species[i]," ")[[1]][1])]
+      species_i_data[[2]]<-traits_df$trait_value[which(traits_df$scrubbed_genus==strsplit(species[i]," ")[[1]][1])]
     }
     #species_i_data[[3]]<-traits_df$trait_value[which(traits_df$family==taxonomy_for_traits$scrubbed_family[i])]
-    species_i_data[[3]]<-traits_df$trait_value[which(traits_df$family==taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])]
+    species_i_data[[3]]<-traits_df$trait_value[which(traits_df$scrubbed_family==taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])]
     if(length(species_i_data[[3]])==0){
-      species_i_data[[3]]<-traits_df$trait_value[which(traits_df$family==unique(taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_genus==strsplit(species[i]," ")[[1]][1])]))]
+      species_i_data[[3]]<-traits_df$trait_value[which(traits_df$scrubbed_family==unique(taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_genus==strsplit(species[i]," ")[[1]][1])]))]
     }
     species_i_data[[4]]<-"NA"
     
@@ -1801,27 +1840,62 @@ BIEN_trait_mean<-function(species,trait, ...){
   return(output_data)
   
 }
+
+
+
+
 ############################
 
 #'Download all measurements of a specific trait(s).
 #'
 #'BIEN_trait_trait downloads all measurements of the trait(s) specified.
 #' @param trait A single trait or a vector of traits.
+#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
+#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe of all available trait data for the given trait(s).
 #' @examples \dontrun{
-#' BIEN_trait_trait("Height")
-#' trait_vector<-c("Height", "Leaf dry mass")
+#' BIEN_trait_trait("whole plant height")
+#' trait_vector<-c("whole plant height", "leaf dry mass per leaf fresh mass")
 #' BIEN_trait_trait(trait_vector)}
 #' @family trait functions
-BIEN_trait_trait<-function(trait, ...){
+BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(trait)
+  is_log(all.taxonomy)
+  is_log(political.boundaries)
+  # set the query
   
-# set the query
-  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ORDER BY taxon;")
-
+  if(political.boundaries){
+    political_select <- "region, country, stateproving, lower_political, locality_description"  
+  }else{
+    political_select <- ""  
+    
+  }
+  
+  if(all.taxonomy){
+    taxonomy_select <- "verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
+    higher_plant_group, tnrs_warning, matched_taxonomic_status, scrubbed_taxonomic_status, scrubbed_family, scrubbed_genus, 
+    scrubbed_specific_epithet, scrubbed_species_binomial, scrubbed_taxon_name_no_author, scrubbed_taxon_canonical, 
+    scrubbed_author, scrubbed_taxon_name_with_author, scrubbed_species_binomial_with_morphospecies"
+    
+  }else{
+    taxonomy_select <- ""  
+    
+  }
+  
+  
+  
+  query <- paste("SELECT 
+                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 political_select, taxonomy_select,
+                 "FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ORDER BY trait_name, scrubbed_species_binomial;")
+  
+  
+  
+  
   return(.BIEN_sql(query, ...))
-
+  
+  
 }
 ############################
 
@@ -1830,23 +1904,57 @@ BIEN_trait_trait<-function(trait, ...){
 #'BIEN_trait_traitbyspecies extracts entries that contain the specified species and trait(s).
 #' @param species A single species or a vector of species.
 #' @param trait A single trait or a vector of traits.
+#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
+#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe of all data matching the specified trait(s) and species.
 #' @examples \dontrun{
-#' BIEN_trait_traitbyspecies(trait = "Height", species = "Carex capitata")
-#' trait_vector<-c("Height", "Leaf dry mass")
+#' BIEN_trait_traitbyspecies(trait = "whole plant height", species = "Carex capitata")
+#' trait_vector<-c("whole plant height", "leaf area")
 #' species_vector<-c("Carex capitata","Betula nana")
 #' BIEN_trait_traitbyspecies(trait=trait_vector,species=species_vector)}
 #' @family trait functions
-BIEN_trait_traitbyspecies<-function(trait,species, ...){
-  is_char(trait)
+BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(species)
-
-# set the query
-  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND taxon in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY taxon,trait_name;")
-
+  is_char(trait)
+  is_log(all.taxonomy)
+  is_log(political.boundaries)
+  # set the query
+  
+  if(political.boundaries){
+    political_select <- "region, country, stateproving, lower_political, locality_description"  
+  }else{
+    political_select <- ""  
+    
+  }
+  
+  if(all.taxonomy){
+    taxonomy_select <- "verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
+    higher_plant_group, tnrs_warning, matched_taxonomic_status, scrubbed_taxonomic_status, scrubbed_family, scrubbed_genus, 
+    scrubbed_specific_epithet, scrubbed_species_binomial, scrubbed_taxon_name_no_author, scrubbed_taxon_canonical, 
+    scrubbed_author, scrubbed_taxon_name_with_author, scrubbed_species_binomial_with_morphospecies"
+    
+  }else{
+    taxonomy_select <- ""  
+    
+  }
+  
+  
+  
+  query <- paste("SELECT 
+                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 political_select, taxonomy_select,
+                 "FROM agg_traits 
+                 WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") 
+                 AND trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ")
+                 ORDER BY trait_name, scrubbed_species_binomial;")
+  
+  
+  
+  
   return(.BIEN_sql(query, ...))
-
+  
+  
 }
 ###########################
 
@@ -1855,23 +1963,57 @@ BIEN_trait_traitbyspecies<-function(trait,species, ...){
 #'BIEN_trait_traitbygenus extracts entries that contain the specified genus/genera and trait(s).
 #' @param genus A single genus or a vector of genera.
 #' @param trait A single trait or a vector of traits.
+#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
+#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe of all data matching the specified trait(s) and genus/genera.
 #' @examples \dontrun{
-#' BIEN_trait_traitbygenus(trait = "Height", genus = "Carex")
-#' trait_vector<-c("Height", "Leaf dry mass")
+#' BIEN_trait_traitbygenus(trait = "whole plant height", genus = "Carex")
+#' trait_vector<-c("whole plant height", "leaf area")
 #' genus_vector<-c("Carex","Betula")
 #' BIEN_trait_traitbygenus(trait=trait_vector,genus=genus_vector)}
 #' @family trait functions
-BIEN_trait_traitbygenus<-function(trait,genus, ...){
-  is_char(trait)
+BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(genus)
-
-# set the query
-  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ORDER BY genus,taxon,trait_name;")
-
+  is_char(trait)
+  is_log(all.taxonomy)
+  is_log(political.boundaries)
+  # set the query
+  
+  if(political.boundaries){
+    political_select <- "region, country, stateproving, lower_political, locality_description"  
+  }else{
+    political_select <- ""  
+    
+  }
+  
+  if(all.taxonomy){
+    taxonomy_select <- "verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
+    higher_plant_group, tnrs_warning, matched_taxonomic_status, scrubbed_taxonomic_status, scrubbed_family, 
+    scrubbed_specific_epithet, scrubbed_taxon_name_no_author, scrubbed_taxon_canonical, 
+    scrubbed_author, scrubbed_taxon_name_with_author, scrubbed_species_binomial_with_morphospecies"
+    
+  }else{
+    taxonomy_select <- ""  
+    
+  }
+  
+  
+  
+  query <- paste("SELECT 
+                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 political_select, taxonomy_select,
+                 "FROM agg_traits 
+                 WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") 
+                 AND trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ")
+                 ORDER BY trait_name, scrubbed_species_binomial;")
+  
+  
+  
+  
   return(.BIEN_sql(query, ...))
-
+  
+  
 }
 ###########################
 
@@ -1880,30 +2022,67 @@ BIEN_trait_traitbygenus<-function(trait,genus, ...){
 #'BIEN_trait_traitbyfamily extracts entries that contain the specified families and trait(s).
 #' @param family A single family or a vector of families.
 #' @param trait A single trait or a vector of traits.
+#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
+#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe of all data matching the specified trait(s) and family/families.
 #' @examples \dontrun{
-#' BIEN_trait_traitbyfamily(trait = "Height", family = "Poaceae")
-#' trait_vector<-c("Height", "Leaf dry mass")
+#' BIEN_trait_traitbyfamily(trait = "whole plant height", family = "Poaceae")
+#' trait_vector<-c("whole plant height", "leaf fresh mass")
 #' family_vector<-c("Orchidaceae","Poaceae")
 #' BIEN_trait_traitbyfamily(trait=trait_vector,family=family_vector)}
 #' @family trait functions
-BIEN_trait_traitbyfamily<-function(trait,family, ...){
-  is_char(trait)
+BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(family)
-
+  is_char(trait)
+  is_log(all.taxonomy)
+  is_log(political.boundaries)
   # set the query
-  query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") ORDER BY family,taxon,trait_name;")
-
+  
+  if(political.boundaries){
+    political_select <- "region, country, stateproving, lower_political, locality_description"  
+  }else{
+    political_select <- ""  
+    
+  }
+  
+  if(all.taxonomy){
+    taxonomy_select <- "verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
+    higher_plant_group, tnrs_warning, matched_taxonomic_status, scrubbed_taxonomic_status, 
+    scrubbed_specific_epithet, scrubbed_taxon_name_no_author, scrubbed_taxon_canonical, 
+    scrubbed_author, scrubbed_taxon_name_with_author, scrubbed_species_binomial_with_morphospecies"
+    
+  }else{
+    taxonomy_select <- ""  
+    
+  }
+  
+  
+  
+  query <- paste("SELECT 
+                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 political_select, taxonomy_select,
+                 "FROM agg_traits 
+                 WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
+                 AND trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ")
+                 ORDER BY trait_name, scrubbed_family, scrubbed_species_binomial;")
+  
+  
+  
+  
   return(.BIEN_sql(query, ...))
-
+  
+  
 }
+
 ############################
 
 #'Download trait data for given genera.
 #'
 #'BIEN_trait_genus extracts entries that contain the specified genera.
 #' @param genus A single genus or a vector of genera.
+#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
+#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe of all data matching the specified genera.
 #' @examples \dontrun{
@@ -1911,15 +2090,40 @@ BIEN_trait_traitbyfamily<-function(trait,family, ...){
 #' genus_vector<-c("Acer","Abies")
 #' BIEN_trait_genus(genus_vector)}
 #' @family trait funcitons
-BIEN_trait_genus<-function(genus, ...){
+BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(genus)
-
+  is_log(all.taxonomy)
+  is_log(political.boundaries)
   # set the query
-  query <- paste("SELECT * FROM agg_traits WHERE genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ORDER BY genus;")
-
+  
+  if(political.boundaries){
+    political_select <- "region, country, stateproving, lower_political, locality_description"  
+  }else{
+    political_select <- ""  
+    
+  }
+  
+  if(all.taxonomy){
+    taxonomy_select <- "verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
+    higher_plant_group, tnrs_warning, matched_taxonomic_status, scrubbed_taxonomic_status, scrubbed_family,
+    scrubbed_specific_epithet, scrubbed_taxon_name_no_author, scrubbed_taxon_canonical, 
+    scrubbed_author, scrubbed_taxon_name_with_author, scrubbed_species_binomial_with_morphospecies"
+    
+  }else{
+    taxonomy_select <- ""  
+    
+  }
+  
+  query <- paste("SELECT 
+                  scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 political_select, taxonomy_select,
+                 "FROM agg_traits WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
+  
   return(.BIEN_sql(query, ...))
-
+  
+  
 }
+
 
 ###########################
 
@@ -1927,6 +2131,8 @@ BIEN_trait_genus<-function(genus, ...){
 #'
 #'BIEN_trait_family extracts all trait data for the specified families.
 #' @param family A single family or a vector of families.
+#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
+#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe of all data matching the specified families.
 #' @examples \dontrun{
@@ -1934,14 +2140,41 @@ BIEN_trait_genus<-function(genus, ...){
 #' family_vector<-c("Poaceae","Orchidaceae")
 #' BIEN_trait_family(family_vector)}
 #' @family trait functions
-BIEN_trait_family<-function(family, ...){
+BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(family)
-
+  is_log(all.taxonomy)
+  is_log(political.boundaries)
   # set the query
-  query <- paste("SELECT * FROM agg_traits WHERE family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") ORDER BY family,taxon;")
+  
+  if(political.boundaries){
+    political_select <- "region, country, stateproving, lower_political, locality_description"  
+  }else{
+    political_select <- ""  
+    
+  }
+  
+  if(all.taxonomy){
+    taxonomy_select <- "verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
+    higher_plant_group, tnrs_warning, matched_taxonomic_status, scrubbed_taxonomic_status,
+    scrubbed_specific_epithet, scrubbed_taxon_name_no_author, scrubbed_taxon_canonical, 
+    scrubbed_author, scrubbed_taxon_name_with_author, scrubbed_species_binomial_with_morphospecies"
+    
+  }else{
+    taxonomy_select <- ""  
+    
+  }
+  
 
+  query <- paste("SELECT 
+                  scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 political_select, taxonomy_select,
+                 "FROM agg_traits WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
+                 ORDER BY scrubbed_family, scrubbed_species_binomial;")
+
+  
   return(.BIEN_sql(query, ...))
-
+  
+  
 }
 
 ############################
@@ -1996,15 +2229,28 @@ BIEN_occurrence_records_per_species<-function(species=NULL, ...){
 #'Count the number of trait observations for each species in the BIEN database
 #'
 #'BIEN_trait_traits_per_species downloads a count of the number of records for each trait for each species in the BIEN database.
+#' @param species Optional species or vector of species.  If left blank, returns counts for all species.
 #' @param ... Additional arguments passed to internal functions.
 #' @return Returns a dataframe containing the number of trait records for each species in the BIEN database.
 #' @examples \dontrun{
 #' trait_observation_counts<-BIEN_trait_traits_per_species()}
 #' @family trait functions
-BIEN_trait_traits_per_species<-function( ...){
+BIEN_trait_traits_per_species<-function( species=NULL, ...){
+  if(!is.null(species)){
+    
+    species_query<-paste("WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")")  
+    
+  }else{
+    
+  species_query<-""  
+  }
   
   # set the query
-  query <- paste("SELECT DISTINCT taxon, trait_name,count(*) FROM agg_traits GROUP BY trait_name,taxon ORDER BY taxon,trait_name;")
+  query <- paste("SELECT DISTINCT scrubbed_species_binomial, trait_name,count(*) 
+                 FROM agg_traits",
+                  species_query,
+                 "GROUP BY trait_name,scrubbed_species_binomial 
+                  ORDER BY scrubbed_species_binomial,trait_name;")
   
   return(.BIEN_sql(query, ...))
 
