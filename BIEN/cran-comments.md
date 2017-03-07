@@ -12,5 +12,5 @@
 
 
 * I have run R CMD check on the downstream dependencies of BIEN.
-  (Summary at https://github.com/bmaitner/RBIEN/blob/master/BIEN/revdep/README.md)
+  (Summary at https://github.com/bmaitner/RBIEN/tree/master/revdep)
   All packages passed the R CMD check.
