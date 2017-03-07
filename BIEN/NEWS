@@ -14,7 +14,7 @@ BIEN 1.1.0
 * Added testing via "testthat" package
 * Made .BIEN_sql an internal function
 * Updated BIEN_trait functions to use new agg_traits schema
-
+* Added many more traits to the database.
 ===============
 BIEN 1.0.0
 ===============

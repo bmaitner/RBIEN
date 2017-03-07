@@ -191,7 +191,7 @@ library(sp) # A package for spatial data</code></pre>
 <p>Take a moment and view the dataframe and take a look at the structure</p>
 <pre class="r"><code>View(Xanthium_strumarium)
 str(Xanthium_strumarium)</code></pre>
-<pre><code>## 'data.frame':    2388 obs. of  9 variables:
+<pre><code>## 'data.frame':    2388 obs. of  10 variables:
 ##  $ scrubbed_species_binomial  : chr  &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; ...
 ##  $ latitude                   : num  19.8 25.5 NA NA 38.9 ...
 ##  $ longitude                  : num  -99.2 -107.5 NA NA -91.5 ...
@@ -200,12 +200,13 @@ str(Xanthium_strumarium)</code></pre>
 ##  $ dataset                    : chr  &quot;MO&quot; &quot;UAS&quot; &quot;MO&quot; &quot;MO&quot; ...
 ##  $ dataowner                  : chr  &quot;MO&quot; &quot;UAS&quot; &quot;MO&quot; &quot;MO&quot; ...
 ##  $ custodial_institution_codes: chr  &quot;MO&quot; &quot;UAS&quot; &quot;MO&quot; &quot;MO&quot; ...
-##  $ collection_code            : chr  NA &quot;UAS&quot; NA NA ...</code></pre>
+##  $ collection_code            : chr  NA &quot;UAS&quot; NA NA ...
+##  $ datasource_id              : int  1609 2460 1609 1609 1609 2478 1651 2559 2314 2122 ...</code></pre>
 <p>The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data. If we want more information on these occurrences, we just need to change the arguments:</p>
 <pre class="r"><code>Xanthium_strumarium_full &lt;- BIEN_occurrence_species(species = &quot;Xanthium strumarium&quot;,cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T)
 
 str(Xanthium_strumarium_full)</code></pre>
-<pre><code>## 'data.frame':    6356 obs. of  33 variables:
+<pre><code>## 'data.frame':    6356 obs. of  34 variables:
 ##  $ scrubbed_species_binomial   : chr  &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; ...
 ##  $ verbatim_family             : chr  &quot;Asteraceae&quot; &quot;Asteraceae&quot; &quot;Asteraceae&quot; &quot;Asteraceae&quot; ...
 ##  $ verbatim_scientific_name    : chr  &quot;Xanthium strumarium L.&quot; &quot;Xanthium strumarium L.&quot; &quot;Xanthium strumarium L.&quot; &quot;Xanthium strumarium L.&quot; ...
@@ -235,6 +236,7 @@ str(Xanthium_strumarium_full)</code></pre>
 ##  $ dataowner                   : chr  &quot;MO&quot; &quot;UAS&quot; &quot;MO&quot; &quot;MO&quot; ...
 ##  $ custodial_institution_codes : chr  &quot;MO&quot; &quot;UAS&quot; &quot;MO&quot; &quot;MO&quot; ...
 ##  $ collection_code             : chr  NA &quot;UAS&quot; NA NA ...
+##  $ datasource_id               : int  1609 2460 1609 1609 1609 1609 2478 2048 1651 2559 ...
 ##  $ is_cultivated               : int  0 NA 1 0 0 0 NA NA NA NA ...
 ##  $ is_cultivated_in_region     : chr  &quot;0&quot; &quot;0&quot; &quot;0&quot; &quot;0&quot; ...
 ##  $ is_new_world                : int  1 1 1 1 1 1 1 NA 1 1 ...
@@ -356,28 +358,47 @@ View(LUQUILLO_full)</code></pre>
 <p><strong>Example 5: Accessing trait data</strong></p>
 <p>If you’re interested in accessing all traits for a taxon, say the genus <em>Salix</em>, just go ahead and use the corresponding function:</p>
 <pre class="r"><code>Salix_traits&lt;-BIEN_trait_genus(genus = &quot;Salix&quot;)</code></pre>
+<pre><code>## Warning in postgresqlQuickSQL(conn, statement, ...): Could not create
+## executeSELECT * FROM agg_traits WHERE genus in ( 'Salix' ) ORDER BY genus;</code></pre>
 <p>If instead we’re interested in a particular trait, the first step is to check if that trait is present and verify the spelling using the function <code>BIEN_trait_list</code>.</p>
 <pre class="r"><code>BIEN_trait_list()</code></pre>
-<pre><code>##                           trait_name
-## 1  Area-based photosynthesis (Aarea)
-## 2                     Flowering date
-## 3                    Flowering month
-## 4                             Height
-## 5                          Leaf area
-## 6                         Leaf Cmass
-## 7                      Leaf dry mass
-## 8     Leaf dry matter content (LDMC)
-## 9                Leaf lifespan (LLS)
-## 10                        Leaf Narea
-## 11                        Leaf Nmass
-## 12                        Leaf Pmass
-## 13 Mass-based photosynthesis (Amass)
-## 14                         seed mass
-## 15          Specific leaf area (SLA)
-## 16         Stomatal conductance (Gs)
-## 17                      wood density</code></pre>
-<p>If we’re interested in leaf lifespan, we see that this is called “Leaf lifespan (LLS)” in the database. Now that we know the proper spelling, we can use the function <code>BIEN_trait_trait</code> to download all observations of that trait.</p>
-<pre class="r"><code>LLS &lt;- BIEN_trait_trait(trait = &quot;Leaf lifespan (LLS)&quot;)</code></pre>
+<pre><code>##                                             trait_name
+## 1                    diameter at breast height (1.3 m)
+## 2                          flower pollination syndrome
+## 3                                            leaf area
+## 4                leaf carbon content per leaf dry mass
+## 5        leaf carbon content per leaf nitrogen content
+## 6                    leaf dry mass per leaf fresh mass
+## 7                                       leaf life span
+## 8                  leaf nitrogen content per leaf area
+## 9              leaf nitrogen content per leaf dry mass
+## 10               leaf phosphorus content per leaf area
+## 11           leaf phosphorus content per leaf dry mass
+## 12              leaf photosynthetic rate per leaf area
+## 13          leaf photosynthetic rate per leaf dry mass
+## 14     leaf stomatal conductance for H2O per leaf area
+## 15             leaf stomatal conductance per leaf area
+## 16                                      leaf thickness
+## 17                               plant flowering begin
+## 18                            plant flowering duration
+## 19                                         seed length
+## 20                                           seed mass
+## 21                                       stem dry mass
+## 22                                   stem wood density
+## 23                      whole plant dispersal syndrome
+## 24                             whole plant growth form
+## 25                   whole plant growth form diversity
+## 26                                  whole plant height
+## 27 whole plant leaf area per whole plant leaf dry mass
+## 28                           whole plant leaf dry mass
+## 29                           whole plant sexual system
+## 30                    whole plant vegetative phenology
+## 31                               whole plant woodiness</code></pre>
+<p>If we’re interested in leaf lifespan, we see that this is called “leaf lifespan” in the database. Now that we know the proper spelling, we can use the function <code>BIEN_trait_trait</code> to download all observations of that trait.</p>
+<pre class="r"><code>LLS &lt;- BIEN_trait_trait(trait = &quot;leaf lifespan&quot;)</code></pre>
+<pre><code>## Warning in postgresqlQuickSQL(conn, statement, ...): Could not create
+## executeSELECT * FROM agg_traits WHERE trait_name in ( 'leaf lifespan' )
+## ORDER BY taxon;</code></pre>
 <p>Note that the units have been standardized and that there is a full set of attribution data for each trait.</p>
 </div>
 <div id="taxonomy-data" class="section level1">
@@ -456,16 +477,16 @@ Haiti_DR &lt;- BIEN_list_country(country = country_vector)</code></pre>
 </div>
 <div id="metadata" class="section level1">
 <h1>Metadata</h1>
-<p>The BIEN metadata functions are still in development. Currently, there are only 2 functions:</p>
+<p>The BIEN metadata functions are still in development. Currently, there are only 3 functions:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>BIEN_metadata_database_version</code> Returns the current version number of the BIEN database and the release date.</p></li>
 <li><p><code>BIEN_metadata_match_data</code> Rudimentary function to check for changed records between old and current queries.</p></li>
+<li><p><code>BIEN_metadata_citation</code> Function to generate bibtex citations for use in reference managers. <strong>Example 10: Metadata </strong></p></li>
 </ol>
-<p><strong>Example 10: Metadata </strong></p>
 <p>To check what the current version of the BIEN database is (which we recommend reporting when using BIEN data):</p>
 <pre class="r"><code>BIEN_metadata_database_version()</code></pre>
 <pre><code>##   db_version db_release_date
-## 1      3.4.1      2017-01-04</code></pre>
+## 1      3.4.3      2017-03-03</code></pre>
 </div>
 <div id="combining-queries" class="section level1">
 <h1>Combining Queries</h1>

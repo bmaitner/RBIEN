@@ -305,11 +305,11 @@ BIEN_trait_list()
 
 ```
 
-If we're interested in leaf lifespan, we see that this is called "Leaf lifespan (LLS)" in the database.  Now that we know the proper spelling, we can use the function `BIEN_trait_trait` to download all observations of that trait.
+If we're interested in leaf lifespan, we see that this is called "leaf lifespan" in the database.  Now that we know the proper spelling, we can use the function `BIEN_trait_trait` to download all observations of that trait.
 
 ```{r}
 
-LLS <- BIEN_trait_trait(trait = "Leaf lifespan (LLS)")
+LLS <- BIEN_trait_trait(trait = "leaf lifespan")
 
 ```
 
@@ -440,12 +440,13 @@ Haiti_DR <- BIEN_list_country(country = country_vector)
 
 
 # Metadata
-The BIEN metadata functions are still in development.  Currently, there are only 2 functions:
+The BIEN metadata functions are still in development.  Currently, there are only 3 functions:
 
 1. `BIEN_metadata_database_version` Returns the current version number of the BIEN database and the release date.
 
 2. `BIEN_metadata_match_data` Rudimentary function to check for changed records between old and current queries.
 
+3. `BIEN_metadata_citation` Function to generate bibtex citations for use in reference managers.
 **Example 10: Metadata **
 
 To check what the current version of the BIEN database is (which we recommend reporting when using BIEN data):
