@@ -25,4 +25,3 @@ Other list functions: \code{\link{BIEN_list_country}},
   \code{\link{BIEN_list_shapefile}},
   \code{\link{BIEN_list_state}}
 }
-

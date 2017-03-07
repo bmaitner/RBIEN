@@ -22,4 +22,3 @@ BIEN_phylo<-BIEN_phylogeny_conservative()}
 \seealso{
 Other phylogeny functions: \code{\link{BIEN_phylogeny_complete}}
 }
-

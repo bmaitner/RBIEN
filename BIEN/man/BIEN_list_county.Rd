@@ -42,4 +42,3 @@ Other list functions: \code{\link{BIEN_list_all}},
   \code{\link{BIEN_list_shapefile}},
   \code{\link{BIEN_list_state}}
 }
-

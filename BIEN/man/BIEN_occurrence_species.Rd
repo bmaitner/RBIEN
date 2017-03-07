@@ -48,4 +48,3 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_shapefile}},
   \code{\link{BIEN_occurrence_state}}
 }
-

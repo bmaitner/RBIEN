@@ -28,4 +28,3 @@ BIEN_trait_genus("Acer")
 genus_vector<-c("Acer","Abies")
 BIEN_trait_genus(genus_vector)}
 }
-

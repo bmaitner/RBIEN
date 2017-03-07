@@ -56,4 +56,3 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_species}},
   \code{\link{BIEN_occurrence_state}}
 }
-

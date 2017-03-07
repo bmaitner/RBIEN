@@ -46,4 +46,3 @@ Other stem functions: \code{\link{BIEN_stem_datasource}},
   \code{\link{BIEN_stem_genus}},
   \code{\link{BIEN_stem_species}}
 }
-

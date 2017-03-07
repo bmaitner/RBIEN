@@ -31,4 +31,3 @@ Other trait functions: \code{\link{BIEN_trait_family}},
   \code{\link{BIEN_trait_traitbyspecies}},
   \code{\link{BIEN_trait_trait}}
 }
-

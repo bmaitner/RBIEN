@@ -32,4 +32,3 @@ Other metadata functions: \code{\link{BIEN_metadata_database_version}},
   \code{\link{BIEN_plot_metadata}},
   \code{\link{BIEN_ranges_list}}
 }
-

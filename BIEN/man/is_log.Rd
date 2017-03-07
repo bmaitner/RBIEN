@@ -14,4 +14,3 @@ Helper function to check data format.
 is_log(only.new.world)}
 }
 \keyword{internal}
-

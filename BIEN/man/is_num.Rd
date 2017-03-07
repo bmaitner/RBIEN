@@ -14,4 +14,3 @@ Helper function to check data format.
 is_num(min.lat)}
 }
 \keyword{internal}
-

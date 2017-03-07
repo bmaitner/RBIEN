@@ -37,9 +37,6 @@ directory = testwd,include.focal = TRUE)
 species_vector<-c("Carnegiea_gigantea","Echinocereus coccineus")
 BIEN_ranges_intersect_species(species = speciesvector,species.names.only = TRUE)}
 }
-\author{
-Daniel Guaderrama
-}
 \seealso{
 Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_genus}},
@@ -48,4 +45,6 @@ Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_shapefile}},
   \code{\link{BIEN_ranges_species}}
 }
-
+\author{
+Daniel Guaderrama
+}

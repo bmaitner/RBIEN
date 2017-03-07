@@ -49,4 +49,3 @@ Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_load_species}},
   \code{\link{BIEN_ranges_species}}
 }
-

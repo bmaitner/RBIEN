@@ -51,4 +51,3 @@ Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_name}},
   \code{\link{BIEN_plot_sampling_protocol}}
 }
-
