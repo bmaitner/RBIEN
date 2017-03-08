@@ -1748,8 +1748,8 @@ BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries
   
   query <- paste("SELECT 
                   scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
-                 political_select, taxonomy_select,
-                 "FROM agg_traits WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
+                 political_select, taxonomy_select,", access, id 
+                 FROM agg_traits WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
   
   
   
@@ -1887,8 +1887,8 @@ BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = F
   
   query <- paste("SELECT 
                  scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
-                 political_select, taxonomy_select,
-                 "FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ORDER BY trait_name, scrubbed_species_binomial;")
+                 political_select, taxonomy_select,", access, id 
+                 FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ORDER BY trait_name, scrubbed_species_binomial;")
   
   
   
@@ -1943,8 +1943,8 @@ BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, politi
   
   query <- paste("SELECT 
                  scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
-                 political_select, taxonomy_select,
-                 "FROM agg_traits 
+                 political_select, taxonomy_select,", access, id 
+                  FROM agg_traits 
                  WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") 
                  AND trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ")
                  ORDER BY trait_name, scrubbed_species_binomial;")
@@ -2002,8 +2002,8 @@ BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.
   
   query <- paste("SELECT 
                  scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
-                 political_select, taxonomy_select,
-                 "FROM agg_traits 
+                 political_select, taxonomy_select,", access, id 
+                  FROM agg_traits 
                  WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") 
                  AND trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ")
                  ORDER BY trait_name, scrubbed_species_binomial;")
@@ -2061,8 +2061,8 @@ BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, politica
   
   query <- paste("SELECT 
                  scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
-                 political_select, taxonomy_select,
-                 "FROM agg_traits 
+                 political_select, taxonomy_select,", access, id
+                 FROM agg_traits 
                  WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
                  AND trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ")
                  ORDER BY trait_name, scrubbed_family, scrubbed_species_binomial;")
@@ -2116,8 +2116,8 @@ BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = F
   
   query <- paste("SELECT 
                   scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
-                 political_select, taxonomy_select,
-                 "FROM agg_traits WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
+                 political_select, taxonomy_select,", access,id 
+                 FROM agg_traits WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
   
   return(.BIEN_sql(query, ...))
   
@@ -2167,8 +2167,8 @@ BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries =
 
   query <- paste("SELECT 
                   scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
-                 political_select, taxonomy_select,
-                 "FROM agg_traits WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
+                 political_select, taxonomy_select,", access,id 
+                  FROM agg_traits WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
                  ORDER BY scrubbed_family, scrubbed_species_binomial;")
 
   
@@ -2310,6 +2310,7 @@ is_num <- function(x) {
 #' @param bien_taxonomy Alternative value to be substituted for "bien_taxonomy" in queries when not NULL.
 #' @param phylogeny Alternative value to be substituted for "phylogeny" in queries when not NULL.
 #' @param bien_metadata Alternative value to be substituted for "bien_metadata" in queries when not NULL.
+#' @param limit A limit on the number of records to be returned.  Should be a single number or NULL (the default).
 #' @param print.query Should  the query used be printed?  Default is FALSE
 #' @return A dataframe returned by the query.
 #' @keywords internal
@@ -2317,7 +2318,7 @@ is_num <- function(x) {
 #' .BIEN_sql("SELECT DISTINCT country, scrubbed_species_binomial FROM view_full_occurrence_individual 
 #' WHERE country in ( 'United States' );")}
 .BIEN_sql<-function(query,view_full_occurrence_individual=NULL,agg_traits=NULL,species_by_political_division=NULL,
-                   bien_species_all=NULL,ranges=NULL,bien_taxonomy=NULL,phylogeny=NULL,bien_metadata=NULL,print.query=FALSE){
+                   bien_species_all=NULL,ranges=NULL,bien_taxonomy=NULL,phylogeny=NULL,bien_metadata=NULL,limit=NULL,print.query=FALSE){
   is_char(query)
   
   if(print.query){
@@ -2351,6 +2352,8 @@ is_num <- function(x) {
   if(!is.null(bien_metadata)){
     query<-gsub(pattern = "bien_metadata",replacement = bien_metadata,x = query)}
   
+  if(!is.null(limit)){
+    query<-gsub(pattern = ";",replacement = paste(" LIMIT ",limit,";"),x = query)}
   
   host='vegbiendev.nceas.ucsb.edu'
   dbname='public_vegbien'
