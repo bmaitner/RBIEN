@@ -3245,6 +3245,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #'
 #'BIEN_metadata_citation guides a user through the proper documentation for data downloaded from the BIEN database.
 #' @param dataframe A data.frame of occurrence data downloaded from the BIEN R package.
+#' @param trait.dataframe A data.frame of trait data downloaded from the BIEN R package.
 #' @param bibtex_file Output file for writing bibtex citations.
 #' @param acknowledgement_file Output file for writing acknowledgements.
 #' @return A list object containing information needed for data attribution.  Full information for herbaria is available at http://sweetgum.nybg.org/science/ih/
@@ -3253,7 +3254,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #' Xanthium_data<-BIEN_occurrence_species("Xanthium strumarium")
 #' citations<-BIEN_metadata_citation(dataframe=Xanthium_data)#If you are referencing occurrence data}
 #' @family metadata functions
-BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement_file=NULL){
+BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file=NULL,acknowledgement_file=NULL){
   
   
   BIEN_cite<-'@ARTICLE{Enquist_undated-aw, title  = "Botanical big data shows that plant diversity in the New World is driven by climatic-linked differences in evolutionary rates and 
@@ -3266,6 +3267,16 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
   P M and Kraft, N J B and Smith, S A and and Donoghue, J C and Hinchliff, C E and Svenning, J-C and Enquist, B J"}'
   R_package_cite<-gsub(pattern = "\n",replacement = "",R_package_cite)
   
+  if(!is.null(trait.dataframe)){
+    trait.query<-paste("SELECT DISTINCT citation_bibtex,source_citation,source, url_source, access, project_pi, project_pi_contact FROM agg_traits 
+                       WHERE id in (", paste(shQuote(trait.dataframe$id, type = "sh"),collapse = ', '),");")
+    trait.sources<-.BIEN_sql(trait.query)}
+  
+  
+  
+  #########
+  ##########
+  #If an occurrence dataframe is supplied:
   
   if(!is.null(dataframe)){  
     
@@ -3285,9 +3296,13 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
     
     
     #Cleaning up the bibtex so that it loads properly into reference managers.  Better too many new lines than not enough...for some reason...
+    
     dl_cites<-unique(sources$source_citation[which(!is.na(sources$source_citation))])
+    if(!is.null(trait.dataframe)){dl_cites<-c(dl_cites,trait.sources$citation_bibtex)}
     dl_cites<-gsub(dl_cites,pattern = '"@',replacement = '@')
     dl_cites<-gsub(dl_cites,pattern = '" @',replacement = '@')
+    dl_cites<-unique(dl_cites[which(!is.na(dl_cites))])
+    
     citation[[2]]<-c(BIEN_cite,R_package_cite,dl_cites)
     citation[[2]]<-gsub(citation[[2]],pattern = "author", replacement = "\nauthor")
     citation[[2]]<-gsub(citation[[2]],pattern = "title", replacement = "\ntitle")
@@ -3301,10 +3316,23 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
     citation[[2]]<-gsub(citation[[2]],pattern = '\n}\"', replacement = '\n}')
     citation[[2]]<-gsub(citation[[2]],pattern = '\"\\\nurl', replacement = '\"\\url',fixed = T)
     
-    
-    citation[[3]]<-paste("We acknowledge the herbaria that contributed data to this work: ",paste(unique(sources$source_name[which(sources$is_herbarium==1)]),collapse = ", "),".",collapse = "",sep="")
+    if(length(unique(sources$source_name[which(sources$is_herbarium==1)]))>0){
+      citation[[3]]<-paste("We acknowledge the herbaria that contributed data to this work: ",paste(unique(sources$source_name[which(sources$is_herbarium==1)]),collapse = ", "),".",collapse = "",sep="")
+    }
+    if(length(unique(sources$source_name[which(sources$is_herbarium==1)]))==0){
+      citation[[3]]<-data.frame()
+    }
     
     citation[[4]]<-sources[which(sources$access_conditions=="contact authors"),]
+    citation[[4]]<-citation[[4]][c('primary_contact_fullname','primary_contact_email','access_conditions','source_fullname','source_citation')]
+    
+    if(!is.null(trait.dataframe)){
+      ack_trait_sources<-trait.sources[which(trait.sources$access=='public (notify the PIs)'),]
+      ack_trait_sources<-ack_trait_sources[c('project_pi','project_pi_contact','access','source_citation','citation_bibtex')]
+      colnames(ack_trait_sources)<-c('primary_contact_fullname','primary_contact_email','access_conditions','source_fullname','source_citation')
+      citation[[4]]<-rbind(citation[[4]],ack_trait_sources)
+    }
+    
     
     names(citation)<-c("general information","references","acknowledgements","data owners to contact")
     
@@ -3324,7 +3352,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
     
     #Write author contact warning and info        
     
-    if("contact authors"%in%sources$access_conditions){
+    if("contact authors"%in%sources$access_conditions & is.null(trait.dataframe)){
       affected_datasource_id<-sources$datasource_id[which(sources$access_conditions=='contact authors')]
       n_affected_records<-length(which(dataframe$datasource_id%in%affected_datasource_id))
       pct_affected_records<-round(x =( n_affected_records/(length(which(!dataframe$datasource_id%in%affected_datasource_id))+n_affected_records))*100,digits = 2)
@@ -3337,15 +3365,33 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
       
     }#if need to contact authors of a study
     
-    
+    if("contact authors"%in%sources$access_conditions & !is.null(trait.dataframe)){
+      affected_datasource_id<-sources$datasource_id[which(sources$access_conditions=='contact authors')]
+      #using author to identify datasource here.  Not perfect, but should generally work
+      affected_trait__datasource_id<-trait.sources$project_pi_contact[which(trait.sources$access=='public (notify the PIs)')]
+      
+      n_affected_records<-length(which(dataframe$datasource_id%in%affected_datasource_id))+length(which(trait.dataframe$access%in%'public (notify the PIs)'))
+      
+      pct_affected_records<-round(x =( n_affected_records/(nrow(dataframe)+nrow(trait.dataframe) ))*100,digits = 2)
+      
+      n_affected_sources<-nrow(citation$`data owners to contact`)
+      
+      pct_affected_sources<-round(x = (n_affected_sources/(nrow(sources)+nrow(trait.sources)))*100,digits = 2)
+      
+      message(paste("NOTE: You have references that require you to contact the data owners before publication.  This applies to ",
+                    n_affected_records, " records (",pct_affected_records,"%) from ",n_affected_sources," sources (",pct_affected_sources,"%).",sep=""))
+      
+    }#if need to contact authors of a study
     
   }  #if a dataframe is supplied
   
+  ##########  
+  
+  #########  
+  #If no dataframe or trait datafrae supplied  
   
   
-  
-  
-  if(is.null(dataframe)){
+  if(is.null(dataframe) & is.null(trait.dataframe)){
     
     citation<-list()
     citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
@@ -3374,7 +3420,79 @@ BIEN_metadata_citation<-function(dataframe=NULL,bibtex_file=NULL,acknowledgement
     
   }#if dataframe is null
   
+  #######
+  #####  
   
+  
+  if(!is.null(trait.dataframe) & is.null(dataframe)){  
+    citation<-list()
+    citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
+    The references in this list should be added to any publication using these data.  This is most easily done by specifying a bibtex_file and importing the bibtex formatted references into a reference manager.
+    The acknowledgements in this list should be pasted into the acknowledgements of any resulting publications.
+    Be sure to check for a 'data owners to contact' section in this list, as any authors listed there need to be contacted prior to publishing with their data."
+    citation[[1]]<-gsub(pattern = "\n",replacement = "",citation[[1]])
+    
+    
+    #Cleaning up the bibtex so that it loads properly into reference managers.  Better too many new lines than not enough...for some reason...
+    if(!is.null(trait.dataframe)){dl_cites<-c(trait.sources$citation_bibtex)}
+    dl_cites<-gsub(dl_cites,pattern = '"@',replacement = '@')
+    dl_cites<-gsub(dl_cites,pattern = '" @',replacement = '@')
+    dl_cites<-unique(dl_cites[which(!is.na(dl_cites))])
+    
+    citation[[2]]<-c(BIEN_cite,R_package_cite,dl_cites)
+    citation[[2]]<-gsub(citation[[2]],pattern = "author", replacement = "\nauthor")
+    citation[[2]]<-gsub(citation[[2]],pattern = "title", replacement = "\ntitle")
+    citation[[2]]<-gsub(citation[[2]],pattern = "year", replacement = "\nyear")
+    citation[[2]]<-gsub(citation[[2]],pattern = "organization", replacement = "\norganization")
+    citation[[2]]<-gsub(citation[[2]],pattern = "address", replacement = "\naddress")
+    citation[[2]]<-gsub(citation[[2]],pattern = "url", replacement = "\nurl")
+    citation[[2]]<-gsub(citation[[2]],pattern = "journal", replacement = "\njournal")
+    citation[[2]]<-gsub(citation[[2]],pattern = "note", replacement = "\nnote")
+    citation[[2]]<-iconv(citation[[2]],to="ASCII//TRANSLIT")
+    citation[[2]]<-gsub(citation[[2]],pattern = '\n}\"', replacement = '\n}')
+    citation[[2]]<-gsub(citation[[2]],pattern = '\"\\\nurl', replacement = '\"\\url',fixed = T)
+    citation[[3]]<-data.frame()
+    ack_trait_sources<-trait.sources[which(trait.sources$access=='public (notify the PIs)'),]
+    ack_trait_sources<-ack_trait_sources[c('project_pi','project_pi_contact','access','source_citation','citation_bibtex')]
+    citation[[4]]<-ack_trait_sources
+    colnames(citation[[4]])<-c('primary_contact_fullname','primary_contact_email','access_conditions','source_fullname','source_citation')
+    
+    
+    names(citation)<-c("general information","references","acknowledgements","data owners to contact")
+    
+    
+    #Write acknowledgements    
+    
+    #add code here if we decide to do trait acknowledgements
+    
+    
+    if(nrow(citation[[4]])==0){citation[[4]]<-NULL}
+    
+    #Write author contact warning and info        
+    
+    if('public (notify the PIs)'%in%trait.sources$access){
+      affected_trait__datasource_id<-trait.sources$project_pi_contact[which(trait.sources$access=='public (notify the PIs)')]
+      
+      n_affected_records<-length(which(trait.dataframe$access%in%'public (notify the PIs)'))
+      
+      pct_affected_records<-round(x =( n_affected_records/(nrow(trait.dataframe) ))*100,digits = 2)
+      
+      n_affected_sources<-nrow(citation$`data owners to contact`)
+      
+      pct_affected_sources<-round(x = (n_affected_sources/(nrow(trait.sources)))*100,digits = 2)
+      
+      message(paste("NOTE: You have references that require you to contact the data owners before publication.  This applies to ",
+                    n_affected_records, " records (",pct_affected_records,"%) from ",n_affected_sources," sources (",pct_affected_sources,"%).",sep=""))
+      
+    }#if need to contact authors of a study
+    
+  }  #if only a trait dataframe is supplied  
+  
+  
+  
+  
+  #######    
+  ######  
   #Write bibtex output  
   if(!is.null(bibtex_file)){
     

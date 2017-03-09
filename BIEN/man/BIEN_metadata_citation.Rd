@@ -4,11 +4,13 @@
 \alias{BIEN_metadata_citation}
 \title{Generate citations for data extracted from BIEN.}
 \usage{
-BIEN_metadata_citation(dataframe = NULL, bibtex_file = NULL,
-  acknowledgement_file = NULL)
+BIEN_metadata_citation(dataframe = NULL, trait.dataframe = NULL,
+  bibtex_file = NULL, acknowledgement_file = NULL)
 }
 \arguments{
 \item{dataframe}{A data.frame of occurrence data downloaded from the BIEN R package.}
+
+\item{trait.dataframe}{A data.frame of trait data downloaded from the BIEN R package.}
 
 \item{bibtex_file}{Output file for writing bibtex citations.}
 

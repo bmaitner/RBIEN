@@ -2,6 +2,7 @@
 BIEN 1.1.1
 ===============
 ## NEW FEATURES
+* Added ability to retrieve trait data citations through BIEN_metadata_citation.
 
 ## OTHER NEWS
 
