@@ -1727,7 +1727,7 @@ BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries
   # set the query
   
   if(political.boundaries){
-    political_select <- "region, country, stateproving, lower_political, locality_description"  
+    political_select <- "region, country, stateprovince, lower_political, locality_description"  
   }else{
     political_select <- ""  
     
@@ -1866,7 +1866,7 @@ BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = F
   # set the query
   
   if(political.boundaries){
-    political_select <- "region, country, stateproving, lower_political, locality_description"  
+    political_select <- "region, country, stateprovince, lower_political, locality_description"  
   }else{
     political_select <- ""  
     
@@ -1922,7 +1922,7 @@ BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, politi
   # set the query
   
   if(political.boundaries){
-    political_select <- "region, country, stateproving, lower_political, locality_description"  
+    political_select <- "region, country, stateprovince, lower_political, locality_description"  
   }else{
     political_select <- ""  
     
@@ -1981,7 +1981,7 @@ BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.
   # set the query
   
   if(political.boundaries){
-    political_select <- "region, country, stateproving, lower_political, locality_description"  
+    political_select <- "region, country, stateprovince, lower_political, locality_description"  
   }else{
     political_select <- ""  
     
@@ -2040,7 +2040,7 @@ BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, politica
   # set the query
   
   if(political.boundaries){
-    political_select <- "region, country, stateproving, lower_political, locality_description"  
+    political_select <- "region, country, stateprovince, lower_political, locality_description"  
   }else{
     political_select <- ""  
     
@@ -2097,7 +2097,7 @@ BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = F
   # set the query
   
   if(political.boundaries){
-    political_select <- "region, country, stateproving, lower_political, locality_description"  
+    political_select <- "region, country, stateprovince, lower_political, locality_description"  
   }else{
     political_select <- ""  
     
@@ -2147,7 +2147,7 @@ BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries =
   # set the query
   
   if(political.boundaries){
-    political_select <- "region, country, stateproving, lower_political, locality_description"  
+    political_select <- "region, country, stateprovince, lower_political, locality_description"  
   }else{
     political_select <- ""  
     
