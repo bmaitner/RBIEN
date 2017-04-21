@@ -11,3 +11,10 @@
 #' @name BIEN
 #' @aliases BIEN-package
 NULL
+###################
+
+.onAttach <- function(libname,pkgname) {
+  packageStartupMessage('Type vignette("BIEN") to get started')
+}
+
+#######################

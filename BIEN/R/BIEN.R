@@ -1,10 +1,3 @@
-###################
-
-.onAttach <- function(libname,pkgname) {
-  packageStartupMessage('Type vignette("BIEN") to get started')
-}
-
-
 
 #####################
 
