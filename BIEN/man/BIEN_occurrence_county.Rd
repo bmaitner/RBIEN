@@ -6,7 +6,8 @@
 \usage{
 BIEN_occurrence_county(country, state, county, cultivated = FALSE,
   only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  observation.type = FALSE, political.boundaries = FALSE, ...)
+  natives.only = TRUE, observation.type = FALSE,
+  political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{country}{A single country or vector of countries.}
@@ -22,6 +23,8 @@ BIEN_occurrence_county(country, state, county, cultivated = FALSE,
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
+
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
 
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 

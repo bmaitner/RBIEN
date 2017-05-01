@@ -5,8 +5,8 @@
 \title{Extract occurrence data for specified species from BIEN}
 \usage{
 BIEN_occurrence_species(species, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE, observation.type = FALSE,
-  political.boundaries = FALSE, ...)
+  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
+  observation.type = FALSE, political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{species}{A single species, or a vector of species.  Genus and species should be separated by a space. Genus should be capitalized.}
@@ -18,6 +18,8 @@ BIEN_occurrence_species(species, cultivated = FALSE, only.new.world = TRUE,
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
+
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
 
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 

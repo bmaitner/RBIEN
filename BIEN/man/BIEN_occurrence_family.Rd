@@ -6,7 +6,7 @@
 \usage{
 BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = TRUE,
   observation.type = FALSE, all.taxonomy = FALSE, native.status = FALSE,
-  political.boundaries = FALSE, ...)
+  natives.only = TRUE, political.boundaries = FALSE, ...)
 }
 \arguments{
 \item{family}{A single family or a vector of families.}
@@ -20,6 +20,8 @@ BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = TRUE,
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
+
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 

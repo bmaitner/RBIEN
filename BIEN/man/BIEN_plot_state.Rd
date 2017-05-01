@@ -5,7 +5,7 @@
 \title{Download plot data from specified states/provinces.}
 \usage{
 BIEN_plot_state(country, state, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE,
+  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
   political.boundaries = TRUE, all.metadata = FALSE, ...)
 }
 \arguments{
@@ -20,6 +20,8 @@ BIEN_plot_state(country, state, cultivated = FALSE, only.new.world = TRUE,
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
+
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 

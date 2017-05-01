@@ -6,7 +6,8 @@
 \usage{
 BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
   only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  observation.type = FALSE, political.boundaries = TRUE, ...)
+  natives.only = TRUE, observation.type = FALSE,
+  political.boundaries = TRUE, ...)
 }
 \arguments{
 \item{min.lat}{Minimum latitude}
@@ -24,6 +25,8 @@ BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
 \item{native.status}{Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.}
+
+\item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
 
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 

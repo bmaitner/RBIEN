@@ -3,8 +3,12 @@ BIEN 1.1.1
 ===============
 ## NEW FEATURES
 * Added ability to retrieve trait data citations through BIEN_metadata_citation.
+* Added ability to exclude known introduced species
 
 ## OTHER NEWS
+* Trait data was increased by nearly an order of magnitude
+* We currently have nearly 1 million trait records
+* Trait units and names have been standardized
 
 ===============
 BIEN 1.1.0
