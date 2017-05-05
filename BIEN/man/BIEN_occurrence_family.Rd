@@ -6,7 +6,8 @@
 \usage{
 BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = TRUE,
   observation.type = FALSE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, political.boundaries = FALSE, ...)
+  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
+  ...)
 }
 \arguments{
 \item{family}{A single family or a vector of families.}
@@ -24,6 +25,8 @@ BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = TRUE,
 \item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

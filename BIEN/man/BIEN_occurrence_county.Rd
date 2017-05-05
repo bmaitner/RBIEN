@@ -7,7 +7,7 @@
 BIEN_occurrence_county(country, state, county, cultivated = FALSE,
   only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
   natives.only = TRUE, observation.type = FALSE,
-  political.boundaries = FALSE, ...)
+  political.boundaries = FALSE, collection.info = F, ...)
 }
 \arguments{
 \item{country}{A single country or vector of countries.}
@@ -29,6 +29,8 @@ BIEN_occurrence_county(country, state, county, cultivated = FALSE,
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

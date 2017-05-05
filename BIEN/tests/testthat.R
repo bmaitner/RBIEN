@@ -27,7 +27,7 @@ test_that("Metadata_citation function returns a list",{
 #Occurrence tests
 test_that("Occurrence functions return a dataframe",{
   expect_that(BIEN_occurrence_box(min.lat = 32.9,max.lat = 33,min.long = -114,max.long = -113.9, cultivated = TRUE, only.new.world = FALSE,all.taxonomy = T,native.status = T,natives.only = T,observation.type = T,political.boundaries = T,schema=schema),is_a("data.frame"))
-  expect_that(BIEN_occurrence_country("Bahamas",schema=schema) ,is_a("data.frame"))
+  expect_that(BIEN_occurrence_country("Bahamas",schema=schema,collection.info = T) ,is_a("data.frame"))
   expect_that(BIEN_occurrence_county(country = "United States",state = "Arizona",county = "Pima",schema=schema) ,is_a("data.frame"))
   expect_that(BIEN_occurrence_family(family = "Cactaceae",limit=1,schema=schema) ,is_a("data.frame"))
   expect_that(BIEN_occurrence_genus(genus = "Xanthium",schema=schema) ,is_a("data.frame"))

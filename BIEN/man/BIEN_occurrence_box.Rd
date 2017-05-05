@@ -7,7 +7,7 @@
 BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
   only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
   natives.only = TRUE, observation.type = FALSE,
-  political.boundaries = TRUE, ...)
+  political.boundaries = TRUE, collection.info = F, ...)
 }
 \arguments{
 \item{min.lat}{Minimum latitude}
@@ -31,6 +31,8 @@ BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

@@ -6,7 +6,8 @@
 \usage{
 BIEN_occurrence_country(country, cultivated = FALSE, only.new.world = TRUE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  observation.type = FALSE, political.boundaries = FALSE, ...)
+  observation.type = FALSE, political.boundaries = FALSE,
+  collection.info = F, ...)
 }
 \arguments{
 \item{country}{A single country or a vector of country.}
@@ -24,6 +25,8 @@ BIEN_occurrence_country(country, cultivated = FALSE, only.new.world = TRUE,
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
