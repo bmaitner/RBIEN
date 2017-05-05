@@ -2417,13 +2417,14 @@ is_num <- function(x) {
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe containing all data from the specified datasource.
 #' @examples \dontrun{
 #' BIEN_plot_datasource("SALVIAS")}
 #' @family plot functions
-BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,all.metadata=FALSE, ...){
+BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   is_log(cultivated)
   is_log(only.new.world)
   is_log(all.taxonomy)
@@ -2431,7 +2432,9 @@ BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
   is_log(native.status)
   is_log(natives.only)
   is_log(political.boundaries)
+  is_log(collection.info)
   is_log(all.metadata)
+  
   
   #set conditions for query
   
@@ -2475,6 +2478,12 @@ BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
     political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
   }
   
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  }  
+  
   if(!all.metadata){
     md_select<-""
   }else{
@@ -2491,7 +2500,7 @@ BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
                  view_full_occurrence_individual.individual_count,",taxon_select,political_select,native_select," view_full_occurrence_individual.latitude, 
                  view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,view_full_occurrence_individual.datasource,
                  view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,view_full_occurrence_individual.custodial_institution_codes,
-                 view_full_occurrence_individual.collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+                 view_full_occurrence_individual.collection_code,view_full_occurrence_individual.datasource_id",paste(collection_select,cultivated_select,newworld_select,md_select),"
                  FROM 
                  (SELECT * FROM view_full_occurrence_individual 
                  WHERE view_full_occurrence_individual.datasource in (", paste(shQuote(datasource, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query,native_query),  "
@@ -2532,6 +2541,7 @@ BIEN_plot_list_datasource<-function(...){
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe containing all data from the specified countries.
@@ -2539,7 +2549,7 @@ BIEN_plot_list_datasource<-function(...){
 #' BIEN_plot_country("Costa Rica")
 #' BIEN_plot_country(c("Costa Rica","Panama"))}
 #' @family plot functions
-BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,all.metadata=FALSE, ...){
+BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   is_log(cultivated)
   is_log(only.new.world)
   is_log(all.taxonomy)
@@ -2547,6 +2557,8 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
   is_log(native.status)
   is_log(natives.only)
   is_log(political.boundaries)
+  is_log(collection.info)
+  is_log(all.metadata)
   
   #set conditions for query
   
@@ -2590,6 +2602,12 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
     political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
   }
   
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  }  
+  
   if(!all.metadata){
     md_select<-""
   }else{
@@ -2606,7 +2624,7 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
                  view_full_occurrence_individual.scrubbed_species_binomial,view_full_occurrence_individual.individual_count,",paste(taxon_select),paste(native_select)," 
                  view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude, view_full_occurrence_individual.date_collected,
                  view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,
-                 view_full_occurrence_individual.custodial_institution_codes,view_full_occurrence_individual.collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+                 view_full_occurrence_individual.custodial_institution_codes,view_full_occurrence_individual.collection_code,view_full_occurrence_individual.datasource_id",paste(collection_select,cultivated_select,newworld_select,md_select),"
                  FROM 
                  (SELECT * FROM view_full_occurrence_individual WHERE view_full_occurrence_individual.country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",
                  paste(cultivated_query,newworld_query,native_query),  "AND higher_plant_group IS NOT NULL 
@@ -2632,6 +2650,7 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @note This function requires you supply either 1) a single country with one or states, or 2) vectors of equal length for each political level.
@@ -2640,7 +2659,7 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' BIEN_plot_state("Colorado")
 #' BIEN_plot_state(c("Colorado","California"))}
 #' @family plot functions
-BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,all.metadata=FALSE, ...){
+BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
   is_char(country)
   is_log(cultivated)
   is_log(only.new.world)
@@ -2649,6 +2668,7 @@ BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all
   is_log(native.status)
   is_log(natives.only)
   is_log(political.boundaries)
+  is_log(collection.info)
   is_log(all.metadata)
   #set conditions for query
   
@@ -2692,6 +2712,12 @@ BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all
   }else{
     political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
   }
+  
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  }  
   
   
   if(!all.metadata){
@@ -2737,7 +2763,7 @@ BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all
   
   
   # set the query
-  query <- paste("SELECT ",political_select," view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count,",paste(taxon_select),paste(native_select)," view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+  query <- paste("SELECT ",political_select," view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count,",taxon_select,native_select," view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_select,cultivated_select,newworld_select,md_select,"
                  FROM 
                  (SELECT * FROM view_full_occurrence_individual ",
                  sql_where,cultivated_query,newworld_query,native_query,  "
@@ -2779,13 +2805,14 @@ BIEN_plot_list_sampling_protocols<-function(...){
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe containing all data from the specified datasource.
 #' @examples \dontrun{
 #' BIEN_plot_sampling_protocol("Point-intercept")}
 #' @family plot functions
-BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,all.metadata=FALSE, ...){
+BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   is_log(cultivated)
   is_log(only.new.world)
   is_log(all.taxonomy)
@@ -2793,102 +2820,7 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
   is_log(native.status)
   is_log(natives.only)
   is_log(political.boundaries)  
-  #set conditions for query
-  
-  if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
-    cultivated_select<-""
-  }else{
-    cultivated_query<-""
-    cultivated_select<-",is_cultivated,is_cultivated_in_region"
-  }
-  
-  if(!only.new.world){
-    newworld_query<-""
-    newworld_select<-",view_full_occurrence_individual.is_new_world"
-  }else{
-    newworld_query<-"AND view_full_occurrence_individual.is_new_world = 1 "
-    newworld_select<-""
-  }
-  
-  if(!all.taxonomy){
-    taxon_select<-""
-  }else{
-    taxon_select<-"verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author,"
-  }
-  
-  if(!native.status){
-    native_select<-""
-  }else{
-    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
-  }
-  
-  if(!natives.only){
-    native_query<-""
-  }else{
-    native_query<-"AND ( view_full_occurrence_individual.native_status IS NULL OR view_full_occurrence_individual.native_status NOT IN ( 'I', 'Ie' ) )"
-  }  
-  
-  if(!political.boundaries){
-    political_select<-""
-  }else{
-    political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
-  }
-  
-  if(!all.metadata){
-    md_select<-""
-  }else{
-    md_select<-",plot_metadata.methodology_reference,plot_metadata.methodology_description,growth_forms_included_all, growth_forms_included_trees, growth_forms_included_shrubs, growth_forms_included_lianas,
-    growth_forms_included_herbs, growth_forms_included_epiphytes, growth_forms_included_notes, taxa_included_all, taxa_included_seed_plants, taxa_included_ferns_lycophytes,
-    taxa_included_bryophytes,taxa_included_exclusions"
-  }
-  
-  # set the query
-  query <- paste("SELECT view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,
-                 view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count,",taxon_select,native_select,political_select," 
-                 view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,date_collected,view_full_occurrence_individual.datasource,
-                 view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,
-                                                                                                                                                                                                    newworld_select,md_select),"
-                 FROM 
-                 (SELECT * FROM view_full_occurrence_individual 
-                 WHERE view_full_occurrence_individual.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")",
-                 paste(cultivated_query,newworld_query,native_query),  "AND view_full_occurrence_individual.higher_plant_group IS NOT NULL 
-                 AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) 
-                 AND view_full_occurrence_individual.observation_type='plot' 
-                 ORDER BY view_full_occurrence_individual.country,view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot,
-                 view_full_occurrence_individual.scrubbed_species_binomial) as view_full_occurrence_individual
-                 JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
-                 ;")
-  
-  # create query to retrieve
-  return(.BIEN_sql(query, ...))
-  
-  }
-#################################
-#'Download plot data by plot name.
-#'
-#'BIEN_plot_name downloads all plot data for a set of plot names.
-#' @param plot.name A plot name or vector of names. See BIEN_plot_metadata for more information on plots.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
-#' @return A dataframe containing all data from the specified plot(s).
-#' @examples \dontrun{
-#' BIEN_plot_name("SR-1")}
-#' @family plot functions
-BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,all.metadata=FALSE, ...){
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(plot.name)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)  
+  is_log(collection.info)
   is_log(all.metadata)
   #set conditions for query
   
@@ -2932,6 +2864,116 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
     political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
   }
   
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  } 
+  
+  if(!all.metadata){
+    md_select<-""
+  }else{
+    md_select<-",plot_metadata.methodology_reference,plot_metadata.methodology_description,growth_forms_included_all, growth_forms_included_trees, growth_forms_included_shrubs, growth_forms_included_lianas,
+    growth_forms_included_herbs, growth_forms_included_epiphytes, growth_forms_included_notes, taxa_included_all, taxa_included_seed_plants, taxa_included_ferns_lycophytes,
+    taxa_included_bryophytes,taxa_included_exclusions"
+  }
+  
+  # set the query
+  query <- paste("SELECT view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,
+                 view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count,",taxon_select,native_select,political_select," 
+                 view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,date_collected,view_full_occurrence_individual.datasource,
+                 view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_select,cultivated_select, newworld_select,md_select,"
+                 FROM 
+                 (SELECT * FROM view_full_occurrence_individual 
+                 WHERE view_full_occurrence_individual.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")",
+                 paste(cultivated_query,newworld_query,native_query),  "AND view_full_occurrence_individual.higher_plant_group IS NOT NULL 
+                 AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) 
+                 AND view_full_occurrence_individual.observation_type='plot' 
+                 ORDER BY view_full_occurrence_individual.country,view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot,
+                 view_full_occurrence_individual.scrubbed_species_binomial) as view_full_occurrence_individual
+                 JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
+                 ;")
+  
+  # create query to retrieve
+  return(.BIEN_sql(query, ...))
+  
+  }
+#################################
+#'Download plot data by plot name.
+#'
+#'BIEN_plot_name downloads all plot data for a set of plot names.
+#' @param plot.name A plot name or vector of names. See BIEN_plot_metadata for more information on plots.
+#' @param cultivated Return cultivated records as well?  Default is FALSE.
+#' @param only.new.world Return only records from the New World?  Default is true
+#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
+#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
+#' @param natives.only Exclude detected introduced species?  Default is TRUE.
+#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
+#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
+#' @param ... Additional arguments passed to internal functions.
+#' @return A dataframe containing all data from the specified plot(s).
+#' @examples \dontrun{
+#' BIEN_plot_name("SR-1")}
+#' @family plot functions
+BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
+  is_log(cultivated)
+  is_log(only.new.world)
+  is_log(all.taxonomy)
+  is_char(plot.name)
+  is_log(native.status)
+  is_log(natives.only)
+  is_log(political.boundaries)  
+  is_log(collection.info)
+  is_log(all.metadata)
+  #set conditions for query
+  
+  if(!cultivated){
+    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
+    cultivated_select<-""
+  }else{
+    cultivated_query<-""
+    cultivated_select<-",is_cultivated,is_cultivated_in_region"
+  }
+  
+  if(!only.new.world){
+    newworld_query<-""
+    newworld_select<-",view_full_occurrence_individual.is_new_world"
+  }else{
+    newworld_query<-"AND view_full_occurrence_individual.is_new_world = 1 "
+    newworld_select<-""
+  }
+  
+  if(!all.taxonomy){
+    taxon_select<-""
+  }else{
+    taxon_select<-"verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author,"
+  }
+  
+  if(!native.status){
+    native_select<-""
+  }else{
+    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
+  }
+  
+  if(!natives.only){
+    native_query<-""
+  }else{
+    native_query<-"AND ( view_full_occurrence_individual.native_status IS NULL OR view_full_occurrence_individual.native_status NOT IN ( 'I', 'Ie' ) )"
+  }  
+  
+  if(!political.boundaries){
+    political_select<-""
+  }else{
+    political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
+  }
+  
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  }  
+  
   if(!all.metadata){
     md_select<-""
   }else{
@@ -2946,7 +2988,7 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
                  view_full_occurrence_individual.individual_count,",taxon_select,native_select,political_select," 
                  view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,
                  view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,
-                 view_full_occurrence_individual.custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+                 view_full_occurrence_individual.custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_select,cultivated_select,newworld_select,md_select,"
                  FROM 
                  (SELECT * FROM view_full_occurrence_individual WHERE view_full_occurrence_individual.plot_name in (", paste(shQuote(plot.name, type = "sh"),collapse = ', '), ")",
                  paste(cultivated_query,newworld_query,native_query),  "AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) AND observation_type='plot' 
@@ -2971,13 +3013,14 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe containing all data from the specified dataset.
 #' @examples \dontrun{
 #' BIEN_plot_dataset("Gentry Transect Dataset")}
 #' @family plot functions
-BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,all.metadata=FALSE, ...){
+BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   is_log(cultivated)
   is_log(only.new.world)
   is_log(all.taxonomy)
@@ -2985,6 +3028,7 @@ BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.tax
   is_log(native.status)
   is_log(natives.only)
   is_log(political.boundaries)
+  is_log(collection.info)
   is_log(all.metadata)
   #set conditions for query
   
@@ -3028,6 +3072,12 @@ BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.tax
     political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
   }
   
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  }  
+  
   if(!all.metadata){
     md_select<-""
   }else{
@@ -3041,7 +3091,7 @@ BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.tax
                  view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count,",taxon_select,native_select,political_select," 
                  view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,
                  view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,
-                 view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+                 view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_select,cultivated_select,newworld_select,md_select,"
                  FROM 
                  (SELECT * FROM view_full_occurrence_individual WHERE view_full_occurrence_individual.dataset in (", paste(shQuote(dataset, type = "sh"),collapse = ', '), ")",
                  cultivated_query,newworld_query,native_query,  " AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) AND observation_type='plot' 
@@ -3591,88 +3641,6 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
 
 ################################
 
-###############################
-#'Download occurrence points without metadata.
-#'
-#'.BIEN_occurrence_sdm returns occurrence points withou the recommended metadata and attribution information.
-#' @param species A single species or vector of species.
-#' @param cultivated Return known cultivated records as well?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
-#' @return Dataframe containing species, latitude and longitude.
-#' @note We strongly recomend BIEN_occurrence_species as an alternative to this function in most instances.
-#' @examples \dontrun{
-#' Abies_alba_points<-.BIEN_occurrence_sdm("Abies alba")
-#' }
-
-.BIEN_occurrence_sdm<-function(species, cultivated=FALSE, ...){
-  is_log(cultivated) 
-  is_char(species)
-  
-  #set conditions for query
-  
-  if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
-  }else{
-    cultivated_query<-""
-  }
-  
-  # set the query
-  query <- paste("SELECT scrubbed_species_binomial, latitude, longitude 
-                 FROM view_full_occurrence_individual WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",paste(cultivated_query),  "
-                 AND higher_plant_group IS NOT NULL 
-                 AND latitude IS NOT NULL 
-                 AND longitude IS NOT NULL
-                 AND (is_geovalid = 1 OR is_geovalid IS NULL) 
-                 ORDER BY scrubbed_species_binomial;")
-  
-  # create query to retrieve
-  
-  return(.BIEN_sql(query, ...))
-  
-}
-
-##########################
-
-#'Download occurrence points without metadata.
-#'
-#'.BIEN_occurrence_genus_sdm returns occurrence points withou the recommended metadata and attribution information.
-#' @param genus A single genus or vector of genera.
-#' @param cultivated Return known cultivated records as well?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
-#' @return Dataframe containing species, latitude and longitude.
-#' @note We strongly recomend BIEN_occurrence_genus as an alternative to this function in most instances.
-#' @examples \dontrun{
-#' Abies_points<-.BIEN_occurrence_genus_sdm("Abies")
-#' }
-
-.BIEN_occurrence_genus_sdm<-function(genus, cultivated=FALSE, ...){
-  is_log(cultivated) 
-  is_char(genus)
-  
-  #set conditions for query
-  
-  if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
-  }else{
-    cultivated_query<-""
-  }
-  
-  # set the query
-  query <- paste("SELECT scrubbed_genus, latitude, longitude 
-                 FROM view_full_occurrence_individual WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ")",paste(cultivated_query),  "
-                 AND higher_plant_group IS NOT NULL 
-                 AND latitude IS NOT NULL 
-                 AND longitude IS NOT NULL
-                 AND (is_geovalid = 1 OR is_geovalid IS NULL) 
-                 ORDER BY scrubbed_genus;")
-  
-  # create query to retrieve
-  return(.BIEN_sql(query, ...))
-  
-}
-
-
-############################
 
 ############################
 #Stem functions
@@ -3688,6 +3656,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return Dataframe containing stem data for the specified species.
@@ -3698,7 +3667,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
 #' BIEN_stem_species(species_vector)
 #' BIEN_stem_species(species_vector,all.taxonomy=TRUE)}
 #' @family stem functions
-BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE, all.metadata = F, ...){
+BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   is_log(all.metadata)
   is_log(cultivated)
   is_log(only.new.world)
@@ -3707,6 +3676,8 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
   is_log(native.status)
   is_log(natives.only)
   is_log(political.boundaries)
+  is_log(collection.info)
+  
   
   #set conditions for query
   
@@ -3750,7 +3721,14 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
     political_select<-"analytical_stem.country,analytical_stem.state_province,analytical_stem.county,analytical_stem.locality,"
   }
   
-  if(native.status | cultivated |natives.only){
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  }  
+  
+  
+  if(native.status | cultivated |natives.only | collection.info){
     vfoi_join<-" JOIN view_full_occurrence_individual ON (analytical_stem.taxonobservation_id  = view_full_occurrence_individual.taxonobservation_id)"}else{
       vfoi_join<-""  
     }
@@ -3769,7 +3747,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
   query <- paste("SELECT analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
                  analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id,analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
                  plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
-                 analytical_stem.collection_code,analytical_stem.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+                 analytical_stem.collection_code,analytical_stem.datasource_id",paste(collection_select,cultivated_select,newworld_select,md_select),"
                  FROM 
                  (SELECT * FROM analytical_stem WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")) AS analytical_stem 
                  JOIN plot_metadata ON 
@@ -3796,6 +3774,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return Dataframe containing stem data for the specified families.
@@ -3806,7 +3785,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' BIEN_stem_family(family = family_vector)
 #' BIEN_stem_family(family = family_vector, all.taxonomy=TRUE, native.status=T)}
 #' @family stem functions
-BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE, all.metadata = F, ...){
+BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   is_log(all.metadata)
   is_log(cultivated)
   is_log(only.new.world)
@@ -3815,6 +3794,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
   is_log(native.status)
   is_log(natives.only)
   is_log(political.boundaries)
+  is_log(collection.info)
   
   #set conditions for query
   
@@ -3858,7 +3838,13 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
     political_select<-"analytical_stem.country,analytical_stem.state_province,analytical_stem.county,analytical_stem.locality,"
   }
   
-  if(native.status | cultivated| natives.only){
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  }  
+  
+  if(native.status | cultivated| natives.only | collection.info){
     vfoi_join<-" JOIN view_full_occurrence_individual ON (analytical_stem.taxonobservation_id  = view_full_occurrence_individual.taxonobservation_id)"}else{
       vfoi_join<-""  
     }
@@ -3877,7 +3863,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
   query <- paste("SELECT analytical_stem.scrubbed_family, analytical_stem.scrubbed_genus,analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
                  analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
                  plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
-                 analytical_stem.collection_code,analytical_stem.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+                 analytical_stem.collection_code,analytical_stem.datasource_id",collection_select,cultivated_select,newworld_select,md_select,"
                  FROM 
                  (SELECT * FROM analytical_stem WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ")) AS analytical_stem 
                  JOIN plot_metadata ON 
@@ -3903,6 +3889,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return Dataframe containing stem data for the specified genera.
@@ -3913,7 +3900,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
 #' BIEN_stem_genus(genus = genus_vector)
 #' BIEN_stem_genus(genus = genus_vector, all.taxonomy=TRUE)}
 #' @family stem functions
-BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE, all.metadata = F, ...){
+BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE, collection.info=F,all.metadata = F, ...){
   is_log(all.metadata)
   is_log(cultivated)
   is_log(only.new.world)
@@ -3922,6 +3909,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
   is_log(native.status)
   is_log(natives.only)
   is_log(political.boundaries)
+  is_log(collection.info)
   
   #set conditions for query
   
@@ -3966,7 +3954,14 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
     political_select<-"analytical_stem.country,analytical_stem.state_province,analytical_stem.county,analytical_stem.locality,"
   }
   
-  if(native.status | cultivated|natives.only){
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  } 
+  
+  
+  if(native.status | cultivated|natives.only | collection.info){
     vfoi_join<-" JOIN view_full_occurrence_individual ON (analytical_stem.taxonobservation_id  = view_full_occurrence_individual.taxonobservation_id)"}else{
       vfoi_join<-""  
     }
@@ -3985,7 +3980,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
   query <- paste("SELECT analytical_stem.scrubbed_genus,analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
                  analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
                  plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
-                 analytical_stem.collection_code,analytical_stem.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+                 analytical_stem.collection_code,analytical_stem.datasource_id",collection_select,cultivated_select,newworld_select,md_select,"
                  FROM 
                  (SELECT * FROM analytical_stem WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ")) AS analytical_stem 
                  JOIN plot_metadata ON 
@@ -4011,6 +4006,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.
 #' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
+#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
 #' @return Dataframe containing stem data for the specified datasource.
@@ -4018,7 +4014,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
 #' @examples \dontrun{
 #' BIEN_stem_datasource(datasource = "SALVIAS")}
 #' @family stem functions
-BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE, all.metadata = F, ...){
+BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   is_log(all.metadata)
   is_log(cultivated)
   is_log(only.new.world)
@@ -4027,7 +4023,8 @@ BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
   is_log(native.status)
   is_log(natives.only)
   is_log(political.boundaries)
-  
+  is_log(collection.info)
+    
   #set conditions for query
   
   if(!cultivated){
@@ -4070,7 +4067,14 @@ BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
     political_select<-"analytical_stem.country,analytical_stem.state_province,analytical_stem.county,analytical_stem.locality,"
   }
   
-  if(native.status | cultivated|natives.only){
+  if(!collection.info){
+    collection_select<-""
+  }else{
+    collection_select<-",view_full_occurrence_individual.catalog_number, view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.record_number, view_full_occurrence_individual.date_collected, view_full_occurrence_individual.identified_by, view_full_occurrence_individual.date_identified, view_full_occurrence_individual.identification_remarks  "
+  }  
+  
+  
+  if(native.status | cultivated|natives.only| collection.info){
     vfoi_join<-" JOIN view_full_occurrence_individual ON (analytical_stem.taxonobservation_id  = view_full_occurrence_individual.taxonobservation_id)"}else{
       vfoi_join<-""  
     }
@@ -4090,7 +4094,7 @@ BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
                  analytical_stem.recorded_by,analytical_stem.scrubbed_species_binomial,",taxon_select,native_select,political_select," analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
                  analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id, analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
                  plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
-                 analytical_stem.collection_code,analytical_stem.datasource_id",paste(cultivated_select,newworld_select,md_select),"
+                 analytical_stem.collection_code,analytical_stem.datasource_id",collection_select,cultivated_select,newworld_select,md_select,"
                  FROM 
                  (SELECT * FROM analytical_stem WHERE datasource in (", paste(shQuote(datasource, type = "sh"),collapse = ', '), ")) AS analytical_stem 
                  JOIN plot_metadata ON 

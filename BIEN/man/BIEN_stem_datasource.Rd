@@ -6,7 +6,8 @@
 \usage{
 BIEN_stem_datasource(datasource, cultivated = FALSE, only.new.world = TRUE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, all.metadata = F, ...)
+  political.boundaries = FALSE, collection.info = F, all.metadata = F,
+  ...)
 }
 \arguments{
 \item{datasource}{A single datasource, or a vector of datasources.}
@@ -22,6 +23,8 @@ BIEN_stem_datasource(datasource, cultivated = FALSE, only.new.world = TRUE,
 \item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 

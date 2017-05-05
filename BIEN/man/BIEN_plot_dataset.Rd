@@ -6,7 +6,8 @@
 \usage{
 BIEN_plot_dataset(dataset, cultivated = FALSE, only.new.world = TRUE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, all.metadata = FALSE, ...)
+  political.boundaries = FALSE, collection.info = F, all.metadata = FALSE,
+  ...)
 }
 \arguments{
 \item{dataset}{A plot dataset or vector of datasets. See BIEN_plot_metadata for more information on plots.}
@@ -22,6 +23,8 @@ BIEN_plot_dataset(dataset, cultivated = FALSE, only.new.world = TRUE,
 \item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 

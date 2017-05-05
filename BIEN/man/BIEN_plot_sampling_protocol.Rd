@@ -6,8 +6,8 @@
 \usage{
 BIEN_plot_sampling_protocol(sampling_protocol, cultivated = FALSE,
   only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, political.boundaries = FALSE, all.metadata = FALSE,
-  ...)
+  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
+  all.metadata = FALSE, ...)
 }
 \arguments{
 \item{sampling_protocol}{A sampling protocol or vector of sampling protocols. See BIEN.plot.list_sampling_protocols() for options.}
@@ -23,6 +23,8 @@ BIEN_plot_sampling_protocol(sampling_protocol, cultivated = FALSE,
 \item{natives.only}{Exclude detected introduced species?  Default is TRUE.}
 
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
+
+\item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
 
 \item{all.metadata}{Should additional plot metadata be returned?  Default is FALSE.}
 

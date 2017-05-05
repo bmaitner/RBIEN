@@ -53,7 +53,7 @@ test_that("Plot functions return a dataframe",{
   expect_that(BIEN_plot_list_datasource(schema=schema) ,is_a("data.frame"))
   expect_that(BIEN_plot_list_sampling_protocols(schema=schema),is_a("data.frame"))
   expect_that(BIEN_plot_metadata(schema=schema) ,is_a("data.frame"))
-  expect_that(BIEN_plot_name("test",schema=schema),is_a("data.frame"))
+  expect_that(BIEN_plot_name("test",schema=schema,collection.info = T),is_a("data.frame"))
   expect_that(BIEN_plot_sampling_protocol(sampling_protocol = "test",natives.only = T,schema=schema),is_a("data.frame"))
   expect_that(BIEN_plot_state(country = "United States",state = "Michigan",limit=1,schema=schema),is_a("data.frame"))
   })
@@ -65,7 +65,7 @@ test_that("Ranges functions return a SpatialPolygonsDataFrame",{
 
 #Stem
 test_that("Stem functions return a dataframe",{
-  expect_that(BIEN_stem_species(species = "Abies amabilis",natives.only = T,native.status = T,schema=schema) ,is_a("data.frame"))
+  expect_that(BIEN_stem_species(species = "Abies amabilis",natives.only = T,native.status = T,collection.info = T,schema=schema) ,is_a("data.frame"))
   expect_that(BIEN_stem_genus(genus = "Abies",natives.only = T,native.status = T,schema=schema,limit=1) ,is_a("data.frame"))
   expect_that(BIEN_stem_family(family = "Selaginellaceae",natives.only = T,native.status = T,schema=schema) ,is_a("data.frame"))
   

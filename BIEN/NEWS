@@ -4,7 +4,7 @@ BIEN 1.1.1
 ## NEW FEATURES
 * Added ability to retrieve trait data citations through BIEN_metadata_citation.
 * Added ability to exclude known introduced species
-* Added option to return additional data on occurrence records
+* Added option to return additional data pertaining to collection and identification
 
 ## OTHER NEWS
 * Trait data was increased by nearly an order of magnitude
