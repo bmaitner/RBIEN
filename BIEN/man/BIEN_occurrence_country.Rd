@@ -12,7 +12,7 @@ BIEN_occurrence_country(country, cultivated = FALSE, only.new.world = TRUE,
 \arguments{
 \item{country}{A single country or a vector of country.}
 
-\item{cultivated}{Return cultivated records as well?  Default is FALSE.}
+\item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
 

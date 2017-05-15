@@ -16,7 +16,7 @@ BIEN_occurrence_county(country, state, county, cultivated = FALSE,
 
 \item{county}{A single county or a vector of counties.}
 
-\item{cultivated}{Return cultivated records as well?  Default is FALSE.}
+\item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
 

@@ -5,15 +5,7 @@
 #'
 #'BIEN_occurrence_species downloads occurrence records for specific species from the BIEN database.
 #' @param species A single species, or a vector of species.  Genus and species should be separated by a space. Genus should be capitalized.
-#' @param cultivated Return known cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template occurrence
 #' @return Dataframe containing occurrence records for the specified species.
 #' @examples \dontrun{
 #' BIEN_occurrence_species("Abies amabilis")
@@ -99,15 +91,7 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,a
 #'
 #'BIEN_occurrence_shapefile downloads occurrence records falling within a user-specified shapefile.
 #' @param shapefile An object of class SpatialPolygonsDataFrame.  Note that the polygon must be in WGS84.
-#' @param cultivated Return known cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template occurrence
 #' @return Dataframe containing occurrence records for the specified species.
 #' @examples \dontrun{
 #' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
@@ -213,9 +197,7 @@ BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TR
 #'
 #'BIEN_list_country downloads a list of all species within a country or countries from the BIEN database.
 #' @param country A single country or a vector of countries.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param ... Additional arguments passed to internal functions.
+#' @template list
 #' @return Dataframe containing species list(s) for the specified country or countries.
 #' @examples \dontrun{
 #' BIEN_list_country("Canada")
@@ -260,9 +242,7 @@ BIEN_list_country<-function(country,cultivated=FALSE,only.new.world=TRUE,...){
 #'BIEN_list_state produces a list of all species with geovalidated occurrences falling within specified state(s) or province(s).
 #' @param state A single state/province, or a vector of states/provinces.
 #' @param country A single country or a vector of countries equal in length to the vector of states/provinces.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param ... Additional arguments passed to internal functions.
+#' @template list
 #' @return Dataframe containing species list(s) for the specified states/provinces.
 #' @examples \dontrun{
 #' BIEN_list_state("United States","Michigan")
@@ -341,9 +321,7 @@ BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...
 #' @param country A single country or vector of countries
 #' @param state A single state or vector of states.
 #' @param county A single county or vector of counties.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param ... Additional arguments passed to internal functions.
+#' @template list
 #' @return Dataframe containing species list(s) for the specified states/provinces.
 #' @note This function requires you supply either 1) a single state and country with one or more counties, or 2) vectors of equal length for each political level.
 #' @examples \dontrun{
@@ -443,9 +421,7 @@ BIEN_list_all<-function( ...){
 #'
 #'BIEN_list_shapefile produces a list of all species with occurrence record falling within a user-supplied GIS shapefile.
 #' @param shapefile An object of class SpatialPolygonsDataFrame.  Note that the polygon must be in WGS84.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param ... Additional arguments passed to internal functions.
+#' @template list
 #' @return Dataframe containing a list of all species with occurrences in the supplied shapefile.
 #' @note We recommend using the function readOGR() in the rgdal package to read in shapefiles.  Other methods may cause problems related to handling holes in polygons.
 #' @examples \dontrun{
@@ -509,15 +485,7 @@ BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,...
 #'
 #'BIEN_occurrence_genus downloads occurrence records for specific genus/genera from the BIEN database.
 #' @param genus A single genus, or a vector of genera. Genera should be capitalized.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template occurrence
 #' @return Dataframe containing occurrence records for the specified genera.
 #' @examples \dontrun{
 #' BIEN_occurrence_genus("Abutilon")
@@ -605,15 +573,7 @@ BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.t
 #'
 #'BIEN_occurrence_family extracts all occurrences for a given family (or families) from the BIEN database.
 #' @param family A single family or a vector of families.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template occurrence
 #' @return Dataframe containing occurrence records for the specified family/families.
 #' @examples \dontrun{
 #' BIEN_occurrence_family("Theaceae")
@@ -704,15 +664,7 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,obs
 #'BIEN_occurrence_state extracts occurrences records for the specified state(s).
 #' @param state A single state or a vector of states.
 #' @param country A single country or vector of countries.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template occurrence
 #' @note This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
 #' @return Dataframe containing occurrence records for the specified states/provinces.
 #' @examples \dontrun{
@@ -839,15 +791,7 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
 #'
 #'BIEN_occurrence_country extracts occurrences records for the specified country/countries.
 #' @param country A single country or a vector of country.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template occurrence
 #' @return Dataframe containing occurrence records for the specified country.
 #' @examples \dontrun{
 #' library(RPostgreSQL)
@@ -936,15 +880,7 @@ BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,a
 #' @param country A single country or vector of countries.
 #' @param state A single state or a vector of states.
 #' @param county A single county or a vector of counties.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template occurrence
 #' @note This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
 #' @return Dataframe containing occurrence records for the specified states/provinces.
 #' @examples \dontrun{
@@ -1081,15 +1017,7 @@ BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.
 #' @param max.lat Maximum latitude
 #' @param min.long Minimum longitude
 #' @param max.long Maximum longitude
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param observation.type Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template occurrence
 #' @return Dataframe containing occurrence records for the specified area.
 #' @examples \dontrun{
 #' output_test<-
@@ -1179,11 +1107,7 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
 #'
 #'BIEN_ranges_species extracts range maps for the specified species.
 #' @param species A single species or a vector of species.
-#' @param directory Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.
-#' @param matched Return a list of species that were downloaded. Default is TRUE.
-#' @param match_names_only Check for range maps for the species specified without downloading range maps. Default is FALSE.
-#' @param include.gid Should the files returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species.
-#' @param ... Additional arguments passed to internal functions.
+#' @template ranges
 #' @return Range maps for specified species.
 #' @examples \dontrun{
 #' species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
@@ -1302,11 +1226,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #'
 #'BIEN_ranges_genus extracts range maps for the specified genera.
 #' @param genus A single genus or a vector of genera.
-#' @param directory Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.
-#' @param matched Return a list of species that were downloaded. Default is TRUE.
-#' @param match_names_only Check for range maps for the genera specified without downloading range maps. Default is FALSE.
-#' @param include.gid Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template ranges
 #' @return Range maps for all available species within the specified genera.
 #' @examples \dontrun{
 #' genus_vector<-c("Abies","Acer")
@@ -1420,28 +1340,24 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
 #' @param max.lat Maximumlatitude of the ranges included.
 #' @param min.long Minimum longitude of the ranges included.
 #' @param max.long Maximum longitude of the ranges included.
-#' @param directory Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.
-#' @param species_names_only  Get a list of the species in the bounding box without downloading range maps. Default is FALSE.
-#' @param return.species.list Should a species list be returned?  Only meaningful when maps are being downloaded.
-#' @param crop.ranges Should the range maps be cropped to the GIS bounding box?  Default is FALSE.
-#' @param include.gid Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @param crop.ranges Should the ranges be cropped to the focal area? Default is FALSE.
+#' @template ranges_spatial
 #' @return Range maps for all available species within the specified bounding box.
 #' @examples \dontrun{
 #' testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
-#' BIEN_ranges_box(42,43,-85,-84,species_names_only = TRUE)
+#' BIEN_ranges_box(42,43,-85,-84,species.names.only = TRUE)
 #' BIEN_ranges_box(42,43,-85,-84,directory = testwd)}
 #' @family range functions
-BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, species_names_only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE, ...){
+BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE, ...){
   is_num(min.lat)
   is_num(max.lat)
   is_num(min.long)
   is_num(max.long)
   is_log(include.gid)
   is_log(return.species.list)
-  is_log(species_names_only)
+  is_log(species.names.only)
   
-  if(species_names_only==FALSE){
+  if(species.names.only==FALSE){
     
     #record original working directory,change to specified directory if given
     if(is.null(directory)){
@@ -1504,7 +1420,7 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
     
   }#species names only if statement
   
-  if(species_names_only==TRUE){
+  if(species.names.only==TRUE){
     
     #rangeQuery <- paste("SELECT species FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species;")
     query<-paste("SELECT species FROM ranges WHERE st_intersects(ST_MakeEnvelope(",min.long, ",",min.lat,",",max.long,",",max.lat,",4326),geom)")  
@@ -1521,19 +1437,15 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
       
     }
     
-  } #species_names_only ==TRUE
+  } #species.names.only ==TRUE
 }
 #######################################
 #'Download range maps that intersect the range of a given species.
 #'
 #'BIEN_ranges_intersect_species extracts range maps for a specified bounding box.
 #' @param species Focal species (or a vector of species) for which to extract intersecting ranges.
-#' @param directory Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.
-#' @param species.names.only  Get a list of the species with ranges overlapping the focal species' range without downloading range maps. Default is FALSE.
-#' @param include.focal Should the focal species be returned as well? Default is TRUE.
-#' @param return.species.list Should a species list be returned?  Only meaningful when maps are being downloaded.
-#' @param include.gid Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @param include.focal Should a range for the focal species be downloaded? Default is TRUE.
+#' @template ranges_spatial
 #' @return Range maps for all available species that intersect the range of the focal species.
 #' @examples \dontrun{
 #' testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
@@ -1630,7 +1542,7 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
       
     }
     
-  } #species_names_only ==TRUE
+  } #species.names.only ==TRUE
 }
 
 #######################################
@@ -1638,12 +1550,8 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
 #'
 #'BIEN_ranges_shapefile extracts range maps that interesect a specified shapefile.
 #' @param shapefile An object of class SpatialPolygonsDataFrame.
-#' @param directory Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.
-#' @param species_names_only  Get a list of the species with ranges overlapping the focal species' range without downloading range maps. Default is FALSE.
-#' @param return.species.list Should a species list be returned?  Only meaningful when maps are being downloaded.
-#' @param crop.ranges Should the returned shapefiles be cropped to the supplied shapefile?
-#' @param include.gid Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @param crop.ranges Should the ranges be cropped to the focal area? Default is FALSE.
+#' @template ranges_spatial
 #' @return All range maps that intersect the user-supplied shapfile.
 #' @note We recommend using the function readOGR() in the rgdal package to read in shapefiles.  Other methods may cause problems related to handling holes in polygons.
 #' @examples \dontrun{
@@ -1654,15 +1562,15 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
 #' #Note that this will save many shapefiles to the working directory.
 #' }
 #' @family range functions
-BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species_names_only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE,...){
+BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE,...){
   is_log(return.species.list)
-  is_log(species_names_only)
+  is_log(species.names.only)
   is_log(crop.ranges)
   is_log(include.gid)
   
   wkt<-rgeos::writeWKT(shapefile)
   
-  if(species_names_only==FALSE){
+  if(species.names.only==FALSE){
     
     #set directory for saving
     if(is.null(directory)){
@@ -1719,7 +1627,7 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species_names_only=FA
     
   }#species names only if statement
   
-  if(species_names_only==TRUE){
+  if(species.names.only==TRUE){
     
     query<-paste("SELECT species FROM ranges WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom)")  
     
@@ -1733,7 +1641,7 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species_names_only=FA
       
     }
     
-  } #species_names_only ==TRUE
+  } #species.names.only ==TRUE
 }
 
 #######################################
@@ -1819,9 +1727,7 @@ BIEN_ranges_list<-function( ...){
 #'
 #'BIEN_trait_species extracts trait data for the species specified.
 #' @param species A single species or a vector of species.
-#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
-#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template trait
 #' @return A dataframe of all available trait data for the given species.
 #' @examples \dontrun{
 #' BIEN_trait_species("Poa annua")
@@ -1955,9 +1861,7 @@ BIEN_trait_mean<-function(species,trait, ...){
 #'
 #'BIEN_trait_trait downloads all measurements of the trait(s) specified.
 #' @param trait A single trait or a vector of traits.
-#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
-#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template trait
 #' @return A dataframe of all available trait data for the given trait(s).
 #' @examples \dontrun{
 #' BIEN_trait_trait("whole plant height")
@@ -2009,9 +1913,7 @@ BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = F
 #'BIEN_trait_traitbyspecies extracts entries that contain the specified species and trait(s).
 #' @param species A single species or a vector of species.
 #' @param trait A single trait or a vector of traits.
-#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
-#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template trait
 #' @return A dataframe of all data matching the specified trait(s) and species.
 #' @examples \dontrun{
 #' BIEN_trait_traitbyspecies(trait = "whole plant height", species = "Carex capitata")
@@ -2068,9 +1970,7 @@ BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, politi
 #'BIEN_trait_traitbygenus extracts entries that contain the specified genus/genera and trait(s).
 #' @param genus A single genus or a vector of genera.
 #' @param trait A single trait or a vector of traits.
-#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
-#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template trait
 #' @return A dataframe of all data matching the specified trait(s) and genus/genera.
 #' @examples \dontrun{
 #' BIEN_trait_traitbygenus(trait = "whole plant height", genus = "Carex")
@@ -2127,9 +2027,7 @@ BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.
 #'BIEN_trait_traitbyfamily extracts entries that contain the specified families and trait(s).
 #' @param family A single family or a vector of families.
 #' @param trait A single trait or a vector of traits.
-#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
-#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template trait
 #' @return A dataframe of all data matching the specified trait(s) and family/families.
 #' @examples \dontrun{
 #' BIEN_trait_traitbyfamily(trait = "whole plant height", family = "Poaceae")
@@ -2186,9 +2084,7 @@ BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, politica
 #'
 #'BIEN_trait_genus extracts entries that contain the specified genera.
 #' @param genus A single genus or a vector of genera.
-#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
-#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template trait
 #' @return A dataframe of all data matching the specified genera.
 #' @examples \dontrun{
 #' BIEN_trait_genus("Acer")
@@ -2236,9 +2132,7 @@ BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = F
 #'
 #'BIEN_trait_family extracts all trait data for the specified families.
 #' @param family A single family or a vector of families.
-#' @param all.taxonomy Should full taxonomic information and TNRS output be returned?  Default is FALSE.
-#' @param political.boundaries Should political boundary information (country, state, etc.) be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template trait
 #' @return A dataframe of all data matching the specified families.
 #' @examples \dontrun{
 #' BIEN_trait_family("Poaceae")
@@ -2411,15 +2305,7 @@ is_num <- function(x) {
 #'
 #'BIEN_plot_datasource downloads all plot data from a given datasource.
 #' @param datasource A datasource. See BIEN.plot.list_datasource() for options.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template plot
 #' @return A dataframe containing all data from the specified datasource.
 #' @examples \dontrun{
 #' BIEN_plot_datasource("SALVIAS")}
@@ -2535,15 +2421,7 @@ BIEN_plot_list_datasource<-function(...){
 #'
 #'BIEN_plot_country downloads all plot data from specified countries.
 #' @param country A country or vector of countries.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template plot
 #' @return A dataframe containing all data from the specified countries.
 #' @examples \dontrun{
 #' BIEN_plot_country("Costa Rica")
@@ -2644,15 +2522,7 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
 #'BIEN_plot_state downloads all plot data from specified states/provinces.
 #' @param country A single country.
 #' @param state A state or vector of states.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template plot
 #' @note This function requires you supply either 1) a single country with one or states, or 2) vectors of equal length for each political level.
 #' @return A dataframe containing all data from the specified states.
 #' @examples \dontrun{
@@ -2799,15 +2669,7 @@ BIEN_plot_list_sampling_protocols<-function(...){
 #'
 #'BIEN_plot_sampling_protocol downloads all plot data using a specified sampling protocol.
 #' @param sampling_protocol A sampling protocol or vector of sampling protocols. See BIEN.plot.list_sampling_protocols() for options.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template plot
 #' @return A dataframe containing all data from the specified datasource.
 #' @examples \dontrun{
 #' BIEN_plot_sampling_protocol("Point-intercept")}
@@ -2903,15 +2765,7 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
 #'
 #'BIEN_plot_name downloads all plot data for a set of plot names.
 #' @param plot.name A plot name or vector of names. See BIEN_plot_metadata for more information on plots.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template plot
 #' @return A dataframe containing all data from the specified plot(s).
 #' @examples \dontrun{
 #' BIEN_plot_name("SR-1")}
@@ -3007,15 +2861,7 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
 #'
 #'BIEN_plot_dataset downloads all plot data for a given dataset or datasets.
 #' @param dataset A plot dataset or vector of datasets. See BIEN_plot_metadata for more information on plots.
-#' @param cultivated Return cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template plot
 #' @return A dataframe containing all data from the specified dataset.
 #' @examples \dontrun{
 #' BIEN_plot_dataset("Gentry Transect Dataset")}
@@ -3136,7 +2982,7 @@ BIEN_plot_metadata<-function( ...){
 #'
 #'BIEN_taxonomy_species downloads a dataframe of all taxonomic information for given species.
 #' @param species A single species or a vector of species.
-#' @param ... Additional arguments passed to internal functions.
+#' @template taxonomy
 #' @return Dataframe containing taxonomic information for the specified species.
 #' @examples \dontrun{
 #' BIEN_taxonomy_species("Cannabis sativa")
@@ -3165,7 +3011,7 @@ BIEN_taxonomy_species<-function(species, ...){
 #'
 #'BIEN_taxonomy_genus downloads a dataframe of all taxonomic information for given genera.
 #' @param genus A single genus or a vector of genera.
-#' @param ... Additional arguments passed to internal functions.
+#' @template taxonomy
 #' @return Dataframe containing taxonomic information for the specified genera.
 #' @examples \dontrun{
 #' BIEN_taxonomy_genus("Acer")
@@ -3195,7 +3041,7 @@ BIEN_taxonomy_genus<-function(genus, ...){
 #'
 #'BIEN_taxonomy_family downloads a dataframe of all taxonomic information for given families.
 #' @param family A single family or a vector of families.
-#' @param ... Additional arguments passed to internal functions.
+#' @template taxonomy
 #' @return Dataframe containing taxonomic information for the specified families.
 #' @examples \dontrun{
 #' BIEN_taxonomy_family("Orchidaceae")
@@ -3231,7 +3077,7 @@ BIEN_taxonomy_family<-function(family, ...){
 #' @param n_phylogenies The number of phylogenies to download.  Should be an integer between 1 and 100.  Default is 1.
 #' @param seed Argument passed to set.seed.  Useful for replicating work with random phylogeny sets.
 #' @param replicates The specific replicated phylogenies to return.  Should be a numeric vector of integers between 1 and 100.
-#' @param ... Additional arguments passed to internal functions.
+#' @template phylogeny
 #' @return A phylo or multiphylo object containing the specified phylogenies
 #' @examples \dontrun{
 #' phylos<-BIEN_phylogeny_complete(n_phylogenies = 10,seed = 1)
@@ -3284,7 +3130,7 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
 #'Download the conservative BIEN phylogeny
 #'
 #'BIEN_phylogeny_conservative downloads the conservative BIEN phylogeny, which only includes species with molecular data available.
-#' @param ... Additional arguments passed to internal functions.
+#' @template phylogeny
 #' @return A phylo object containing the BIEN conservative phylogeny
 #' @examples \dontrun{
 #' BIEN_phylo<-BIEN_phylogeny_conservative()}
@@ -3650,15 +3496,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
 #'
 #'BIEN_stem_species downloads occurrence records for specific species from the BIEN database.
 #' @param species A single species, or a vector of species.  Genus and species should be separated by a space. Genus should be capitalized.
-#' @param cultivated Return known cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template stem
 #' @return Dataframe containing stem data for the specified species.
 #' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 #' @examples \dontrun{
@@ -3768,15 +3606,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
 #'
 #'BIEN_stem_family downloads occurrence records for specific families from the BIEN database.
 #' @param family A single family, or a vector of families. Families should be capitalized.
-#' @param cultivated Return known cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template stem
 #' @return Dataframe containing stem data for the specified families.
 #' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 #' @examples \dontrun{
@@ -3883,15 +3713,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
 #'
 #'BIEN_stem_genus downloads occurrence records for specific genera from the BIEN database.
 #' @param genus A single genus, or a vector of genera. Genera should be capitalized.
-#' @param cultivated Return known cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template stem
 #' @return Dataframe containing stem data for the specified genera.
 #' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 #' @examples \dontrun{
@@ -4000,15 +3822,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
 #'
 #'BIEN_stem_datasource downloads occurrence records for specific datasources from the BIEN database.
 #' @param datasource A single datasource, or a vector of datasources.
-#' @param cultivated Return known cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is true
-#' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
-#' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
-#' @param natives.only Exclude detected introduced species?  Default is TRUE.
-#' @param political.boundaries Return information on political boundaries for an observation? The default value is FALSE.
-#' @param collection.info Return additional information about collection and identification? The default value is FALSE.
-#' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
-#' @param ... Additional arguments passed to internal functions.
+#' @template stem
 #' @return Dataframe containing stem data for the specified datasource.
 #' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 #' @examples \dontrun{

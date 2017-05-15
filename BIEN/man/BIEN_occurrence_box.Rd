@@ -18,7 +18,7 @@ BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
 
 \item{max.long}{Maximum longitude}
 
-\item{cultivated}{Return cultivated records as well?  Default is FALSE.}
+\item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
 

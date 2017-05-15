@@ -12,11 +12,11 @@ BIEN_ranges_genus(genus, directory = NULL, matched = TRUE,
 
 \item{directory}{Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.}
 
-\item{matched}{Return a list of species that were downloaded. Default is TRUE.}
+\item{matched}{Return a list of taxa that were downloaded. Default is TRUE.}
 
-\item{match_names_only}{Check for range maps for the genera specified without downloading range maps. Default is FALSE.}
+\item{match_names_only}{Check for range maps for the taxa specified without downloading range maps. Default is FALSE.}
 
-\item{include.gid}{Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.}
+\item{include.gid}{Should the files returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

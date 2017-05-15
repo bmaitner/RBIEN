@@ -5,7 +5,7 @@
 \title{Download range maps that intersect a user-supplied shapefile.}
 \usage{
 BIEN_ranges_shapefile(shapefile, directory = NULL,
-  species_names_only = FALSE, return.species.list = TRUE,
+  species.names.only = FALSE, return.species.list = TRUE,
   crop.ranges = FALSE, include.gid = FALSE, ...)
 }
 \arguments{
@@ -13,13 +13,13 @@ BIEN_ranges_shapefile(shapefile, directory = NULL,
 
 \item{directory}{Directory that range maps should be saved in.  If none is specified, range maps will be saved in the current working directory.}
 
-\item{species_names_only}{Get a list of the species with ranges overlapping the focal species' range without downloading range maps. Default is FALSE.}
+\item{species.names.only}{Return species names rather than spatial data? Default is FALSE.}
 
-\item{return.species.list}{Should a species list be returned?  Only meaningful when maps are being downloaded.}
+\item{return.species.list}{Should a species list be returned in addition to downloading range maps?  Default is FALSE}
 
-\item{crop.ranges}{Should the returned shapefiles be cropped to the supplied shapefile?}
+\item{crop.ranges}{Should the ranges be cropped to the focal area? Default is FALSE.}
 
-\item{include.gid}{Should the filenames returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species. Default is FALSE.}
+\item{include.gid}{Should the files returned have a unique GID appended to them? This is needed if downloading multiple maps for the same species.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

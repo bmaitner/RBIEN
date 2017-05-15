@@ -14,7 +14,7 @@ BIEN_occurrence_state(country, state, cultivated = FALSE,
 
 \item{state}{A single state or a vector of states.}
 
-\item{cultivated}{Return cultivated records as well?  Default is FALSE.}
+\item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
 \item{only.new.world}{Return only records from the New World?  Default is true}
 
