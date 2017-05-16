@@ -37,7 +37,7 @@ BIEN_ranges_box extracts range maps for a specified bounding box.
 }
 \examples{
 \dontrun{
-testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
+testwd<-tempdir() #Set a working directory
 BIEN_ranges_box(42,43,-85,-84,species.names.only = TRUE)
 BIEN_ranges_box(42,43,-85,-84,directory = testwd)}
 }

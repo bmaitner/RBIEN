@@ -38,10 +38,11 @@ BIEN_occurrence_shapefile downloads occurrence records falling within a user-spe
 }
 \examples{
 \dontrun{
+library(rgdal)
 BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
 shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
-#shapefiles should be read with readOGR(), see note.
-species_occurrenes<-BIEN_occurrences_shapefile(shapefile=shape)}
+#shapefiles should be read with readOGR().
+species_occurrenes<-BIEN_occurrence_shapefile(shapefile=shape)}
 }
 \seealso{
 Other occurrence functions: \code{\link{BIEN_occurrence_box}},

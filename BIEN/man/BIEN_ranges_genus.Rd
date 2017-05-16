@@ -28,22 +28,22 @@ BIEN_ranges_genus extracts range maps for the specified genera.
 }
 \examples{
 \dontrun{
+library(rgdal)
+library(maps)
 genus_vector<-c("Abies","Acer")
-testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
+testwd<-tempdir() #Set a working directory
 BIEN_ranges_genus(genus_vector)
 BIEN_ranges_genus(genus_vector,match_names_only = TRUE)
-BIEN_ranges_genus(genus_vector,test_wd)#saves ranges to a specified working directory
+BIEN_ranges_genus(genus_vector,testwd)#saves ranges to a specified working directory
 BIEN_ranges_genus("Abies")
-BIEN_ranges_genus("Abies","C:/wherever/you/want/files/saved/")
+BIEN_ranges_genus("Abies",tempdir())
 
 #Reading files
-setwd("C:/wherever/your/shapefiles/are/")
-Abies_poly<-readShapePoly("Abies_lasiocarpa")
-Abies_poly<-readShapePoly("C:/wherever/your/shapefiles/are/Abies_lasiocarpa.shp")
+
+Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
 
 #Plotting files
 plot(Abies_poly)#plots the shapefile, but doesn't mean much without any reference
-require(maps)#easy source of maps
 map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
 

@@ -19,13 +19,13 @@ BIEN_ranges_load_species returns spatial data for the specified species.
 }
 \examples{
 \dontrun{
+library(maps)
 species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
 abies_maps<-BIEN_ranges_load_species(species = species_vector)
 xanthium_strumarium<-BIEN_ranges_load_species(species = "Xanthium strumarium")
 
 #Plotting files
 plot(abies_maps)#plots the shapefile, but doesn't mean much without any reference
-require(maps) #easy source of maps
 map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 plot(xanthium_strumarium,col="forest green",add=TRUE) #adds the range of X. strumarium
 plot(abies_maps[1,], add = T, col ="light green")}

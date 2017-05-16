@@ -38,7 +38,6 @@ BIEN_occurrence_country extracts occurrences records for the specified country/c
 }
 \examples{
 \dontrun{
-library(RPostgreSQL)
 BIEN_occurrence_country("Cuba")
 country_vector<-c("Cuba","Bahamas")
 BIEN_occurrence_country(country_vector)}

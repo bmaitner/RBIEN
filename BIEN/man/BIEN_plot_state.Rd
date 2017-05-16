@@ -43,8 +43,8 @@ This function requires you supply either 1) a single country with one or states,
 }
 \examples{
 \dontrun{
-BIEN_plot_state("Colorado")
-BIEN_plot_state(c("Colorado","California"))}
+BIEN_plot_state(country="United States", state="Colorado")
+BIEN_plot_state(country="United States",state= c("Colorado","California"))}
 }
 \seealso{
 Other plot functions: \code{\link{BIEN_plot_country}},

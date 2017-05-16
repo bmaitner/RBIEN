@@ -34,6 +34,7 @@ We recommend using the function readOGR() in the rgdal package to read in shapef
 }
 \examples{
 \dontrun{
+library(rgdal)
 BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
 shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
 #shapefiles should be read with readOGR(), see note.

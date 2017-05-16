@@ -28,22 +28,21 @@ BIEN_ranges_species extracts range maps for the specified species.
 }
 \examples{
 \dontrun{
+library(rgdal)
+library(maps) #a convenient source of maps
 species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
-testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
 BIEN_ranges_species(species_vector)
 BIEN_ranges_species(species_vector,match_names_only = TRUE)
-BIEN_ranges_species(species_vector,test_wd)#saves ranges to a specified working directory
+BIEN_ranges_species(species_vector,tempdir())#saves ranges to a temporary directory
 BIEN_ranges_species("Abies_lasiocarpa")
-BIEN_ranges_species("Abies_lasiocarpa","C:/wherever/you/want/files/saved/")
+BIEN_ranges_species("Abies_lasiocarpa",tempdir())
 
 #Reading files
-setwd("C:/wherever/your/shapefiles/are/")
-Abies_poly<-readShapePoly("Abies_lasiocarpa")
-Abies_poly<-readShapePoly("C:/wherever/your/shapefiles/are/Abies_lasiocarpa.shp")
+
+Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
 
 #Plotting files
 plot(Abies_poly)#plots the shapefile, but doesn't mean much without any reference
-require(maps)#easy source of maps
 map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
 

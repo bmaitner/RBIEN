@@ -96,7 +96,6 @@ For full information on each function, see the associated help file.
 * `BIEN_stem_species` Downloads all stem data for given species.
 * `BIEN_stem_genus` Downloads all stem data for given genera.
 * `BIEN_stem_family` Downloads all stem data for given families.
-* `BIEN_stem_datasource` Downloads occurrence records for specific datasources.
 
 ###BIEN_taxonomy functions
 * `BIEN_taxonomy_species` Downloads all taxonomic information for given species.
