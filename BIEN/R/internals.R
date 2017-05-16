@@ -41,7 +41,7 @@ taxonomy_check<-function(all.taxonomy){
   if(!all.taxonomy){
     select<-""
   }else{
-    select<-"verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author,"
+    select<-", verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author"
   }
   
   output<-as.data.frame(cbind(select),stringsAsFactors = F)  
@@ -59,7 +59,7 @@ native_check<-function(native.status){
   if(!native.status){
     select<-""
   }else{
-    select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
+    select<-",native_status, native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish"
   }
   
   output<-as.data.frame(cbind(select),stringsAsFactors = F)  
@@ -90,7 +90,7 @@ political_check<-function(political.boundaries){
   if(!political.boundaries){
     select<-""
   }else{
-    select<-"country,state_province,county,locality,"
+    select<-", country,state_province,county,locality"
   }
   
   
@@ -122,7 +122,7 @@ collection_check<-function(collection.info){
   if(!collection.info){
     select<-""
   }else{
-    select<-"catalog_number, recorded_by, record_number, date_collected, identified_by, date_identified, identification_remarks  "
+    select<-",catalog_number, recorded_by, record_number, date_collected, identified_by, date_identified, identification_remarks  "
   }  
   
   output<-as.data.frame(cbind(select),stringsAsFactors = F)  

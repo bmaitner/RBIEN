@@ -14,6 +14,8 @@
 #' BIEN_occurrence_species(species_vector,all.taxonomy=TRUE)}
 #' @family occurrence functions
 BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
+  
+  #Test input
   is_log(cultivated)
   is_log(only.new.world)
   is_log(all.taxonomy)
@@ -25,62 +27,24 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,a
   is_log(collection.info)
   
   #set conditions for query
-  
-  if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
-    cultivated_select<-""
-  }else{
-    cultivated_query<-""
-    cultivated_select<-",is_cultivated,is_cultivated_in_region"
-  }
-  
-  if(!only.new.world){
-    newworld_query<-""
-    newworld_select<-",is_new_world"
-  }else{
-    newworld_query<-"AND is_new_world = 1 "
-    newworld_select<-""
-  }
-  
-  if(!all.taxonomy){
-    taxon_select<-""
-  }else{
-    taxon_select<-"verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author,"
-  }
-  
-  if(!native.status){
-    native_select<-""
-  }else{
-    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
-  }
-  
-  if(!observation.type){
-    observation_select<-""
-  }else{
-    observation_select<-",observation_type"
-  }
-  
-  if(!political.boundaries){
-    political_select<-""
-  }else{
-    political_select<-"country,state_province,county,locality,"
-  }
-  
-  if(!natives.only){
-    native_query<-""
-  }else{
-    native_query<-"AND ( native_status IS NULL OR native_status NOT IN ( 'I', 'Ie' ) )"
-  }  
-  
-  if(!collection.info){
-    collection_select<-""
-  }else{
-    collection_select<-"catalog_number, recorded_by, record_number, date_collected, identified_by, date_identified, identification_remarks  "
-  }  
-  
+  cultivated_<-cultivated_check(cultivated)  
+  newworld_<-newworld_check(only.new.world)
+  taxonomy_<-taxonomy_check(all.taxonomy)  
+  native_<-native_check(native.status)
+  observation_<-observation_check(observation.type)
+  political_<-political_check(political.boundaries)  
+  natives_<-natives_check(natives.only)
+  collection_<-collection_check(collection.info)
   
   # set the query
-  query <- paste("SELECT scrubbed_species_binomial,",taxon_select,native_select,political_select," latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",paste(collection_select,cultivated_select,newworld_select,observation_select),"FROM view_full_occurrence_individual WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query,native_query),  "AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY scrubbed_species_binomial;")
+  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,latitude, longitude,date_collected,
+                 datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",
+                 collection_$select,cultivated_$select,newworld_$select,observation_$select,"
+                 FROM view_full_occurrence_individual 
+                 WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",
+                 cultivated_$query,newworld_$query,natives_$query,  "
+                 AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) 
+                 ORDER BY scrubbed_species_binomial;")
   
   return(.BIEN_sql(query, ...))
   
@@ -119,65 +83,19 @@ BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TR
   
   #set conditions for query
   
-  if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
-    cultivated_select<-""
-  }else{
-    cultivated_query<-""
-    cultivated_select<-",is_cultivated,is_cultivated_in_region"
-  }
-  
-  if(!only.new.world){
-    newworld_query<-""
-    newworld_select<-",is_new_world"
-  }else{
-    newworld_query<-"AND is_new_world = 1 "
-    newworld_select<-""
-  }
-  
-  if(!all.taxonomy){
-    taxon_select<-""
-  }else{
-    taxon_select<-"verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author,"
-  }
-  
-  if(!native.status){
-    native_select<-""
-  }else{
-    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
-  }
-  
-  
-  if(!natives.only){
-    native_query<-""
-  }else{
-    native_query<-"AND ( native_status IS NULL OR native_status NOT IN ( 'I', 'Ie' ) )"
-  }  
-  
-  
-  if(!observation.type){
-    observation_select<-""
-  }else{
-    observation_select<-",observation_type"
-  }
-  
-  if(!political.boundaries){
-    political_select<-""
-  }else{
-    political_select<-"country,state_province,county,locality,"
-  }
-  
-  if(!collection.info){
-    collection_select<-""
-  }else{
-    collection_select<-"catalog_number, recorded_by, record_number, date_collected, identified_by, date_identified, identification_remarks  "
-  }  
-  
+  cultivated_<-cultivated_check(cultivated)  
+  newworld_<-newworld_check(only.new.world)
+  taxonomy_<-taxonomy_check(all.taxonomy)  
+  native_<-native_check(native.status)
+  observation_<-observation_check(observation.type)
+  political_<-political_check(political.boundaries)  
+  natives_<-natives_check(natives.only)
+  collection_<-collection_check(collection.info)
   
   # set the query
-  query <- paste("SELECT scrubbed_species_binomial,",taxon_select,native_select,political_select," latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,a.datasource_id",paste(collection_select,cultivated_select,newworld_select,observation_select),"FROM 
+  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," , latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,a.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"FROM 
                  (SELECT * FROM view_full_occurrence_individual WHERE higher_plant_group IS NOT NULL AND is_geovalid =1 AND latitude BETWEEN ",lat_min," AND ",lat_max,"AND longitude BETWEEN ",long_min," AND ",long_max,") a 
-                 WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_query,newworld_query,native_query, "AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY scrubbed_species_binomial ;")
+                 WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_$query,newworld_$query,natives_$query, "AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY scrubbed_species_binomial ;")
   
   # create query to retrieve
   df <- .BIEN_sql(query)
@@ -191,6 +109,8 @@ BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TR
   }
   
 }
+
+
 
 ###############################
 
@@ -441,6 +361,7 @@ BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,...
   lat_min<-shapefile@bbox[2,1]
   lat_max<-shapefile@bbox[2,2]
   
+  
   # adjust for optional parameters
   if(!cultivated){
     cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
@@ -505,65 +426,21 @@ BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.t
   is_log(natives.only)
   is_log(collection.info)
   
-  #set conditions for query
-  if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
-    cultivated_select<-""
-  }else{
-    cultivated_query<-""
-    cultivated_select<-",is_cultivated,is_cultivated_in_region"
-  }
-  
-  if(!only.new.world){
-    newworld_query<-""
-    newworld_select<-",is_new_world"
-  }else{
-    newworld_query<-"AND is_new_world = 1 "
-    newworld_select<-""
-  }
-  
-  if(!all.taxonomy){
-    taxon_select<-""
-  }else{
-    taxon_select<-"verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author,"
-  }
-  
-  if(!native.status){
-    native_select<-""
-  }else{
-    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
-  }
-  
-  if(!observation.type){
-    observation_select<-""
-  }else{
-    observation_select<-",observation_type"
-  }
-  
-  if(!political.boundaries){
-    political_select<-""
-  }else{
-    political_select<-"country,state_province,county,locality,"
-  }
-  
-  if(!natives.only){
-    native_query<-""
-  }else{
-    native_query<-"AND ( native_status IS NULL OR native_status NOT IN ( 'I', 'Ie' ) )"
-  }  
-  
-  if(!collection.info){
-    collection_select<-""
-  }else{
-    collection_select<-"catalog_number, recorded_by, record_number, date_collected, identified_by, date_identified, identification_remarks  "
-  } 
-  
+  cultivated_<-cultivated_check(cultivated)  
+  newworld_<-newworld_check(only.new.world)
+  taxonomy_<-taxonomy_check(all.taxonomy)  
+  native_<-native_check(native.status)
+  observation_<-observation_check(observation.type)
+  political_<-political_check(political.boundaries)  
+  natives_<-natives_check(natives.only)
+  collection_<-collection_check(collection.info)
   
   # set the query
   query <-
-    paste("SELECT scrubbed_genus, scrubbed_species_binomial,",taxon_select,native_select,political_select," latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",paste(collection_select,cultivated_select,newworld_select,observation_select), "
+    paste("SELECT scrubbed_genus, scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select, "
           FROM view_full_occurrence_individual 
-          WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query,native_query)," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY scrubbed_species_binomial;")
+          WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) 
+          ORDER BY scrubbed_species_binomial;")
   
   return(.BIEN_sql(query, ...))
   
@@ -593,65 +470,20 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,obs
   is_log(collection.info)
   
   #set conditions for query
-  if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
-    cultivated_select<-""
-  }else{
-    cultivated_query<-""
-    cultivated_select<-",is_cultivated,is_cultivated_in_region"
-  }
-  
-  if(only.new.world){
-    newworld_query<-"AND is_new_world = 1 "
-    newworld_select<-""
-  }else{
-    newworld_query<-""
-    newworld_select<-",is_new_world"
-  }
-  
-  
-  if(!all.taxonomy){
-    taxon_select<-""
-  }else{
-    taxon_select<-"verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_author,"
-  }
-  
-  if(!native.status){
-    native_select<-""
-  }else{
-    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
-  }
-  
-  if(!natives.only){
-    native_query<-""
-  }else{
-    native_query<-"AND ( native_status IS NULL OR native_status NOT IN ( 'I', 'Ie' ) )"
-  }  
-  
-  if(!observation.type){
-    observation_select<-""
-  }else{
-    observation_select<-",observation_type"
-  }
-  
-  if(!political.boundaries){
-    political_select<-""
-  }else{
-    political_select<-"country,state_province,county,locality,"
-  }
-  
-  if(!collection.info){
-    collection_select<-""
-  }else{
-    collection_select<-"catalog_number, recorded_by, record_number, date_collected, identified_by, date_identified, identification_remarks  "
-  }  
-  
-  
+  cultivated_<-cultivated_check(cultivated)  
+  newworld_<-newworld_check(only.new.world)
+  taxonomy_<-taxonomy_check(all.taxonomy)  
+  native_<-native_check(native.status)
+  observation_<-observation_check(observation.type)
+  political_<-political_check(political.boundaries)  
+  natives_<-natives_check(natives.only)
+  collection_<-collection_check(collection.info)
   
   # set the query
-  query <- paste("SELECT scrubbed_family,",taxon_select,native_select,political_select,"scrubbed_species_binomial, latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",paste(collection_select,cultivated_select,newworld_select,observation_select),"
+  query <- paste("SELECT scrubbed_family",taxonomy_$select,native_$select,political_$select,", scrubbed_species_binomial, latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
                  FROM view_full_occurrence_individual 
-                 WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query,native_query), " AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY scrubbed_species_binomial;")
+                 WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query, " AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) 
+                 ORDER BY scrubbed_species_binomial;")
   
   return(.BIEN_sql(query, ...))
   
@@ -686,59 +518,15 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
   is_log(collection.info)
       
   #set conditions for query
-  if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
-    cultivated_select<-""
-  }else{
-    cultivated_query<-""
-    cultivated_select<-",is_cultivated,is_cultivated_in_region"
-  }
-  
-  if(only.new.world){
-    newworld_query<-"AND is_new_world = 1 "
-    newworld_select<-""
-  }else{
-    newworld_query<-""
-    newworld_select<-",is_new_world"
-  }
-  
-  if(!all.taxonomy){
-    taxon_select<-""
-  }else{
-    taxon_select<-"verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author,"
-  }
-  
-  if(!native.status){
-    native_select<-""
-  }else{
-    native_select<-" ,native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish"
-  }
-  
-  if(!natives.only){
-    native_query<-""
-  }else{
-    native_query<-"AND ( native_status IS NULL OR native_status NOT IN ( 'I', 'Ie' ) )"
-  }  
-  
-  if(!observation.type){
-    observation_select<-""
-  }else{
-    observation_select<-",observation_type"
-  }
-  
-  if(!political.boundaries){
-    political_select<-"state_province,"
-  }else{
-    political_select<-"country,state_province,county,locality,"
-  }
-  
-  if(!collection.info){
-    collection_select<-""
-  }else{
-    collection_select<-"catalog_number, recorded_by, record_number, date_collected, identified_by, date_identified, identification_remarks  "
-  } 
-  
-  
+  cultivated_<-cultivated_check(cultivated)  
+  newworld_<-newworld_check(only.new.world)
+  taxonomy_<-taxonomy_check(all.taxonomy)  
+  native_<-native_check(native.status)
+  observation_<-observation_check(observation.type)
+  political_<-political_check(political.boundaries)  
+  natives_<-natives_check(natives.only)
+  collection_<-collection_check(collection.info)
+ 
   ##state where
   if(length(country)==1){
     sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
@@ -773,11 +561,11 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
   
   
   # set the query
-  query <- paste("SELECT ",political_select," scrubbed_species_binomial," ,taxon_select , "latitude, longitude,date_collected,datasource,
+  query <- paste("SELECT scrubbed_species_binomial" ,taxonomy_$select,political_$select, ", latitude, longitude,date_collected,datasource,
                  dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",
-                 collection_select,cultivated_select,newworld_select,native_select,observation_select,"
+                 collection_$select,cultivated_$select,newworld_$select,native_$select,observation_$select,"
                  FROM view_full_occurrence_individual ",
-                 sql_where,cultivated_query,newworld_query,native_query," 
+                 sql_where,cultivated_$query,newworld_$query,natives_$query," 
                  AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) 
                  ORDER BY scrubbed_species_binomial;")
   
@@ -811,62 +599,19 @@ BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,a
   is_log(collection.info)
   
   #set conditions for query
-  if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
-    cultivated_select<-""
-  }else{
-    cultivated_query<-""
-    cultivated_select<-",is_cultivated,is_cultivated_in_region"
-  }
   
-  if(only.new.world){
-    newworld_query<-"AND is_new_world = 1 "
-    newworld_select<-""
-  }else{
-    newworld_query<-""
-    newworld_select<-",is_new_world"
-  }
-  
-  if(!all.taxonomy){
-    taxon_select<-""
-  }else{
-    taxon_select<-"verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author,"
-  }
-  
-  if(!native.status){
-    native_select<-""
-  }else{
-    native_select<-"native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish,"
-  }
-  
-  if(!natives.only){
-    native_query<-""
-  }else{
-    native_query<-"AND ( native_status IS NULL OR native_status NOT IN ( 'I', 'Ie' ) )"
-  }  
-  
-  
-  if(!observation.type){
-    observation_select<-""
-  }else{
-    observation_select<-",observation_type"
-  }
-  
-  if(!political.boundaries){
-    political_select<-"country,"
-  }else{
-    political_select<-"country,state_province,county,locality,"
-  }
-  
-  if(!collection.info){
-    collection_select<-""
-  }else{
-    collection_select<-"catalog_number, recorded_by, record_number, date_collected, identified_by, date_identified, identification_remarks  "
-  }  
+  cultivated_<-cultivated_check(cultivated)  
+  newworld_<-newworld_check(only.new.world)
+  taxonomy_<-taxonomy_check(all.taxonomy)  
+  native_<-native_check(native.status)
+  observation_<-observation_check(observation.type)
+  political_<-political_check(political.boundaries)  
+  natives_<-natives_check(natives.only)
+  collection_<-collection_check(collection.info)
   
   # set the query
-  query <- paste("SELECT ",political_select ," scrubbed_species_binomial,",taxon_select,native_select,"latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",paste(collection_select,cultivated_select,newworld_select,observation_select),"
-                 FROM view_full_occurrence_individual WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",paste(cultivated_query,newworld_query,native_query)," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
+  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
+                 FROM view_full_occurrence_individual WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
   
   return(.BIEN_sql(query, ...))
   
