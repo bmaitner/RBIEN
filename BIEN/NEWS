@@ -13,6 +13,8 @@ BIEN 1.1.1
 
 ##BUG FIXES
 * Fixed issue with BIEN_occurrence_shapefile()
+* Updated test structure to comply with standard practices
+* Modified function documentation to use templates
 
 ===============
 BIEN 1.1.0

@@ -94,10 +94,11 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,a
 #' @template occurrence
 #' @return Dataframe containing occurrence records for the specified species.
 #' @examples \dontrun{
+#' library(rgdal)
 #' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
 #' shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
-#' #shapefiles should be read with readOGR(), see note.
-#' species_occurrenes<-BIEN_occurrences_shapefile(shapefile=shape)}
+#' #shapefiles should be read with readOGR().
+#' species_occurrenes<-BIEN_occurrence_shapefile(shapefile=shape)}
 #' @family occurrence functions
 BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
   is_log(cultivated)
@@ -794,7 +795,6 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
 #' @template occurrence
 #' @return Dataframe containing occurrence records for the specified country.
 #' @examples \dontrun{
-#' library(RPostgreSQL)
 #' BIEN_occurrence_country("Cuba")
 #' country_vector<-c("Cuba","Bahamas")
 #' BIEN_occurrence_country(country_vector)}
@@ -1110,22 +1110,21 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
 #' @template ranges
 #' @return Range maps for specified species.
 #' @examples \dontrun{
+#' library(rgdal)
+#' library(maps) #a convenient source of maps
 #' species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
-#' testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
 #' BIEN_ranges_species(species_vector)
 #' BIEN_ranges_species(species_vector,match_names_only = TRUE)
-#' BIEN_ranges_species(species_vector,test_wd)#saves ranges to a specified working directory
+#' BIEN_ranges_species(species_vector,tempdir())#saves ranges to a temporary directory
 #' BIEN_ranges_species("Abies_lasiocarpa")
-#' BIEN_ranges_species("Abies_lasiocarpa","C:/wherever/you/want/files/saved/")
+#' BIEN_ranges_species("Abies_lasiocarpa",tempdir())
 #'
 #' #Reading files
-#' setwd("C:/wherever/your/shapefiles/are/")
-#' Abies_poly<-readShapePoly("Abies_lasiocarpa")
-#' Abies_poly<-readShapePoly("C:/wherever/your/shapefiles/are/Abies_lasiocarpa.shp")
-#'
+#' 
+#' Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
+#' 
 #' #Plotting files
 #' plot(Abies_poly)#plots the shapefile, but doesn't mean much without any reference
-#' require(maps)#easy source of maps
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 #' plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
 #'
@@ -1229,22 +1228,22 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #' @template ranges
 #' @return Range maps for all available species within the specified genera.
 #' @examples \dontrun{
+#' library(rgdal)
+#' library(maps)
 #' genus_vector<-c("Abies","Acer")
-#' testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
+#' testwd<-tempdir() #Set a working directory
 #' BIEN_ranges_genus(genus_vector)
 #' BIEN_ranges_genus(genus_vector,match_names_only = TRUE)
-#' BIEN_ranges_genus(genus_vector,test_wd)#saves ranges to a specified working directory
+#' BIEN_ranges_genus(genus_vector,testwd)#saves ranges to a specified working directory
 #' BIEN_ranges_genus("Abies")
-#' BIEN_ranges_genus("Abies","C:/wherever/you/want/files/saved/")
+#' BIEN_ranges_genus("Abies",tempdir())
 #'
 #' #Reading files
-#' setwd("C:/wherever/your/shapefiles/are/")
-#' Abies_poly<-readShapePoly("Abies_lasiocarpa")
-#' Abies_poly<-readShapePoly("C:/wherever/your/shapefiles/are/Abies_lasiocarpa.shp")
-#'
+#' 
+#' Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
+#' 
 #' #Plotting files
 #' plot(Abies_poly)#plots the shapefile, but doesn't mean much without any reference
-#' require(maps)#easy source of maps
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 #' plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
 #'
@@ -1344,7 +1343,7 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
 #' @template ranges_spatial
 #' @return Range maps for all available species within the specified bounding box.
 #' @examples \dontrun{
-#' testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
+#' testwd<-tempdir() #Set a working directory
 #' BIEN_ranges_box(42,43,-85,-84,species.names.only = TRUE)
 #' BIEN_ranges_box(42,43,-85,-84,directory = testwd)}
 #' @family range functions
@@ -1448,11 +1447,11 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
 #' @template ranges_spatial
 #' @return Range maps for all available species that intersect the range of the focal species.
 #' @examples \dontrun{
-#' testwd<-"C:/wherever/you/want/files/saved/" #Set a working directory
+#' testwd<-tempdir() #Set a working directory
 #' BIEN_ranges_intersect_species(species = "Carnegiea_gigantea",
 #' directory = testwd,include.focal = TRUE)
 #' species_vector<-c("Carnegiea_gigantea","Echinocereus coccineus")
-#' BIEN_ranges_intersect_species(species = speciesvector,species.names.only = TRUE)}
+#' BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
 #' @family range functions
 #' @author Daniel Guaderrama
 BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.only=FALSE, include.focal=TRUE,return.species.list=TRUE,include.gid=FALSE, ...){
@@ -1555,6 +1554,7 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
 #' @return All range maps that intersect the user-supplied shapfile.
 #' @note We recommend using the function readOGR() in the rgdal package to read in shapefiles.  Other methods may cause problems related to handling holes in polygons.
 #' @examples \dontrun{
+#' library(rgdal)
 #' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
 #' shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
 #' #shapefiles should be read with readOGR(), see note.
@@ -1652,13 +1652,13 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species.names.only=FA
 #' @param ... Additional arguments passed to internal functions.
 #' @return A SpatialPolygonsDataFrame containing range maps for the specified species.
 #' @examples \dontrun{
+#' library(maps)
 #' species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
 #' abies_maps<-BIEN_ranges_load_species(species = species_vector)
 #' xanthium_strumarium<-BIEN_ranges_load_species(species = "Xanthium strumarium")
 #' 
 #' #Plotting files
 #' plot(abies_maps)#plots the shapefile, but doesn't mean much without any reference
-#' require(maps) #easy source of maps
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 #' plot(xanthium_strumarium,col="forest green",add=TRUE) #adds the range of X. strumarium
 #' plot(abies_maps[1,], add = T, col ="light green")}
@@ -2526,8 +2526,8 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' @note This function requires you supply either 1) a single country with one or states, or 2) vectors of equal length for each political level.
 #' @return A dataframe containing all data from the specified states.
 #' @examples \dontrun{
-#' BIEN_plot_state("Colorado")
-#' BIEN_plot_state(c("Colorado","California"))}
+#' BIEN_plot_state(country="United States", state="Colorado")
+#' BIEN_plot_state(country="United States",state= c("Colorado","California"))}
 #' @family plot functions
 BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
   is_char(country)
