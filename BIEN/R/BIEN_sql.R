@@ -16,6 +16,7 @@
 #' @param return.query Should  the query used be returned rather than executed?  Default is FALSE
 #' @param schema An alternative schema to be accessed.  Used for testing purposes.
 #' @param print.query Should  the query used be printed?  Default is FALSE
+#' @import RPostgreSQL
 #' @return A dataframe returned by the query.
 #' @keywords internal
 #' @examples \dontrun{
@@ -101,7 +102,7 @@
   }
   
   # create query to retrieve
-  df <- DBI::dbGetQuery(con, statement = query);
+  df <- RPostgreSQL::dbGetQuery(con, statement = query);
   
   DBI::dbDisconnect(con)
   

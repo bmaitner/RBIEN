@@ -13,6 +13,7 @@
 #' BIEN_occurrence_species(species_vector)
 #' BIEN_occurrence_species(species_vector,all.taxonomy=TRUE)}
 #' @family occurrence functions
+#' @export
 BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
   
   #Test input
@@ -64,6 +65,7 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,a
 #' #shapefiles should be read with readOGR().
 #' species_occurrenes<-BIEN_occurrence_shapefile(shapefile=shape)}
 #' @family occurrence functions
+#' @export
 BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
   is_log(cultivated)
   is_log(only.new.world)
@@ -125,6 +127,7 @@ BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TR
 #' country_vector<-c("Canada","United States")
 #' BIEN_list_country(country_vector)}
 #' @family list functions
+#' @export
 BIEN_list_country<-function(country,cultivated=FALSE,only.new.world=TRUE,...){
   is_log(cultivated)
   is_log(only.new.world)
@@ -170,6 +173,7 @@ BIEN_list_country<-function(country,cultivated=FALSE,only.new.world=TRUE,...){
 #' state_vector<-c("Michigan","Arizona")
 #' BIEN_list_state(country="United States", state= state_vector)}
 #' @family list functions
+#' @export
 BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...){
   is_char(country)
   is_char(state)
@@ -251,6 +255,7 @@ BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...
 #' county_vector<-c("Kent","Kalamazoo")
 #' BIEN_list_county(country = "United States", state = "Michigan", county = county_vector)}
 #' @family list functions
+#' @export
 BIEN_list_county<-function(country,state,county,cultivated=FALSE,only.new.world=TRUE, ...){
   is_char(country)
   is_char(state)
@@ -330,6 +335,7 @@ BIEN_list_county<-function(country,state,county,cultivated=FALSE,only.new.world=
 #' @examples \dontrun{
 #' species_list<-BIEN_list_all()}
 #' @family list functions
+#' @export
 BIEN_list_all<-function( ...){
   query <- paste("SELECT species FROM bien_species_all ORDER BY species;")
   
@@ -351,6 +357,7 @@ BIEN_list_all<-function( ...){
 #' #shapefiles should be read with readOGR(), see note.
 #' species_list<-BIEN_list_shapefile(shapefile=shape)}
 #' @family list functions
+#' @export
 BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,...){
   is_log(cultivated)
   is_log(only.new.world)
@@ -415,6 +422,7 @@ BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,...
 #' BIEN_occurrence_genus(genus_vector)
 #' BIEN_occurrence_genus(genus = "Abutilon",cultivated = TRUE,only.new.world = FALSE)}
 #' @family occurrence functions
+#' @export
 BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   is_char(genus)
   is_log(cultivated)
@@ -458,6 +466,7 @@ BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.t
 #' family_vector<-c("Theaceae","Ericaceae")
 #' BIEN_occurrence_family(family_vector)}
 #' @family occurrence functions
+#' @export
 BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,observation.type=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F, ...){
   is_char(family)
   is_log(cultivated)
@@ -505,6 +514,7 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,obs
 #' state_vector<-c("Rhode Island","Maryland")
 #' BIEN_occurrence_state(country="United States",state=state_vector)}
 #' @family occurrence functions
+#' @export
 BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   is_char(country)
   is_char(state)
@@ -587,6 +597,7 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
 #' country_vector<-c("Cuba","Bahamas")
 #' BIEN_occurrence_country(country_vector)}
 #' @family occurrence functions
+#' @export
 BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   is_char(country)
   is_log(cultivated)
@@ -635,6 +646,7 @@ BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,a
 #' county_vector<-c("Pima","Kent")
 #' BIEN_occurrence_county(country=country_vector, state = state_vector, county = county_vector)}
 #' @family occurrence functions
+#' @export
 BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.new.world=TRUE, all.taxonomy=FALSE, native.status=FALSE, natives.only=TRUE, observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   is_char(country)
   is_char(state)
@@ -727,6 +739,7 @@ BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.
 #' BIEN_occurrence_box(min.lat = 32,max.lat = 33,min.long = -114,max.long = -113,
 #' cultivated = TRUE, only.new.world = FALSE)}
 #' @family occurrence functions
+#' @export
 BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=TRUE,collection.info=F, ...){
   is_num(min.lat)
   is_num(max.lat)
@@ -789,6 +802,7 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
 #' #Getting data from the files (currently only species names)
 #' Abies_poly$Species#gives the species name associated with "Abies_poly"}
 #' @family range functions
+#' @export
 BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_only=FALSE,include.gid=FALSE, ...){
   is_char(species)
   is_log(matched)
@@ -901,6 +915,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #' #Getting data from the files (currently only species names)
 #' Abies_poly$Species#gives the species name associated with "Abies_poly"}
 #' @family range functions
+#' @export
 BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=FALSE,include.gid=FALSE, ...){
   is_char(genus)
   is_log(matched)
@@ -995,6 +1010,7 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
 #' BIEN_ranges_box(42,43,-85,-84,species.names.only = TRUE)
 #' BIEN_ranges_box(42,43,-85,-84,directory = testwd)}
 #' @family range functions
+#' @export
 BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE, ...){
   is_num(min.lat)
   is_num(max.lat)
@@ -1088,6 +1104,7 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
 #' BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
 #' @family range functions
 #' @author Daniel Guaderrama
+#' @export
 BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.only=FALSE, include.focal=TRUE,return.species.list=TRUE,include.gid=FALSE, ...){
   is_char(species)
   is_log(species.names.only)
@@ -1190,6 +1207,7 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
 #' #Note that this will save many shapefiles to the working directory.
 #' }
 #' @family range functions
+#' @export
 BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE,...){
   is_log(return.species.list)
   is_log(species.names.only)
@@ -1288,6 +1306,7 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species.names.only=FA
 #' plot(xanthium_strumarium,col="forest green",add=TRUE) #adds the range of X. strumarium
 #' plot(abies_maps[1,], add = T, col ="light green")}
 #' @family range functions
+#' @export
 BIEN_ranges_load_species<-function(species, ...){
   is_char(species)
   
@@ -1332,6 +1351,7 @@ BIEN_ranges_load_species<-function(species, ...){
 #' available_maps<-BIEN_ranges_list()}
 #' @family range functions
 #' @family metadata functions
+#' @export
 BIEN_ranges_list<-function( ...){
   
   # set the query
@@ -1359,6 +1379,7 @@ BIEN_ranges_list<-function( ...){
 #' species_vector<-c("Poa annua","Juncus trifidus")
 #' BIEN_trait_species(species_vector)}
 #' @family trait functions
+#' @export
 BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(species)
   is_log(all.taxonomy)
@@ -1389,6 +1410,7 @@ BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries
 #' @examples \dontrun{
 #' BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="leaf dry mass per leaf fresh mass") }
 #' @family trait functions
+#' @export
 BIEN_trait_mean<-function(species,trait, ...){
   
   #first, get taxonomic info for the species
@@ -1473,6 +1495,7 @@ BIEN_trait_mean<-function(species,trait, ...){
 #' trait_vector<-c("whole plant height", "leaf dry mass per leaf fresh mass")
 #' BIEN_trait_trait(trait_vector)}
 #' @family trait functions
+#' @export
 BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(trait)
   is_log(all.taxonomy)
@@ -1505,6 +1528,7 @@ BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = F
 #' species_vector<-c("Carex capitata","Betula nana")
 #' BIEN_trait_traitbyspecies(trait=trait_vector,species=species_vector)}
 #' @family trait functions
+#' @export
 BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(species)
   is_char(trait)
@@ -1541,6 +1565,7 @@ BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, politi
 #' genus_vector<-c("Carex","Betula")
 #' BIEN_trait_traitbygenus(trait=trait_vector,genus=genus_vector)}
 #' @family trait functions
+#' @export
 BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(genus)
   is_char(trait)
@@ -1577,6 +1602,7 @@ BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.
 #' family_vector<-c("Orchidaceae","Poaceae")
 #' BIEN_trait_traitbyfamily(trait=trait_vector,family=family_vector)}
 #' @family trait functions
+#' @export
 BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(family)
   is_char(trait)
@@ -1612,6 +1638,7 @@ BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, politica
 #' genus_vector<-c("Acer","Abies")
 #' BIEN_trait_genus(genus_vector)}
 #' @family trait funcitons
+#' @export
 BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(genus)
   is_log(all.taxonomy)
@@ -1644,6 +1671,7 @@ BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = F
 #' family_vector<-c("Poaceae","Orchidaceae")
 #' BIEN_trait_family(family_vector)}
 #' @family trait functions
+#' @export
 BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
   is_char(family)
   is_log(all.taxonomy)
@@ -1673,6 +1701,7 @@ BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries =
 #' @examples \dontrun{
 #' BIEN_trait_list()}
 #' @family trait functions
+#' @export
 BIEN_trait_list<-function( ...){
   
   # set the query
@@ -1693,6 +1722,7 @@ BIEN_trait_list<-function( ...){
 #' @examples \dontrun{
 #' occurrence_counts<-BIEN_occurrence_records_per_species()}
 #' @family occurrence functions
+#' @export
 BIEN_occurrence_records_per_species<-function(species=NULL, ...){
   
   if(is.null(species)){    
@@ -1721,6 +1751,7 @@ BIEN_occurrence_records_per_species<-function(species=NULL, ...){
 #' @examples \dontrun{
 #' trait_observation_counts<-BIEN_trait_traits_per_species()}
 #' @family trait functions
+#' @export
 BIEN_trait_traits_per_species<-function( species=NULL, ...){
   if(!is.null(species)){
     
@@ -1755,6 +1786,7 @@ BIEN_trait_traits_per_species<-function( species=NULL, ...){
 #' @examples \dontrun{
 #' BIEN_plot_datasource("SALVIAS")}
 #' @family plot functions
+#' @export
 BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   is_log(cultivated)
   is_log(only.new.world)
@@ -1807,6 +1839,7 @@ BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
 #' @examples \dontrun{
 #' BIEN_plot_list_datasource()}
 #' @family plot functions
+#' @export
 BIEN_plot_list_datasource<-function(...){
   query <- paste("SELECT DISTINCT datasource FROM plot_metadata ;")
   return(.BIEN_sql(query, ...))
@@ -1824,6 +1857,7 @@ BIEN_plot_list_datasource<-function(...){
 #' BIEN_plot_country("Costa Rica")
 #' BIEN_plot_country(c("Costa Rica","Panama"))}
 #' @family plot functions
+#' @export
 BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   is_log(cultivated)
   is_log(only.new.world)
@@ -1884,6 +1918,7 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' BIEN_plot_state(country="United States", state="Colorado")
 #' BIEN_plot_state(country="United States",state= c("Colorado","California"))}
 #' @family plot functions
+#' @export
 BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
   is_char(country)
   is_log(cultivated)
@@ -1972,6 +2007,7 @@ BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all
 #' @examples \dontrun{
 #' BIEN_plot_list_sampling_protocols()}
 #' @family plot functions
+#' @export
 BIEN_plot_list_sampling_protocols<-function(...){
   query <- paste("SELECT DISTINCT sampling_protocol FROM plot_metadata ;")
   return(.BIEN_sql(query, ...))
@@ -1988,6 +2024,7 @@ BIEN_plot_list_sampling_protocols<-function(...){
 #' @examples \dontrun{
 #' BIEN_plot_sampling_protocol("Point-intercept")}
 #' @family plot functions
+#' @export
 BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   is_log(cultivated)
   is_log(only.new.world)
@@ -2040,6 +2077,7 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
 #' @examples \dontrun{
 #' BIEN_plot_name("SR-1")}
 #' @family plot functions
+#' @export
 BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   is_log(cultivated)
   is_log(only.new.world)
@@ -2091,6 +2129,7 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
 #' @examples \dontrun{
 #' BIEN_plot_dataset("Gentry Transect Dataset")}
 #' @family plot functions
+#' @export
 BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   is_log(cultivated)
   is_log(only.new.world)
@@ -2141,6 +2180,7 @@ BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' BIEN_plot_metadata()}
 #' @family plot functions
 #' @family metadata functions
+#' @export
 BIEN_plot_metadata<-function( ...){
   
   # set the query
@@ -2169,6 +2209,7 @@ BIEN_plot_metadata<-function( ...){
 #' species_vector<-c("Acer nigrum","Cannabis sativa")
 #' BIEN_taxonomy_species(species_vector)}
 #' @family taxonomy functions
+#' @export
 BIEN_taxonomy_species<-function(species, ...){
   is_char(species)
   
@@ -2198,6 +2239,7 @@ BIEN_taxonomy_species<-function(species, ...){
 #' genus_vector<-c("Acer","Quercus")
 #' BIEN_taxonomy_genus(genus_vector)}
 #' @family taxonomy functions
+#' @export
 BIEN_taxonomy_genus<-function(genus, ...){
   is_char(genus)
   
@@ -2228,6 +2270,7 @@ BIEN_taxonomy_genus<-function(genus, ...){
 #' family_vector<-c("Orchidaceae","Poaceae")
 #' BIEN_taxonomy_family(family_vector)}
 #' @family taxonomy functions
+#' @export
 BIEN_taxonomy_family<-function(family, ...){
   is_char(family)
   
@@ -2263,6 +2306,7 @@ BIEN_taxonomy_family<-function(family, ...){
 #' phylos<-BIEN_phylogeny_complete(n_phylogenies = 10,seed = 1)
 #' phylos<-BIEN_phylogeny_complete(replicates = c(1,2,99,100))}
 #' @family phylogeny functions
+#' @export
 BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...){
   is_num(n_phylogenies)  
   
@@ -2315,6 +2359,7 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
 #' @examples \dontrun{
 #' BIEN_phylo<-BIEN_phylogeny_conservative()}
 #' @family phylogeny functions
+#' @export
 BIEN_phylogeny_conservative<-function(...){
   
   query<-paste("SELECT * FROM phylogeny WHERE phylogeny_version = 'BIEN_2016_conservative' ;"  )
@@ -2339,6 +2384,7 @@ BIEN_phylogeny_conservative<-function(...){
 #' @family metadata functions
 #' @examples \dontrun{
 #' BIEN_metadata_database_version()}
+#' @export
 BIEN_metadata_database_version<-function(...){
   query<-"SELECT db_version, db_release_date FROM bien_metadata a JOIN (SELECT MAX(bien_metadata_id) as max_id FROM bien_metadata) AS b ON a.bien_metadata_id=b.max_id;"
   .BIEN_sql(query, ...)
@@ -2363,6 +2409,7 @@ BIEN_metadata_database_version<-function(...){
 #' old<-new[-1:-4,]#simulate having an older dataset by removing four rows
 #' BIEN_metadata_match_data(old,new,return="identical")
 #' BIEN_metadata_match_data(old,new,return="additions")}
+#' @export
 BIEN_metadata_match_data<-function(old,new,return="identical"){
   if(return %in% c("identical","logical","additions","deletions")){
     
@@ -2408,6 +2455,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #' Xanthium_data<-BIEN_occurrence_species("Xanthium strumarium")
 #' citations<-BIEN_metadata_citation(dataframe=Xanthium_data)#If you are referencing occurrence data}
 #' @family metadata functions
+#' @export
 BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file=NULL,acknowledgement_file=NULL){
   
   
@@ -2655,22 +2703,16 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
     
   }
   
-  
   #Return the citation list  
   
   return(citation)    
   
 }
 
-
-
-
 ################################
-
 
 ############################
 #Stem functions
-
 
 #'Extract stem data for specified species from BIEN
 #'
@@ -2685,6 +2727,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
 #' BIEN_stem_species(species_vector)
 #' BIEN_stem_species(species_vector,all.taxonomy=TRUE)}
 #' @family stem functions
+#' @export
 BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   is_log(all.metadata)
   is_log(cultivated)
@@ -2741,6 +2784,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' BIEN_stem_family(family = family_vector)
 #' BIEN_stem_family(family = family_vector, all.taxonomy=TRUE, native.status=T)}
 #' @family stem functions
+#' @export
 BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   is_log(all.metadata)
   is_log(cultivated)
@@ -2797,6 +2841,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
 #' BIEN_stem_genus(genus = genus_vector)
 #' BIEN_stem_genus(genus = genus_vector, all.taxonomy=TRUE)}
 #' @family stem functions
+#' @export
 BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE, collection.info=F,all.metadata = F, ...){
   is_log(all.metadata)
   is_log(cultivated)
@@ -2849,6 +2894,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
 #' @examples \dontrun{
 #' BIEN_stem_datasource(datasource = "SALVIAS")}
 #' @family stem functions
+#' @export
 BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   is_log(all.metadata)
   is_log(cultivated)
