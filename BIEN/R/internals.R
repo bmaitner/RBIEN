@@ -6,7 +6,7 @@
 #'
 #'Helper function to set query components.
 #' @keywords internal
-cultivated_check<-function(cultivated){
+.cultivated_check<-function(cultivated){
   if(!cultivated){
     query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
     select<-""
@@ -28,7 +28,7 @@ cultivated_check<-function(cultivated){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-newworld_check<-function(only.new.world){
+.newworld_check<-function(only.new.world){
   if(!only.new.world){
     query<-""
     select<-",is_new_world"
@@ -49,7 +49,7 @@ newworld_check<-function(only.new.world){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-taxonomy_check<-function(all.taxonomy){
+.taxonomy_check<-function(all.taxonomy){
   if(!all.taxonomy){
     select<-""
   }else{
@@ -70,7 +70,7 @@ taxonomy_check<-function(all.taxonomy){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-native_check<-function(native.status){
+.native_check<-function(native.status){
   if(!native.status){
     select<-""
   }else{
@@ -89,7 +89,7 @@ native_check<-function(native.status){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-observation_check<-function(observation.type){
+.observation_check<-function(observation.type){
   if(!observation.type){
     select<-""
   }else{
@@ -109,7 +109,7 @@ observation_check<-function(observation.type){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-political_check<-function(political.boundaries){
+.political_check<-function(political.boundaries){
   if(!political.boundaries){
     select<-""
   }else{
@@ -130,7 +130,7 @@ political_check<-function(political.boundaries){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-natives_check<-function(natives.only){
+.natives_check<-function(natives.only){
   if(!natives.only){
     query<-""
   }else{
@@ -149,7 +149,7 @@ natives_check<-function(natives.only){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-collection_check<-function(collection.info){
+.collection_check<-function(collection.info){
   if(!collection.info){
     select<-""
   }else{
@@ -171,7 +171,7 @@ collection_check<-function(collection.info){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-political_check_traits<-function(political.boundaries){
+.political_check_traits<-function(political.boundaries){
 if(political.boundaries){
   select <- "region, country, stateprovince, lower_political, locality_description"  
 }else{
@@ -191,7 +191,7 @@ if(political.boundaries){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-taxonomy_check_traits<-function(all.taxonomy){
+.taxonomy_check_traits<-function(all.taxonomy){
   
 if(all.taxonomy){
   select <- "verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
@@ -218,7 +218,7 @@ if(all.taxonomy){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-cultivated_check_plot<-function(cultivated){
+.cultivated_check_plot<-function(cultivated){
   if(!cultivated){
     query<-"AND (view_full_occurrence_individual.is_cultivated = 0 OR view_full_occurrence_individual.is_cultivated IS NULL)"
     select<-""
@@ -242,7 +242,7 @@ cultivated_check_plot<-function(cultivated){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-newworld_check_plot<-function(only.new.world){
+.newworld_check_plot<-function(only.new.world){
   
   if(!only.new.world){
     query<-""
@@ -267,7 +267,7 @@ newworld_check_plot<-function(only.new.world){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-taxonomy_check_plot<-function(all.taxonomy){
+.taxonomy_check_plot<-function(all.taxonomy){
   
   if(!all.taxonomy){
     select<-""
@@ -288,7 +288,7 @@ taxonomy_check_plot<-function(all.taxonomy){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-native_check_plot<-function(native.status){
+.native_check_plot<-function(native.status){
   
   if(!native.status){
     select<-""
@@ -310,7 +310,7 @@ native_check_plot<-function(native.status){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-natives_check_plot<-function(natives.only){  
+.natives_check_plot<-function(natives.only){  
   
   if(!natives.only){
     query<-""
@@ -334,7 +334,7 @@ natives_check_plot<-function(natives.only){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-political_check_plot<-function(political.boundaries){  
+.political_check_plot<-function(political.boundaries){  
   
   if(!political.boundaries){
     select<-""
@@ -356,7 +356,7 @@ political_check_plot<-function(political.boundaries){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-collection_check_plot<-function(collection.info){    
+.collection_check_plot<-function(collection.info){    
   
   if(!collection.info){
     select<-""
@@ -378,7 +378,7 @@ collection_check_plot<-function(collection.info){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-md_check_plot<-function(all.metadata){    
+.md_check_plot<-function(all.metadata){    
   
   if(!all.metadata){
     select<-""
@@ -403,7 +403,7 @@ md_check_plot<-function(all.metadata){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-cultivated_check_stem<-function(cultivated){    
+.cultivated_check_stem<-function(cultivated){    
   
   if(!cultivated){
     query<-"AND (analytical_stem.is_cultivated = 0 OR analytical_stem.is_cultivated IS NULL)"
@@ -427,7 +427,7 @@ cultivated_check_stem<-function(cultivated){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-newworld_check_stem<-function(only.new.world){    
+.newworld_check_stem<-function(only.new.world){    
   
   if(!only.new.world){
     query<-""
@@ -447,7 +447,7 @@ newworld_check_stem<-function(only.new.world){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-taxonomy_check_stem<-function(all.taxonomy){    
+.taxonomy_check_stem<-function(all.taxonomy){    
   
   if(!all.taxonomy){
     select<-""
@@ -466,7 +466,7 @@ taxonomy_check_stem<-function(all.taxonomy){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-native_check_stem<-function(native.status){    
+.native_check_stem<-function(native.status){    
   if(!native.status){
     select<-""
   }else{
@@ -486,7 +486,7 @@ native_check_stem<-function(native.status){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-natives_check_stem<-function(natives.only){    
+.natives_check_stem<-function(natives.only){    
   
   if(!natives.only){
     query<-""
@@ -506,7 +506,7 @@ natives_check_stem<-function(natives.only){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-political_check_stem<-function(political.boundaries){    
+.political_check_stem<-function(political.boundaries){    
   
   if(!political.boundaries){
     select<-""
@@ -526,7 +526,7 @@ political_check_stem<-function(political.boundaries){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-collection_check_stem<-function(collection.info){   
+.collection_check_stem<-function(collection.info){   
   
   if(!collection.info){
     select<-""
@@ -546,7 +546,7 @@ collection_check_stem<-function(collection.info){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-vfoi_check_stem<-function(native.status,cultivated,natives.only,collection.info){ 
+.vfoi_check_stem<-function(native.status,cultivated,natives.only,collection.info){ 
   
   if(native.status | cultivated |natives.only | collection.info){
     join<-" JOIN view_full_occurrence_individual ON (analytical_stem.taxonobservation_id  = view_full_occurrence_individual.taxonobservation_id)"}else{
@@ -565,7 +565,7 @@ vfoi_check_stem<-function(native.status,cultivated,natives.only,collection.info)
 #'
 #'Helper function to set query components.
 #' @keywords internal
-md_check_stem<-function(all.metadata){   
+.md_check_stem<-function(all.metadata){   
   
   if(!all.metadata){
     select<-""
@@ -591,7 +591,7 @@ md_check_stem<-function(all.metadata){
 #' @keywords internal
 #' @examples \dontrun{
 #' is_log(only.new.world)}
-is_log <- function(x) {
+.is_log <- function(x) {
   if (!inherits(x, 'logical')) {
     stop(sys.call()[-1], " should be logical", call. = FALSE)
   }
@@ -604,7 +604,7 @@ is_log <- function(x) {
 #' @keywords internal
 #' @examples \dontrun{
 #' is_char(species)}
-is_char <- function(x) {
+.is_char <- function(x) {
   if (!inherits(x ,'character')) {
     stop(sys.call()[-1]," should be character", call. = FALSE)
   }
@@ -617,7 +617,7 @@ is_char <- function(x) {
 #' @keywords internal
 #' @examples \dontrun{
 #' is_num(min.lat)}
-is_num <- function(x) {
+.is_num <- function(x) {
   if (!inherits(x ,'numeric')) {
     stop(sys.call()[-1]," should be numeric", call. = FALSE)
   }

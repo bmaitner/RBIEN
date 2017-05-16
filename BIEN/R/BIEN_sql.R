@@ -25,7 +25,7 @@
 .BIEN_sql<-function(query,view_full_occurrence_individual=NULL,agg_traits=NULL,species_by_political_division=NULL,
                     bien_species_all=NULL,ranges=NULL,bien_taxonomy=NULL,phylogeny=NULL,bien_metadata=NULL,plot_metadata=NULL,
                     analytical_stem=NULL,limit=NULL,return.query=FALSE,schema=NULL,print.query=FALSE){
-  is_char(query)
+  .is_char(query)
 
   
   if(print.query){

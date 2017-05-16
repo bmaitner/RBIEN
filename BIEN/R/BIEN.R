@@ -17,25 +17,25 @@
 BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
   
   #Test input
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(species)
-  is_log(native.status)
-  is_log(observation.type)
-  is_log(political.boundaries)
-  is_log(natives.only)
-  is_log(collection.info)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(species)
+  .is_log(native.status)
+  .is_log(observation.type)
+  .is_log(political.boundaries)
+  .is_log(natives.only)
+  .is_log(collection.info)
   
   #set conditions for query
-  cultivated_<-cultivated_check(cultivated)  
-  newworld_<-newworld_check(only.new.world)
-  taxonomy_<-taxonomy_check(all.taxonomy)  
-  native_<-native_check(native.status)
-  observation_<-observation_check(observation.type)
-  political_<-political_check(political.boundaries)  
-  natives_<-natives_check(natives.only)
-  collection_<-collection_check(collection.info)
+  cultivated_<-.cultivated_check(cultivated)  
+  newworld_<-.newworld_check(only.new.world)
+  taxonomy_<-.taxonomy_check(all.taxonomy)  
+  native_<-.native_check(native.status)
+  observation_<-.observation_check(observation.type)
+  political_<-.political_check(political.boundaries)  
+  natives_<-.natives_check(natives.only)
+  collection_<-.collection_check(collection.info)
   
   # set the query
   query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,latitude, longitude,date_collected,
@@ -67,14 +67,14 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,a
 #' @family occurrence functions
 #' @export
 BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_log(native.status)
-  is_log(observation.type)
-  is_log(political.boundaries)
-  is_log(natives.only)
-  is_log(collection.info)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_log(native.status)
+  .is_log(observation.type)
+  .is_log(political.boundaries)
+  .is_log(natives.only)
+  .is_log(collection.info)
   
   wkt<-rgeos::writeWKT(shapefile)
   long_min<-shapefile@bbox[1,1]
@@ -85,14 +85,14 @@ BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TR
   
   #set conditions for query
   
-  cultivated_<-cultivated_check(cultivated)  
-  newworld_<-newworld_check(only.new.world)
-  taxonomy_<-taxonomy_check(all.taxonomy)  
-  native_<-native_check(native.status)
-  observation_<-observation_check(observation.type)
-  political_<-political_check(political.boundaries)  
-  natives_<-natives_check(natives.only)
-  collection_<-collection_check(collection.info)
+  cultivated_<-.cultivated_check(cultivated)  
+  newworld_<-.newworld_check(only.new.world)
+  taxonomy_<-.taxonomy_check(all.taxonomy)  
+  native_<-.native_check(native.status)
+  observation_<-.observation_check(observation.type)
+  political_<-.political_check(political.boundaries)  
+  natives_<-.natives_check(natives.only)
+  collection_<-.collection_check(collection.info)
   
   # set the query
   query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," , latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,a.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"FROM 
@@ -129,9 +129,9 @@ BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TR
 #' @family list functions
 #' @export
 BIEN_list_country<-function(country,cultivated=FALSE,only.new.world=TRUE,...){
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_char(country)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_char(country)
   
   #set base query components
   sql_select <-  paste("SELECT DISTINCT country, scrubbed_species_binomial ")
@@ -175,10 +175,10 @@ BIEN_list_country<-function(country,cultivated=FALSE,only.new.world=TRUE,...){
 #' @family list functions
 #' @export
 BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...){
-  is_char(country)
-  is_char(state)
-  is_log(cultivated)
-  is_log(only.new.world)
+  .is_char(country)
+  .is_char(state)
+  .is_log(cultivated)
+  .is_log(only.new.world)
   
   # set base query components
   sql_select <-  paste("SELECT DISTINCT country, state_province, scrubbed_species_binomial ")
@@ -209,12 +209,8 @@ BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...
       stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
       
     }  
-    
-    
-    
+  
   }#if length(country>1)
-  
-  
   
   sql_order_by <- paste(" ORDER BY scrubbed_species_binomial ")
   
@@ -257,11 +253,11 @@ BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...
 #' @family list functions
 #' @export
 BIEN_list_county<-function(country,state,county,cultivated=FALSE,only.new.world=TRUE, ...){
-  is_char(country)
-  is_char(state)
-  is_char(county)
-  is_log(cultivated)
-  is_log(only.new.world)
+  .is_char(country)
+  .is_char(state)
+  .is_char(county)
+  .is_log(cultivated)
+  .is_log(only.new.world)
   
   # set base query components
   sql_select <-  paste("SELECT DISTINCT country, state_province, county,  scrubbed_species_binomial ")
@@ -359,8 +355,8 @@ BIEN_list_all<-function( ...){
 #' @family list functions
 #' @export
 BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,...){
-  is_log(cultivated)
-  is_log(only.new.world)
+  .is_log(cultivated)
+  .is_log(only.new.world)
   
   wkt<-rgeos::writeWKT(shapefile)
   long_min<-shapefile@bbox[1,1]
@@ -385,8 +381,6 @@ BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,...
     newworld_query<-"AND is_new_world = 1 "
     newworld_select<-""
   }
-  
-  
   
   #rangeQuery <- paste("SELECT species FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species;")
   query<-paste("SELECT DISTINCT scrubbed_species_binomial",cultivated_select,newworld_select ,"FROM  
@@ -424,24 +418,24 @@ BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,...
 #' @family occurrence functions
 #' @export
 BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
-  is_char(genus)
-  is_log(cultivated)
-  is_log(all.taxonomy)
-  is_log(only.new.world)
-  is_log(native.status)
-  is_log(observation.type)
-  is_log(political.boundaries)
-  is_log(natives.only)
-  is_log(collection.info)
+  .is_char(genus)
+  .is_log(cultivated)
+  .is_log(all.taxonomy)
+  .is_log(only.new.world)
+  .is_log(native.status)
+  .is_log(observation.type)
+  .is_log(political.boundaries)
+  .is_log(natives.only)
+  .is_log(collection.info)
   
-  cultivated_<-cultivated_check(cultivated)  
-  newworld_<-newworld_check(only.new.world)
-  taxonomy_<-taxonomy_check(all.taxonomy)  
-  native_<-native_check(native.status)
-  observation_<-observation_check(observation.type)
-  political_<-political_check(political.boundaries)  
-  natives_<-natives_check(natives.only)
-  collection_<-collection_check(collection.info)
+  cultivated_<-.cultivated_check(cultivated)  
+  newworld_<-.newworld_check(only.new.world)
+  taxonomy_<-.taxonomy_check(all.taxonomy)  
+  native_<-.native_check(native.status)
+  observation_<-.observation_check(observation.type)
+  political_<-.political_check(political.boundaries)  
+  natives_<-.natives_check(natives.only)
+  collection_<-.collection_check(collection.info)
   
   # set the query
   query <-
@@ -468,25 +462,25 @@ BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.t
 #' @family occurrence functions
 #' @export
 BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,observation.type=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F, ...){
-  is_char(family)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(observation.type)
-  is_log(all.taxonomy)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)
-  is_log(collection.info)
+  .is_char(family)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(observation.type)
+  .is_log(all.taxonomy)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
   
   #set conditions for query
-  cultivated_<-cultivated_check(cultivated)  
-  newworld_<-newworld_check(only.new.world)
-  taxonomy_<-taxonomy_check(all.taxonomy)  
-  native_<-native_check(native.status)
-  observation_<-observation_check(observation.type)
-  political_<-political_check(political.boundaries)  
-  natives_<-natives_check(natives.only)
-  collection_<-collection_check(collection.info)
+  cultivated_<-.cultivated_check(cultivated)  
+  newworld_<-.newworld_check(only.new.world)
+  taxonomy_<-.taxonomy_check(all.taxonomy)  
+  native_<-.native_check(native.status)
+  observation_<-.observation_check(observation.type)
+  political_<-.political_check(political.boundaries)  
+  natives_<-.natives_check(natives.only)
+  collection_<-.collection_check(collection.info)
   
   # set the query
   query <- paste("SELECT scrubbed_family",taxonomy_$select,native_$select,political_$select,", scrubbed_species_binomial, latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
@@ -516,26 +510,26 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,obs
 #' @family occurrence functions
 #' @export
 BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
-  is_char(country)
-  is_char(state)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_log(native.status)
-  is_log(observation.type)
-  is_log(political.boundaries)
-  is_log(natives.only)
-  is_log(collection.info)
+  .is_char(country)
+  .is_char(state)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_log(native.status)
+  .is_log(observation.type)
+  .is_log(political.boundaries)
+  .is_log(natives.only)
+  .is_log(collection.info)
       
   #set conditions for query
-  cultivated_<-cultivated_check(cultivated)  
-  newworld_<-newworld_check(only.new.world)
-  taxonomy_<-taxonomy_check(all.taxonomy)  
-  native_<-native_check(native.status)
-  observation_<-observation_check(observation.type)
-  political_<-political_check(political.boundaries)  
-  natives_<-natives_check(natives.only)
-  collection_<-collection_check(collection.info)
+  cultivated_<-.cultivated_check(cultivated)  
+  newworld_<-.newworld_check(only.new.world)
+  taxonomy_<-.taxonomy_check(all.taxonomy)  
+  native_<-.native_check(native.status)
+  observation_<-.observation_check(observation.type)
+  political_<-.political_check(political.boundaries)  
+  natives_<-.natives_check(natives.only)
+  collection_<-.collection_check(collection.info)
  
   ##state where
   if(length(country)==1){
@@ -599,26 +593,26 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
 #' @family occurrence functions
 #' @export
 BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
-  is_char(country)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(observation.type)
-  is_log(political.boundaries)
-  is_log(collection.info)
+  .is_char(country)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(observation.type)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
   
   #set conditions for query
   
-  cultivated_<-cultivated_check(cultivated)  
-  newworld_<-newworld_check(only.new.world)
-  taxonomy_<-taxonomy_check(all.taxonomy)  
-  native_<-native_check(native.status)
-  observation_<-observation_check(observation.type)
-  political_<-political_check(political.boundaries)  
-  natives_<-natives_check(natives.only)
-  collection_<-collection_check(collection.info)
+  cultivated_<-.cultivated_check(cultivated)  
+  newworld_<-.newworld_check(only.new.world)
+  taxonomy_<-.taxonomy_check(all.taxonomy)  
+  native_<-.native_check(native.status)
+  observation_<-.observation_check(observation.type)
+  political_<-.political_check(political.boundaries)  
+  natives_<-.natives_check(natives.only)
+  collection_<-.collection_check(collection.info)
   
   # set the query
   query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
@@ -648,27 +642,27 @@ BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,a
 #' @family occurrence functions
 #' @export
 BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.new.world=TRUE, all.taxonomy=FALSE, native.status=FALSE, natives.only=TRUE, observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
-  is_char(country)
-  is_char(state)
-  is_char(county)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(observation.type)
-  is_log(political.boundaries)
-  is_log(collection.info)
+  .is_char(country)
+  .is_char(state)
+  .is_char(county)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(observation.type)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
   
   #set conditions for query
-  cultivated_<-cultivated_check(cultivated)  
-  newworld_<-newworld_check(only.new.world)
-  taxonomy_<-taxonomy_check(all.taxonomy)  
-  native_<-native_check(native.status)
-  observation_<-observation_check(observation.type)
-  political_<-political_check(political.boundaries)  
-  natives_<-natives_check(natives.only)
-  collection_<-collection_check(collection.info)
+  cultivated_<-.cultivated_check(cultivated)  
+  newworld_<-.newworld_check(only.new.world)
+  taxonomy_<-.taxonomy_check(all.taxonomy)  
+  native_<-.native_check(native.status)
+  observation_<-.observation_check(observation.type)
+  political_<-.political_check(political.boundaries)  
+  natives_<-.natives_check(natives.only)
+  collection_<-.collection_check(collection.info)
   
   
   #sql where
@@ -741,27 +735,27 @@ BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.
 #' @family occurrence functions
 #' @export
 BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=TRUE,collection.info=F, ...){
-  is_num(min.lat)
-  is_num(max.lat)
-  is_num(min.long)
-  is_num(max.long)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(observation.type)
-  is_log(collection.info)
+  .is_num(min.lat)
+  .is_num(max.lat)
+  .is_num(min.long)
+  .is_num(max.long)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(observation.type)
+  .is_log(collection.info)
   
   #set conditions for query
-  cultivated_<-cultivated_check(cultivated)  
-  newworld_<-newworld_check(only.new.world)
-  taxonomy_<-taxonomy_check(all.taxonomy)  
-  native_<-native_check(native.status)
-  observation_<-observation_check(observation.type)
-  political_<-political_check(political.boundaries)  
-  natives_<-natives_check(natives.only)
-  collection_<-collection_check(collection.info)
+  cultivated_<-.cultivated_check(cultivated)  
+  newworld_<-.newworld_check(only.new.world)
+  taxonomy_<-.taxonomy_check(all.taxonomy)  
+  native_<-.native_check(native.status)
+  observation_<-.observation_check(observation.type)
+  political_<-.political_check(political.boundaries)  
+  natives_<-.natives_check(natives.only)
+  collection_<-.collection_check(collection.info)
   
   # set the query
   query <- paste("SELECT scrubbed_species_binomial", taxonomy_$select,political_$select,native_$select,",latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
@@ -804,9 +798,9 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
 #' @family range functions
 #' @export
 BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_only=FALSE,include.gid=FALSE, ...){
-  is_char(species)
-  is_log(matched)
-  is_log(match_names_only)
+  .is_char(species)
+  .is_log(matched)
+  .is_log(match_names_only)
   
   #make sure there are no spaces in the species names
   species<-gsub(" ","_",species)
@@ -917,10 +911,10 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #' @family range functions
 #' @export
 BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=FALSE,include.gid=FALSE, ...){
-  is_char(genus)
-  is_log(matched)
-  is_log(match_names_only)
-  is_log(include.gid)
+  .is_char(genus)
+  .is_log(matched)
+  .is_log(match_names_only)
+  .is_log(include.gid)
   
   #modify the genus list to make searching easier
   genus<-paste("(",genus,"_",")",sep = "")
@@ -1012,13 +1006,13 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
 #' @family range functions
 #' @export
 BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE, ...){
-  is_num(min.lat)
-  is_num(max.lat)
-  is_num(min.long)
-  is_num(max.long)
-  is_log(include.gid)
-  is_log(return.species.list)
-  is_log(species.names.only)
+  .is_num(min.lat)
+  .is_num(max.lat)
+  .is_num(min.long)
+  .is_num(max.long)
+  .is_log(include.gid)
+  .is_log(return.species.list)
+  .is_log(species.names.only)
   
   if(species.names.only==FALSE){
     
@@ -1106,10 +1100,10 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
 #' @author Daniel Guaderrama
 #' @export
 BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.only=FALSE, include.focal=TRUE,return.species.list=TRUE,include.gid=FALSE, ...){
-  is_char(species)
-  is_log(species.names.only)
-  is_log(include.focal)
-  is_log(include.gid)
+  .is_char(species)
+  .is_log(species.names.only)
+  .is_log(include.focal)
+  .is_log(include.gid)
   
   #make sure there are no spaces in the species names
   species<-gsub(" ","_",species)
@@ -1209,10 +1203,10 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
 #' @family range functions
 #' @export
 BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE,...){
-  is_log(return.species.list)
-  is_log(species.names.only)
-  is_log(crop.ranges)
-  is_log(include.gid)
+  .is_log(return.species.list)
+  .is_log(species.names.only)
+  .is_log(crop.ranges)
+  .is_log(include.gid)
   
   wkt<-rgeos::writeWKT(shapefile)
   
@@ -1308,7 +1302,7 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species.names.only=FA
 #' @family range functions
 #' @export
 BIEN_ranges_load_species<-function(species, ...){
-  is_char(species)
+  .is_char(species)
   
   #make sure there are no spaces in the species names
   species<-gsub(" ","_",species)
@@ -1381,13 +1375,13 @@ BIEN_ranges_list<-function( ...){
 #' @family trait functions
 #' @export
 BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
-  is_char(species)
-  is_log(all.taxonomy)
-  is_log(political.boundaries)
+  .is_char(species)
+  .is_log(all.taxonomy)
+  .is_log(political.boundaries)
   
   # set the query
-  taxonomy_<-taxonomy_check_traits(all.taxonomy)  
-  political_<-political_check_traits(political.boundaries)  
+  taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
+  political_<-.political_check_traits(political.boundaries)  
   
   query <- paste("SELECT 
                  scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
@@ -1414,8 +1408,8 @@ BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries
 BIEN_trait_mean<-function(species,trait, ...){
   
   #first, get taxonomic info for the species
-  is_char(trait)
-  is_char(species)
+  .is_char(trait)
+  .is_char(species)
   
   #make sure trait exists
   traits_available<-BIEN_trait_list(...)
@@ -1497,13 +1491,13 @@ BIEN_trait_mean<-function(species,trait, ...){
 #' @family trait functions
 #' @export
 BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
-  is_char(trait)
-  is_log(all.taxonomy)
-  is_log(political.boundaries)
+  .is_char(trait)
+  .is_log(all.taxonomy)
+  .is_log(political.boundaries)
   
   # set the query
-  taxonomy_<-taxonomy_check_traits(all.taxonomy)  
-  political_<-political_check_traits(political.boundaries)
+  taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
+  political_<-.political_check_traits(political.boundaries)
   
   query <- paste("SELECT 
                  scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
@@ -1530,14 +1524,14 @@ BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = F
 #' @family trait functions
 #' @export
 BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
-  is_char(species)
-  is_char(trait)
-  is_log(all.taxonomy)
-  is_log(political.boundaries)
+  .is_char(species)
+  .is_char(trait)
+  .is_log(all.taxonomy)
+  .is_log(political.boundaries)
   
   # set the query
-  taxonomy_<-taxonomy_check_traits(all.taxonomy)  
-  political_<-political_check_traits(political.boundaries)
+  taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
+  political_<-.political_check_traits(political.boundaries)
   
   query <- paste("SELECT 
                  scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
@@ -1567,14 +1561,14 @@ BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, politi
 #' @family trait functions
 #' @export
 BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
-  is_char(genus)
-  is_char(trait)
-  is_log(all.taxonomy)
-  is_log(political.boundaries)
+  .is_char(genus)
+  .is_char(trait)
+  .is_log(all.taxonomy)
+  .is_log(political.boundaries)
   # set the query
   
-  taxonomy_<-taxonomy_check_traits(all.taxonomy)  
-  political_<-political_check_traits(political.boundaries)
+  taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
+  political_<-.political_check_traits(political.boundaries)
   
   query <- paste("SELECT 
                  scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
@@ -1604,14 +1598,14 @@ BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.
 #' @family trait functions
 #' @export
 BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
-  is_char(family)
-  is_char(trait)
-  is_log(all.taxonomy)
-  is_log(political.boundaries)
+  .is_char(family)
+  .is_char(trait)
+  .is_log(all.taxonomy)
+  .is_log(political.boundaries)
   
   # set the query
-  taxonomy_<-taxonomy_check_traits(all.taxonomy)  
-  political_<-political_check_traits(political.boundaries)
+  taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
+  political_<-.political_check_traits(political.boundaries)
   
   query <- paste("SELECT 
                  scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
@@ -1640,13 +1634,13 @@ BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, politica
 #' @family trait funcitons
 #' @export
 BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
-  is_char(genus)
-  is_log(all.taxonomy)
-  is_log(political.boundaries)
+  .is_char(genus)
+  .is_log(all.taxonomy)
+  .is_log(political.boundaries)
   
   # set the query
-  taxonomy_<-taxonomy_check_traits(all.taxonomy)  
-  political_<-political_check_traits(political.boundaries)
+  taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
+  political_<-.political_check_traits(political.boundaries)
   
   query <- paste("SELECT 
                  scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
@@ -1673,13 +1667,13 @@ BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = F
 #' @family trait functions
 #' @export
 BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
-  is_char(family)
-  is_log(all.taxonomy)
-  is_log(political.boundaries)
+  .is_char(family)
+  .is_log(all.taxonomy)
+  .is_log(political.boundaries)
 
   # set the query
-  taxonomy_<-taxonomy_check_traits(all.taxonomy)  
-  political_<-political_check_traits(political.boundaries)
+  taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
+  political_<-.political_check_traits(political.boundaries)
   
   query <- paste("SELECT 
                  scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
@@ -1788,25 +1782,25 @@ BIEN_trait_traits_per_species<-function( species=NULL, ...){
 #' @family plot functions
 #' @export
 BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(datasource)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)
-  is_log(collection.info)
-  is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(datasource)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
+  .is_log(all.metadata)
 
   #set conditions for query
-  cultivated_<-cultivated_check_plot(cultivated)
-  newworld_<-newworld_check_plot(only.new.world)
-  taxonomy_<-taxonomy_check_plot(all.taxonomy)
-  native_<-native_check_plot(native.status)
-  natives_<-natives_check_plot(natives.only)
-  political_<-political_check_plot(political.boundaries)
-  collection_<-collection_check_plot(collection.info)
-  md_<-md_check_plot(all.metadata)
+  cultivated_<-.cultivated_check_plot(cultivated)
+  newworld_<-.newworld_check_plot(only.new.world)
+  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
+  native_<-.native_check_plot(native.status)
+  natives_<-.natives_check_plot(natives.only)
+  political_<-.political_check_plot(political.boundaries)
+  collection_<-.collection_check_plot(collection.info)
+  md_<-.md_check_plot(all.metadata)
   
   # set the query
   query <- paste("SELECT view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, view_full_occurrence_individual.elevation_m,
@@ -1859,25 +1853,25 @@ BIEN_plot_list_datasource<-function(...){
 #' @family plot functions
 #' @export
 BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(country)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)
-  is_log(collection.info)
-  is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(country)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
+  .is_log(all.metadata)
   
   
   #set conditions for query
-  cultivated_<-cultivated_check_plot(cultivated)
-  newworld_<-newworld_check_plot(only.new.world)
-  taxonomy_<-taxonomy_check_plot(all.taxonomy)
-  native_<-native_check_plot(native.status)
-  natives_<-natives_check_plot(natives.only)
-  collection_<-collection_check_plot(collection.info)
-  md_<-md_check_plot(all.metadata)
+  cultivated_<-.cultivated_check_plot(cultivated)
+  newworld_<-.newworld_check_plot(only.new.world)
+  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
+  native_<-.native_check_plot(native.status)
+  natives_<-.natives_check_plot(natives.only)
+  collection_<-.collection_check_plot(collection.info)
+  md_<-.md_check_plot(all.metadata)
   
   if(!political.boundaries){
     political_select<-"view_full_occurrence_individual.country,"
@@ -1920,25 +1914,25 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' @family plot functions
 #' @export
 BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
-  is_char(country)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(state)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)
-  is_log(collection.info)
-  is_log(all.metadata)
+  .is_char(country)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(state)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
+  .is_log(all.metadata)
   
   #set conditions for query
-  cultivated_<-cultivated_check_plot(cultivated)
-  newworld_<-newworld_check_plot(only.new.world)
-  taxonomy_<-taxonomy_check_plot(all.taxonomy)
-  native_<-native_check_plot(native.status)
-  natives_<-natives_check_plot(natives.only)
-  collection_<-collection_check_plot(collection.info)
-  md_<-md_check_plot(all.metadata)
+  cultivated_<-.cultivated_check_plot(cultivated)
+  newworld_<-.newworld_check_plot(only.new.world)
+  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
+  native_<-.native_check_plot(native.status)
+  natives_<-.natives_check_plot(natives.only)
+  collection_<-.collection_check_plot(collection.info)
+  md_<-.md_check_plot(all.metadata)
   
   if(!political.boundaries){
     political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,"
@@ -2026,25 +2020,25 @@ BIEN_plot_list_sampling_protocols<-function(...){
 #' @family plot functions
 #' @export
 BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(sampling_protocol)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)  
-  is_log(collection.info)
-  is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(sampling_protocol)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)  
+  .is_log(collection.info)
+  .is_log(all.metadata)
 
   #set conditions for query
-  cultivated_<-cultivated_check_plot(cultivated)
-  newworld_<-newworld_check_plot(only.new.world)
-  taxonomy_<-taxonomy_check_plot(all.taxonomy)
-  native_<-native_check_plot(native.status)
-  natives_<-natives_check_plot(natives.only)
-  political_<-political_check_plot(political.boundaries)
-  collection_<-collection_check_plot(collection.info)
-  md_<-md_check_plot(all.metadata)
+  cultivated_<-.cultivated_check_plot(cultivated)
+  newworld_<-.newworld_check_plot(only.new.world)
+  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
+  native_<-.native_check_plot(native.status)
+  natives_<-.natives_check_plot(natives.only)
+  political_<-.political_check_plot(political.boundaries)
+  collection_<-.collection_check_plot(collection.info)
+  md_<-.md_check_plot(all.metadata)
   
   # set the query
   query <- paste("SELECT view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,
@@ -2079,25 +2073,25 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
 #' @family plot functions
 #' @export
 BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(plot.name)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)  
-  is_log(collection.info)
-  is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(plot.name)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)  
+  .is_log(collection.info)
+  .is_log(all.metadata)
   
   #set conditions for query
-  cultivated_<-cultivated_check_plot(cultivated)
-  newworld_<-newworld_check_plot(only.new.world)
-  taxonomy_<-taxonomy_check_plot(all.taxonomy)
-  native_<-native_check_plot(native.status)
-  natives_<-natives_check_plot(natives.only)
-  political_<-political_check_plot(political.boundaries)
-  collection_<-collection_check_plot(collection.info)
-  md_<-md_check_plot(all.metadata)
+  cultivated_<-.cultivated_check_plot(cultivated)
+  newworld_<-.newworld_check_plot(only.new.world)
+  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
+  native_<-.native_check_plot(native.status)
+  natives_<-.natives_check_plot(natives.only)
+  political_<-.political_check_plot(political.boundaries)
+  collection_<-.collection_check_plot(collection.info)
+  md_<-.md_check_plot(all.metadata)
   
   # set the query
   query <- paste("SELECT view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,
@@ -2131,25 +2125,25 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
 #' @family plot functions
 #' @export
 BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(dataset)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)
-  is_log(collection.info)
-  is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(dataset)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
+  .is_log(all.metadata)
   
   #set conditions for query
-  cultivated_<-cultivated_check_plot(cultivated)
-  newworld_<-newworld_check_plot(only.new.world)
-  taxonomy_<-taxonomy_check_plot(all.taxonomy)
-  native_<-native_check_plot(native.status)
-  natives_<-natives_check_plot(natives.only)
-  political_<-political_check_plot(political.boundaries)
-  collection_<-collection_check_plot(collection.info)
-  md_<-md_check_plot(all.metadata)
+  cultivated_<-.cultivated_check_plot(cultivated)
+  newworld_<-.newworld_check_plot(only.new.world)
+  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
+  native_<-.native_check_plot(native.status)
+  natives_<-.natives_check_plot(natives.only)
+  political_<-.political_check_plot(political.boundaries)
+  collection_<-.collection_check_plot(collection.info)
+  md_<-.md_check_plot(all.metadata)
   
   # set the query
   query <- paste("SELECT view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,
@@ -2211,7 +2205,7 @@ BIEN_plot_metadata<-function( ...){
 #' @family taxonomy functions
 #' @export
 BIEN_taxonomy_species<-function(species, ...){
-  is_char(species)
+  .is_char(species)
   
   #set base query components
   sql_select <-  paste('SELECT DISTINCT higher_plant_group, "class", superorder, "order", scrubbed_family,scrubbed_genus,scrubbed_species_binomial,scrubbed_author,scrubbed_taxonomic_status')
@@ -2241,7 +2235,7 @@ BIEN_taxonomy_species<-function(species, ...){
 #' @family taxonomy functions
 #' @export
 BIEN_taxonomy_genus<-function(genus, ...){
-  is_char(genus)
+  .is_char(genus)
   
   #set base query components
   sql_select <-  paste('SELECT DISTINCT higher_plant_group, "class", superorder, "order", scrubbed_family,scrubbed_genus,scrubbed_species_binomial,scrubbed_author,scrubbed_taxonomic_status')
@@ -2272,7 +2266,7 @@ BIEN_taxonomy_genus<-function(genus, ...){
 #' @family taxonomy functions
 #' @export
 BIEN_taxonomy_family<-function(family, ...){
-  is_char(family)
+  .is_char(family)
   
   #set base query components
   sql_select <-  paste('SELECT DISTINCT higher_plant_group, "class", superorder, "order", scrubbed_family,scrubbed_genus,scrubbed_species_binomial,scrubbed_author,scrubbed_taxonomic_status')
@@ -2308,7 +2302,7 @@ BIEN_taxonomy_family<-function(family, ...){
 #' @family phylogeny functions
 #' @export
 BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...){
-  is_num(n_phylogenies)  
+  .is_num(n_phylogenies)  
   
   if(!is.null(replicates)){
     replicates<-replicates[which(replicates%in%1:100)]
@@ -2729,26 +2723,26 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
 #' @family stem functions
 #' @export
 BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
-  is_log(all.metadata)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(species)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)
-  is_log(collection.info)
+  .is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(species)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
   
   #set conditions for query
-  cultivated_<-cultivated_check_stem(cultivated)
-  newworld_<-newworld_check_stem(only.new.world)
-  taxonomy_<-taxonomy_check_stem(all.taxonomy)
-  native_<-native_check_stem(native.status)
-  natives_<-natives_check_stem(natives.only)
-  political_<-political_check_stem(political.boundaries)
-  collection_<-collection_check_stem(collection.info)
-  vfoi_<-vfoi_check_stem(native.status,cultivated,natives.only,collection.info)
-  md_<-md_check_stem(all.metadata)
+  cultivated_<-.cultivated_check_stem(cultivated)
+  newworld_<-.newworld_check_stem(only.new.world)
+  taxonomy_<-.taxonomy_check_stem(all.taxonomy)
+  native_<-.native_check_stem(native.status)
+  natives_<-.natives_check_stem(natives.only)
+  political_<-.political_check_stem(political.boundaries)
+  collection_<-.collection_check_stem(collection.info)
+  vfoi_<-.vfoi_check_stem(native.status,cultivated,natives.only,collection.info)
+  md_<-.md_check_stem(all.metadata)
   
   # set the query
   query <- paste("SELECT analytical_stem.scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
@@ -2786,26 +2780,26 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' @family stem functions
 #' @export
 BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
-  is_log(all.metadata)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(family)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)
-  is_log(collection.info)
+  .is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(family)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
 
   #set conditions for query
-  cultivated_<-cultivated_check_stem(cultivated)
-  newworld_<-newworld_check_stem(only.new.world)
-  taxonomy_<-taxonomy_check_stem(all.taxonomy)
-  native_<-native_check_stem(native.status)
-  natives_<-natives_check_stem(natives.only)
-  political_<-political_check_stem(political.boundaries)
-  collection_<-collection_check_stem(collection.info)
-  vfoi_<-vfoi_check_stem(native.status,cultivated,natives.only,collection.info)
-  md_<-md_check_stem(all.metadata)
+  cultivated_<-.cultivated_check_stem(cultivated)
+  newworld_<-.newworld_check_stem(only.new.world)
+  taxonomy_<-.taxonomy_check_stem(all.taxonomy)
+  native_<-.native_check_stem(native.status)
+  natives_<-.natives_check_stem(natives.only)
+  political_<-.political_check_stem(political.boundaries)
+  collection_<-.collection_check_stem(collection.info)
+  vfoi_<-.vfoi_check_stem(native.status,cultivated,natives.only,collection.info)
+  md_<-.md_check_stem(all.metadata)
   
   # set the query
   query <- paste("SELECT analytical_stem.scrubbed_family, analytical_stem.scrubbed_genus,analytical_stem.scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select,", 
@@ -2843,26 +2837,26 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
 #' @family stem functions
 #' @export
 BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE, collection.info=F,all.metadata = F, ...){
-  is_log(all.metadata)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(genus)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)
-  is_log(collection.info)
+  .is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(genus)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
   
   #set conditions for query
-  cultivated_<-cultivated_check_stem(cultivated)
-  newworld_<-newworld_check_stem(only.new.world)
-  taxonomy_<-taxonomy_check_stem(all.taxonomy)
-  native_<-native_check_stem(native.status)
-  natives_<-natives_check_stem(natives.only)
-  political_<-political_check_stem(political.boundaries)
-  collection_<-collection_check_stem(collection.info)
-  vfoi_<-vfoi_check_stem(native.status,cultivated,natives.only,collection.info)
-  md_<-md_check_stem(all.metadata)
+  cultivated_<-.cultivated_check_stem(cultivated)
+  newworld_<-.newworld_check_stem(only.new.world)
+  taxonomy_<-.taxonomy_check_stem(all.taxonomy)
+  native_<-.native_check_stem(native.status)
+  natives_<-.natives_check_stem(natives.only)
+  political_<-.political_check_stem(political.boundaries)
+  collection_<-.collection_check_stem(collection.info)
+  vfoi_<-.vfoi_check_stem(native.status,cultivated,natives.only,collection.info)
+  md_<-.md_check_stem(all.metadata)
   
   # set the query
   query <- paste("SELECT analytical_stem.scrubbed_genus,analytical_stem.scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,analytical_stem.latitude, 
@@ -2896,26 +2890,26 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
 #' @family stem functions
 #' @export
 BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
-  is_log(all.metadata)
-  is_log(cultivated)
-  is_log(only.new.world)
-  is_log(all.taxonomy)
-  is_char(datasource)
-  is_log(native.status)
-  is_log(natives.only)
-  is_log(political.boundaries)
-  is_log(collection.info)
+  .is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(datasource)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
     
   #set conditions for query
-  cultivated_<-cultivated_check_stem(cultivated)
-  newworld_<-newworld_check_stem(only.new.world)
-  taxonomy_<-taxonomy_check_stem(all.taxonomy)
-  native_<-native_check_stem(native.status)
-  natives_<-natives_check_stem(natives.only)
-  political_<-political_check_stem(political.boundaries)
-  collection_<-collection_check_stem(collection.info)
-  vfoi_<-vfoi_check_stem(native.status,cultivated,natives.only,collection.info)
-  md_<-md_check_stem(all.metadata)
+  cultivated_<-.cultivated_check_stem(cultivated)
+  newworld_<-.newworld_check_stem(only.new.world)
+  taxonomy_<-.taxonomy_check_stem(all.taxonomy)
+  native_<-.native_check_stem(native.status)
+  natives_<-.natives_check_stem(natives.only)
+  political_<-.political_check_stem(political.boundaries)
+  collection_<-.collection_check_stem(collection.info)
+  vfoi_<-.vfoi_check_stem(native.status,cultivated,natives.only,collection.info)
+  md_<-.md_check_stem(all.metadata)
   
   # set the query
   query <- paste("SELECT analytical_stem.plot_name,analytical_stem.subplot, analytical_stem.elevation_m, analytical_stem.plot_area_ha,analytical_stem.sampling_protocol,
