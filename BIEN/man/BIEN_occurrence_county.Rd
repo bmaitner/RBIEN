@@ -57,7 +57,7 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_family}},
   \code{\link{BIEN_occurrence_genus}},
   \code{\link{BIEN_occurrence_records_per_species}},
-  \code{\link{BIEN_occurrence_shapefile}},
+  \code{\link{BIEN_occurrence_spatialpolygons}},
   \code{\link{BIEN_occurrence_species}},
   \code{\link{BIEN_occurrence_state}}
 }

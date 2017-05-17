@@ -52,21 +52,22 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,a
 }
 ##############
 
-#'Extract occurrence data for specified shapefile
+#'Extract occurrence data for specified SpatialPolygons or SpatialPolygonsDataFrame
 #'
-#'BIEN_occurrence_shapefile downloads occurrence records falling within a user-specified shapefile.
-#' @param shapefile An object of class SpatialPolygonsDataFrame.  Note that the polygon must be in WGS84.
+#'BIEN_occurrence_spatialpolygons downloads occurrence records falling within a user-specified SpatialPolygons or SpatialPolygonsDataFrame.
+#' @param spatialpolygons An object of class SpatialPolygons or SpatialPolygonsDataFrame.  Note that the file must be in WGS84.
 #' @template occurrence
 #' @return Dataframe containing occurrence records for the specified species.
+#' @note We recommend using \code{\link[rgdal]{readOGR}} to load spatial data
 #' @examples \dontrun{
 #' library(rgdal)
 #' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
-#' shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
-#' #shapefiles should be read with readOGR().
-#' species_occurrenes<-BIEN_occurrence_shapefile(shapefile=shape)}
+#' sp<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
+#' #SpatialPolygons should be read with readOGR().
+#' species_occurrences<-BIEN_occurrence_spatialpolygons(spatialpolygons=sp)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
+BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -76,11 +77,11 @@ BIEN_occurrence_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TR
   .is_log(natives.only)
   .is_log(collection.info)
   
-  wkt<-rgeos::writeWKT(shapefile)
-  long_min<-shapefile@bbox[1,1]
-  long_max<-shapefile@bbox[1,2]
-  lat_min<-shapefile@bbox[2,1]
-  lat_max<-shapefile@bbox[2,2]
+  wkt<-rgeos::writeWKT(spatialpolygons)
+  long_min<-spatialpolygons@bbox[1,1]
+  long_max<-spatialpolygons@bbox[1,2]
+  lat_min<-spatialpolygons@bbox[2,1]
+  lat_max<-spatialpolygons@bbox[2,2]
   
   
   #set conditions for query
@@ -340,29 +341,29 @@ BIEN_list_all<-function( ...){
 }
 ###########################
 
-#'Extract a list of species within a given shapefile.
+#'Extract a list of species within a given spatialpolygons.
 #'
-#'BIEN_list_shapefile produces a list of all species with occurrence record falling within a user-supplied GIS shapefile.
-#' @param shapefile An object of class SpatialPolygonsDataFrame.  Note that the polygon must be in WGS84.
+#'BIEN_list_spatialpolygons produces a list of all species with occurrence record falling within a user-supplied SpatialPolygons or SpatialPolygonsDataFrame.
+#' @param spatialpolygons An object of class SpatialPolygonsDataFrame.  Note that the object must be in WGS84.
 #' @template list
-#' @return Dataframe containing a list of all species with occurrences in the supplied shapefile.
-#' @note We recommend using the function readOGR() in the rgdal package to read in shapefiles.  Other methods may cause problems related to handling holes in polygons.
+#' @return Dataframe containing a list of all species with occurrences in the supplied SpatialPolygons object.
+#' @note We recommend using \code{\link[rgdal]{readOGR}} to load spatial data.  Other methods may cause problems related to handling holes in polygons.
 #' @examples \dontrun{
 #' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
 #' shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
-#' #shapefiles should be read with readOGR(), see note.
-#' species_list<-BIEN_list_shapefile(shapefile=shape)}
+#' #spatialpolygons should be read with readOGR(), see note.
+#' species_list<-BIEN_list_spatialpolygons(spatialpolygons=shape)}
 #' @family list functions
 #' @export
-BIEN_list_shapefile<-function(shapefile,cultivated=FALSE,only.new.world=TRUE,...){
+BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.world=TRUE,...){
   .is_log(cultivated)
   .is_log(only.new.world)
   
-  wkt<-rgeos::writeWKT(shapefile)
-  long_min<-shapefile@bbox[1,1]
-  long_max<-shapefile@bbox[1,2]
-  lat_min<-shapefile@bbox[2,1]
-  lat_max<-shapefile@bbox[2,2]
+  wkt<-rgeos::writeWKT(spatialpolygons)
+  long_min<-spatialpolygons@bbox[1,1]
+  long_max<-spatialpolygons@bbox[1,2]
+  lat_min<-spatialpolygons@bbox[2,1]
+  lat_max<-spatialpolygons@bbox[2,2]
   
   
   # adjust for optional parameters
@@ -556,14 +557,9 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
       stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
       
     }  
-    
-    
-    
+
   }#if length(country>1)
-  
-  
-  
-  
+
   # set the query
   query <- paste("SELECT scrubbed_species_binomial" ,taxonomy_$select,political_$select, ", latitude, longitude,date_collected,datasource,
                  dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",
@@ -789,7 +785,7 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
 #' Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
 #' 
 #' #Plotting files
-#' plot(Abies_poly)#plots the shapefile, but doesn't mean much without any reference
+#' plot(Abies_poly)#plots the range, but doesn't mean much without any reference
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 #' plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
 #'
@@ -828,7 +824,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
         Species<-df$species[l]
         sp_range<-rgeos::readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         
-        #convert shapepoly into a spatialpolygon dataframe(needed to save as a shapefile)
+        #convert shapepoly into a spatialpolygon dataframe(needed to save)
         spdf<-as.data.frame(Species)
         spdf<-sp::SpatialPolygonsDataFrame(sp_range,spdf)
         
@@ -902,7 +898,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #' Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
 #' 
 #' #Plotting files
-#' plot(Abies_poly)#plots the shapefile, but doesn't mean much without any reference
+#' plot(Abies_poly)#plots the range, but doesn't mean much without any reference
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 #' plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
 #'
@@ -941,7 +937,7 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
         Species<-df$species[l]
         sp_range<-rgeos::readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         
-        #convert shapepoly into a spatialpolygon dataframe(needed to save as a shapefile)
+        #convert shapepoly into a spatialpolygon dataframe(needed to save)
         spdf<-as.data.frame(Species)
         spdf<-sp::SpatialPolygonsDataFrame(sp_range,spdf)
         
@@ -1039,7 +1035,7 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
         Species<-df$species[l]
         sp_range<-rgeos::readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         
-        #convert shapepoly into a spatialpolygon dataframe(needed to save as a shapefile)
+        #convert shapepoly into a spatialpolygon dataframe(needed to save)
         spdf<-as.data.frame(Species)
         spdf<-sp::SpatialPolygonsDataFrame(sp_range,spdf)
               
@@ -1184,31 +1180,31 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
 }
 
 #######################################
-#'Download range maps that intersect a user-supplied shapefile.
+#'Download range maps that intersect a user-supplied SpatialPolygons object.
 #'
-#'BIEN_ranges_shapefile extracts range maps that interesect a specified shapefile.
-#' @param shapefile An object of class SpatialPolygonsDataFrame.
+#'BIEN_ranges_spatialpolygons extracts range maps that interesect a specified SpatialPolygons or SpatialPolygonsDataFrame object.
+#' @param spatialpolygons An object of class SpatialPolygonsDataFrame or SpatialPolygons.
 #' @param crop.ranges Should the ranges be cropped to the focal area? Default is FALSE.
 #' @template ranges_spatial
 #' @return All range maps that intersect the user-supplied shapfile.
-#' @note We recommend using the function readOGR() in the rgdal package to read in shapefiles.  Other methods may cause problems related to handling holes in polygons.
+#' @note We recommend using \code{\link[rgdal]{readOGR}} to load spatial data.  Other methods may cause problems related to handling holes in polygons.
 #' @examples \dontrun{
 #' library(rgdal)
 #' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
 #' shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
-#' #shapefiles should be read with readOGR(), see note.
-#' BIEN_ranges_shapefile(shapefile = shape) 
-#' #Note that this will save many shapefiles to the working directory.
+#' #spatialpolygons should be read with readOGR(), see note.
+#' BIEN_ranges_spatialpolygons(spatialpolygons = shape) 
+#' #Note that this will save many SpatialPolygonsDataFrames to the working directory.
 #' }
 #' @family range functions
 #' @export
-BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE,...){
+BIEN_ranges_spatialpolygons<-function(spatialpolygons, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE,...){
   .is_log(return.species.list)
   .is_log(species.names.only)
   .is_log(crop.ranges)
   .is_log(include.gid)
   
-  wkt<-rgeos::writeWKT(shapefile)
+  wkt<-rgeos::writeWKT(spatialpolygons)
   
   if(species.names.only==FALSE){
     
@@ -1237,7 +1233,7 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species.names.only=FA
         sp_range<-rgeos::readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         if(!is.null(sp_range)){
           
-          #convert shapepoly into a spatialpolygon dataframe(needed to save as a shapefile)
+          #convert shapepoly into a spatialpolygon dataframe(needed to save)
           spdf<-as.data.frame(Species)
           spdf<-sp::SpatialPolygonsDataFrame(sp_range,spdf)
           
@@ -1295,7 +1291,7 @@ BIEN_ranges_shapefile<-function(shapefile, directory=NULL, species.names.only=FA
 #' xanthium_strumarium<-BIEN_ranges_load_species(species = "Xanthium strumarium")
 #' 
 #' #Plotting files
-#' plot(abies_maps)#plots the shapefile, but doesn't mean much without any reference
+#' plot(abies_maps)#plots the spatialpolygons, but doesn't mean much without any reference
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 #' plot(xanthium_strumarium,col="forest green",add=TRUE) #adds the range of X. strumarium
 #' plot(abies_maps[1,], add = T, col ="light green")}
@@ -1361,7 +1357,6 @@ BIEN_ranges_list<-function( ...){
 ########################################
 ########################################
 
-
 #'Download trait data for given species.
 #'
 #'BIEN_trait_species extracts trait data for the species specified.
@@ -1400,6 +1395,7 @@ BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries
 #' @param species A single species or a vector of species.
 #' @param trait A single trait.
 #' @param ... Additional arguments passed to internal functions.
+#' @note Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
 #' @return A dataframe of estimated trait means and associated metadata for the given species.
 #' @examples \dontrun{
 #' BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="leaf dry mass per leaf fresh mass") }
@@ -1483,6 +1479,7 @@ BIEN_trait_mean<-function(species,trait, ...){
 #'BIEN_trait_trait downloads all measurements of the trait(s) specified.
 #' @param trait A single trait or a vector of traits.
 #' @template trait
+#' @note Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
 #' @return A dataframe of all available trait data for the given trait(s).
 #' @examples \dontrun{
 #' BIEN_trait_trait("whole plant height")
@@ -1515,6 +1512,7 @@ BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = F
 #' @param species A single species or a vector of species.
 #' @param trait A single trait or a vector of traits.
 #' @template trait
+#' @note Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
 #' @return A dataframe of all data matching the specified trait(s) and species.
 #' @examples \dontrun{
 #' BIEN_trait_traitbyspecies(trait = "whole plant height", species = "Carex capitata")
@@ -1552,6 +1550,7 @@ BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, politi
 #' @param genus A single genus or a vector of genera.
 #' @param trait A single trait or a vector of traits.
 #' @template trait
+#' @note Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
 #' @return A dataframe of all data matching the specified trait(s) and genus/genera.
 #' @examples \dontrun{
 #' BIEN_trait_traitbygenus(trait = "whole plant height", genus = "Carex")
@@ -1589,6 +1588,7 @@ BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.
 #' @param family A single family or a vector of families.
 #' @param trait A single trait or a vector of traits.
 #' @template trait
+#' @note Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
 #' @return A dataframe of all data matching the specified trait(s) and family/families.
 #' @examples \dontrun{
 #' BIEN_trait_traitbyfamily(trait = "whole plant height", family = "Poaceae")
@@ -1777,6 +1777,7 @@ BIEN_trait_traits_per_species<-function( species=NULL, ...){
 #' @param datasource A datasource. See BIEN.plot.list_datasource() for options.
 #' @template plot
 #' @return A dataframe containing all data from the specified datasource.
+#' @note For a list of available datasources, use \code{\link{BIEN_plot_list_datasource}}.
 #' @examples \dontrun{
 #' BIEN_plot_datasource("SALVIAS")}
 #' @family plot functions
@@ -2015,6 +2016,7 @@ BIEN_plot_list_sampling_protocols<-function(...){
 #' @param sampling_protocol A sampling protocol or vector of sampling protocols. See BIEN.plot.list_sampling_protocols() for options.
 #' @template plot
 #' @return A dataframe containing all data from the specified datasource.
+#' @note For a list of available datasources, use \code{\link{BIEN_plot_list_sampling_protocols}}.
 #' @examples \dontrun{
 #' BIEN_plot_sampling_protocol("Point-intercept")}
 #' @family plot functions
@@ -2067,6 +2069,7 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
 #'BIEN_plot_name downloads all plot data for a set of plot names.
 #' @param plot.name A plot name or vector of names. See BIEN_plot_metadata for more information on plots.
 #' @template plot
+#' @note Plot names can be looked up with \code{\link{BIEN_plot_metadata}}.
 #' @return A dataframe containing all data from the specified plot(s).
 #' @examples \dontrun{
 #' BIEN_plot_name("SR-1")}
@@ -2120,6 +2123,7 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
 #' @param dataset A plot dataset or vector of datasets. See BIEN_plot_metadata for more information on plots.
 #' @template plot
 #' @return A dataframe containing all data from the specified dataset.
+#' @note Datasets and related information can be looked up with \code{\link{BIEN_plot_metadata}}
 #' @examples \dontrun{
 #' BIEN_plot_dataset("Gentry Transect Dataset")}
 #' @family plot functions
@@ -2609,11 +2613,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
     citation[[2]]<-gsub(citation[[2]],pattern = "note", replacement = "\nnote")
     citation[[2]]<-iconv(citation[[2]],to="ASCII//TRANSLIT")
     names(citation)<-c("general information","references")
-    
-    
-    
-    
-    
+
   }#if dataframe is null
   
   #######
@@ -2885,6 +2885,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
 #' @template stem
 #' @return Dataframe containing stem data for the specified datasource.
 #' @note Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
+#' @note #' @note For a list of available datasources, use \code{\link{BIEN_plot_list_datasource}}.
 #' @examples \dontrun{
 #' BIEN_stem_datasource(datasource = "SALVIAS")}
 #' @family stem functions

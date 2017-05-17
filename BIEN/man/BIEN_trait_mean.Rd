@@ -19,6 +19,9 @@ A dataframe of estimated trait means and associated metadata for the given speci
 \description{
 BIEN_trait_mean Estimates species mean values for a given trait, using Genus or Family level data where Species level data is absent.
 }
+\note{
+Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
+}
 \examples{
 \dontrun{
 BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="leaf dry mass per leaf fresh mass") }

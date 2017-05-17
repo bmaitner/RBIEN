@@ -36,6 +36,9 @@ A dataframe containing all data from the specified datasource.
 \description{
 BIEN_plot_sampling_protocol downloads all plot data using a specified sampling protocol.
 }
+\note{
+For a list of available datasources, use \code{\link{BIEN_plot_list_sampling_protocols}}.
+}
 \examples{
 \dontrun{
 BIEN_plot_sampling_protocol("Point-intercept")}

@@ -34,5 +34,5 @@ BIEN_list_state(country="United States", state= state_vector)}
 Other list functions: \code{\link{BIEN_list_all}},
   \code{\link{BIEN_list_country}},
   \code{\link{BIEN_list_county}},
-  \code{\link{BIEN_list_shapefile}}
+  \code{\link{BIEN_list_spatialpolygons}}
 }

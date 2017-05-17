@@ -38,6 +38,8 @@ BIEN_stem_datasource downloads occurrence records for specific datasources from 
 }
 \note{
 Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
+
+#' @note For a list of available datasources, use \code{\link{BIEN_plot_list_datasource}}.
 }
 \examples{
 \dontrun{

@@ -36,6 +36,9 @@ A dataframe containing all data from the specified plot(s).
 \description{
 BIEN_plot_name downloads all plot data for a set of plot names.
 }
+\note{
+Plot names can be looked up with \code{\link{BIEN_plot_metadata}}.
+}
 \examples{
 \dontrun{
 BIEN_plot_name("SR-1")}

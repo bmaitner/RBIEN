@@ -42,7 +42,7 @@ BIEN_ranges_species("Abies_lasiocarpa",tempdir())
 Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
 
 #Plotting files
-plot(Abies_poly)#plots the shapefile, but doesn't mean much without any reference
+plot(Abies_poly)#plots the range, but doesn't mean much without any reference
 map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
 
@@ -55,5 +55,5 @@ Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_intersect_species}},
   \code{\link{BIEN_ranges_list}},
   \code{\link{BIEN_ranges_load_species}},
-  \code{\link{BIEN_ranges_shapefile}}
+  \code{\link{BIEN_ranges_spatialpolygons}}
 }

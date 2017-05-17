@@ -39,6 +39,6 @@ BIEN_list_county(country = "United States", state = "Michigan", county = county_
 \seealso{
 Other list functions: \code{\link{BIEN_list_all}},
   \code{\link{BIEN_list_country}},
-  \code{\link{BIEN_list_shapefile}},
+  \code{\link{BIEN_list_spatialpolygons}},
   \code{\link{BIEN_list_state}}
 }

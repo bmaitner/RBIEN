@@ -25,7 +25,7 @@ abies_maps<-BIEN_ranges_load_species(species = species_vector)
 xanthium_strumarium<-BIEN_ranges_load_species(species = "Xanthium strumarium")
 
 #Plotting files
-plot(abies_maps)#plots the shapefile, but doesn't mean much without any reference
+plot(abies_maps)#plots the spatialpolygons, but doesn't mean much without any reference
 map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 plot(xanthium_strumarium,col="forest green",add=TRUE) #adds the range of X. strumarium
 plot(abies_maps[1,], add = T, col ="light green")}
@@ -35,6 +35,6 @@ Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_genus}},
   \code{\link{BIEN_ranges_intersect_species}},
   \code{\link{BIEN_ranges_list}},
-  \code{\link{BIEN_ranges_shapefile}},
+  \code{\link{BIEN_ranges_spatialpolygons}},
   \code{\link{BIEN_ranges_species}}
 }

@@ -10,6 +10,8 @@ BIEN 1.1.1
 * Trait data was increased by nearly an order of magnitude
 * We currently have nearly 1 million trait records
 * Trait units and names have been standardized
+* Functions names containing "...shapefile" have been changed to "...spatialpolygons" to make the names more accurate
+* The `shapefile` arguments have been renamed `spatialpolygons`, again for increased accuracy
 
 ##BUG FIXES
 * Fixed issue with BIEN_occurrence_shapefile()

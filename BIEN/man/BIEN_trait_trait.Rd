@@ -22,6 +22,9 @@ A dataframe of all available trait data for the given trait(s).
 \description{
 BIEN_trait_trait downloads all measurements of the trait(s) specified.
 }
+\note{
+Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
+}
 \examples{
 \dontrun{
 BIEN_trait_trait("whole plant height")

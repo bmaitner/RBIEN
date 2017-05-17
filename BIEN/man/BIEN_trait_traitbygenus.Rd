@@ -24,6 +24,9 @@ A dataframe of all data matching the specified trait(s) and genus/genera.
 \description{
 BIEN_trait_traitbygenus extracts entries that contain the specified genus/genera and trait(s).
 }
+\note{
+Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_list}} for a list of traits.
+}
 \examples{
 \dontrun{
 BIEN_trait_traitbygenus(trait = "whole plant height", genus = "Carex")

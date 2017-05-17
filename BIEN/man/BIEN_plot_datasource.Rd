@@ -36,6 +36,9 @@ A dataframe containing all data from the specified datasource.
 \description{
 BIEN_plot_datasource downloads all plot data from a given datasource.
 }
+\note{
+For a list of available datasources, use \code{\link{BIEN_plot_list_datasource}}.
+}
 \examples{
 \dontrun{
 BIEN_plot_datasource("SALVIAS")}
