@@ -1369,17 +1369,19 @@ BIEN_ranges_list<-function( ...){
 #' BIEN_trait_species(species_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
+BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries = FALSE,source.citation =F, ...){
   .is_char(species)
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
+  .is_log(source.citation)
   
   # set the query
   taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
   political_<-.political_check_traits(political.boundaries)  
+  source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
   
@@ -1487,17 +1489,20 @@ BIEN_trait_mean<-function(species,trait, ...){
 #' BIEN_trait_trait(trait_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
+BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = FALSE, source.citation =F, ...){
   .is_char(trait)
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
+  .is_log(source.citation)
   
   # set the query
   taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
   political_<-.political_check_traits(political.boundaries)
+  source_<-.source_check_traits(source.citation)
+  
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,",project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ORDER BY trait_name, scrubbed_species_binomial;")
 
@@ -1521,18 +1526,20 @@ BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = F
 #' BIEN_trait_traitbyspecies(trait=trait_vector,species=species_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
+BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, political.boundaries = FALSE,source.citation =F, ...){
   .is_char(species)
   .is_char(trait)
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
+  .is_log(source.citation)
   
   # set the query
   taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
   political_<-.political_check_traits(political.boundaries)
+  source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits 
                  WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") 
@@ -1559,18 +1566,20 @@ BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, politi
 #' BIEN_trait_traitbygenus(trait=trait_vector,genus=genus_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
+BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.boundaries = FALSE, source.citation =F, ...){
   .is_char(genus)
   .is_char(trait)
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
+  .is_log(source.citation)
   # set the query
   
   taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
   political_<-.political_check_traits(political.boundaries)
+  source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits 
                  WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") 
@@ -1597,18 +1606,20 @@ BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.
 #' BIEN_trait_traitbyfamily(trait=trait_vector,family=family_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
+BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, political.boundaries = FALSE,source.citation =F, ...){
   .is_char(family)
   .is_char(trait)
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
+  .is_log(source.citation)
   
   # set the query
   taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
   political_<-.political_check_traits(political.boundaries)
+  source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id
                  FROM agg_traits 
                  WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
@@ -1633,17 +1644,19 @@ BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, politica
 #' BIEN_trait_genus(genus_vector)}
 #' @family trait funcitons
 #' @export
-BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
+BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = FALSE,source.citation =F, ...){
   .is_char(genus)
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
+  .is_log(source.citation)
   
   # set the query
   taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
   political_<-.political_check_traits(political.boundaries)
+  source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access,id 
                  FROM agg_traits WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
   
@@ -1666,17 +1679,19 @@ BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = F
 #' BIEN_trait_family(family_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries = FALSE, ...){
+BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries = FALSE,source.citation =F, ...){
   .is_char(family)
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
+  .is_log(source.citation)
 
   # set the query
   taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
   political_<-.political_check_traits(political.boundaries)
+  source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source, project_pi, project_pi_contact",
+                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access,id 
                  FROM agg_traits WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
                  ORDER BY scrubbed_family, scrubbed_species_binomial;")
@@ -1774,10 +1789,9 @@ BIEN_trait_traits_per_species<-function( species=NULL, ...){
 #'Download plot data from a given datasource.
 #'
 #'BIEN_plot_datasource downloads all plot data from a given datasource.
-#' @param datasource A datasource. See BIEN.plot.list_datasource() for options.
+#' @param datasource A datasource. See \code{\link{BIEN_plot_list_datasource}} for options.
 #' @template plot
 #' @return A dataframe containing all data from the specified datasource.
-#' @note For a list of available datasources, use \code{\link{BIEN_plot_list_datasource}}.
 #' @examples \dontrun{
 #' BIEN_plot_datasource("SALVIAS")}
 #' @family plot functions
@@ -2013,10 +2027,9 @@ BIEN_plot_list_sampling_protocols<-function(...){
 #'Download plot data using a specified sampling protocol.
 #'
 #'BIEN_plot_sampling_protocol downloads all plot data using a specified sampling protocol.
-#' @param sampling_protocol A sampling protocol or vector of sampling protocols. See BIEN.plot.list_sampling_protocols() for options.
+#' @param sampling_protocol A sampling protocol or vector of sampling protocols. See \code{\link{BIEN_plot_list_sampling_protocols}} for options.
 #' @template plot
 #' @return A dataframe containing all data from the specified datasource.
-#' @note For a list of available datasources, use \code{\link{BIEN_plot_list_sampling_protocols}}.
 #' @examples \dontrun{
 #' BIEN_plot_sampling_protocol("Point-intercept")}
 #' @family plot functions

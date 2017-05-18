@@ -5,7 +5,7 @@
 \title{Download all measurements of a specific trait(s).}
 \usage{
 BIEN_trait_trait(trait, all.taxonomy = FALSE, political.boundaries = FALSE,
-  ...)
+  source.citation = F, ...)
 }
 \arguments{
 \item{trait}{A single trait or a vector of traits.}
@@ -13,6 +13,8 @@ BIEN_trait_trait(trait, all.taxonomy = FALSE, political.boundaries = FALSE,
 \item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
 
 \item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
+
+\item{source.citation}{Should readable source information be downloaded for each record?  Note that \code{\link{BIEN_metadata_citation}} may be more useful.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

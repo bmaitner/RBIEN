@@ -210,6 +210,32 @@ if(all.taxonomy){
   return(output)  
   
 } 
+
+##
+#'Set query details
+#'
+#'Helper function to set query components.
+#' @keywords internal
+.source_check_traits<-function(source.citation){
+  
+  if(source.citation){
+    select <- ",source_citation"
+    
+  }else{
+    select <- ""  
+    
+  }
+  
+  output<-as.data.frame(cbind(select),stringsAsFactors = F)  
+  colnames(output)<-c("select")
+  
+  return(output)  
+  
+} 
+
+
+
+
 #####################################
 #Plots
 

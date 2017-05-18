@@ -5,7 +5,7 @@
 \title{Download trait data for given species.}
 \usage{
 BIEN_trait_species(species, all.taxonomy = FALSE,
-  political.boundaries = FALSE, ...)
+  political.boundaries = FALSE, source.citation = F, ...)
 }
 \arguments{
 \item{species}{A single species or a vector of species.}
@@ -13,6 +13,8 @@ BIEN_trait_species(species, all.taxonomy = FALSE,
 \item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
 
 \item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
+
+\item{source.citation}{Should readable source information be downloaded for each record?  Note that \code{\link{BIEN_metadata_citation}} may be more useful.}
 
 \item{...}{Additional arguments passed to internal functions.}
 }
