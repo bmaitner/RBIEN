@@ -10,7 +10,7 @@ BIEN_plot_datasource(datasource, cultivated = FALSE, only.new.world = TRUE,
   ...)
 }
 \arguments{
-\item{datasource}{A datasource. See BIEN.plot.list_datasource() for options.}
+\item{datasource}{A datasource. See \code{\link{BIEN_plot_list_datasource}} for options.}
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
@@ -35,9 +35,6 @@ A dataframe containing all data from the specified datasource.
 }
 \description{
 BIEN_plot_datasource downloads all plot data from a given datasource.
-}
-\note{
-For a list of available datasources, use \code{\link{BIEN_plot_list_datasource}}.
 }
 \examples{
 \dontrun{

@@ -4,10 +4,13 @@
 \alias{BIEN_list_country}
 \title{Extract species list by country}
 \usage{
-BIEN_list_country(country, cultivated = FALSE, only.new.world = TRUE, ...)
+BIEN_list_country(country = NULL, iso.2 = NULL, cultivated = FALSE,
+  only.new.world = TRUE, ...)
 }
 \arguments{
 \item{country}{A single country or a vector of countries.}
+
+\item{iso.2}{A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html}
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 

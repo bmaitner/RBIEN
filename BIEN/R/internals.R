@@ -631,12 +631,13 @@ if(all.taxonomy){
 #' @examples \dontrun{
 #' is_char(species)}
 .is_char <- function(x) {
-  if (!inherits(x ,'character')) {
+  if (!inherits(x ,c("character","NULL"))) {
     stop(sys.call()[-1]," should be character", call. = FALSE)
   }
 }
 
 ###################################
+
 #'Check that value is numeric
 #'
 #'Helper function to check data format.
@@ -651,4 +652,3 @@ if(all.taxonomy){
 
 #################################
 #################################
-

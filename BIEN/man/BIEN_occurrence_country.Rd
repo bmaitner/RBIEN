@@ -4,13 +4,15 @@
 \alias{BIEN_occurrence_country}
 \title{Extract species occurrence records by country.}
 \usage{
-BIEN_occurrence_country(country, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  observation.type = FALSE, political.boundaries = FALSE,
-  collection.info = F, ...)
+BIEN_occurrence_country(country = NULL, iso.2 = NULL, cultivated = FALSE,
+  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
+  natives.only = TRUE, observation.type = FALSE,
+  political.boundaries = FALSE, collection.info = F, ...)
 }
 \arguments{
 \item{country}{A single country or a vector of country.}
+
+\item{iso.2}{A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html}
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 

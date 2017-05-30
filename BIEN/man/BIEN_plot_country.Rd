@@ -4,13 +4,15 @@
 \alias{BIEN_plot_country}
 \title{Download plot data from specified countries.}
 \usage{
-BIEN_plot_country(country, cultivated = FALSE, only.new.world = TRUE,
-  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, collection.info = F, all.metadata = FALSE,
-  ...)
+BIEN_plot_country(country = NULL, iso.2 = NULL, cultivated = FALSE,
+  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
+  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
+  all.metadata = FALSE, ...)
 }
 \arguments{
 \item{country}{A country or vector of countries.}
+
+\item{iso.2}{A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html}
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 

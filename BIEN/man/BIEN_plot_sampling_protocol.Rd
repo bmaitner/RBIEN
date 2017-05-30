@@ -10,7 +10,7 @@ BIEN_plot_sampling_protocol(sampling_protocol, cultivated = FALSE,
   all.metadata = FALSE, ...)
 }
 \arguments{
-\item{sampling_protocol}{A sampling protocol or vector of sampling protocols. See BIEN.plot.list_sampling_protocols() for options.}
+\item{sampling_protocol}{A sampling protocol or vector of sampling protocols. See \code{\link{BIEN_plot_list_sampling_protocols}} for options.}
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
@@ -35,9 +35,6 @@ A dataframe containing all data from the specified datasource.
 }
 \description{
 BIEN_plot_sampling_protocol downloads all plot data using a specified sampling protocol.
-}
-\note{
-For a list of available datasources, use \code{\link{BIEN_plot_list_sampling_protocols}}.
 }
 \examples{
 \dontrun{

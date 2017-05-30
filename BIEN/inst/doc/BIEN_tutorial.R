@@ -57,7 +57,6 @@ Xanthium_strumarium_range <- BIEN_ranges_load_species(species = "Xanthium struma
 
 
 ## ------------------------------------------------------------------------
-
 #First, let's add a base map so that our range has some context:
 
 map('world',fill=T , col= "grey", bg="light blue",xlim = c(-180,-20),ylim = c(-60,80))
@@ -69,7 +68,6 @@ plot(Xanthium_strumarium_range,col="green",add=T)
 
 
 ## ------------------------------------------------------------------------
-
 map('world',fill=T , col= "grey", bg="light blue",xlim = c(-180,-20),ylim = c(-60,80))
 plot(Xanthium_strumarium_range,col="green",add=T)
 points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col="blue",pch=20,cex=1)
@@ -96,7 +94,7 @@ BIEN_trait_list()
 
 ## ------------------------------------------------------------------------
 
-LLS <- BIEN_trait_trait(trait = "leaf lifespan")
+leaf_area <- BIEN_trait_trait(trait = "leaf area")
 
 
 ## ------------------------------------------------------------------------

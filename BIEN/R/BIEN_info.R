@@ -14,7 +14,7 @@ NULL
 ###################
 
 .onAttach <- function(libname,pkgname) {
-  packageStartupMessage('Type vignette("BIEN") to get started')
+  packageStartupMessage('Type vignette("BIEN") or vignette("BIEN_tutorial") to get started')
 }
 
 #######################

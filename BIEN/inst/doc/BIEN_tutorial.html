@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Setup</title>
+<title>title: &ldquo;BIEN tutorial&rdquo;</title>
 
 <script type="text/javascript">
 window.onload = function() {
@@ -207,6 +207,10 @@ hr {
 %\VignetteEncoding{UTF-8}
 -->
 
+<hr/>
+
+<h2>title: &ldquo;BIEN tutorial&rdquo;</h2>
+
 <h1>Setup</h1>
 
 <pre><code class="r">library(BIEN)
@@ -217,8 +221,7 @@ library(sp) # A package for spatial data
 
 <h1>An overview of the package</h1>
 
-<p>We try to make this package as easy and intuitive to use as possible, but it is still often easiest to start with our vignette.
-Particularly useful are the &ldquo;Function Names&rdquo; and &ldquo;Function Directory&rdquo; sections.</p>
+<p>We try to make this package as easy and intuitive to use as possible, but it is still often easiest to start with our vignette.  Particularly useful are the &ldquo;Function Names&rdquo; and &ldquo;Function Directory&rdquo; sections.</p>
 
 <pre><code class="r">vignette(&quot;BIEN&quot;)
 </code></pre>
@@ -238,22 +241,22 @@ Particularly useful are the &ldquo;Function Names&rdquo; and &ldquo;Function Dir
 <p>Currently we have 9 function families in RBIEN.  These are sets of functions that access a given type of data.</p>
 
 <ol>
-<li>occurrence records (BIEN<em>occurrence</em>&hellip;)</li>
-<li>range maps (BIEN<em>ranges</em>&hellip;)</li>
-<li>plot data (BIEN<em>plot</em>&hellip;)</li>
-<li>trait data (BIEN<em>trait</em>&hellip;)</li>
-<li>taxonomic information (BIEN<em>taxonomy</em>&hellip;)</li>
-<li>phylogenies (BIEN<em>phylogeny</em>&hellip;)</li>
-<li>stem data (BIEN<em>stem</em>&hellip;)</li>
-<li>species lists (BIEN<em>list</em>&hellip;)</li>
-<li>metadata (BIEN<em>metadata</em>&hellip;)</li>
+<li>occurrence records (<code>BIEN_occurrence_...</code>)</li>
+<li>range maps (<code>BIEN_ranges_...</code>)</li>
+<li>plot data (<code>BIEN_plot_...</code>)</li>
+<li>trait data (<code>BIEN_trait_...</code>)</li>
+<li>taxonomic information (<code>BIEN_taxonomy_...</code>)</li>
+<li>phylogenies (<code>BIEN_phylogeny_...</code>)</li>
+<li>stem data (<code>BIEN_stem_...</code>)</li>
+<li>species lists (<code>BIEN_list_...</code>)</li>
+<li>metadata (<code>BIEN_metadata_...</code>)</li>
 </ol>
 
 <p>We&#39;ll walk through each of the function families and take a look at some the options available within each.</p>
 
 <h1>Occurrence records</h1>
 
-<p>These functions begin with the prefix &ldquo;BIEN<em>occurrence</em>&rdquo; and allow you to query occurrences by either taxonomy or geography.  Functions include:</p>
+<p>These functions begin with the prefix <code>BIEN_occurrence_...</code> and allow you to query occurrences by either taxonomy or geography.  Functions include:</p>
 
 <ol>
 <li><p><code>BIEN_occurrence_country</code> Returns all occurrence records within a given country</p></li>
@@ -278,8 +281,10 @@ Particularly useful are the &ldquo;Function Names&rdquo; and &ldquo;Function Dir
 <ol>
 <li><p>all.taxonomy If TRUE, the query will return additional taxonomic data, including the uncorrected taxonomic information for those records.</p></li>
 <li><p>native.status If TRUE, additional information will be returned regarding whether a species is native in a given region.</p></li>
+<li><p>natives.only If TRUE, the default, information for occurrences flagged as introduced will not be returned.</p></li>
 <li><p>observation.type  If TRUE, the query will return whether each record is from either a plot or a specimen.  This may be useful if a user believes one type of information may be more accurate.</p></li>
 <li><p>political.boundaries If TRUE, the query will return information on which country, state, etc. that an occurrence is found within.</p></li>
+<li><p>collection.info If TRUE, the quest will return additional information about the collection and identification of that specimen.</p></li>
 </ol>
 
 <p><strong>Example 1: Occurrence records for a species</strong></p>
@@ -335,7 +340,9 @@ Particularly useful are the &ldquo;Function Names&rdquo; and &ldquo;Function Dir
 ## 6           281
 </code></pre>
 
-<p>The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  If we want more information on these occurrences, we just need to change the arguments:</p>
+<p>The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  The meaning of some of these columns is obvious (e.g. latitude, longitide), however others may be less clear.  The meanings of these columns and the information within is explained in more detail in our data dictionary, available at <a href="http://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/">http://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/</a></p>
+
+<p>If we want more information on these occurrences, we just need to change the arguments:</p>
 
 <pre><code class="r">Xanthium_strumarium_full &lt;- BIEN_occurrence_species(species = &quot;Xanthium strumarium&quot;,cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T)
 
@@ -379,7 +386,7 @@ str(Xanthium_strumarium_full)
 ##  $ observation_type            : chr  &quot;specimen&quot; &quot;specimen&quot; &quot;specimen&quot; &quot;specimen&quot; ...
 </code></pre>
 
-<p>We now have considerably more information, but the query took longer to run.</p>
+<p>We now have considerably more information.</p>
 
 <p>Let&#39;s take a quick look at where those occurrences are.</p>
 
@@ -398,7 +405,7 @@ points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col=&qu
 
 <p><img src="data:image/png;base64,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VY09n+Pd1RnBG/ZCbuwbHu+uUBcfNfi0JUwvsWUwmPWSUlSUnif9oMu/tYre89Sr+bIh/jK9uz6/hvv3rTXfbW96FsLTlhzo/Rbmere9oav/ulq9QW94bPl1KsBj7cteqXfXYjxpzt940qB3aaQqXl6NBfk36zusDHq7refJf0nreIveX1nsq0VHF95j0LOaVcivqKxv6eu/SVahoDLwoPqj4G1oOJJVEKgMPKi+Erx4isCDdnyzvq/e/C+rPm3F1+urarD3WyOmUl9VjS6gN/jj+qIqPBu6NZ3R11Si+/69eHf0xdc79RpDDvQeZ2+2xPn/0CjlWCrlZad6tRm18IKaPKHXdPLs9OfxZmEp9niH+Ed5heMf6UlPKMl4EtfrDdAFO3q+ptMB8Qt35OhR6buXVNgPl2c0gYmq2OKfDeCr4F5zRb98BJHddMy8RZXWNVq2iWnN1zYdir8reqnXa2nH5nYCznZ95RcE5zaBSeWdk8w18rUuR8fRFBfOKFRk9ucicj2BkqVyHXWe2QT+rwcvhtaBbwVrokRZna7ys/Mw9n9vYqr4zLC/brvvnKGjwYsguNFv1IRUeM1NJXGPsysZ99b8k+BVJ6T5m9+Kyb2zi3yPC7fW/wPYB/v7y8FzpouYltNIShXnxPq1fHD/2gzeUVDkagYXp69l6QbjgBeB17058uTXNRa20Yq7ply3atDZfd0M3s+T0ny0NLqMWF1U2uu7+Gc0gfoyDfw1lSxinKctbWtP36jHwfe5bkP5GpEvf514kIsRhwF2I/dSNYfRe165ToYp8ysAmAe1eoRSd313Ua53eHqtjHFt75JV89fo71N7R6gi7Lsr5uxkUHVy4VheMTfJfWUj3sUjz0s0KVg/vr1HkZb5BcyQ83YuACdTILg/Cb7EcVE9O5cv/6IBuTl/FnWuOejHJnfLHXGxWFzd33GIk0Q3dz34vLIfiJDEXO/L8rVyg/gbb40u9lD1T8q16DL+gOaDf7pEF6ixkv6iRgM40wwx3SsjByoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDD6p/fHnEY2FuiPMAAAAASUVORK5CYII=" alt="plot of chunk unnamed-chunk-6"/></p>
 
-<p>From the map, we can see that the points from the default query (in blue) all fall within the New World.  The points from the full query (red + blue) additionally include occurrences from the Old World.  The points in the Old World have not gone through the same data validation procedures as those in the New World, but may still be useful.</p>
+<p>From the map, we can see that the points from the default query (in blue) all fall within the New World.  The points from the full query (red + blue) additionally include occurrences from the Old World.</p>
 
 <p><strong>Example 2: Occurrence records for a country</strong></p>
 
@@ -430,7 +437,7 @@ points(cbind(Bahamas$longitude,Bahamas$latitude),col=&quot;blue&quot;,pch=20,cex
 
 <h1>Range maps</h1>
 
-<p>These functions begin with the prefix &ldquo;BIEN<em>ranges</em>&rdquo; and return (unsurprisingly) species ranges.  Most of these functions work by saving the downloaded ranges to a specified directory in shapefile format, rather than by loading them into the R environment.</p>
+<p>These functions begin with the prefix <code>BIEN_ranges_...</code> and return (unsurprisingly) species ranges.  Most of these functions work by saving the downloaded ranges to a specified directory in shapefile format, rather than by loading them into the R environment.</p>
 
 <p>Functions include:</p>
 
@@ -456,7 +463,7 @@ points(cbind(Bahamas$longitude,Bahamas$latitude),col=&quot;blue&quot;,pch=20,cex
 <pre><code class="r">Xanthium_strumarium_range &lt;- BIEN_ranges_load_species(species = &quot;Xanthium strumarium&quot;)
 </code></pre>
 
-<p>The range map is now in our global environment as a Spatial polygons dataframe.  Let&#39;s plot the map and see what it looks like.</p>
+<p>The range map is now in our global environment as a SpatialPolygonsDataFrame.  Let&#39;s plot the map and see what it looks like.</p>
 
 <pre><code class="r">#First, let&#39;s add a base map so that our range has some context:
 
@@ -562,7 +569,7 @@ head(LUQUILLO)
 
 <h1>Trait data</h1>
 
-<p>These functions begin with the prefix &ldquo;BIEN<em>trait</em>&rdquo; and access the BIEN trait database.   Note that the spelling of the trait names must be precise, so we recommend using the function <code>BIEN_trait_list</code> first. </p>
+<p>These functions begin with the prefix <code>BIEN_trait_...</code> and access the BIEN trait database.   Note that the spelling of the trait names must be precise, so we recommend using the function <code>BIEN_trait_list</code> first.  Traits names are standardized to follow <a href="http://www.top-thesaurus.org/">http://www.top-thesaurus.org/</a> where available.  Trait units have been standardized for each trait.</p>
 
 <p>Functions include:</p>
 
@@ -621,16 +628,16 @@ head(LUQUILLO)
 ## 28                               whole plant woodiness
 </code></pre>
 
-<p>If we&#39;re interested in leaf lifespan, we see that this is called &ldquo;leaf lifespan&rdquo; in the database.  Now that we know the proper spelling, we can use the function <code>BIEN_trait_trait</code> to download all observations of that trait.</p>
+<p>If we&#39;re interested in leaf area, we see that this is indeed called &ldquo;leaf area&rdquo; in the database.  Now that we know the proper spelling, we can use the function <code>BIEN_trait_trait</code> to download all observations of that trait.</p>
 
-<pre><code class="r">LLS &lt;- BIEN_trait_trait(trait = &quot;leaf lifespan&quot;)
+<pre><code class="r">leaf_area &lt;- BIEN_trait_trait(trait = &quot;leaf area&quot;)
 </code></pre>
 
 <p>Note that the units have been standardized and that there is a full set of attribution data for each trait.</p>
 
 <p>#Taxonomy Data</p>
 
-<p>While there are existing packages that query taxonomic data (e.g. those included in the taxize package), the RBIEN taxonomy functions access the taxonomic information that underlies the BIEN database, ensuring consistency.</p>
+<p>While there are existing packages that query taxonomic data (e.g. those included in the excellent taxize package), the RBIEN taxonomy functions access the taxonomic information that underlies the BIEN database, ensuring consistency.</p>
 
 <ol>
 <li><p><code>BIEN_taxonomy_family</code> Downloads all taxonomic information for a given family.</p></li>
@@ -654,7 +661,7 @@ Asclepias_species&lt;-unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclep
 
 <h1>Phylogenies</h1>
 
-<p>The BIEN database currently contains 101 phylogenies for new world plants.  This includes 100 replicated phylogenies that include nearly all New World plant species (&ldquo;complete phylogenies&rdquo;) and 1 phylogeny containing only those New World plant species for which molecular data was available (&ldquo;conservative phylogeny&rdquo;). Currently, there are only 2 functions available:</p>
+<p>The BIEN database currently contains 101 phylogenies for new world plants.  This includes 100 replicated phylogenies that include a large fraction of New World plant species (&ldquo;complete phylogenies&rdquo;) and 1 phylogeny containing only those New World plant species for which molecular data were available (&ldquo;conservative phylogeny&rdquo;). Currently, there are only 2 functions available:</p>
 
 <ol>
 <li><p><code>BIEN_phylogeny_complete</code>  This function will return a specified number of the replicated &ldquo;complete&rdquo; phylogenies.  Note that each phylogeny is several Mb in size, so downloading many may take a while on slow connections.</p></li>
@@ -663,11 +670,11 @@ Asclepias_species&lt;-unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclep
 
 <p>Arguments: The function <code>BIEN_phylogeny_complete</code> has a few arguments that are worth explaining:</p>
 
-<p>n_phylogenies This is the number of replicated phylogenies that you want to download (between 1 and 100)</p>
-
-<p>seed This function sets the seed for the random number generator before randomly drawing the phylogenies to be downloaded.  This is useful for replicating analyses.</p>
-
-<p>replicates This function allows you to specify WHICH of the 100 phylogenies to download, rather than having them selected randomly.</p>
+<ol>
+<li><p>n_phylogenies This is the number of replicated phylogenies that you want to download (between 1 and 100)</p></li>
+<li><p>seed This function sets the seed for the random number generator before randomly drawing the phylogenies to be downloaded.  This is useful for replicating analyses.</p></li>
+<li><p>replicates This function allows you to specify WHICH of the 100 phylogenies to download, rather than having them selected randomly.</p></li>
+</ol>
 
 <p>*<em>Example 7: Phylogenies *</em></p>
 
@@ -689,10 +696,13 @@ phylo_species &lt;- phylo$tip.label
 
 <h1>Stem Data</h1>
 
-<p>The BIEN datbase contains stem data associated with many of the plots.  This is typically either diameter at breast height or diameter at ground height.  At present, there is only one stem function (although expect more in the future):</p>
+<p>The BIEN database contains stem data associated with many of the plots.  This is typically either diameter at breast height or diameter at ground height.  At present, there is only one stem function (although expect more in the future):</p>
 
 <ol>
 <li><code>BIEN_stem_species</code> This function downloads all of the stem data for a given species (or set of species)</li>
+<li><code>BIEN_stem_genus</code></li>
+<li><code>BIEN_stem_family</code></li>
+<li><code>BIEN_stem_datasource</code> This function downloads all of the stem data for a given datasource.</li>
 </ol>
 
 <p>Arguments:</p>
@@ -708,15 +718,15 @@ phylo_species &lt;- phylo$tip.label
 
 <h1>Species lists</h1>
 
-<p>These functions begin with the prefix &ldquo;BIEN<em>list</em>&rdquo; and allow you to quickly get a list of all the species in a geographic unit.  Functions include:</p>
+<p>These functions begin with the prefix <code>BIEN_list_</code> and allow you to quickly get a list of all the species in a geographic unit.  Functions include:</p>
 
 <ol>
 <li><p><code>BIEN_list_country</code> Returns all species found within a country.</p></li>
-<li><p><code>BIEN_list_state</code> Returns all species found within a given state/province</p></li>
-<li><p><code>BIEN_list_county</code> Returns all species found within a given state/province</p></li>
+<li><p><code>BIEN_list_state</code> Returns all species found within a given state/province or other 2nd level political division.</p></li>
+<li><p><code>BIEN_list_county</code> Returns all species found within a given county/parish/or other 3rd level political division.</p></li>
 </ol>
 
-<p>Some of the same arguments we saw in the occurrence functions appear here as well, including &ldquo;cultivate&rdquo;, &ldquo;only.new.world&rdquo; and &ldquo;print.query&rdquo;.</p>
+<p>Some of the same arguments we saw in the occurrence functions appear here as well, including &ldquo;cultivated&rdquo; and &ldquo;only.new.world&rdquo;.</p>
 
 <p><strong>Example 9: Species list for a country</strong></p>
 
@@ -740,9 +750,10 @@ Haiti_DR &lt;- BIEN_list_country(country = country_vector)
 <ol>
 <li><p><code>BIEN_metadata_database_version</code> Returns the current version number of the BIEN database and the release date.</p></li>
 <li><p><code>BIEN_metadata_match_data</code> Rudimentary function to check for changed records between old and current queries.</p></li>
-<li><p><code>BIEN_metadata_citation</code> Function to generate bibtex citations for use in reference managers.
-*<em>Example 10: Metadata *</em></p></li>
+<li><p><code>BIEN_metadata_citation</code> Function to generate bibtex citations for use in reference managers.</p></li>
 </ol>
+
+<p>*<em>Example 10: Metadata *</em></p>
 
 <p>To check what the current version of the BIEN database is (which we recommend reporting when using BIEN data):</p>
 
@@ -750,12 +761,13 @@ Haiti_DR &lt;- BIEN_list_country(country = country_vector)
 </code></pre>
 
 <pre><code>##   db_version db_release_date
-## 1      3.4.4      2017-05-15
+## 1      3.4.5      2017-05-18
 </code></pre>
 
 <h1>Combining Queries</h1>
 
-<p>*<em>Example 12: Putting it all together *</em></p>
+<p>*<em>Example 11: Putting it all together *</em>
+Coming soon!</p>
 
 </body>
 

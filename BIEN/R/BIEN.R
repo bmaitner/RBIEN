@@ -121,6 +121,7 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.
 #'
 #'BIEN_list_country downloads a list of all species within a country or countries from the BIEN database.
 #' @param country A single country or a vector of countries.
+#' @param iso.2 A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html
 #' @template list
 #' @return Dataframe containing species list(s) for the specified country or countries.
 #' @examples \dontrun{
@@ -129,15 +130,24 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.
 #' BIEN_list_country(country_vector)}
 #' @family list functions
 #' @export
-BIEN_list_country<-function(country,cultivated=FALSE,only.new.world=TRUE,...){
+BIEN_list_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.world=TRUE,...){
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_char(country)
+  .is_char(iso.2)
+  if(is.null(country)& is.null(iso.2))  {stop("Please supply either a country name or 2-digit ISO code")}
   
   #set base query components
   sql_select <-  paste("SELECT DISTINCT country, scrubbed_species_binomial ")
   sql_from <- paste(" FROM species_by_political_division ")
-  sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") AND scrubbed_species_binomial IS NOT NULL")
+  
+  if(is.null(iso.2)){
+    sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") AND scrubbed_species_binomial IS NOT NULL")
+  }else{
+    sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(iso.2, type = "sh"),collapse = ', '), ")) 
+                       AND scrubbed_species_binomial IS NOT NULL")  
+  }
+  
   sql_order_by <- paste(" ORDER BY scrubbed_species_binomial ")
   
   # adjust for optional parameters
@@ -158,7 +168,7 @@ BIEN_list_country<-function(country,cultivated=FALSE,only.new.world=TRUE,...){
   
   return(.BIEN_sql(query, ...))
   
-}
+  }
 
 ############################
 
@@ -580,6 +590,7 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
 #'
 #'BIEN_occurrence_country extracts occurrences records for the specified country/countries.
 #' @param country A single country or a vector of country.
+#' @param iso.2 A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html
 #' @template occurrence
 #' @return Dataframe containing occurrence records for the specified country.
 #' @examples \dontrun{
@@ -588,8 +599,9 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
 #' BIEN_occurrence_country(country_vector)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   .is_char(country)
+  .is_char(iso.2)
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -598,6 +610,7 @@ BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,a
   .is_log(observation.type)
   .is_log(political.boundaries)
   .is_log(collection.info)
+  if(is.null(country)& is.null(iso.2))  {stop("Please supply either a country or 2-digit ISO code")}
   
   #set conditions for query
   
@@ -610,9 +623,21 @@ BIEN_occurrence_country<-function(country,cultivated=FALSE,only.new.world=TRUE,a
   natives_<-.natives_check(natives.only)
   collection_<-.collection_check(collection.info)
   
+  
   # set the query
-  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
-                 FROM view_full_occurrence_individual WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
+  
+  
+  if(is.null(iso.2)){query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
+                                    FROM view_full_occurrence_individual WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
+  
+  }else{
+    query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
+                   FROM view_full_occurrence_individual WHERE country in (SELECT country FROM countries 
+                   WHERE iso in (", paste(shQuote(iso.2, type = "sh"),collapse = ', '), "))",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
+    
+    
+  }
+  
   
   return(.BIEN_sql(query, ...))
   
@@ -1860,6 +1885,7 @@ BIEN_plot_list_datasource<-function(...){
 #'
 #'BIEN_plot_country downloads all plot data from specified countries.
 #' @param country A country or vector of countries.
+#' @param iso.2 A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html
 #' @template plot
 #' @return A dataframe containing all data from the specified countries.
 #' @examples \dontrun{
@@ -1867,7 +1893,8 @@ BIEN_plot_list_datasource<-function(...){
 #' BIEN_plot_country(c("Costa Rica","Panama"))}
 #' @family plot functions
 #' @export
-BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
+  .is_char(iso.2)
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -1877,7 +1904,7 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
   .is_log(political.boundaries)
   .is_log(collection.info)
   .is_log(all.metadata)
-  
+  if(is.null(country)& is.null(iso.2))  {stop("Please supply either a country name or 2-digit ISO code")}
   
   #set conditions for query
   cultivated_<-.cultivated_check_plot(cultivated)
@@ -1895,25 +1922,44 @@ BIEN_plot_country<-function(country,cultivated=FALSE,only.new.world=TRUE,all.tax
   }
   
   # set the query
-  query <- paste("SELECT ",political_select," view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, view_full_occurrence_individual.elevation_m,
-                 view_full_occurrence_individual.plot_area_ha, view_full_occurrence_individual.sampling_protocol,view_full_occurrence_individual.recorded_by, 
-                 view_full_occurrence_individual.scrubbed_species_binomial,view_full_occurrence_individual.individual_count",taxonomy_$select,native_$select,", 
-                 view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude, view_full_occurrence_individual.date_collected,
-                 view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,
-                 view_full_occurrence_individual.custodial_institution_codes,view_full_occurrence_individual.collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,md_$select,"
-                 FROM 
-                 (SELECT * FROM view_full_occurrence_individual WHERE view_full_occurrence_individual.country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",
-                 cultivated_$query,newworld_$query,natives_$query,  "AND higher_plant_group IS NOT NULL 
-                 AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) AND observation_type='plot' 
-                 ORDER BY country,plot_name,subplot,scrubbed_species_binomial) as view_full_occurrence_individual 
-                 LEFT JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
-                 ;")
-  
+  if(is.null(iso.2)){
+    query <- paste("SELECT ",political_select," view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, view_full_occurrence_individual.elevation_m,
+                   view_full_occurrence_individual.plot_area_ha, view_full_occurrence_individual.sampling_protocol,view_full_occurrence_individual.recorded_by, 
+                   view_full_occurrence_individual.scrubbed_species_binomial,view_full_occurrence_individual.individual_count",taxonomy_$select,native_$select,", 
+                   view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude, view_full_occurrence_individual.date_collected,
+                   view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,
+                   view_full_occurrence_individual.custodial_institution_codes,view_full_occurrence_individual.collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,md_$select,"
+                   FROM 
+                   (SELECT * FROM view_full_occurrence_individual WHERE view_full_occurrence_individual.country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",
+                   cultivated_$query,newworld_$query,natives_$query,  "AND higher_plant_group IS NOT NULL 
+                   AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) AND observation_type='plot' 
+                   ORDER BY country,plot_name,subplot,scrubbed_species_binomial) as view_full_occurrence_individual 
+                   LEFT JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
+                   ;")
+  }else{
+    
+    query <- paste("SELECT ",political_select," view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, view_full_occurrence_individual.elevation_m,
+                   view_full_occurrence_individual.plot_area_ha, view_full_occurrence_individual.sampling_protocol,view_full_occurrence_individual.recorded_by, 
+                   view_full_occurrence_individual.scrubbed_species_binomial,view_full_occurrence_individual.individual_count",taxonomy_$select,native_$select,", 
+                   view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude, view_full_occurrence_individual.date_collected,
+                   view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,
+                   view_full_occurrence_individual.custodial_institution_codes,view_full_occurrence_individual.collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,md_$select,"
+                   FROM 
+                   (SELECT * FROM view_full_occurrence_individual WHERE view_full_occurrence_individual.country in 
+                   (SELECT country FROM countries 
+                   WHERE iso in (", paste(shQuote(iso.2, type = "sh"),collapse = ', '), "))",cultivated_$query,newworld_$query,natives_$query,  "AND higher_plant_group IS NOT NULL 
+                   AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) AND observation_type='plot' 
+                   ORDER BY country,plot_name,subplot,scrubbed_species_binomial) as view_full_occurrence_individual 
+                   LEFT JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
+                   ;")  
+    
+    
+  }
   
   # create query to retrieve
   return(.BIEN_sql(query, ...))
   
-  }
+}
 ###############################
 #'Download plot data from specified states/provinces.
 #'
