@@ -4,15 +4,22 @@
 \alias{BIEN_list_county}
 \title{Extract a species list by county.}
 \usage{
-BIEN_list_county(country, state, county, cultivated = FALSE,
-  only.new.world = TRUE, ...)
+BIEN_list_county(country = NULL, state = NULL, county = NULL,
+  country.code = NULL, state.code = NULL, county.code = NULL,
+  cultivated = FALSE, only.new.world = TRUE, ...)
 }
 \arguments{
 \item{country}{A single country or vector of countries}
 
-\item{state}{A single state or vector of states.}
+\item{state}{A single state (or other primary administarive boundary) or vector of states.}
 
-\item{county}{A single county or vector of counties.}
+\item{county}{A single county (or other secondary administarive boundary)or vector of counties.}
+
+\item{country.code}{A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.}
+
+\item{state.code}{A single state/province code, or a vector of states/province codes.}
+
+\item{county.code}{A single county (or other secondary administarive boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.}
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
@@ -27,6 +34,10 @@ Dataframe containing species list(s) for the specified states/provinces.
 BIEN_list_county produces a list of all species with geovalidated occurrences falling within specified county or counties.
 }
 \note{
+Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
+
+We recommend using country, state, and county rather than codes, since county names have not been fully standardized.
+
 This function requires you supply either 1) a single state and country with one or more counties, or 2) vectors of equal length for each political level.
 }
 \examples{

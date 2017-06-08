@@ -409,7 +409,7 @@ if(all.taxonomy){
   if(!all.metadata){
     select<-""
   }else{
-    select<-",plot_metadata.methodology_reference,plot_metadata.methodology_description,growth_forms_included_all, growth_forms_included_trees, growth_forms_included_shrubs, growth_forms_included_lianas,
+    select<-",plot_metadata.coord_uncertainty_m,plot_metadata.methodology_reference,plot_metadata.methodology_description,growth_forms_included_all, growth_forms_included_trees, growth_forms_included_shrubs, growth_forms_included_lianas,
     growth_forms_included_herbs, growth_forms_included_epiphytes, growth_forms_included_notes, taxa_included_all, taxa_included_seed_plants, taxa_included_ferns_lycophytes,
     taxa_included_bryophytes,taxa_included_exclusions"
   }
@@ -596,7 +596,7 @@ if(all.taxonomy){
   if(!all.metadata){
     select<-""
   }else{
-    select<-",plot_metadata.methodology_reference,plot_metadata.methodology_description,growth_forms_included_all, growth_forms_included_trees, growth_forms_included_shrubs, growth_forms_included_lianas,
+    select<-",plot_metadata.coord_uncertainty_m,plot_metadata.methodology_reference,plot_metadata.methodology_description,growth_forms_included_all, growth_forms_included_trees, growth_forms_included_shrubs, growth_forms_included_lianas,
     growth_forms_included_herbs, growth_forms_included_epiphytes, growth_forms_included_notes, taxa_included_all, taxa_included_seed_plants, taxa_included_ferns_lycophytes,
     taxa_included_bryophytes,taxa_included_exclusions"
   }

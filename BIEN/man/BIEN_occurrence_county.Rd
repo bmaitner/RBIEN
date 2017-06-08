@@ -4,9 +4,10 @@
 \alias{BIEN_occurrence_county}
 \title{Extract species occurrence records by county.}
 \usage{
-BIEN_occurrence_county(country, state, county, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, observation.type = FALSE,
+BIEN_occurrence_county(country = NULL, state = NULL, county = NULL,
+  country.code = NULL, state.code = NULL, county.code = NULL,
+  cultivated = FALSE, only.new.world = TRUE, all.taxonomy = FALSE,
+  native.status = FALSE, natives.only = TRUE, observation.type = FALSE,
   political.boundaries = FALSE, collection.info = F, ...)
 }
 \arguments{
@@ -15,6 +16,12 @@ BIEN_occurrence_county(country, state, county, cultivated = FALSE,
 \item{state}{A single state or a vector of states.}
 
 \item{county}{A single county or a vector of counties.}
+
+\item{country.code}{A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.}
+
+\item{state.code}{A single state/province code, or a vector of states/province codes.}
+
+\item{county.code}{A single county (or other secondary administarive boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.}
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
@@ -41,6 +48,10 @@ Dataframe containing occurrence records for the specified states/provinces.
 BIEN_occurrence_county extracts occurrences records for the specified county or counties.
 }
 \note{
+Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
+
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
 This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
 }
 \examples{

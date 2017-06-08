@@ -37,6 +37,8 @@ Dataframe containing stem data for the specified families.
 BIEN_stem_family downloads occurrence records for specific families from the BIEN database.
 }
 \note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
 Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 }
 \examples{

@@ -26,6 +26,9 @@ Range maps for all available species within the specified genera.
 \description{
 BIEN_ranges_genus extracts range maps for the specified genera.
 }
+\note{
+Details on the construction of BIEN range maps is available at http://bien.nceas.ucsb.edu/bien/biendata/bien-3/
+}
 \examples{
 \dontrun{
 library(rgdal)

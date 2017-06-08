@@ -4,15 +4,15 @@
 \alias{BIEN_occurrence_country}
 \title{Extract species occurrence records by country.}
 \usage{
-BIEN_occurrence_country(country = NULL, iso.2 = NULL, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, observation.type = FALSE,
+BIEN_occurrence_country(country = NULL, country.code = NULL,
+  cultivated = FALSE, only.new.world = TRUE, all.taxonomy = FALSE,
+  native.status = FALSE, natives.only = TRUE, observation.type = FALSE,
   political.boundaries = FALSE, collection.info = F, ...)
 }
 \arguments{
 \item{country}{A single country or a vector of country.}
 
-\item{iso.2}{A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html}
+\item{country.code}{A single country code or a vector of country codes equal in length to the vector of states/province codes.}
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
@@ -37,6 +37,11 @@ Dataframe containing occurrence records for the specified country.
 }
 \description{
 BIEN_occurrence_country extracts occurrences records for the specified country/countries.
+}
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
+Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 }
 \examples{
 \dontrun{

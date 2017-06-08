@@ -42,6 +42,9 @@ Dataframe containing occurrence records for the specified area.
 \description{
 BIEN_occurrence_box extracts occurrences records falling within the specific area.
 }
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+}
 \examples{
 \dontrun{
 output_test<-

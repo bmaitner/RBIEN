@@ -7,3 +7,4 @@
 #' @param collection.info Return additional information about collection and identification? The default value is FALSE.
 #' @param all.metadata Should additional plot metadata be returned?  Default is FALSE.
 #' @param ... Additional arguments passed to internal functions.
+#' @note US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php

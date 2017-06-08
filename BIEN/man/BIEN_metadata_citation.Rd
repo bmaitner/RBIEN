@@ -30,6 +30,7 @@ citations<-BIEN_metadata_citation(dataframe=Xanthium_data)#If you are referencin
 }
 \seealso{
 Other metadata functions: \code{\link{BIEN_metadata_database_version}},
+  \code{\link{BIEN_metadata_list_political_names}},
   \code{\link{BIEN_metadata_match_data}},
   \code{\link{BIEN_plot_metadata}},
   \code{\link{BIEN_ranges_list}}

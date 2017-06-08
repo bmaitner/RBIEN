@@ -35,6 +35,9 @@ Range maps for all available species within the specified bounding box.
 \description{
 BIEN_ranges_box extracts range maps for a specified bounding box.
 }
+\note{
+Details on the construction of BIEN range maps is available at http://bien.nceas.ucsb.edu/bien/biendata/bien-3/
+}
 \examples{
 \dontrun{
 testwd<-tempdir() #Set a working directory

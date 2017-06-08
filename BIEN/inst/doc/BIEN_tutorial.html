@@ -681,8 +681,12 @@ Asclepias_species&lt;-unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclep
 <p>Let&#39;s say we want to download the conservative phylogeny.</p>
 
 <pre><code class="r">phylo &lt;- BIEN_phylogeny_conservative()
+</code></pre>
 
-#Let&#39;s make sure it looks alright
+<pre><code>## Note: these phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.
+</code></pre>
+
+<pre><code class="r">#Let&#39;s make sure it looks alright
 
 plot.phylo(x = phylo, show.tip.label =  FALSE)
 </code></pre>

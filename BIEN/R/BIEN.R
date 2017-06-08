@@ -121,8 +121,9 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.
 #'
 #'BIEN_list_country downloads a list of all species within a country or countries from the BIEN database.
 #' @param country A single country or a vector of countries.
-#' @param iso.2 A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html
+#' @param country.code A single country code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template list
+#' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @return Dataframe containing species list(s) for the specified country or countries.
 #' @examples \dontrun{
 #' BIEN_list_country("Canada")
@@ -130,21 +131,21 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.
 #' BIEN_list_country(country_vector)}
 #' @family list functions
 #' @export
-BIEN_list_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.world=TRUE,...){
+BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only.new.world=TRUE,...){
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_char(country)
-  .is_char(iso.2)
-  if(is.null(country)& is.null(iso.2))  {stop("Please supply either a country name or 2-digit ISO code")}
+  .is_char(country.code)
+  if(is.null(country)& is.null(country.code))  {stop("Please supply either a country name or 2-digit ISO code")}
   
   #set base query components
   sql_select <-  paste("SELECT DISTINCT country, scrubbed_species_binomial ")
   sql_from <- paste(" FROM species_by_political_division ")
   
-  if(is.null(iso.2)){
+  if(is.null(country.code)){
     sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") AND scrubbed_species_binomial IS NOT NULL")
   }else{
-    sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(iso.2, type = "sh"),collapse = ', '), ")) 
+    sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                        AND scrubbed_species_binomial IS NOT NULL")  
   }
   
@@ -177,52 +178,91 @@ BIEN_list_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.wo
 #'BIEN_list_state produces a list of all species with geovalidated occurrences falling within specified state(s) or province(s).
 #' @param state A single state/province, or a vector of states/provinces.
 #' @param country A single country or a vector of countries equal in length to the vector of states/provinces.
+#' @param state.code A single state/province code, or a vector of states/province codes.
+#' @param country.code A single country code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template list
 #' @return Dataframe containing species list(s) for the specified states/provinces.
+#' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @examples \dontrun{
 #' BIEN_list_state("United States","Michigan")
 #' state_vector<-c("Michigan","Arizona")
 #' BIEN_list_state(country="United States", state= state_vector)}
 #' @family list functions
 #' @export
-BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...){
+BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=NULL,cultivated=FALSE,only.new.world=TRUE,...){
   .is_char(country)
+  .is_char(country.code)
   .is_char(state)
+  .is_char(state.code)
   .is_log(cultivated)
   .is_log(only.new.world)
+  
+  if(is.null(country)& is.null(country.code))  {stop("Please supply either a country name or 2-digit ISO code")}  
   
   # set base query components
   sql_select <-  paste("SELECT DISTINCT country, state_province, scrubbed_species_binomial ")
   sql_from <- paste(" FROM species_by_political_division ")
   
-  
-  if(length(country)==1){
-    sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
-                       AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
-                       AND scrubbed_species_binomial IS NOT NULL")
+  #if supplying country names  
+  if(is.null(country.code) & is.null(state.code)){  
+    if(length(country)==1){
+      sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
+                         AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
+                         AND scrubbed_species_binomial IS NOT NULL")
+    }else{
+      
+      if(length(country)==length(state)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country)){
+          
+          condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), ")")
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
+        
+      }  
+      
+    }#if length(country>1)
   }else{
     
-    if(length(country)==length(state)){
-      
-      sql_where<-"WHERE ("
-      
-      for(i in 1:length(country)){
-        
-        condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), ")")
-        if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
-        sql_where<-paste(sql_where,condition_i)
-        
-      }#for i  
-      
-      sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
-      
+    if(length(country.code)==1){
+      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+                         AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
+                         AND scrubbed_species_binomial IS NOT NULL")
     }else{
-      stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
       
-    }  
-  
-  }#if length(country>1)
-  
+      if(length(country.code)==length(state.code)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country.code)){
+          
+          condition_i<- paste("country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code[i], type = "sh"),collapse = ', '), ")) 
+                              AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code[i], type = "sh"),collapse = ', '), "))")
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
+        
+      }  
+      
+    }#if length(country>1)
+
+  }  
+
   sql_order_by <- paste(" ORDER BY scrubbed_species_binomial ")
   
   # adjust for optional parameters
@@ -243,7 +283,9 @@ BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...
   
   return(.BIEN_sql(query, ...))
   
-}
+  }
+
+
 
 ###########################
 
@@ -251,8 +293,13 @@ BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...
 #'
 #'BIEN_list_county produces a list of all species with geovalidated occurrences falling within specified county or counties.
 #' @param country A single country or vector of countries
-#' @param state A single state or vector of states.
-#' @param county A single county or vector of counties.
+#' @param state A single state (or other primary administarive boundary) or vector of states.
+#' @param county A single county (or other secondary administarive boundary)or vector of counties.
+#' @param state.code A single state/province code, or a vector of states/province codes.
+#' @param country.code A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.
+#' @param county.code A single county (or other secondary administarive boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.
+#' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
+#' @note We recommend using country, state, and county rather than codes, since county names have not been fully standardized.
 #' @template list
 #' @return Dataframe containing species list(s) for the specified states/provinces.
 #' @note This function requires you supply either 1) a single state and country with one or more counties, or 2) vectors of equal length for each political level.
@@ -263,7 +310,10 @@ BIEN_list_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,...
 #' BIEN_list_county(country = "United States", state = "Michigan", county = county_vector)}
 #' @family list functions
 #' @export
-BIEN_list_county<-function(country,state,county,cultivated=FALSE,only.new.world=TRUE, ...){
+BIEN_list_county<-function(country=NULL,state=NULL,county=NULL,country.code=NULL,state.code=NULL,county.code=NULL,cultivated=FALSE,only.new.world=TRUE, ...){
+  .is_char(country.code)
+  .is_char(state.code)
+  .is_char(county.code)
   .is_char(country)
   .is_char(state)
   .is_char(county)
@@ -274,40 +324,81 @@ BIEN_list_county<-function(country,state,county,cultivated=FALSE,only.new.world=
   sql_select <-  paste("SELECT DISTINCT country, state_province, county,  scrubbed_species_binomial ")
   sql_from <- paste(" FROM species_by_political_division ")
   
-  #sql where
-  if(length(country)==1 & length(state)==1){
-    sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
-                       AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
-                       AND county in (", paste(shQuote(county, type = "sh"),collapse = ', '), ")
-                       AND scrubbed_species_binomial IS NOT NULL")
-  }else{
+  if(is.null(country.code) & is.null(state.code) & is.null(county.code)){  
     
-    if(length(country)==length(state) & length(country)==length(county)){
-      
-      sql_where<-"WHERE ("
-      
-      for(i in 1:length(country)){
-        
-        condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " 
-                            AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), "
-                            AND county = ", paste(shQuote(county[i], type = "sh"),collapse = ', '), ")
-                            ")
-        
-        if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
-        sql_where<-paste(sql_where,condition_i)
-        
-      }#for i  
-      
-      sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
-      
+    #sql where
+    if(length(country)==1 & length(state)==1){
+      sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
+                         AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
+                         AND county in (", paste(shQuote(county, type = "sh"),collapse = ', '), ")
+                         AND scrubbed_species_binomial IS NOT NULL")
     }else{
-      stop("If supplying more than one country and/or state the function requires matching vectors of countries, states and counties.")  
       
-    }  
+      if(length(country)==length(state) & length(country)==length(county)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country)){
+          
+          condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " 
+                              AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), "
+                              AND county = ", paste(shQuote(county[i], type = "sh"),collapse = ', '), ")
+                              ")
+          
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country and/or state the function requires matching vectors of countries, states and counties.")  
+        
+      }  
+      
+      
+      
+    }#if length(country>1)
+  }else{ 
+    
+    #sql where
+    if(length(country.code)==1 & length(state.code)==1){
+      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+                         AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), "))
+                         AND county in (SELECT county_parish_ascii FROM county_parish WHERE admin2code in (", paste(shQuote(county.code, type = "sh"),collapse = ', '), "))
+                         AND scrubbed_species_binomial IS NOT NULL")
+    }else{
+      
+      if(length(country)==length(state) & length(country)==length(county)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country)){
+          
+          condition_i<- paste("(country = (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+                              AND state_province = (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
+                              AND county = (SELECT county_parish_ascii FROM county_parish WHERE admin2code in (", paste(shQuote(county.code, type = "sh"),collapse = ', '), "))" )
+          
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country and/or state the function requires matching vectors of countries, states and counties.")  
+        
+      }  
+      
+      
+      
+    }#if length(country>1)
     
     
-    
-  }#if length(country>1)
+  }
+  
   
   sql_order_by <- paste(" ORDER BY scrubbed_species_binomial ")
   
@@ -329,7 +420,7 @@ BIEN_list_county<-function(country,state,county,cultivated=FALSE,only.new.world=
   
   return(.BIEN_sql(query, ...))
   
-}
+  }
 
 
 ###########################
@@ -511,7 +602,10 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,obs
 #'BIEN_occurrence_state extracts occurrences records for the specified state(s).
 #' @param state A single state or a vector of states.
 #' @param country A single country or vector of countries.
+#' @param state.code A single state/province code, or a vector of states/province codes.
+#' @param country.code A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template occurrence
+#' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @note This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
 #' @return Dataframe containing occurrence records for the specified states/provinces.
 #' @examples \dontrun{
@@ -520,9 +614,11 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,obs
 #' BIEN_occurrence_state(country="United States",state=state_vector)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   .is_char(country)
   .is_char(state)
+  .is_char(country.code)
+  .is_char(state.code)
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -531,7 +627,7 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
   .is_log(political.boundaries)
   .is_log(natives.only)
   .is_log(collection.info)
-      
+  
   #set conditions for query
   cultivated_<-.cultivated_check(cultivated)  
   newworld_<-.newworld_check(only.new.world)
@@ -541,34 +637,68 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
   political_<-.political_check(political.boundaries)  
   natives_<-.natives_check(natives.only)
   collection_<-.collection_check(collection.info)
- 
-  ##state where
-  if(length(country)==1){
-    sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
-                       AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
-                       AND scrubbed_species_binomial IS NOT NULL")
+  
+  if(is.null(country.code) & is.null(state.code)){  
+    
+    ##state where
+    if(length(country)==1){
+      sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
+                         AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
+                         AND scrubbed_species_binomial IS NOT NULL")
+    }else{
+      
+      if(length(country)==length(state)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country)){
+          
+          condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), ")")
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
+        
+      }  
+      
+    }#if length(country>1)
   }else{
     
-    if(length(country)==length(state)){
-      
-      sql_where<-"WHERE ("
-      
-      for(i in 1:length(country)){
-        
-        condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), ")")
-        if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
-        sql_where<-paste(sql_where,condition_i)
-        
-      }#for i  
-      
-      sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
-      
+    ##state where
+    if(length(country.code)==1){
+      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+                         AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
+                         AND scrubbed_species_binomial IS NOT NULL")
     }else{
-      stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
       
-    }  
+      if(length(country.code)==length(state.code)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country.code)){
+          
+          condition_i<- paste("country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code[i], type = "sh"),collapse = ', '), ")) 
+                              AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code[i], type = "sh"),collapse = ', '), "))")
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
+        
+      }  
+      
+    }#if length(country>1)  
 
-  }#if length(country>1)
+  }  
 
   # set the query
   query <- paste("SELECT scrubbed_species_binomial" ,taxonomy_$select,political_$select, ", latitude, longitude,date_collected,datasource,
@@ -582,7 +712,8 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
   
   return(.BIEN_sql(query, ...))
   
-}
+  }
+
 
 #############################
 
@@ -590,8 +721,9 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
 #'
 #'BIEN_occurrence_country extracts occurrences records for the specified country/countries.
 #' @param country A single country or a vector of country.
-#' @param iso.2 A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html
+#' @param country.code A single country code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template occurrence
+#' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @return Dataframe containing occurrence records for the specified country.
 #' @examples \dontrun{
 #' BIEN_occurrence_country("Cuba")
@@ -599,9 +731,9 @@ BIEN_occurrence_state<-function(country,state,cultivated=FALSE,only.new.world=TR
 #' BIEN_occurrence_country(country_vector)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   .is_char(country)
-  .is_char(iso.2)
+  .is_char(country.code)
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -610,7 +742,7 @@ BIEN_occurrence_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.
   .is_log(observation.type)
   .is_log(political.boundaries)
   .is_log(collection.info)
-  if(is.null(country)& is.null(iso.2))  {stop("Please supply either a country or 2-digit ISO code")}
+  if(is.null(country)& is.null(country.code))  {stop("Please supply either a country or 2-digit ISO code")}
   
   #set conditions for query
   
@@ -627,13 +759,13 @@ BIEN_occurrence_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.
   # set the query
   
   
-  if(is.null(iso.2)){query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
+  if(is.null(country.code)){query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
                                     FROM view_full_occurrence_individual WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
   
   }else{
     query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
                    FROM view_full_occurrence_individual WHERE country in (SELECT country FROM countries 
-                   WHERE iso in (", paste(shQuote(iso.2, type = "sh"),collapse = ', '), "))",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
+                   WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), "))",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
     
     
   }
@@ -651,6 +783,10 @@ BIEN_occurrence_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.
 #' @param country A single country or vector of countries.
 #' @param state A single state or a vector of states.
 #' @param county A single county or a vector of counties.
+#' @param state.code A single state/province code, or a vector of states/province codes.
+#' @param country.code A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.
+#' @param county.code A single county (or other secondary administarive boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.
+#' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @template occurrence
 #' @note This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
 #' @return Dataframe containing occurrence records for the specified states/provinces.
@@ -662,10 +798,13 @@ BIEN_occurrence_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.
 #' BIEN_occurrence_county(country=country_vector, state = state_vector, county = county_vector)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.new.world=TRUE, all.taxonomy=FALSE, native.status=FALSE, natives.only=TRUE, observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_county<-function(country=NULL, state=NULL, county=NULL,country.code=NULL, state.code=NULL, county.code=NULL, cultivated=FALSE, only.new.world=TRUE, all.taxonomy=FALSE, native.status=FALSE, natives.only=TRUE, observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   .is_char(country)
   .is_char(state)
   .is_char(county)
+  .is_char(country.code)
+  .is_char(state.code)
+  .is_char(county.code)
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -685,45 +824,77 @@ BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.
   natives_<-.natives_check(natives.only)
   collection_<-.collection_check(collection.info)
   
-  
-  #sql where
-  if(length(country)==1 & length(state)==1){
-    sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
-                       AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
-                       AND county in (", paste(shQuote(county, type = "sh"),collapse = ', '), ")
-                       AND scrubbed_species_binomial IS NOT NULL")
+  if(is.null(country.code) & is.null(state.code) & is.null(county.code)){    
+    
+    #sql where
+    if(length(country)==1 & length(state)==1){
+      sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
+                         AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
+                         AND county in (", paste(shQuote(county, type = "sh"),collapse = ', '), ")
+                         AND scrubbed_species_binomial IS NOT NULL")
+    }else{
+      
+      if(length(country)==length(state) & length(country)==length(county)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country)){
+          
+          condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " 
+                              AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), "
+                              AND county = ", paste(shQuote(county[i], type = "sh"),collapse = ', '), ")
+                              ")
+          
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country and/or state the function requires matching vectors of countries, states and counties.")  
+        
+      }  
+
+    }#if length(country>1)
+    
   }else{
     
-    if(length(country)==length(state) & length(country)==length(county)){
-      
-      sql_where<-"WHERE ("
-      
-      for(i in 1:length(country)){
-        
-        condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " 
-                            AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), "
-                            AND county = ", paste(shQuote(county[i], type = "sh"),collapse = ', '), ")
-                            ")
-        
-        if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
-        sql_where<-paste(sql_where,condition_i)
-        
-      }#for i  
-      
-      sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
-      
+    #sql where
+    if(length(country.code)==1 & length(state.code)==1){
+      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+                         AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), "))
+                         AND county in (SELECT county_parish_ascii FROM county_parish WHERE admin2code in (", paste(shQuote(county.code, type = "sh"),collapse = ', '), "))
+                         AND scrubbed_species_binomial IS NOT NULL")
     }else{
-      stop("If supplying more than one country and/or state the function requires matching vectors of countries, states and counties.")  
       
-    }  
-    
-    
-    
-  }#if length(country>1)
-  
-  
-  
-  
+      if(length(country)==length(state) & length(country)==length(county)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country)){
+          
+          condition_i<- paste("(country = (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+                              AND state_province = (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
+                              AND county = (SELECT county_parish_ascii FROM county_parish WHERE admin2code in (", paste(shQuote(county.code, type = "sh"),collapse = ', '), "))" )
+          
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country and/or state the function requires matching vectors of countries, states and counties.")  
+        
+      }  
+
+    }#if length(country>1)
+
+  }#if codes are not null  
+
   # set the query
   query <- paste("SELECT scrubbed_species_binomial" ,taxonomy_$select,political_$select , ",latitude, longitude,date_collected,datasource,
                  dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",
@@ -732,11 +903,10 @@ BIEN_occurrence_county<-function(country, state, county, cultivated=FALSE, only.
                  sql_where,cultivated_$query,newworld_$query,natives_$query," 
                  AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) 
                  ORDER BY scrubbed_species_binomial;")
-  
-  
+
   return(.BIEN_sql(query, ...))
   
-}
+  }
 
 
 ############################
@@ -1885,16 +2055,17 @@ BIEN_plot_list_datasource<-function(...){
 #'
 #'BIEN_plot_country downloads all plot data from specified countries.
 #' @param country A country or vector of countries.
-#' @param iso.2 A single 2-digit ISO code or a vector of 2-digit ISO codes. More information is available at https://www.iso.org/iso-3166-country-codes.html
+#' @param country.code A single country code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template plot
 #' @return A dataframe containing all data from the specified countries.
+#' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @examples \dontrun{
 #' BIEN_plot_country("Costa Rica")
 #' BIEN_plot_country(c("Costa Rica","Panama"))}
 #' @family plot functions
 #' @export
-BIEN_plot_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
-  .is_char(iso.2)
+BIEN_plot_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
+  .is_char(country.code)
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -1904,7 +2075,7 @@ BIEN_plot_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.wo
   .is_log(political.boundaries)
   .is_log(collection.info)
   .is_log(all.metadata)
-  if(is.null(country)& is.null(iso.2))  {stop("Please supply either a country name or 2-digit ISO code")}
+  if(is.null(country)& is.null(country.code))  {stop("Please supply either a country name or 2-digit ISO code")}
   
   #set conditions for query
   cultivated_<-.cultivated_check_plot(cultivated)
@@ -1922,7 +2093,7 @@ BIEN_plot_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.wo
   }
   
   # set the query
-  if(is.null(iso.2)){
+  if(is.null(country.code)){
     query <- paste("SELECT ",political_select," view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, view_full_occurrence_individual.elevation_m,
                    view_full_occurrence_individual.plot_area_ha, view_full_occurrence_individual.sampling_protocol,view_full_occurrence_individual.recorded_by, 
                    view_full_occurrence_individual.scrubbed_species_binomial,view_full_occurrence_individual.individual_count",taxonomy_$select,native_$select,", 
@@ -1947,7 +2118,7 @@ BIEN_plot_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.wo
                    FROM 
                    (SELECT * FROM view_full_occurrence_individual WHERE view_full_occurrence_individual.country in 
                    (SELECT country FROM countries 
-                   WHERE iso in (", paste(shQuote(iso.2, type = "sh"),collapse = ', '), "))",cultivated_$query,newworld_$query,natives_$query,  "AND higher_plant_group IS NOT NULL 
+                   WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), "))",cultivated_$query,newworld_$query,natives_$query,  "AND higher_plant_group IS NOT NULL 
                    AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) AND observation_type='plot' 
                    ORDER BY country,plot_name,subplot,scrubbed_species_binomial) as view_full_occurrence_individual 
                    LEFT JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
@@ -1966,7 +2137,10 @@ BIEN_plot_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.wo
 #'BIEN_plot_state downloads all plot data from specified states/provinces.
 #' @param country A single country.
 #' @param state A state or vector of states.
+#' @param state.code A single state/province code, or a vector of states/province codes.
+#' @param country.code A single country code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template plot
+#' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @note This function requires you supply either 1) a single country with one or states, or 2) vectors of equal length for each political level.
 #' @return A dataframe containing all data from the specified states.
 #' @examples \dontrun{
@@ -1974,12 +2148,14 @@ BIEN_plot_country<-function(country=NULL,iso.2=NULL,cultivated=FALSE,only.new.wo
 #' BIEN_plot_state(country="United States",state= c("Colorado","California"))}
 #' @family plot functions
 #' @export
-BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
   .is_char(country)
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
   .is_char(state)
+  .is_char(state.code)
+  .is_char(country.code)
   .is_log(native.status)
   .is_log(natives.only)
   .is_log(political.boundaries)
@@ -2001,43 +2177,75 @@ BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all
     political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
   }
   
+  if(is.null(country.code) & is.null(state.code) ){  
+
+    #state where
+    if(length(country)==1){
+      sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
+                         AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
+                         AND scrubbed_species_binomial IS NOT NULL")
+    }else{
+      
+      if(length(country)==length(state)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country)){
+          
+          condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), ")")
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
+        
+      }  
   
-  #state where
-  if(length(country)==1){
-    sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") 
-                       AND state_province in (", paste(shQuote(state, type = "sh"),collapse = ', '), ") 
-                       AND scrubbed_species_binomial IS NOT NULL")
+    }#if length(country>1)
+    
   }else{
     
-    if(length(country)==length(state)){
-      
-      sql_where<-"WHERE ("
-      
-      for(i in 1:length(country)){
-        
-        condition_i<- paste("(country = ", paste(shQuote(country[i], type = "sh"),collapse = ', '), " AND state_province = ", paste(shQuote(state[i], type = "sh"),collapse = ', '), ")")
-        if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
-        sql_where<-paste(sql_where,condition_i)
-        
-      }#for i  
-      
-      sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
-      
+    
+    if(length(country.code)==1){
+      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+                         AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
+                         AND scrubbed_species_binomial IS NOT NULL")
     }else{
-      stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
       
-    }  
+      if(length(country.code)==length(state.code)){
+        
+        sql_where<-"WHERE ("
+        
+        for(i in 1:length(country.code)){
+          
+          condition_i<- paste("country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code[i], type = "sh"),collapse = ', '), ")) 
+                              AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code[i], type = "sh"),collapse = ', '), "))")
+          if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
+          sql_where<-paste(sql_where,condition_i)
+          
+        }#for i  
+        
+        sql_where<-paste(sql_where,") AND scrubbed_species_binomial IS NOT NULL")  
+        
+      }else{
+        stop("If supplying more than one country, the function requires a vector of countries corresponding to the vector of states")  
+        
+      }  
+      
+    }#if length(country>1)
     
-    
-    
-  }#if length(country>1)
+  }    
   
   # set the query
   query <- paste("SELECT ",political_select," view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, 
-                  view_full_occurrence_individual.plot_area_ha,view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count",
-                  taxonomy_$select,native_$select," ,view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,
-                  view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,
-                  collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,md_$select,"
+                 view_full_occurrence_individual.plot_area_ha,view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count",
+                 taxonomy_$select,native_$select," ,view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,
+                 view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,
+                 collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,md_$select,"
                  FROM 
                  (SELECT * FROM view_full_occurrence_individual ",
                  sql_where,cultivated_$query,newworld_$query,natives_$query,  "
@@ -2051,7 +2259,6 @@ BIEN_plot_state<-function(country,state,cultivated=FALSE,only.new.world=TRUE,all
   return(.BIEN_sql(query, ...))
   
   }
-
 
 ###############################
 #'List available sampling protocols.
@@ -2359,6 +2566,7 @@ BIEN_taxonomy_family<-function(family, ...){
 #' @param replicates The specific replicated phylogenies to return.  Should be a numeric vector of integers between 1 and 100.
 #' @template phylogeny
 #' @return A phylo or multiphylo object containing the specified phylogenies
+#' @note The BIEN phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.
 #' @examples \dontrun{
 #' phylos<-BIEN_phylogeny_complete(n_phylogenies = 10,seed = 1)
 #' phylos<-BIEN_phylogeny_complete(replicates = c(1,2,99,100))}
@@ -2403,6 +2611,8 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
   
   tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
   
+  message("Note: these phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.")
+  
   return(tree)
   
 }
@@ -2416,6 +2626,7 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
 #' @examples \dontrun{
 #' BIEN_phylo<-BIEN_phylogeny_conservative()}
 #' @family phylogeny functions
+#' @note The BIEN phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.
 #' @export
 BIEN_phylogeny_conservative<-function(...){
   
@@ -2424,6 +2635,8 @@ BIEN_phylogeny_conservative<-function(...){
   df<-.BIEN_sql(query, ...)
   
   tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
+  
+  message("Note: these phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.")
   
   return(tree)
   
@@ -2759,6 +2972,26 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
   #Return the citation list  
   
   return(citation)    
+  
+}
+
+#####################
+
+
+#'List political divisions and associated geonames codes.
+#'
+#'BIEN_metadata_list_political_names downloads country, state, and county names and associated codes used by BIEN.
+#' @param ... Additional arguments passed to internal functions.
+#' @return A dataframe containing political division names and their associated codes.
+#' @note Political names and codes follow http://www.geonames.org/
+#' @examples \dontrun{
+#' BIEN_metadata_list_political_names()}
+#' @family metadata functions
+#' @export
+BIEN_metadata_list_political_names<-function(...){
+  query<-'SELECT country,countrycode AS "country.code", state_province, state_province_ascii,admin1code AS "state.code",
+  county_parish,county_parish_ascii,admin2code AS "county.code" FROM county_parish;'
+  .BIEN_sql(query, ...)
   
 }
 

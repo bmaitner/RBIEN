@@ -37,6 +37,8 @@ Dataframe containing occurrence records for the specified species.
 BIEN_occurrence_spatialpolygons downloads occurrence records falling within a user-specified SpatialPolygons or SpatialPolygonsDataFrame.
 }
 \note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
 We recommend using \code{\link[rgdal]{readOGR}} to load spatial data
 }
 \examples{

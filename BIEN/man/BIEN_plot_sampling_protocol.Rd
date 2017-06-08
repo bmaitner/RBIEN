@@ -36,6 +36,9 @@ A dataframe containing all data from the specified datasource.
 \description{
 BIEN_plot_sampling_protocol downloads all plot data using a specified sampling protocol.
 }
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+}
 \examples{
 \dontrun{
 BIEN_plot_sampling_protocol("Point-intercept")}

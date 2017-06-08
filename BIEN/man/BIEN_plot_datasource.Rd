@@ -36,6 +36,9 @@ A dataframe containing all data from the specified datasource.
 \description{
 BIEN_plot_datasource downloads all plot data from a given datasource.
 }
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+}
 \examples{
 \dontrun{
 BIEN_plot_datasource("SALVIAS")}

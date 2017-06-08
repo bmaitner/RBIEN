@@ -37,6 +37,8 @@ Dataframe containing stem data for the specified datasource.
 BIEN_stem_datasource downloads occurrence records for specific datasources from the BIEN database.
 }
 \note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
 Setting either "cultivated" or "native.status" to TRUE will significantly slow the speed of a query.
 
 #' @note For a list of available datasources, use \code{\link{BIEN_plot_list_datasource}}.

@@ -36,6 +36,9 @@ Dataframe containing occurrence records for the specified genera.
 \description{
 BIEN_occurrence_genus downloads occurrence records for specific genus/genera from the BIEN database.
 }
+\note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+}
 \examples{
 \dontrun{
 BIEN_occurrence_genus("Abutilon")

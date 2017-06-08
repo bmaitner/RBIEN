@@ -30,6 +30,8 @@ All range maps that intersect the user-supplied shapfile.
 BIEN_ranges_spatialpolygons extracts range maps that interesect a specified SpatialPolygons or SpatialPolygonsDataFrame object.
 }
 \note{
+Details on the construction of BIEN range maps is available at http://bien.nceas.ucsb.edu/bien/biendata/bien-3/
+
 We recommend using \code{\link[rgdal]{readOGR}} to load spatial data.  Other methods may cause problems related to handling holes in polygons.
 }
 \examples{

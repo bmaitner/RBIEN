@@ -37,6 +37,8 @@ A dataframe containing all data from the specified dataset.
 BIEN_plot_dataset downloads all plot data for a given dataset or datasets.
 }
 \note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
 Datasets and related information can be looked up with \code{\link{BIEN_plot_metadata}}
 }
 \examples{

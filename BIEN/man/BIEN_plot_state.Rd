@@ -4,7 +4,8 @@
 \alias{BIEN_plot_state}
 \title{Download plot data from specified states/provinces.}
 \usage{
-BIEN_plot_state(country, state, cultivated = FALSE, only.new.world = TRUE,
+BIEN_plot_state(country = NULL, state = NULL, country.code = NULL,
+  state.code = NULL, cultivated = FALSE, only.new.world = TRUE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
   political.boundaries = TRUE, collection.info = F, all.metadata = FALSE,
   ...)
@@ -13,6 +14,10 @@ BIEN_plot_state(country, state, cultivated = FALSE, only.new.world = TRUE,
 \item{country}{A single country.}
 
 \item{state}{A state or vector of states.}
+
+\item{country.code}{A single country code or a vector of country codes equal in length to the vector of states/province codes.}
+
+\item{state.code}{A single state/province code, or a vector of states/province codes.}
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
@@ -39,6 +44,10 @@ A dataframe containing all data from the specified states.
 BIEN_plot_state downloads all plot data from specified states/provinces.
 }
 \note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
+Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
+
 This function requires you supply either 1) a single country with one or states, or 2) vectors of equal length for each political level.
 }
 \examples{

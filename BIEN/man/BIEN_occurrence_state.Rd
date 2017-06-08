@@ -4,15 +4,20 @@
 \alias{BIEN_occurrence_state}
 \title{Extract species occurrence records by state.}
 \usage{
-BIEN_occurrence_state(country, state, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, observation.type = FALSE,
-  political.boundaries = FALSE, collection.info = F, ...)
+BIEN_occurrence_state(country = NULL, state = NULL, country.code = NULL,
+  state.code = NULL, cultivated = FALSE, only.new.world = TRUE,
+  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
+  observation.type = FALSE, political.boundaries = FALSE,
+  collection.info = F, ...)
 }
 \arguments{
 \item{country}{A single country or vector of countries.}
 
 \item{state}{A single state or a vector of states.}
+
+\item{country.code}{A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.}
+
+\item{state.code}{A single state/province code, or a vector of states/province codes.}
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
@@ -39,6 +44,10 @@ Dataframe containing occurrence records for the specified states/provinces.
 BIEN_occurrence_state extracts occurrences records for the specified state(s).
 }
 \note{
+US FIA coordinates have been fuzzed and swapped, for more details see: https://www.fia.fs.fed.us/tools-data/spatial/Policy/index.php
+
+Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
+
 This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
 }
 \examples{
