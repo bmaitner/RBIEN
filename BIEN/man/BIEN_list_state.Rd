@@ -12,7 +12,7 @@ BIEN_list_state(country = NULL, country.code = NULL, state = NULL,
 
 \item{country.code}{A single country code or a vector of country codes equal in length to the vector of states/province codes.}
 
-\item{state}{A single state/province, or a vector of states/provinces.}
+\item{state}{A state or vector of states (or other primary political divisions, e.g. provinces).}
 
 \item{state.code}{A single state/province code, or a vector of states/province codes.}
 

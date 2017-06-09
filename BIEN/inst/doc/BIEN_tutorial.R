@@ -142,7 +142,54 @@ Haiti_DR <- BIEN_list_country(country = country_vector)
 
 
 ## ------------------------------------------------------------------------
+#To see all of the political division names, and associated codes, we can use this function:
+
+political_names<-BIEN_metadata_list_political_names()
+
+#Let's take a look at what the dataframe contains:
+
+head(political_names)
+
+#In addition to the standardized country, state (state_province_ascii) and county (county_parish_ascii) names, we have the associated codes that can be used in BIEN functions.
+#Note that 'state' refers to any primary political division (e.g. province), and 'county' refers to any secondary political division (e.g. parish).
+
+#Looking at the political_names dataframe, we see that the Dominican Republic has country code "DO", and Haiti has country code "HT"
+
+Haiti_DR_from_codes <- BIEN_list_country(country.code = c("HT","DO"))
+
+
+
+## ------------------------------------------------------------------------
 
 BIEN_metadata_database_version()
+
+
+## ------------------------------------------------------------------------
+
+Selaginella_selaginoides_occurrences<-BIEN_occurrence_species("Selaginella selaginoides",only.new.world = F)
+
+
+## ------------------------------------------------------------------------
+
+citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
+
+
+## ------------------------------------------------------------------------
+
+
+citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+                                      bibtex_file = paste(tempdir(),"\\","selaginella_selaginoides.bib",sep=""),
+                                      acknowledgement_file=paste(tempdir(),"\\","selaginella_selaginoides.txt",sep=""))
+
+
+## ------------------------------------------------------------------------
+#First, let's get some trait data:
+selaginella_selaginoides_traits<-BIEN_trait_species(species = "Selaginella selaginoides")
+
+#Now, we just need to modify our previous bit of code to include the trait data as well:
+citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+                                      trait.dataframe = selaginella_selaginoides_traits,
+                                      bibtex_file = paste(tempdir(),"\\","selaginella_selaginoides.bib",sep=""),
+                                      acknowledgement_file=paste(tempdir(),"\\","selaginella_selaginoides.txt",sep=""))
 
 

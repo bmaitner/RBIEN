@@ -13,7 +13,7 @@ BIEN_occurrence_state(country = NULL, state = NULL, country.code = NULL,
 \arguments{
 \item{country}{A single country or vector of countries.}
 
-\item{state}{A single state or a vector of states.}
+\item{state}{A state or vector of states (or other primary political divisions, e.g. provinces).}
 
 \item{country.code}{A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.}
 

@@ -11,7 +11,7 @@ BIEN_list_county(country = NULL, state = NULL, county = NULL,
 \arguments{
 \item{country}{A single country or vector of countries}
 
-\item{state}{A single state (or other primary administarive boundary) or vector of states.}
+\item{state}{A state or vector of states (or other primary political divisions, e.g. provinces).}
 
 \item{county}{A single county (or other secondary administarive boundary)or vector of counties.}
 

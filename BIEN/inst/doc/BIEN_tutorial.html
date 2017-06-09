@@ -747,14 +747,50 @@ phylo_species &lt;- phylo$tip.label
 Haiti_DR &lt;- BIEN_list_country(country = country_vector)
 </code></pre>
 
+<p>We can also use political division codes (from geonames.org) instead of writing out the full country names.</p>
+
+<pre><code class="r">#To see all of the political division names, and associated codes, we can use this function:
+
+political_names&lt;-BIEN_metadata_list_political_names()
+
+#Let&#39;s take a look at what the dataframe contains:
+
+head(political_names)
+</code></pre>
+
+<pre><code>##         country country.code state_province state_province_ascii
+## 1 Aland Islands           AX           &lt;NA&gt;                 &lt;NA&gt;
+## 2    Azerbaijan           AZ           &lt;NA&gt;                 &lt;NA&gt;
+## 3    Azerbaijan           AZ           &lt;NA&gt;                 &lt;NA&gt;
+## 4       Burundi           BI           &lt;NA&gt;                 &lt;NA&gt;
+## 5       Burundi           BI           &lt;NA&gt;                 &lt;NA&gt;
+## 6       Burundi           BI           &lt;NA&gt;                 &lt;NA&gt;
+##   state.code       county_parish county_parish_ascii county.code
+## 1         01   Landskapet Ã<U+0085>land    Landskapet Aland      830602
+## 2         00   MirbÇÅ<U+009F>ir Rayonu     Mirbasir Rayonu      585509
+## 3         00      Shaumyan Rayon      Shaumyan Rayon      585038
+## 4         02 Commune of Buterere Commune of Buterere     7670922
+## 5         02  Commune of Buyenzi  Commune of Buyenzi     8335225
+## 6         02  Commune of Gihanga  Commune of Gihanga     8303259
+</code></pre>
+
+<pre><code class="r">#In addition to the standardized country, state (state_province_ascii) and county (county_parish_ascii) names, we have the associated codes that can be used in BIEN functions.
+#Note that &#39;state&#39; refers to any primary political division (e.g. province), and &#39;county&#39; refers to any secondary political division (e.g. parish).
+
+#Looking at the political_names dataframe, we see that the Dominican Republic has country code &quot;DO&quot;, and Haiti has country code &quot;HT&quot;
+
+Haiti_DR_from_codes &lt;- BIEN_list_country(country.code = c(&quot;HT&quot;,&quot;DO&quot;))
+</code></pre>
+
 <h1>Metadata</h1>
 
-<p>The BIEN metadata functions are still in development.  Currently, there are only 3 functions:</p>
+<p>The BIEN metadata functions start with the prefix <code>BIEN_metadata_...</code> and provide useful metadata for the BIEN database.</p>
 
 <ol>
 <li><p><code>BIEN_metadata_database_version</code> Returns the current version number of the BIEN database and the release date.</p></li>
 <li><p><code>BIEN_metadata_match_data</code> Rudimentary function to check for changed records between old and current queries.</p></li>
 <li><p><code>BIEN_metadata_citation</code> Function to generate bibtex citations for use in reference managers.</p></li>
+<li><p><code>BIEN_metadata_list_political_names</code> Returns a dataframe containing political division names and associate codes.</p></li>
 </ol>
 
 <p>*<em>Example 10: Metadata *</em></p>
@@ -767,6 +803,48 @@ Haiti_DR &lt;- BIEN_list_country(country = country_vector)
 <pre><code>##   db_version db_release_date
 ## 1      3.4.5      2017-05-18
 </code></pre>
+
+<p>** Example 11: Citations**</p>
+
+<p>One of the more innovative features of the BIEN package is that it will generate custom attribution data for you based on what data you downloaded through the package.</p>
+
+<p>Let&#39;s say we&#39;re interested in <em>Selaginella selaginoides</em>, and we&#39;d like to download some occurrence data:</p>
+
+<pre><code class="r">Selaginella_selaginoides_occurrences&lt;-BIEN_occurrence_species(&quot;Selaginella selaginoides&quot;,only.new.world = F)
+</code></pre>
+
+<p>If we plan on using those data in a publication ,we&#39;ll need proper attribution.  We can use <code>BIEN_metadata_citation</code> to do this for us:</p>
+
+<pre><code class="r">citation_info&lt;-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
+</code></pre>
+
+<p>citation_info is a list that contains 3 elements:
+1. A bit of general information on how to use the list.
+2. A set of bibtex formatted references.
+3. Acknowledgement text.</p>
+
+<p>To make things even easier on ourselves, we can use some of the additional functionality of the <code>BIEN_metadata_citation</code> function:</p>
+
+<pre><code class="r">citation_info&lt;-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+                                      bibtex_file = paste(tempdir(),&quot;\\&quot;,&quot;selaginella_selaginoides.bib&quot;,sep=&quot;&quot;),
+                                      acknowledgement_file=paste(tempdir(),&quot;\\&quot;,&quot;selaginella_selaginoides.txt&quot;,sep=&quot;&quot;))
+</code></pre>
+
+<p>Now, we have a bibtex file, selaginella_selaginoides.bib, that can be loaded into a reference manages (e.g. Endnote, Paperpile, etc.), and a text file, selaginella_selaginoides.txt, containing text that can be pasted into the acknowledgements section of a publication.</p>
+
+<p>What if we also have some trait data?  No problem there, the code handles that as well:</p>
+
+<pre><code class="r">#First, let&#39;s get some trait data:
+selaginella_selaginoides_traits&lt;-BIEN_trait_species(species = &quot;Selaginella selaginoides&quot;)
+
+#Now, we just need to modify our previous bit of code to include the trait data as well:
+citation_info&lt;-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+                                      trait.dataframe = selaginella_selaginoides_traits,
+                                      bibtex_file = paste(tempdir(),&quot;\\&quot;,&quot;selaginella_selaginoides.bib&quot;,sep=&quot;&quot;),
+                                      acknowledgement_file=paste(tempdir(),&quot;\\&quot;,&quot;selaginella_selaginoides.txt&quot;,sep=&quot;&quot;))
+</code></pre>
+
+<p>The updated citation information will now contain references for both trait and occurrence records.</p>
 
 <h1>Combining Queries</h1>
 

@@ -13,9 +13,9 @@ BIEN_occurrence_county(country = NULL, state = NULL, county = NULL,
 \arguments{
 \item{country}{A single country or vector of countries.}
 
-\item{state}{A single state or a vector of states.}
+\item{state}{A state or vector of states (or other primary political divisions, e.g. provinces).}
 
-\item{county}{A single county or a vector of counties.}
+\item{county}{A single county or a vector of counties (or other secondary political division, e.g. parish).}
 
 \item{country.code}{A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.}
 

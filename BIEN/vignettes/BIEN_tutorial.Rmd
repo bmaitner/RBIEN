@@ -442,15 +442,38 @@ Haiti_DR <- BIEN_list_country(country = country_vector)
 
 ```
 
+We can also use political division codes (from geonames.org) instead of writing out the full country names.
+
+```{r}
+#To see all of the political division names, and associated codes, we can use this function:
+
+political_names<-BIEN_metadata_list_political_names()
+
+#Let's take a look at what the dataframe contains:
+
+head(political_names)
+
+#In addition to the standardized country, state (state_province_ascii) and county (county_parish_ascii) names, we have the associated codes that can be used in BIEN functions.
+#Note that 'state' refers to any primary political division (e.g. province), and 'county' refers to any secondary political division (e.g. parish).
+
+#Looking at the political_names dataframe, we see that the Dominican Republic has country code "DO", and Haiti has country code "HT"
+
+Haiti_DR_from_codes <- BIEN_list_country(country.code = c("HT","DO"))
+
+
+```
+
 
 # Metadata
-The BIEN metadata functions are still in development.  Currently, there are only 3 functions:
+The BIEN metadata functions start with the prefix `BIEN_metadata_...` and provide useful metadata for the BIEN database.
 
 1. `BIEN_metadata_database_version` Returns the current version number of the BIEN database and the release date.
 
 2. `BIEN_metadata_match_data` Rudimentary function to check for changed records between old and current queries.
 
 3. `BIEN_metadata_citation` Function to generate bibtex citations for use in reference managers.
+
+4. `BIEN_metadata_list_political_names` Returns a dataframe containing political division names and associate codes.
 
 **Example 10: Metadata **
 
@@ -461,6 +484,59 @@ To check what the current version of the BIEN database is (which we recommend re
 BIEN_metadata_database_version()
 
 ```
+
+** Example 11: Citations**
+
+One of the more innovative features of the BIEN package is that it will generate custom attribution data for you based on what data you downloaded through the package.
+
+Let's say we're interested in *Selaginella selaginoides*, and we'd like to download some occurrence data:
+
+```{r}
+
+Selaginella_selaginoides_occurrences<-BIEN_occurrence_species("Selaginella selaginoides",only.new.world = F)
+
+```
+
+If we plan on using those data in a publication ,we'll need proper attribution.  We can use `BIEN_metadata_citation` to do this for us:
+
+```{r}
+
+citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
+
+```
+citation_info is a list that contains 3 elements:
+1. A bit of general information on how to use the list.
+2. A set of bibtex formatted references.
+3. Acknowledgement text.
+
+To make things even easier on ourselves, we can use some of the additional functionality of the `BIEN_metadata_citation` function:
+
+```{r}
+
+
+citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+                                      bibtex_file = paste(tempdir(),"\\","selaginella_selaginoides.bib",sep=""),
+                                      acknowledgement_file=paste(tempdir(),"\\","selaginella_selaginoides.txt",sep=""))
+
+```
+Now, we have a bibtex file, selaginella_selaginoides.bib, that can be loaded into a reference manages (e.g. Endnote, Paperpile, etc.), and a text file, selaginella_selaginoides.txt, containing text that can be pasted into the acknowledgements section of a publication.
+
+What if we also have some trait data?  No problem there, the code handles that as well:
+
+```{r}
+#First, let's get some trait data:
+selaginella_selaginoides_traits<-BIEN_trait_species(species = "Selaginella selaginoides")
+
+#Now, we just need to modify our previous bit of code to include the trait data as well:
+citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+                                      trait.dataframe = selaginella_selaginoides_traits,
+                                      bibtex_file = paste(tempdir(),"\\","selaginella_selaginoides.bib",sep=""),
+                                      acknowledgement_file=paste(tempdir(),"\\","selaginella_selaginoides.txt",sep=""))
+
+```
+
+
+The updated citation information will now contain references for both trait and occurrence records.
 
 
 # Combining Queries

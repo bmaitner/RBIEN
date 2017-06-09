@@ -176,7 +176,7 @@ BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only
 #'Extract a species list by state/province
 #'
 #'BIEN_list_state produces a list of all species with geovalidated occurrences falling within specified state(s) or province(s).
-#' @param state A single state/province, or a vector of states/provinces.
+#' @param state A state or vector of states (or other primary political divisions, e.g. provinces).
 #' @param country A single country or a vector of countries equal in length to the vector of states/provinces.
 #' @param state.code A single state/province code, or a vector of states/province codes.
 #' @param country.code A single country code or a vector of country codes equal in length to the vector of states/province codes.
@@ -293,7 +293,7 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
 #'
 #'BIEN_list_county produces a list of all species with geovalidated occurrences falling within specified county or counties.
 #' @param country A single country or vector of countries
-#' @param state A single state (or other primary administarive boundary) or vector of states.
+#' @param state A state or vector of states (or other primary political divisions, e.g. provinces).
 #' @param county A single county (or other secondary administarive boundary)or vector of counties.
 #' @param state.code A single state/province code, or a vector of states/province codes.
 #' @param country.code A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.
@@ -600,7 +600,7 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,obs
 #'Extract species occurrence records by state.
 #'
 #'BIEN_occurrence_state extracts occurrences records for the specified state(s).
-#' @param state A single state or a vector of states.
+#' @param state A state or vector of states (or other primary political divisions, e.g. provinces).
 #' @param country A single country or vector of countries.
 #' @param state.code A single state/province code, or a vector of states/province codes.
 #' @param country.code A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.
@@ -781,8 +781,8 @@ BIEN_occurrence_country<-function(country=NULL,country.code=NULL,cultivated=FALS
 #'
 #'BIEN_occurrence_county extracts occurrences records for the specified county or counties.
 #' @param country A single country or vector of countries.
-#' @param state A single state or a vector of states.
-#' @param county A single county or a vector of counties.
+#' @param state A state or vector of states (or other primary political divisions, e.g. provinces).
+#' @param county A single county or a vector of counties (or other secondary political division, e.g. parish).
 #' @param state.code A single state/province code, or a vector of states/province codes.
 #' @param country.code A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.
 #' @param county.code A single county (or other secondary administarive boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.
@@ -2136,7 +2136,7 @@ BIEN_plot_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only
 #'
 #'BIEN_plot_state downloads all plot data from specified states/provinces.
 #' @param country A single country.
-#' @param state A state or vector of states.
+#' @param state A state or vector of states (or other primary political divisions).
 #' @param state.code A single state/province code, or a vector of states/province codes.
 #' @param country.code A single country code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template plot
@@ -2566,7 +2566,6 @@ BIEN_taxonomy_family<-function(family, ...){
 #' @param replicates The specific replicated phylogenies to return.  Should be a numeric vector of integers between 1 and 100.
 #' @template phylogeny
 #' @return A phylo or multiphylo object containing the specified phylogenies
-#' @note The BIEN phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.
 #' @examples \dontrun{
 #' phylos<-BIEN_phylogeny_complete(n_phylogenies = 10,seed = 1)
 #' phylos<-BIEN_phylogeny_complete(replicates = c(1,2,99,100))}
@@ -2611,8 +2610,6 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
   
   tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
   
-  message("Note: these phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.")
-  
   return(tree)
   
 }
@@ -2626,7 +2623,6 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
 #' @examples \dontrun{
 #' BIEN_phylo<-BIEN_phylogeny_conservative()}
 #' @family phylogeny functions
-#' @note The BIEN phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.
 #' @export
 BIEN_phylogeny_conservative<-function(...){
   
@@ -2635,8 +2631,6 @@ BIEN_phylogeny_conservative<-function(...){
   df<-.BIEN_sql(query, ...)
   
   tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
-  
-  message("Note: these phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.")
   
   return(tree)
   

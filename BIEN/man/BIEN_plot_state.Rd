@@ -13,7 +13,7 @@ BIEN_plot_state(country = NULL, state = NULL, country.code = NULL,
 \arguments{
 \item{country}{A single country.}
 
-\item{state}{A state or vector of states.}
+\item{state}{A state or vector of states (or other primary political divisions).}
 
 \item{country.code}{A single country code or a vector of country codes equal in length to the vector of states/province codes.}
 

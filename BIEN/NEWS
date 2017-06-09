@@ -7,7 +7,7 @@ BIEN 1.1.1
 * Added option to return additional data pertaining to collection and identification
 * Added ability to download readable citation information for trait data.
 * Added a new vignette tutorial, "BIEN_tutorial", which walks users through some of the functions
-* Functions that query by country name can now use either 2-digit ISO codes or country names
+* Functions that query by political name can now utilize shorthand codes from geonames.org
 
 ## OTHER NEWS
 * Trait data was increased by nearly an order of magnitude
