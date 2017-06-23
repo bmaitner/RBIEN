@@ -23,7 +23,7 @@ A phylo or multiphylo object containing the specified phylogenies
 BIEN_phylogeny_complete downloads a specified number of the BIEN phylogeny replicates.
 }
 \note{
-The BIEN phylogenies have not yet passed through peer review.  Users are advised to use them with caution for now.
+Information on the construction of the BIEN phylogenies is available online at http://bien.nceas.ucsb.edu/bien/biendata/bien-2/phylogeny/
 }
 \examples{
 \dontrun{

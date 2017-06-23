@@ -2729,9 +2729,13 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
   
   R_package_cite<-'@ARTICLE{Maitner_undated-aw,
   title  = "The BIEN R package: A tool to access the Botanical Information and Ecology Network (BIEN) Database",
-  author = "Maitner, B S and Boyle, B and Merow, C and Guaderrama, D and Casler, N and Sandel, B and Violle, C and Morueta-Holme, N and Peet, R K and Jorgensen,
-  P M and Kraft, N J B and Smith, S A and and Donoghue, J C and Hinchliff, C E and Svenning, J-C and Enquist, B J"}'
+  author = "Maitner, B S and Boyle, B and Casler, N and Condit, R and Donoghue, J C and Duran, S M and Guaderrama, D and Hinchliff, C E and Jorgensen, P M and Kraft, N J B 
+and McGill, B and Merow, C and Morueta-Holme, N and Peet, R K and Sandel, B and Schildhauer, M and Smith, S A and Svenning, J-C and Thiers, B and Violle, C and Wiser, S and Enquist, B J"}'
   R_package_cite<-gsub(pattern = "\n",replacement = "",R_package_cite)
+  
+  
+  
+  
   
   if(!is.null(trait.dataframe)){
     trait.query<-paste("SELECT DISTINCT citation_bibtex,source_citation,source, url_source, access, project_pi, project_pi_contact FROM agg_traits 
