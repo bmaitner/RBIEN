@@ -2045,7 +2045,7 @@ BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
 #' @family plot functions
 #' @export
 BIEN_plot_list_datasource<-function(...){
-  query <- paste("SELECT DISTINCT datasource FROM plot_metadata ;")
+  query <- paste("SELECT DISTINCT plot_metadata.datasource FROM plot_metadata ;")
   return(.BIEN_sql(query, ...))
   
 }
