@@ -15,7 +15,7 @@ BIEN_occurrence_records_per_species(species = NULL, ...)
 A dataframe listing the number of geovalidated occurrence records for each species in the BIEN database.
 }
 \description{
-BIEN_occurrence_records_per_species downloads a count of the number of geovalidated occurence records for each species in the BIEN database.
+BIEN_occurrence_records_per_species downloads a count of the number of geovalidated occurrence records for each species in the BIEN database.
 }
 \examples{
 \dontrun{

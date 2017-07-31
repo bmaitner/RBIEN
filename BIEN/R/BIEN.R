@@ -294,10 +294,10 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
 #'BIEN_list_county produces a list of all species with geovalidated occurrences falling within specified county or counties.
 #' @param country A single country or vector of countries
 #' @param state A state or vector of states (or other primary political divisions, e.g. provinces).
-#' @param county A single county (or other secondary administarive boundary)or vector of counties.
+#' @param county A single county (or other secondary administrative boundary)or vector of counties.
 #' @param state.code A single state/province code, or a vector of states/province codes.
-#' @param country.code A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.
-#' @param county.code A single county (or other secondary administarive boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.
+#' @param country.code A single country (or other primary administrative boundary) code or a vector of country codes equal in length to the vector of states/province codes.
+#' @param county.code A single county (or other secondary administrative boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.
 #' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @note We recommend using country, state, and county rather than codes, since county names have not been fully standardized.
 #' @template list
@@ -603,7 +603,7 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,obs
 #' @param state A state or vector of states (or other primary political divisions, e.g. provinces).
 #' @param country A single country or vector of countries.
 #' @param state.code A single state/province code, or a vector of states/province codes.
-#' @param country.code A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.
+#' @param country.code A single country (or other primary administrative boundary) code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template occurrence
 #' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @note This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
@@ -784,8 +784,8 @@ BIEN_occurrence_country<-function(country=NULL,country.code=NULL,cultivated=FALS
 #' @param state A state or vector of states (or other primary political divisions, e.g. provinces).
 #' @param county A single county or a vector of counties (or other secondary political division, e.g. parish).
 #' @param state.code A single state/province code, or a vector of states/province codes.
-#' @param country.code A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.
-#' @param county.code A single county (or other secondary administarive boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.
+#' @param country.code A single country (or other primary administrative boundary) code or a vector of country codes equal in length to the vector of states/province codes.
+#' @param county.code A single county (or other secondary administrative boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.
 #' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @template occurrence
 #' @note This function requires you supply either 1) a single country with one or more states, or 2) vectors of equal length for each political level.
@@ -1184,7 +1184,7 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
 #'
 #'BIEN_ranges_box extracts range maps for a specified bounding box.
 #' @param min.lat Minimum latitude of the ranges included.
-#' @param max.lat Maximumlatitude of the ranges included.
+#' @param max.lat Maximum latitude of the ranges included.
 #' @param min.long Minimum longitude of the ranges included.
 #' @param max.long Maximum longitude of the ranges included.
 #' @param crop.ranges Should the ranges be cropped to the focal area? Default is FALSE.
@@ -1377,11 +1377,11 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
 #######################################
 #'Download range maps that intersect a user-supplied SpatialPolygons object.
 #'
-#'BIEN_ranges_spatialpolygons extracts range maps that interesect a specified SpatialPolygons or SpatialPolygonsDataFrame object.
+#'BIEN_ranges_spatialpolygons extracts range maps that intersect a specified SpatialPolygons or SpatialPolygonsDataFrame object.
 #' @param spatialpolygons An object of class SpatialPolygonsDataFrame or SpatialPolygons.
 #' @param crop.ranges Should the ranges be cropped to the focal area? Default is FALSE.
 #' @template ranges_spatial
-#' @return All range maps that intersect the user-supplied shapfile.
+#' @return All range maps that intersect the user-supplied shapefile.
 #' @note We recommend using \code{\link[rgdal]{readOGR}} to load spatial data.  Other methods may cause problems related to handling holes in polygons.
 #' @examples \dontrun{
 #' library(rgdal)
@@ -1919,7 +1919,7 @@ BIEN_trait_list<-function( ...){
 
 #'Count the number of (geoValid) occurrence records for each species in BIEN
 #'
-#'BIEN_occurrence_records_per_species downloads a count of the number of geovalidated occurence records for each species in the BIEN database.
+#'BIEN_occurrence_records_per_species downloads a count of the number of geovalidated occurrence records for each species in the BIEN database.
 #' @param species A single species, or vector of species.  If NULL, the default, it will return counts for all species.
 #' @param ... Additional arguments passed to internal functions.
 #' @return A dataframe listing the number of geovalidated occurrence records for each species in the BIEN database.

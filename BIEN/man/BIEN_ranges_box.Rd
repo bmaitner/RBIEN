@@ -11,7 +11,7 @@ BIEN_ranges_box(min.lat, max.lat, min.long, max.long, directory = NULL,
 \arguments{
 \item{min.lat}{Minimum latitude of the ranges included.}
 
-\item{max.lat}{Maximumlatitude of the ranges included.}
+\item{max.lat}{Maximum latitude of the ranges included.}
 
 \item{min.long}{Minimum longitude of the ranges included.}
 

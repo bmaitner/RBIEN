@@ -17,11 +17,11 @@ BIEN_occurrence_county(country = NULL, state = NULL, county = NULL,
 
 \item{county}{A single county or a vector of counties (or other secondary political division, e.g. parish).}
 
-\item{country.code}{A single country (or other primary administarive boundary) code or a vector of country codes equal in length to the vector of states/province codes.}
+\item{country.code}{A single country (or other primary administrative boundary) code or a vector of country codes equal in length to the vector of states/province codes.}
 
 \item{state.code}{A single state/province code, or a vector of states/province codes.}
 
-\item{county.code}{A single county (or other secondary administarive boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.}
+\item{county.code}{A single county (or other secondary administrative boundary) code or a vector of county codes equal in length to the vectors of states/province codes and country codes.}
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 

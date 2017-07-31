@@ -24,10 +24,10 @@ BIEN_ranges_spatialpolygons(spatialpolygons, directory = NULL,
 \item{...}{Additional arguments passed to internal functions.}
 }
 \value{
-All range maps that intersect the user-supplied shapfile.
+All range maps that intersect the user-supplied shapefile.
 }
 \description{
-BIEN_ranges_spatialpolygons extracts range maps that interesect a specified SpatialPolygons or SpatialPolygonsDataFrame object.
+BIEN_ranges_spatialpolygons extracts range maps that intersect a specified SpatialPolygons or SpatialPolygonsDataFrame object.
 }
 \note{
 Details on the construction of BIEN range maps is available at http://bien.nceas.ucsb.edu/bien/biendata/bien-3/
