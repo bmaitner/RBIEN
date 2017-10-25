@@ -1,4 +1,14 @@
 
+BIEN 1.2.1
+===============
+## NEW FEATURES
+
+## OTHER NEWS
+
+## BUG FIXES
+* Updated example directories to use file.path() to construct OS-independent paths
+* Fixed a bug in BIEN_plot_sampling_protocol causing it to fail to return records for certain sampling protocols.
+
 BIEN 1.1.1
 ===============
 ## NEW FEATURES
@@ -16,7 +26,7 @@ BIEN 1.1.1
 * Functions names containing "...shapefile" have been changed to "...spatialpolygons" to make the names more accurate
 * The `shapefile` arguments have been renamed `spatialpolygons`, again for increased accuracy
 
-##BUG FIXES
+## BUG FIXES
 * Fixed issue with BIEN_occurrence_shapefile()
 * Updated test structure to comply with standard practices
 * Modified function documentation to use templates

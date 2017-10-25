@@ -821,9 +821,12 @@ Haiti_DR_from_codes &lt;- BIEN_list_country(country.code = c(&quot;HT&quot;,&quo
 
 <p>To make things even easier on ourselves, we can use some of the additional functionality of the <code>BIEN_metadata_citation</code> function:</p>
 
-<pre><code class="r">citation_info&lt;-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
-                                      bibtex_file = paste(tempdir(),&quot;\\&quot;,&quot;selaginella_selaginoides.bib&quot;,sep=&quot;&quot;),
-                                      acknowledgement_file=paste(tempdir(),&quot;\\&quot;,&quot;selaginella_selaginoides.txt&quot;,sep=&quot;&quot;))
+<pre><code class="r">temp_dir &lt;- file.path(tempdir(), &quot;BIEN_temp&quot;) #Set a temporary working directory
+
+
+citation_info&lt;-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+                                     bibtex_file = file.path(temp_dir,&quot;selaginella_selaginoides.bib&quot;),
+                                      acknowledgement_file=file.path(temp_dir,&quot;selaginella_selaginoides.txt&quot;))
 </code></pre>
 
 <p>Now, we have a bibtex file, selaginella_selaginoides.bib, that can be loaded into a reference manages (e.g. Endnote, Paperpile, etc.), and a text file, selaginella_selaginoides.txt, containing text that can be pasted into the acknowledgements section of a publication.</p>
@@ -834,10 +837,13 @@ Haiti_DR_from_codes &lt;- BIEN_list_country(country.code = c(&quot;HT&quot;,&quo
 selaginella_selaginoides_traits&lt;-BIEN_trait_species(species = &quot;Selaginella selaginoides&quot;)
 
 #Now, we just need to modify our previous bit of code to include the trait data as well:
+
+temp_dir &lt;- file.path(tempdir(), &quot;BIEN_temp&quot;)
+
 citation_info&lt;-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
                                       trait.dataframe = selaginella_selaginoides_traits,
-                                      bibtex_file = paste(tempdir(),&quot;\\&quot;,&quot;selaginella_selaginoides.bib&quot;,sep=&quot;&quot;),
-                                      acknowledgement_file=paste(tempdir(),&quot;\\&quot;,&quot;selaginella_selaginoides.txt&quot;,sep=&quot;&quot;))
+                                      bibtex_file = file.path(temp_dir,&quot;selaginella_selaginoides.bib&quot;),
+                                      acknowledgement_file=file.path(temp_dir,&quot;selaginella_selaginoides.txt&quot;))
 </code></pre>
 
 <p>The updated citation information will now contain references for both trait and occurrence records.</p>

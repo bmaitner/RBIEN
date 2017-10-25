@@ -36,13 +36,14 @@ library(maps) #a convenient source of maps
 species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
 BIEN_ranges_species(species_vector)
 BIEN_ranges_species(species_vector,match_names_only = TRUE)
-BIEN_ranges_species(species_vector,tempdir())#saves ranges to a temporary directory
+temp_dir <- file.path(tempdir(), "BIEN_temp")#Set a working directory
+BIEN_ranges_species(species_vector,temp_dir)#saves ranges to a temporary directory
 BIEN_ranges_species("Abies_lasiocarpa")
-BIEN_ranges_species("Abies_lasiocarpa",tempdir())
+BIEN_ranges_species("Abies_lasiocarpa",temp_dir)
 
 #Reading files
 
-Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
+Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
 
 #Plotting files
 plot(Abies_poly)#plots the range, but doesn't mean much without any reference

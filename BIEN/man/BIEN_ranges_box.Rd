@@ -40,9 +40,9 @@ Details on the construction of BIEN range maps is available at http://bien.nceas
 }
 \examples{
 \dontrun{
-testwd<-tempdir() #Set a working directory
+temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a working directory
 BIEN_ranges_box(42,43,-85,-84,species.names.only = TRUE)
-BIEN_ranges_box(42,43,-85,-84,directory = testwd)}
+BIEN_ranges_box(42,43,-85,-84,directory = temp_dir)}
 }
 \seealso{
 Other range functions: \code{\link{BIEN_ranges_genus}},

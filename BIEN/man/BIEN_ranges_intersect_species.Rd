@@ -34,9 +34,9 @@ Details on the construction of BIEN range maps is available at http://bien.nceas
 }
 \examples{
 \dontrun{
-testwd<-tempdir() #Set a working directory
+temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a working directory
 BIEN_ranges_intersect_species(species = "Carnegiea_gigantea",
-directory = testwd,include.focal = TRUE)
+directory = temp_dir,include.focal = TRUE)
 species_vector<-c("Carnegiea_gigantea","Echinocereus coccineus")
 BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
 }

@@ -174,22 +174,28 @@ Selaginella_selaginoides_occurrences<-BIEN_occurrence_species("Selaginella selag
 citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
 
 
-## ------------------------------------------------------------------------
+## ---- eval=FALSE---------------------------------------------------------
+#  
+#  temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a temporary working directory
+#  
+#  
+#  citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+#                                       bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
+#                                        acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
+#  
+#  
 
-
-citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
-                                      bibtex_file = paste(tempdir(),"\\","selaginella_selaginoides.bib",sep=""),
-                                      acknowledgement_file=paste(tempdir(),"\\","selaginella_selaginoides.txt",sep=""))
-
-
-## ------------------------------------------------------------------------
-#First, let's get some trait data:
-selaginella_selaginoides_traits<-BIEN_trait_species(species = "Selaginella selaginoides")
-
-#Now, we just need to modify our previous bit of code to include the trait data as well:
-citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
-                                      trait.dataframe = selaginella_selaginoides_traits,
-                                      bibtex_file = paste(tempdir(),"\\","selaginella_selaginoides.bib",sep=""),
-                                      acknowledgement_file=paste(tempdir(),"\\","selaginella_selaginoides.txt",sep=""))
-
+## ---- eval=FALSE---------------------------------------------------------
+#  #First, let's get some trait data:
+#  selaginella_selaginoides_traits<-BIEN_trait_species(species = "Selaginella selaginoides")
+#  
+#  #Now, we just need to modify our previous bit of code to include the trait data as well:
+#  
+#  temp_dir <- file.path(tempdir(), "BIEN_temp")
+#  
+#  citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+#                                        trait.dataframe = selaginella_selaginoides_traits,
+#                                        bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
+#                                        acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
+#  
 

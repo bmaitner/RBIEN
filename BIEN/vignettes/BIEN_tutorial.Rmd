@@ -511,27 +511,33 @@ citation_info is a list that contains 3 elements:
 
 To make things even easier on ourselves, we can use some of the additional functionality of the `BIEN_metadata_citation` function:
 
-```{r}
+```{r, eval=FALSE}
+
+temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a temporary working directory
 
 
 citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
-                                      bibtex_file = paste(tempdir(),"\\","selaginella_selaginoides.bib",sep=""),
-                                      acknowledgement_file=paste(tempdir(),"\\","selaginella_selaginoides.txt",sep=""))
+                                     bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
+                                      acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
+
 
 ```
 Now, we have a bibtex file, selaginella_selaginoides.bib, that can be loaded into a reference manages (e.g. Endnote, Paperpile, etc.), and a text file, selaginella_selaginoides.txt, containing text that can be pasted into the acknowledgements section of a publication.
 
 What if we also have some trait data?  No problem there, the code handles that as well:
 
-```{r}
+```{r, eval=FALSE}
 #First, let's get some trait data:
 selaginella_selaginoides_traits<-BIEN_trait_species(species = "Selaginella selaginoides")
 
 #Now, we just need to modify our previous bit of code to include the trait data as well:
+
+temp_dir <- file.path(tempdir(), "BIEN_temp")
+
 citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
                                       trait.dataframe = selaginella_selaginoides_traits,
-                                      bibtex_file = paste(tempdir(),"\\","selaginella_selaginoides.bib",sep=""),
-                                      acknowledgement_file=paste(tempdir(),"\\","selaginella_selaginoides.txt",sep=""))
+                                      bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
+                                      acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
 
 ```
 

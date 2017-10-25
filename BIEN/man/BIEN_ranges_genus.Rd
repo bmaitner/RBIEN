@@ -34,16 +34,16 @@ Details on the construction of BIEN range maps is available at http://bien.nceas
 library(rgdal)
 library(maps)
 genus_vector<-c("Abies","Acer")
-testwd<-tempdir() #Set a working directory
+temp_dir <- file.path(tempdir(), "BIEN_temp")#Set a working directory
 BIEN_ranges_genus(genus_vector)
 BIEN_ranges_genus(genus_vector,match_names_only = TRUE)
-BIEN_ranges_genus(genus_vector,testwd)#saves ranges to a specified working directory
+BIEN_ranges_genus(genus_vector,temp_dir)#saves ranges to a specified working directory
 BIEN_ranges_genus("Abies")
-BIEN_ranges_genus("Abies",tempdir())
+BIEN_ranges_genus("Abies",temp_dir)
 
 #Reading files
 
-Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
+Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
 
 #Plotting files
 plot(Abies_poly)#plots the range, but doesn't mean much without any reference

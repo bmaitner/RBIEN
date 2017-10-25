@@ -971,13 +971,14 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
 #' species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
 #' BIEN_ranges_species(species_vector)
 #' BIEN_ranges_species(species_vector,match_names_only = TRUE)
-#' BIEN_ranges_species(species_vector,tempdir())#saves ranges to a temporary directory
+#' temp_dir <- file.path(tempdir(), "BIEN_temp")#Set a working directory
+#' BIEN_ranges_species(species_vector,temp_dir)#saves ranges to a temporary directory
 #' BIEN_ranges_species("Abies_lasiocarpa")
-#' BIEN_ranges_species("Abies_lasiocarpa",tempdir())
+#' BIEN_ranges_species("Abies_lasiocarpa",temp_dir)
 #'
 #' #Reading files
 #' 
-#' Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
+#' Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
 #' 
 #' #Plotting files
 #' plot(Abies_poly)#plots the range, but doesn't mean much without any reference
@@ -1081,16 +1082,16 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #' library(rgdal)
 #' library(maps)
 #' genus_vector<-c("Abies","Acer")
-#' testwd<-tempdir() #Set a working directory
+#' temp_dir <- file.path(tempdir(), "BIEN_temp")#Set a working directory
 #' BIEN_ranges_genus(genus_vector)
 #' BIEN_ranges_genus(genus_vector,match_names_only = TRUE)
-#' BIEN_ranges_genus(genus_vector,testwd)#saves ranges to a specified working directory
+#' BIEN_ranges_genus(genus_vector,temp_dir)#saves ranges to a specified working directory
 #' BIEN_ranges_genus("Abies")
-#' BIEN_ranges_genus("Abies",tempdir())
+#' BIEN_ranges_genus("Abies",temp_dir)
 #'
 #' #Reading files
 #' 
-#' Abies_poly<-readOGR(dsn = tempdir(),layer = "Abies_lasiocarpa")
+#' Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
 #' 
 #' #Plotting files
 #' plot(Abies_poly)#plots the range, but doesn't mean much without any reference
@@ -1191,9 +1192,9 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
 #' @template ranges_spatial
 #' @return Range maps for all available species within the specified bounding box.
 #' @examples \dontrun{
-#' testwd<-tempdir() #Set a working directory
+#' temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a working directory
 #' BIEN_ranges_box(42,43,-85,-84,species.names.only = TRUE)
-#' BIEN_ranges_box(42,43,-85,-84,directory = testwd)}
+#' BIEN_ranges_box(42,43,-85,-84,directory = temp_dir)}
 #' @family range functions
 #' @export
 BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE, ...){
@@ -1282,9 +1283,9 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
 #' @template ranges_spatial
 #' @return Range maps for all available species that intersect the range of the focal species.
 #' @examples \dontrun{
-#' testwd<-tempdir() #Set a working directory
+#' temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a working directory
 #' BIEN_ranges_intersect_species(species = "Carnegiea_gigantea",
-#' directory = testwd,include.focal = TRUE)
+#' directory = temp_dir,include.focal = TRUE)
 #' species_vector<-c("Carnegiea_gigantea","Echinocereus coccineus")
 #' BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
 #' @family range functions
@@ -2297,7 +2298,7 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
   .is_log(political.boundaries)  
   .is_log(collection.info)
   .is_log(all.metadata)
-
+  
   #set conditions for query
   cultivated_<-.cultivated_check_plot(cultivated)
   newworld_<-.newworld_check_plot(only.new.world)
@@ -2309,26 +2310,32 @@ BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
   md_<-.md_check_plot(all.metadata)
   
   # set the query
-  query <- paste("SELECT view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,
-                 view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count",taxonomy_$select,native_$select,political_$select,", 
-                 view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,date_collected,view_full_occurrence_individual.datasource,
-                 view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",
-                  collection_$select,cultivated_$select, newworld_$select,md_$select,"
-                 FROM 
-                 (SELECT * FROM view_full_occurrence_individual 
-                 WHERE view_full_occurrence_individual.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")",
-                 cultivated_$query,newworld_$query,natives_$query,  "AND view_full_occurrence_individual.higher_plant_group IS NOT NULL 
-                 AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) 
-                 AND view_full_occurrence_individual.observation_type='plot' 
-                 ORDER BY view_full_occurrence_individual.country,view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot,
-                 view_full_occurrence_individual.scrubbed_species_binomial) as view_full_occurrence_individual
-                 JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
-                 ;")
+  
+  query<-paste(
+    "SELECT view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,
+    view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count",taxonomy_$select,native_$select,political_$select,", 
+    view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,date_collected,view_full_occurrence_individual.datasource,
+    view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",
+    collection_$select,cultivated_$select, newworld_$select,md_$select,
+    "FROM 
+    (SELECT * FROM plot_metadata
+    WHERE plot_metadata.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ") ) as plot_metadata",
+    "JOIN view_full_occurrence_individual ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
+    
+    WHERE plot_metadata.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")",
+    cultivated_$query,newworld_$query,natives_$query,  "
+    AND view_full_occurrence_individual.higher_plant_group IS NOT NULL 
+    AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) 
+    AND view_full_occurrence_individual.observation_type='plot'
+    ORDER BY view_full_occurrence_individual.country,view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot,
+    view_full_occurrence_individual.scrubbed_species_binomial ;")
   
   # create query to retrieve
   return(.BIEN_sql(query, ...))
   
-  }
+}
+
+
 #################################
 #'Download plot data by plot name.
 #'
