@@ -2,6 +2,7 @@
 BIEN 1.2.1
 ===============
 ## NEW FEATURES
+* Added BIEN_stem_sampling_protocol()
 
 ## OTHER NEWS
 
@@ -48,6 +49,7 @@ BIEN 1.1.0
 * Made .BIEN_sql an internal function
 * Updated BIEN_trait functions to use new agg_traits schema
 * Added many more traits to the database.
+
 ===============
 BIEN 1.0.0
 ===============

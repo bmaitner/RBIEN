@@ -3230,3 +3230,63 @@ BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
 
 
 ##########################
+
+
+#'Download stem data using a specified sampling protocol.
+#'
+#'BIEN_stem_sampling_protocol downloads plot-based stem data using a specified sampling protocol.
+#' @param sampling_protocol A sampling protocol or vector of sampling protocols. See \code{\link{BIEN_plot_list_sampling_protocols}} for options.
+#' @template stem
+#' @return A dataframe containing all data from the specified sampling protocol.
+#' @examples \dontrun{
+#' BIEN_stem_sampling_protocol("Point-intercept")}
+#' @family stem functions
+#' @export
+BIEN_stem_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
+  .is_log(all.metadata)
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_char(sampling_protocol)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
+  
+  #set conditions for query
+  cultivated_<-.cultivated_check_stem(cultivated)
+  newworld_<-.newworld_check_stem(only.new.world)
+  taxonomy_<-.taxonomy_check_stem(all.taxonomy)
+  native_<-.native_check_stem(native.status)
+  natives_<-.natives_check_stem(natives.only)
+  political_<-.political_check_stem(political.boundaries)
+  collection_<-.collection_check_stem(collection.info)
+  vfoi_<-.vfoi_check_stem(native.status,cultivated,natives.only,collection.info)
+  md_<-.md_check_stem(all.metadata)
+  
+  # set the query
+  
+  query<-paste("SELECT analytical_stem.plot_name,analytical_stem.subplot, analytical_stem.elevation_m, analytical_stem.plot_area_ha,analytical_stem.sampling_protocol,
+                  analytical_stem.recorded_by,analytical_stem.scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,analytical_stem.latitude, 
+                  analytical_stem.longitude,analytical_stem.date_collected,analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id, 
+                  analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,
+                  analytical_stem.custodial_institution_codes, analytical_stem.collection_code,analytical_stem.datasource_id",collection_$select,cultivated_$select,
+               newworld_$select,md_$select,"
+             FROM 
+                    (SELECT * FROM analytical_stem WHERE plot_metadata_id in 
+                        ( SELECT plot_metadata_id FROM plot_metadata WHERE sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")  ) ) 
+                    AS analytical_stem 
+                 JOIN plot_metadata ON 
+                    (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
+               vfoi_$join,
+               "WHERE analytical_stem.higher_plant_group IS NOT NULL
+              AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)
+             AND analytical_stem.sampling_protocol IS NOT NULL",
+               cultivated_$query,newworld_$query,native_$query, 
+               "ORDER BY analytical_stem.scrubbed_species_binomial ;")
+  
+  return(.BIEN_sql(query, ...))
+  
+}
+
+#######################################

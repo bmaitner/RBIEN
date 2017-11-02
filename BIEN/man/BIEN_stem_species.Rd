@@ -51,5 +51,6 @@ BIEN_stem_species(species_vector,all.taxonomy=TRUE)}
 \seealso{
 Other stem functions: \code{\link{BIEN_stem_datasource}},
   \code{\link{BIEN_stem_family}},
-  \code{\link{BIEN_stem_genus}}
+  \code{\link{BIEN_stem_genus}},
+  \code{\link{BIEN_stem_sampling_protocol}}
 }

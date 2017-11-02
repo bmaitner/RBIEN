@@ -50,5 +50,6 @@ BIEN_stem_datasource(datasource = "SALVIAS")}
 \seealso{
 Other stem functions: \code{\link{BIEN_stem_family}},
   \code{\link{BIEN_stem_genus}},
+  \code{\link{BIEN_stem_sampling_protocol}},
   \code{\link{BIEN_stem_species}}
 }
