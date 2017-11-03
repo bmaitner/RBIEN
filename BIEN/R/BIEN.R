@@ -3266,7 +3266,7 @@ BIEN_stem_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
   
   # set the query
   
-  query<-paste("SELECT analytical_stem.plot_name,analytical_stem.subplot, analytical_stem.elevation_m, analytical_stem.plot_area_ha,analytical_stem.sampling_protocol,
+  query<-paste("SELECT analytical_stem.plot_name,analytical_stem.subplot, analytical_stem.elevation_m, analytical_stem.plot_area_ha,plot_metadata.sampling_protocol,
                   analytical_stem.recorded_by,analytical_stem.scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,analytical_stem.latitude, 
                   analytical_stem.longitude,analytical_stem.date_collected,analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id, 
                   analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,
@@ -3280,8 +3280,7 @@ BIEN_stem_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
                     (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
                vfoi_$join,
                "WHERE analytical_stem.higher_plant_group IS NOT NULL
-              AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)
-             AND analytical_stem.sampling_protocol IS NOT NULL",
+              AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)",
                cultivated_$query,newworld_$query,native_$query, 
                "ORDER BY analytical_stem.scrubbed_species_binomial ;")
   
