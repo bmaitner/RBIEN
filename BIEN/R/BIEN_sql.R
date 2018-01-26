@@ -110,6 +110,7 @@
   if(return.query){
     query<-gsub(pattern = "\n",replacement = "",query)
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
+    DBI::dbDisconnect(con)
     return(query)
   }
   
