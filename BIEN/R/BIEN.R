@@ -2288,51 +2288,44 @@ BIEN_plot_list_sampling_protocols<-function(...){
 #' BIEN_plot_sampling_protocol("Point-intercept")}
 #' @family plot functions
 #' @export
-BIEN_plot_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_sampling_protocol <- function (sampling_protocol, cultivated = FALSE, only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE, 
+                                         political.boundaries = FALSE, collection.info = F, all.metadata = FALSE, ...){
+  
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
   .is_char(sampling_protocol)
   .is_log(native.status)
   .is_log(natives.only)
-  .is_log(political.boundaries)  
+  .is_log(political.boundaries)
   .is_log(collection.info)
   .is_log(all.metadata)
   
-  #set conditions for query
-  cultivated_<-.cultivated_check_plot(cultivated)
-  newworld_<-.newworld_check_plot(only.new.world)
-  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
-  native_<-.native_check_plot(native.status)
-  natives_<-.natives_check_plot(natives.only)
-  political_<-.political_check_plot(political.boundaries)
-  collection_<-.collection_check_plot(collection.info)
-  md_<-.md_check_plot(all.metadata)
+  cultivated_ <- .cultivated_check_plot(cultivated)
+  newworld_ <- .newworld_check_plot(only.new.world)
+  taxonomy_ <- .taxonomy_check_plot(all.taxonomy)
+  native_ <- .native_check_plot(native.status)
+  natives_ <- .natives_check_plot(natives.only)
+  political_ <- .political_check_plot(political.boundaries)
+  collection_ <- .collection_check_plot(collection.info)
+  md_ <- .md_check_plot(all.metadata)
   
-  # set the query
-  
-  query<-paste(
-    "SELECT view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha,
-    view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count",taxonomy_$select,native_$select,political_$select,", 
-    view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,date_collected,view_full_occurrence_individual.datasource,
-    view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",
-    collection_$select,cultivated_$select, newworld_$select,md_$select,
-    "FROM 
-    (SELECT * FROM plot_metadata
-    WHERE plot_metadata.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ") ) as plot_metadata",
-    "JOIN view_full_occurrence_individual ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
-    
-    WHERE plot_metadata.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")",
-    cultivated_$query,newworld_$query,natives_$query,  "
-    AND view_full_occurrence_individual.higher_plant_group IS NOT NULL 
-    AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) 
-    AND view_full_occurrence_individual.observation_type='plot'
-    ORDER BY view_full_occurrence_individual.country,view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot,
-    view_full_occurrence_individual.scrubbed_species_binomial ;")
-  
-  # create query to retrieve
+  query <- paste("SELECT view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha, 
+                    view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count", 
+                    taxonomy_$select, native_$select, political_$select,",
+                    view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,date_collected,view_full_occurrence_individual.datasource,
+                    view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,collection_code,
+                    view_full_occurrence_individual.datasource_id", collection_$select, cultivated_$select, newworld_$select, md_$select, " 
+                 FROM (SELECT * FROM view_full_occurrence_individual 
+                 WHERE view_full_occurrence_individual.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"), collapse = ", "), ")",
+                 cultivated_$query, newworld_$query, natives_$query, 
+                 "AND view_full_occurrence_individual.higher_plant_group IS NOT NULL 
+                 AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) 
+                 AND view_full_occurrence_individual.observation_type='plot' 
+                 ORDER BY view_full_occurrence_individual.country,view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, 
+                 view_full_occurrence_individual.scrubbed_species_binomial) as view_full_occurrence_individual
+                 JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id);")
   return(.BIEN_sql(query, ...))
-  
 }
 
 
