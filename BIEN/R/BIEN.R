@@ -3258,24 +3258,19 @@ BIEN_stem_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
   md_<-.md_check_stem(all.metadata)
   
   # set the query
-  
-  query<-paste("SELECT analytical_stem.plot_name,analytical_stem.subplot, analytical_stem.elevation_m, analytical_stem.plot_area_ha,plot_metadata.sampling_protocol,
-                  analytical_stem.recorded_by,analytical_stem.scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,analytical_stem.latitude, 
-                  analytical_stem.longitude,analytical_stem.date_collected,analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id, 
-                  analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,
-                  analytical_stem.custodial_institution_codes, analytical_stem.collection_code,analytical_stem.datasource_id",collection_$select,cultivated_$select,
-               newworld_$select,md_$select,"
-             FROM 
-                    (SELECT * FROM analytical_stem WHERE plot_metadata_id in 
-                        ( SELECT plot_metadata_id FROM plot_metadata WHERE sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")  ) ) 
-                    AS analytical_stem 
+  query <- paste("SELECT analytical_stem.scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,analytical_stem.latitude, analytical_stem.longitude,analytical_stem.date_collected,
+                 analytical_stem.relative_x_m, analytical_stem.relative_y_m, analytical_stem.taxonobservation_id,analytical_stem.stem_code, analytical_stem.stem_dbh_cm, analytical_stem.stem_height_m, 
+                 plot_metadata.dataset,plot_metadata.datasource,plot_metadata.dataowner,analytical_stem.custodial_institution_codes,
+                 analytical_stem.collection_code,analytical_stem.datasource_id,view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, view_full_occurrence_individual.elevation_m, view_full_occurrence_individual.plot_area_ha, 
+                 view_full_occurrence_individual.sampling_protocol,view_full_occurrence_individual.recorded_by, view_full_occurrence_individual.individual_count",collection_$select,cultivated_$select,newworld_$select,md_$select,"
+                 FROM 
+                 (SELECT * FROM analytical_stem WHERE sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")) AS analytical_stem 
                  JOIN plot_metadata ON 
-                    (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
-               vfoi_$join,
-               "WHERE analytical_stem.higher_plant_group IS NOT NULL
-              AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)",
-               cultivated_$query,newworld_$query,native_$query, 
-               "ORDER BY analytical_stem.scrubbed_species_binomial ;")
+                 (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
+                 vfoi_$join ," 
+                 WHERE analytical_stem.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")",
+                 cultivated_$query,newworld_$query,natives_$query,  "AND analytical_stem.higher_plant_group IS NOT NULL AND (analytical_stem.is_geovalid = 1 OR analytical_stem.is_geovalid IS NULL)
+                 ORDER BY analytical_stem.scrubbed_species_binomial;")
   
   return(.BIEN_sql(query, ...))
   
