@@ -13,6 +13,7 @@
 NULL
 ###################
 
+
 .onAttach <- function(libname,pkgname) {
   packageStartupMessage('Type vignette("todoBIEN") to get started')
   
@@ -20,7 +21,7 @@ NULL
   suppressWarnings(x<-try(readLines("http://raw.github.com/bmaitner/RBIEN/master/BIEN/NOTES",warn = F),silent = T))
   if(class(x)=="character"){
     if(length(x)!=0){
-      message(x)  
+      packageStartupMessage(x,appendLF = T)  
       
     }  
     
