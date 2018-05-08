@@ -1,12 +1,14 @@
+BIEN 1.2.2
+===============
+## NEW FEATURES
+* BIEN database updated to 4.0
+* Updated code to work with updated BIEN4.0 database structure.
+* Some functions now return slightly different fields, please take note!
 
 BIEN 1.2.1
 ===============
 ## NEW FEATURES
 * Added BIEN_stem_sampling_protocol()
-
-## OTHER NEWS
-* BIEN database updated to 4.0
-* Some functions now return slightly different fields, please take note!
 
 ## BUG FIXES
 * Updated example directories to use file.path() to construct OS-independent paths
