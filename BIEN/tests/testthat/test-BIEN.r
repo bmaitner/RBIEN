@@ -1,7 +1,7 @@
 #Tests for BIEN package
 
+#Normal testing
 schema<-"public"
-#schema<-"analytical_db_dev"
 
 #List tests
 
@@ -31,7 +31,7 @@ test_that("Occurrence functions return a dataframe",{
   expect_that(BIEN_occurrence_genus(genus = "Xanthium",schema=schema) ,is_a("data.frame"))
   expect_that(BIEN_occurrence_species(species = "Xanthium strumarium",cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T,limit=1,schema=schema) ,is_a("data.frame"))
   expect_that(BIEN_occurrence_state(country = "United States",state = "Rhode Island",schema=schema) ,is_a("data.frame"))
-  #expect_that(BIEN_occurrence_spatialpolygons( BIEN_ranges_load_species(species = "Aa argyrolepis")),is_a("data.frame"))
+  expect_that(BIEN_occurrence_spatialpolygons( BIEN_ranges_load_species(species = "Aa argyrolepis"), limit = 100),is_a("data.frame"))
   #expect_that(BIEN_occurrence_records_per_species() ,is_a("data.frame"))
   })
 

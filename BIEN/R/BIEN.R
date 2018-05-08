@@ -101,7 +101,7 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.
                  WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_$query,newworld_$query,natives_$query, "AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY scrubbed_species_binomial ;")
   
   # create query to retrieve
-  df <- .BIEN_sql(query)
+  df <- .BIEN_sql(query, ...)
   
   
   if(length(df)==0){
@@ -145,7 +145,7 @@ BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only
   if(is.null(country.code)){
     sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") AND scrubbed_species_binomial IS NOT NULL")
   }else{
-    sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+    sql_where <- paste(" WHERE country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                        AND scrubbed_species_binomial IS NOT NULL")  
   }
   
@@ -153,9 +153,9 @@ BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only
   
   # adjust for optional parameters
   if(!cultivated){
-    sql_where <- paste(sql_where, " AND (is_cultivated = 0 OR is_cultivated IS NULL) ")
+    sql_where <- paste(sql_where, " AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) ")
   }else{
-    sql_select  <- paste(sql_select, ",is_cultivated,is_cultivated_in_region")
+    sql_select  <- paste(sql_select, ",is_cultivated_observation,is_cultivated_in_region")
   }
   
   if(!only.new.world){
@@ -234,7 +234,7 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
   }else{
     
     if(length(country.code)==1){
-      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+      sql_where <- paste(" WHERE country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                          AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
                          AND scrubbed_species_binomial IS NOT NULL")
     }else{
@@ -245,7 +245,7 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
         
         for(i in 1:length(country.code)){
           
-          condition_i<- paste("country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code[i], type = "sh"),collapse = ', '), ")) 
+          condition_i<- paste("country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code[i], type = "sh"),collapse = ', '), ")) 
                               AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code[i], type = "sh"),collapse = ', '), "))")
           if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
           sql_where<-paste(sql_where,condition_i)
@@ -267,9 +267,9 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
   
   # adjust for optional parameters
   if(!cultivated){
-    sql_where <- paste(sql_where, " AND (is_cultivated = 0 OR is_cultivated IS NULL) ")
+    sql_where <- paste(sql_where, " AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) ")
   }else{
-    sql_select  <- paste(sql_select, ",is_cultivated,is_cultivated_in_region")
+    sql_select  <- paste(sql_select, ",is_cultivated_observation,is_cultivated_in_region")
   }
   
   if(!only.new.world){
@@ -364,7 +364,7 @@ BIEN_list_county<-function(country=NULL,state=NULL,county=NULL,country.code=NULL
     
     #sql where
     if(length(country.code)==1 & length(state.code)==1){
-      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+      sql_where <- paste(" WHERE country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                          AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), "))
                          AND county in (SELECT county_parish_ascii FROM county_parish WHERE admin2code in (", paste(shQuote(county.code, type = "sh"),collapse = ', '), "))
                          AND scrubbed_species_binomial IS NOT NULL")
@@ -376,7 +376,7 @@ BIEN_list_county<-function(country=NULL,state=NULL,county=NULL,country.code=NULL
         
         for(i in 1:length(country)){
           
-          condition_i<- paste("(country = (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+          condition_i<- paste("(country = (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                               AND state_province = (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
                               AND county = (SELECT county_parish_ascii FROM county_parish WHERE admin2code in (", paste(shQuote(county.code, type = "sh"),collapse = ', '), "))" )
           
@@ -404,9 +404,9 @@ BIEN_list_county<-function(country=NULL,state=NULL,county=NULL,country.code=NULL
   
   # adjust for optional parameters
   if(!cultivated){
-    sql_where <- paste(sql_where, " AND (is_cultivated = 0 OR is_cultivated IS NULL) ")
+    sql_where <- paste(sql_where, " AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) ")
   }else{
-    sql_select  <- paste(sql_select, ",is_cultivated,is_cultivated_in_region")
+    sql_select  <- paste(sql_select, ",is_cultivated_observation,is_cultivated_in_region")
   }
   
   if(!only.new.world){
@@ -469,11 +469,11 @@ BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.wo
   
   # adjust for optional parameters
   if(!cultivated){
-    cultivated_query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
+    cultivated_query<-"AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)"
     cultivated_select<-""
   }else{
     cultivated_query<-""
-    cultivated_select<-",is_cultivated,is_cultivated_in_region"
+    cultivated_select<-",is_cultivated_observation,is_cultivated_in_region"
   }
   
   if(!only.new.world){
@@ -671,7 +671,7 @@ BIEN_occurrence_state<-function(country=NULL,state=NULL,country.code=NULL,state.
     
     ##state where
     if(length(country.code)==1){
-      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+      sql_where <- paste(" WHERE country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                          AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
                          AND scrubbed_species_binomial IS NOT NULL")
     }else{
@@ -682,7 +682,7 @@ BIEN_occurrence_state<-function(country=NULL,state=NULL,country.code=NULL,state.
         
         for(i in 1:length(country.code)){
           
-          condition_i<- paste("country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code[i], type = "sh"),collapse = ', '), ")) 
+          condition_i<- paste("country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code[i], type = "sh"),collapse = ', '), ")) 
                               AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code[i], type = "sh"),collapse = ', '), "))")
           if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
           sql_where<-paste(sql_where,condition_i)
@@ -760,11 +760,11 @@ BIEN_occurrence_country<-function(country=NULL,country.code=NULL,cultivated=FALS
   
   
   if(is.null(country.code)){query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
-                                    FROM view_full_occurrence_individual WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
+                                           FROM view_full_occurrence_individual WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
   
   }else{
     query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
-                   FROM view_full_occurrence_individual WHERE country in (SELECT country FROM countries 
+                   FROM view_full_occurrence_individual WHERE country in (SELECT country FROM country 
                    WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), "))",cultivated_$query,newworld_$query,natives_$query," AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) ORDER BY country,scrubbed_species_binomial;")
     
     
@@ -863,7 +863,7 @@ BIEN_occurrence_county<-function(country=NULL, state=NULL, county=NULL,country.c
     
     #sql where
     if(length(country.code)==1 & length(state.code)==1){
-      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+      sql_where <- paste(" WHERE country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                          AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), "))
                          AND county in (SELECT county_parish_ascii FROM county_parish WHERE admin2code in (", paste(shQuote(county.code, type = "sh"),collapse = ', '), "))
                          AND scrubbed_species_binomial IS NOT NULL")
@@ -875,7 +875,7 @@ BIEN_occurrence_county<-function(country=NULL, state=NULL, county=NULL,country.c
         
         for(i in 1:length(country)){
           
-          condition_i<- paste("(country = (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+          condition_i<- paste("(country = (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                               AND state_province = (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
                               AND county = (SELECT county_parish_ascii FROM county_parish WHERE admin2code in (", paste(shQuote(county.code, type = "sh"),collapse = ', '), "))" )
           
@@ -1577,7 +1577,7 @@ BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
   
@@ -1698,7 +1698,7 @@ BIEN_trait_trait<-function(trait, all.taxonomy = FALSE, political.boundaries = F
   
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,",project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,",project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ORDER BY trait_name, scrubbed_species_binomial;")
 
@@ -1735,7 +1735,7 @@ BIEN_trait_traitbyspecies<-function(species, trait, all.taxonomy = FALSE, politi
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits 
                  WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") 
@@ -1775,7 +1775,7 @@ BIEN_trait_traitbygenus<-function(genus, trait, all.taxonomy = FALSE, political.
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits 
                  WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") 
@@ -1815,7 +1815,7 @@ BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, politica
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access, id
                  FROM agg_traits 
                  WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
@@ -1852,7 +1852,7 @@ BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = F
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access,id 
                  FROM agg_traits WHERE scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ORDER BY scrubbed_species_binomial;")
   
@@ -1887,7 +1887,7 @@ BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries =
   source_<-.source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_family, scrubbed_genus, scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
                  political_$select, taxonomy_$select,", access,id 
                  FROM agg_traits WHERE scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ") 
                  ORDER BY scrubbed_family, scrubbed_species_binomial;")
@@ -2118,7 +2118,7 @@ BIEN_plot_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only
                    view_full_occurrence_individual.custodial_institution_codes,view_full_occurrence_individual.collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,md_$select,"
                    FROM 
                    (SELECT * FROM view_full_occurrence_individual WHERE view_full_occurrence_individual.country in 
-                   (SELECT country FROM countries 
+                   (SELECT country FROM country 
                    WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), "))",cultivated_$query,newworld_$query,natives_$query,  "AND higher_plant_group IS NOT NULL 
                    AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) AND observation_type='plot' 
                    ORDER BY country,plot_name,subplot,scrubbed_species_binomial) as view_full_occurrence_individual 
@@ -2212,7 +2212,7 @@ BIEN_plot_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=N
     
     
     if(length(country.code)==1){
-      sql_where <- paste(" WHERE country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
+      sql_where <- paste(" WHERE country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                          AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code, type = "sh"),collapse = ', '), ")) 
                          AND scrubbed_species_binomial IS NOT NULL")
     }else{
@@ -2223,7 +2223,7 @@ BIEN_plot_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=N
         
         for(i in 1:length(country.code)){
           
-          condition_i<- paste("country in (SELECT country FROM countries WHERE iso in (", paste(shQuote(country.code[i], type = "sh"),collapse = ', '), ")) 
+          condition_i<- paste("country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code[i], type = "sh"),collapse = ', '), ")) 
                               AND state_province in (SELECT state_province_ascii FROM county_parish WHERE admin1code in (", paste(shQuote(state.code[i], type = "sh"),collapse = ', '), "))")
           if(i!=1){condition_i<- paste("OR ",condition_i)}#stick OR onto the condition where needed
           sql_where<-paste(sql_where,condition_i)
@@ -2987,8 +2987,10 @@ and McGill, B and Merow, C and Morueta-Holme, N and Peet, R K and Sandel, B and 
 #' @family metadata functions
 #' @export
 BIEN_metadata_list_political_names<-function(...){
-  query<-'SELECT country,countrycode AS "country.code", state_province, state_province_ascii,admin1code AS "state.code",
-  county_parish,county_parish_ascii,admin2code AS "county.code" FROM county_parish;'
+  
+  query<-'SELECT country,country_iso, state_province, state_province_ascii,state_province_code AS "state_code",
+  county_parish,county_parish_ascii,county_parish_code AS "county_code" FROM county_parish;'
+  
   .BIEN_sql(query, ...)
   
 }

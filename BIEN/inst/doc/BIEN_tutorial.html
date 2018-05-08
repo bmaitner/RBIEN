@@ -301,43 +301,43 @@ library(sp) # A package for spatial data
 <pre><code class="r">str(Xanthium_strumarium)
 </code></pre>
 
-<pre><code>## &#39;data.frame&#39;:    2357 obs. of  10 variables:
+<pre><code>## &#39;data.frame&#39;:    2935 obs. of  10 variables:
 ##  $ scrubbed_species_binomial  : chr  &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; ...
-##  $ latitude                   : num  40.1 38.6 39.2 38.2 38.6 ...
-##  $ longitude                  : num  -92.1 -90.2 -91.8 -91.9 -90.3 ...
-##  $ date_collected             : Date, format: &quot;1934-10-15&quot; &quot;1894-07-03&quot; ...
-##  $ datasource                 : chr  &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; ...
-##  $ dataset                    : chr  &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; ...
-##  $ dataowner                  : chr  &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; ...
-##  $ custodial_institution_codes: chr  &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; ...
-##  $ collection_code            : chr  NA NA NA NA ...
-##  $ datasource_id              : num  281 281 281 281 281 281 281 281 281 272 ...
+##  $ latitude                   : num  NA 39.4 44.7 40.9 41.1 ...
+##  $ longitude                  : num  NA -84.6 -93.1 -88.6 -85.5 ...
+##  $ date_collected             : Date, format: NA NA ...
+##  $ datasource                 : chr  &quot;GBIF&quot; &quot;GBIF&quot; &quot;GBIF&quot; &quot;GBIF&quot; ...
+##  $ dataset                    : chr  &quot;UCJEPS&quot; &quot;USDA NRCS&quot; &quot;USDA NRCS&quot; &quot;USDA NRCS&quot; ...
+##  $ dataowner                  : chr  &quot;UCJEPS&quot; &quot;USDA NRCS&quot; &quot;USDA NRCS&quot; &quot;USDA NRCS&quot; ...
+##  $ custodial_institution_codes: chr  &quot;UCJEPS&quot; &quot;USDA NRCS&quot; &quot;USDA NRCS&quot; &quot;USDA NRCS&quot; ...
+##  $ collection_code            : chr  &quot;JEPS&quot; &quot;USDA Plants&quot; &quot;USDA Plants&quot; &quot;USDA Plants&quot; ...
+##  $ datasource_id              : num  1021 102 102 102 102 ...
 </code></pre>
 
 <pre><code class="r">head(Xanthium_strumarium)
 </code></pre>
 
 <pre><code>##   scrubbed_species_binomial latitude longitude date_collected datasource
-## 1       Xanthium strumarium 40.13075 -92.14917     1934-10-15         MO
-## 2       Xanthium strumarium 38.63798 -90.24525     1894-07-03         MO
-## 3       Xanthium strumarium 39.21727 -91.84273     1985-09-21         MO
-## 4       Xanthium strumarium 38.16665 -91.92466     1934-09-16         MO
-## 5       Xanthium strumarium 38.62388 -90.34611     1991-09-01         MO
-## 6       Xanthium strumarium 37.82746 -92.20761     1935-10-06         MO
-##   dataset dataowner custodial_institution_codes collection_code
-## 1      MO        MO                          MO            &lt;NA&gt;
-## 2      MO        MO                          MO            &lt;NA&gt;
-## 3      MO        MO                          MO            &lt;NA&gt;
-## 4      MO        MO                          MO            &lt;NA&gt;
-## 5      MO        MO                          MO            &lt;NA&gt;
-## 6      MO        MO                          MO            &lt;NA&gt;
+## 1       Xanthium strumarium       NA        NA           &lt;NA&gt;       GBIF
+## 2       Xanthium strumarium 39.43840 -84.57740           &lt;NA&gt;       GBIF
+## 3       Xanthium strumarium 44.68480 -93.06482           &lt;NA&gt;       GBIF
+## 4       Xanthium strumarium 40.88810 -88.55674           &lt;NA&gt;       GBIF
+## 5       Xanthium strumarium 41.13542 -85.50394           &lt;NA&gt;       GBIF
+## 6       Xanthium strumarium       NA        NA           &lt;NA&gt;       GBIF
+##     dataset dataowner custodial_institution_codes collection_code
+## 1    UCJEPS    UCJEPS                      UCJEPS            JEPS
+## 2 USDA NRCS USDA NRCS                   USDA NRCS     USDA Plants
+## 3 USDA NRCS USDA NRCS                   USDA NRCS     USDA Plants
+## 4 USDA NRCS USDA NRCS                   USDA NRCS     USDA Plants
+## 5 USDA NRCS USDA NRCS                   USDA NRCS     USDA Plants
+## 6    UCJEPS    UCJEPS                      UCJEPS            JEPS
 ##   datasource_id
-## 1           281
-## 2           281
-## 3           281
-## 4           281
-## 5           281
-## 6           281
+## 1          1021
+## 2           102
+## 3           102
+## 4           102
+## 5           102
+## 6          1021
 </code></pre>
 
 <p>The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  The meaning of some of these columns is obvious (e.g. latitude, longitide), however others may be less clear.  The meanings of these columns and the information within is explained in more detail in our data dictionary, available at <a href="http://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/">http://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/</a></p>
@@ -349,40 +349,40 @@ library(sp) # A package for spatial data
 str(Xanthium_strumarium_full)
 </code></pre>
 
-<pre><code>## &#39;data.frame&#39;:    6325 obs. of  34 variables:
+<pre><code>## &#39;data.frame&#39;:    7719 obs. of  34 variables:
 ##  $ scrubbed_species_binomial   : chr  &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; ...
-##  $ verbatim_family             : chr  &quot;Asteraceae&quot; &quot;Asteraceae&quot; &quot;Asteraceae&quot; &quot;Asteraceae&quot; ...
-##  $ verbatim_scientific_name    : chr  &quot;Xanthium strumarium L.&quot; &quot;Xanthium strumarium L.&quot; &quot;Xanthium strumarium L.&quot; &quot;Xanthium strumarium L.&quot; ...
+##  $ verbatim_family             : chr  NA &quot;Asteraceae&quot; &quot;asteraceae&quot; NA ...
+##  $ verbatim_scientific_name    : chr  &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;xanthium strumarium&quot; &quot;Xanthium strumarium L.&quot; ...
 ##  $ family_matched              : chr  &quot;Asteraceae&quot; &quot;Asteraceae&quot; &quot;Asteraceae&quot; &quot;Asteraceae&quot; ...
 ##  $ name_matched                : chr  &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; ...
 ##  $ name_matched_author         : chr  &quot;L.&quot; &quot;L.&quot; &quot;L.&quot; &quot;L.&quot; ...
 ##  $ higher_plant_group          : chr  &quot;flowering plants&quot; &quot;flowering plants&quot; &quot;flowering plants&quot; &quot;flowering plants&quot; ...
-##  $ taxonomic_status            : chr  &quot;accepted&quot; &quot;accepted&quot; &quot;accepted&quot; &quot;accepted&quot; ...
+##  $ scrubbed_taxonomic_status   : chr  &quot;Accepted&quot; &quot;Accepted&quot; &quot;Accepted&quot; &quot;Accepted&quot; ...
 ##  $ scrubbed_family             : chr  &quot;Asteraceae&quot; &quot;Asteraceae&quot; &quot;Asteraceae&quot; &quot;Asteraceae&quot; ...
 ##  $ scrubbed_author             : chr  &quot;L.&quot; &quot;L.&quot; &quot;L.&quot; &quot;L.&quot; ...
-##  $ native_status               : chr  &quot;P&quot; NA &quot;P&quot; &quot;P&quot; ...
-##  $ native_status_reason        : chr  &quot;Present in one or more checklists for region, status not indicated&quot; NA &quot;Present in one or more checklists for region, status not indicated&quot; &quot;Present in one or more checklists for region, status not indicated&quot; ...
-##  $ native_status_sources       : chr  &quot;usda, vascan, tropicos&quot; NA &quot;usda, vascan, tropicos&quot; &quot;usda, vascan, tropicos&quot; ...
-##  $ isintroduced                : int  0 NA 0 0 0 NA 0 0 NA 0 ...
-##  $ native_status_country       : chr  &quot;N&quot; NA &quot;N&quot; &quot;N&quot; ...
-##  $ native_status_state_province: chr  &quot;P&quot; NA &quot;P&quot; &quot;P&quot; ...
-##  $ native_status_county_parish : chr  &quot;&quot; NA &quot;&quot; &quot;&quot; ...
-##  $ country                     : chr  &quot;United States&quot; &quot;Turkmenistan&quot; &quot;United States&quot; &quot;United States&quot; ...
-##  $ state_province              : chr  &quot;Missouri&quot; &quot;Ahal&quot; &quot;Missouri&quot; &quot;Missouri&quot; ...
-##  $ county                      : chr  &quot;Knox&quot; NA &quot;Saint Louis&quot; &quot;Audrain&quot; ...
-##  $ locality                    : chr  &quot;Between Edina and Knox City prairie&quot; &quot;Eastern Kopetdag, the canyon Schukurbachshi, on clayey slopes.&quot; &quot;St. Charles Road waste roadsides&quot; &quot;NW 1/4 NW 1/4 Sec. 27; NW corner of junction of north-south and east-west gravel roads, ca. 4.5 mi NNW of Middl&quot;| __truncated__ ...
-##  $ latitude                    : num  40.1 NA 38.6 39.2 38.2 ...
-##  $ longitude                   : num  -92.1 NA -90.2 -91.8 -91.9 ...
-##  $ date_collected              : Date, format: &quot;1934-10-15&quot; &quot;2004-06-02&quot; ...
-##  $ datasource                  : chr  &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; ...
-##  $ dataset                     : chr  &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; ...
-##  $ dataowner                   : chr  &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; ...
-##  $ custodial_institution_codes : chr  &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; &quot;MO&quot; ...
-##  $ collection_code             : chr  NA NA NA NA ...
-##  $ datasource_id               : num  281 281 281 281 281 281 281 281 281 281 ...
-##  $ is_cultivated               : int  0 0 0 0 0 0 0 0 0 0 ...
-##  $ is_cultivated_in_region     : int  0 NA 0 0 0 NA 0 0 0 0 ...
-##  $ is_new_world                : int  1 0 1 1 1 NA 1 1 1 1 ...
+##  $ native_status               : chr  &quot;UNK&quot; &quot;P&quot; NA &quot;UNK&quot; ...
+##  $ native_status_reason        : chr  &quot;Status unknown, no checklists for region of observation&quot; &quot;Present in one or more checklists for region, status not indicated&quot; NA &quot;Status unknown, no checklists for region of observation&quot; ...
+##  $ native_status_sources       : chr  NA &quot;usda&quot; NA NA ...
+##  $ is_introduced               : int  NA 0 NA NA 0 NA 0 NA NA NA ...
+##  $ native_status_country       : chr  NA &quot;P&quot; NA NA ...
+##  $ native_status_state_province: chr  NA &quot;P&quot; NA NA ...
+##  $ native_status_county_parish : chr  NA NA NA NA ...
+##  $ country                     : chr  &quot;Sweden&quot; &quot;United States&quot; NA &quot;Austria&quot; ...
+##  $ state_province              : chr  NA &quot;California&quot; NA NA ...
+##  $ county                      : chr  NA &quot;San Diego&quot; NA NA ...
+##  $ locality                    : chr  &quot;Kalmar, Fredriksskans&quot; &quot;San Diego; San Felipe Creek; sandy wash; San Felipe Valley, wash of San Felipe Creek&quot; NA &quot;sterreich, Burgenland, Neusiedler See, Seewinkel, knapp S Podersdorf-Ortsende&quot; ...
+##  $ latitude                    : num  56.7 NA NA NA 39.4 ...
+##  $ longitude                   : num  16.4 NA NA NA -84.6 ...
+##  $ date_collected              : Date, format: &quot;1914-01-01&quot; NA ...
+##  $ datasource                  : chr  &quot;GBIF&quot; &quot;GBIF&quot; &quot;GBIF&quot; &quot;GBIF&quot; ...
+##  $ dataset                     : chr  &quot;OHN&quot; &quot;UCJEPS&quot; &quot;MNHN&quot; &quot;W&quot; ...
+##  $ dataowner                   : chr  &quot;OHN&quot; &quot;UCJEPS&quot; &quot;MNHN&quot; &quot;W&quot; ...
+##  $ custodial_institution_codes : chr  &quot;OHN&quot; &quot;UCJEPS&quot; &quot;MNHN&quot; &quot;W&quot; ...
+##  $ collection_code             : chr  &quot;OHN&quot; &quot;JEPS&quot; &quot;p&quot; &quot;Herbarium W&quot; ...
+##  $ datasource_id               : num  209 1021 1008 669 102 ...
+##  $ is_cultivated_observation   : int  0 NA NA NA 0 NA 0 NA NA 0 ...
+##  $ is_cultivated_in_region     : int  0 0 NA 0 0 NA 0 NA NA 0 ...
+##  $ is_new_world                : int  0 1 NA 0 1 NA 1 NA NA 0 ...
 ##  $ observation_type            : chr  &quot;specimen&quot; &quot;specimen&quot; &quot;specimen&quot; &quot;specimen&quot; ...
 </code></pre>
 
@@ -403,7 +403,7 @@ points(cbind(Xanthium_strumarium_full$longitude,Xanthium_strumarium_full$latitud
 points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col=&quot;blue&quot;,pch=20,cex=1) 
 </code></pre>
 
-<p><img src="data:image/png;base64,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VY09n+Pd1RnBG/ZCbuwbHu+uUBcfNfi0JUwvsWUwmPWSUlSUnif9oMu/tYre89Sr+bIh/jK9uz6/hvv3rTXfbW96FsLTlhzo/Rbmere9oav/ulq9QW94bPl1KsBj7cteqXfXYjxpzt940qB3aaQqXl6NBfk36zusDHq7refJf0nreIveX1nsq0VHF95j0LOaVcivqKxv6eu/SVahoDLwoPqj4G1oOJJVEKgMPKi+Erx4isCDdnyzvq/e/C+rPm3F1+urarD3WyOmUl9VjS6gN/jj+qIqPBu6NZ3R11Si+/69eHf0xdc79RpDDvQeZ2+2xPn/0CjlWCrlZad6tRm18IKaPKHXdPLs9OfxZmEp9niH+Ed5heMf6UlPKMl4EtfrDdAFO3q+ptMB8Qt35OhR6buXVNgPl2c0gYmq2OKfDeCr4F5zRb98BJHddMy8RZXWNVq2iWnN1zYdir8reqnXa2nH5nYCznZ95RcE5zaBSeWdk8w18rUuR8fRFBfOKFRk9ucicj2BkqVyHXWe2QT+rwcvhtaBbwVrokRZna7ys/Mw9n9vYqr4zLC/brvvnKGjwYsguNFv1IRUeM1NJXGPsysZ99b8k+BVJ6T5m9+Kyb2zi3yPC7fW/wPYB/v7y8FzpouYltNIShXnxPq1fHD/2gzeUVDkagYXp69l6QbjgBeB17058uTXNRa20Yq7ply3atDZfd0M3s+T0ny0NLqMWF1U2uu7+Gc0gfoyDfw1lSxinKctbWtP36jHwfe5bkP5GpEvf514kIsRhwF2I/dSNYfRe165ToYp8ysAmAe1eoRSd313Ua53eHqtjHFt75JV89fo71N7R6gi7Lsr5uxkUHVy4VheMTfJfWUj3sUjz0s0KVg/vr1HkZb5BcyQ83YuACdTILg/Cb7EcVE9O5cv/6IBuTl/FnWuOejHJnfLHXGxWFzd33GIk0Q3dz34vLIfiJDEXO/L8rVyg/gbb40u9lD1T8q16DL+gOaDf7pEF6ixkv6iRgM40wwx3SsjByoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDDyoDD6p/fHnEY2FuiPMAAAAASUVORK5CYII=" alt="plot of chunk unnamed-chunk-6"/></p>
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-6"/></p>
 
 <p>From the map, we can see that the points from the default query (in blue) all fall within the New World.  The points from the full query (red + blue) additionally include occurrences from the Old World.</p>
 
@@ -419,7 +419,7 @@ points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col=&qu
 length(unique(Bahamas$scrubbed_species_binomial))
 </code></pre>
 
-<pre><code>## [1] 954
+<pre><code>## [1] 948
 </code></pre>
 
 <pre><code class="r">#Nearly 1000 species, not bad.
@@ -430,7 +430,7 @@ map(regions = &quot;Bahamas&quot; ,fill=T , col= &quot;grey&quot;, bg=&quot;ligh
 points(cbind(Bahamas$longitude,Bahamas$latitude),col=&quot;blue&quot;,pch=20,cex=1) 
 </code></pre>
 
-<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-7"/></p>
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-7"/></p>
 
 <pre><code class="r">#Looks like some islands are considerably better sampled than others.
 </code></pre>
@@ -482,7 +482,7 @@ plot(Xanthium_strumarium_range,col=&quot;green&quot;,add=T)
 points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col=&quot;blue&quot;,pch=20,cex=1)
 </code></pre>
 
-<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-10"/></p>
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-10"/></p>
 
 <h1>Plot data</h1>
 
@@ -534,16 +534,16 @@ head(LUQUILLO)
 ## 1 0.1 ha  transect, stems &gt;= 2.5 cm dbh Alwyn H. Gentry
 ## 2 0.1 ha  transect, stems &gt;= 2.5 cm dbh Alwyn H. Gentry
 ## 3 0.1 ha  transect, stems &gt;= 2.5 cm dbh Alwyn H. Gentry
-## 4 0.1 ha  transect, stems &gt;= 2.5 cm dbh Alwyn H. Gentry
-## 5 0.1 ha  transect, stems &gt;= 2.5 cm dbh            &lt;NA&gt;
+## 4 0.1 ha  transect, stems &gt;= 2.5 cm dbh            &lt;NA&gt;
+## 5 0.1 ha  transect, stems &gt;= 2.5 cm dbh Alwyn H. Gentry
 ## 6 0.1 ha  transect, stems &gt;= 2.5 cm dbh Alwyn H. Gentry
 ##   scrubbed_species_binomial individual_count latitude longitude
-## 1          Cyathea aquilina                1       NA        NA
-## 2         Dacryodes excelsa                1  18.1833  -65.8333
-## 3           Guarea guidonia                1  18.1833  -65.8333
-## 4         Paullinia pinnata                1  18.1833  -65.8333
-## 5        Prestoea acuminata                4  18.1833  -65.8333
-## 6     Schefflera morototoni                1  18.1833  -65.8333
+## 1         Dacryodes excelsa                1  18.1833  -65.8333
+## 2           Guarea guidonia                1  18.1833  -65.8333
+## 3         Paullinia pinnata                1  18.1833  -65.8333
+## 4        Prestoea acuminata                4  18.1833  -65.8333
+## 5     Schefflera morototoni                1  18.1833  -65.8333
+## 6        Sloanea berteriana                5  18.1833  -65.8333
 ##   date_collected datasource                 dataset       dataowner
 ## 1           &lt;NA&gt;    SALVIAS Gentry Transect Dataset James S. MIller
 ## 2           &lt;NA&gt;    SALVIAS Gentry Transect Dataset James S. MIller
@@ -597,35 +597,544 @@ head(LUQUILLO)
 <pre><code class="r">BIEN_trait_list()
 </code></pre>
 
-<pre><code>##                                             trait_name
-## 1                    diameter at breast height (1.3 m)
-## 2                          flower pollination syndrome
-## 3                                            leaf area
-## 4                leaf carbon content per leaf dry mass
-## 5        leaf carbon content per leaf nitrogen content
-## 6                    leaf dry mass per leaf fresh mass
-## 7                  leaf nitrogen content per leaf area
-## 8              leaf nitrogen content per leaf dry mass
-## 9            leaf phosphorus content per leaf dry mass
-## 10              leaf photosynthetic rate per leaf area
-## 11          leaf photosynthetic rate per leaf dry mass
-## 12     leaf stomatal conductance for H2O per leaf area
-## 13                                      leaf thickness
-## 14                               plant flowering begin
-## 15                            plant flowering duration
-## 16                                         seed length
-## 17                                           seed mass
-## 18                                       stem dry mass
-## 19                                   stem wood density
-## 20                      whole plant dispersal syndrome
-## 21                             whole plant growth form
-## 22                   whole plant growth form diversity
-## 23                                  whole plant height
-## 24 whole plant leaf area per whole plant leaf dry mass
-## 25                           whole plant leaf dry mass
-## 26                           whole plant sexual system
-## 27                    whole plant vegetative phenology
-## 28                               whole plant woodiness
+<pre><code>##                                                                                    trait_name
+## 1                                                                         aboveground biomass
+## 2                                                                     Aboveground stem length
+## 3                                                                           acoustic velocity
+## 4                                                                        active growth period
+## 5                                                                                        Amax
+## 6                                                                               annual growth
+## 7                                                        Annual relative basal area increment
+## 8                                                                        annual transpiration
+## 9                                                   annual transpiration per needle unit area
+## 10                                                                              anther length
+## 11                                                                               anther width
+## 12                                                                             bark thickness
+## 13                                                                        basal stem diameter
+## 14                                                                        bee visitation rate
+## 15                                                         Belowground:Aboveground mass ratio
+## 16                                                                       Belowground dry mass
+## 17                                                                          bending stiffness
+## 18                                                                                    biomass
+## 19                                                                            biomass density
+## 20                                                                               branch count
+## 21                                                                             breaking force
+## 22                                                                    bundle sheath cell size
+## 23                                                                               calyx length
+## 24                                                                    calyx midpoint diameter
+## 25                                                                                canopy area
+## 26                                                                               canopy cover
+## 27                                                                              Canopy Height
+## 28                                                                            canopy openness
+## 29                                                                        Canopy trasmittance
+## 30                                                                               capsule mass
+## 31                                                                        capsule seed weight
+## 32                                                                              catkin number
+## 33                                                                            cell population
+## 34                                                                       cell radial diameter
+## 35                                                                    cell tangental diameter
+## 36                                                                              Cellulose 13C
+## 37                                                                            Cellulose Cmass
+## 38                                                                        cell wall thickness
+## 39                                                                change in stem circumfrence
+## 40                                                                        chlorophyll content
+## 41                                                                          chlorophyll level
+## 42                                                        circumfrence at breast height (CBH)
+## 43                                                                               cluster size
+## 44                                                  CO2 net exchange rate on area basis (NPa)
+## 45                                            CO2 net exchange rate on dry weight basis (NPG)
+## 46                                      CO2 net exchange rate on individual shoot basis (NPi)
+## 47                                                                          condensed tannins
+## 48                                                                              cone dry mass
+## 49                                                                                core length
+## 50                                                                           corolla diameter
+## 51                                                  corolla diameter at the base of the calyx
+## 52                                                     corolla diameter at the mouth openness
+## 53                                                                             corolla length
+## 54                                                                      corolla limb diameter
+## 55                                                                        corolla tube length
+## 56                                                                             cotton biomass
+## 57                                                                                  C:P ratio
+## 58                                                                       cross sectional area
+## 59                                                                  cross sectional stem area
+## 60                                                                                 crown area
+## 61                                                                             crown diameter
+## 62                                                                      crown projection area
+## 63                                                                               crown radius
+## 64                                                                     crown vector direction
+## 65                                                                        crown vector length
+## 66                                                                               crown volume
+## 67                                                                          crystallite width
+## 68                                                                                       d13C
+## 69                                                                                       d15N
+## 70                                                                             Daily sap flow
+## 71                                                                        Daily transpiration
+## 72                                                                      Dark respiration rate
+## 73                                                                       DBH annual increment
+## 74                                                                         DBH (without bark)
+## 75                                                                    developed seeds in cone
+## 76                                                        developed seeds with embryo in cone
+## 77                                                                 diagonal length of a petal
+## 78                                                          diameter at breast height (1.3 m)
+## 79                                                                              diaspore area
+## 80                                                                              diaspore mass
+## 81                                                                   diaspore rate of descent
+## 82  distance from center of mesophyll chlorenchyma cells to center of nearest vascular bundle
+## 83                                       distance from center of vascular bundle to epidermis
+## 84                  distance from center of vascular bundle to nearest intercellular airspace
+## 85                                                                              dry leaf mass
+## 86                                                                                   dry mass
+## 87                                                                                    ECM 13C
+## 88                                                                                    ECM 15N
+## 89                                                                                  ECM Cmass
+## 90                                                                                  ECM Nmass
+## 91                                                                                embryo mass
+## 92                                                              Estimated aboveground biomass
+## 93                                                                             Feret-diameter
+## 94                                                                           fibre courseness
+## 95                                                                         floral tube length
+## 96                                                                               flower color
+## 97                                                                            flower diameter
+## 98                                                                            flower dry mass
+## 99                                                                              flower height
+## 100                                                                            flowering time
+## 101                                                               flower pollination syndrome
+## 102                                                                         flower tube depth
+## 103                                                                       fly visitation rate
+## 104                                                                      follicles per flower
+## 105                                                                          Frond narrowness
+## 106                                                                               fruit color
+## 107                                                                               fruit count
+## 108                                                                         fruiting duration
+## 109                                                                        fruiting intensity
+## 110                                                                            fruiting month
+## 111                                                                              fruit length
+## 112                                                                                fruit type
+## 113                                                                               fruit width
+## 114                                                                     fuel moisture content
+## 115                                                             gas exchange rate in the dark
+## 116                                                            gas exchange rate in the light
+## 117                                                                          Germination time
+## 118                                                                                 greenness
+## 119                                                                     growing season length
+## 120                                                                              Growing time
+## 121                                                              Height of first major branch
+## 122                                                            height of living stump sprouts
+## 123                                                                      height to crown base
+## 124                                                                    height to first branch
+## 125                                                                                 herkogamy
+## 126                                                                      inflorescence length
+## 127                                                                            initial height
+## 128                                                                      inner bark thickness
+## 129                                                        inner segment cross sectional area
+## 130                                                                    inner segment dry mass
+## 131                                                                  inner segment fresh mass
+## 132                                                                inner segment fresh volume
+## 133                                                                      inner segment length
+## 134                                                       inner segment wood specific gravity
+## 135                                                        instantaneous water use efficiency
+## 136                                                                          Internode Length
+## 137                         interveinal distance between centers of adjacent vascular bundles
+## 138                                                            intrinsic water-use efficiency
+## 139                                                                       Lateral Root Length
+## 140                                                                                  Leaf 13C
+## 141                                                                                  Leaf 15N
+## 142                                                                                  Leaf 18O
+## 143                                                                  leaf acid detergen fiber
+## 144                                                                              Leaf Al mass
+## 145                                                                    Leaf angle inclination
+## 146                                                                                 leaf area
+## 147                                                                 Leaf area per 5-20 leaves
+## 148                                                               leaf area per leaf dry mass
+## 149                                                                 leaf area per leaf volume
+## 150                                                              leaf area:sapwood area ratio
+## 151                                                                               Leaf B mass
+## 152                                                                              leaf Ca mass
+## 153                                                                              Leaf Ca mass
+## 154                                                     leaf carbon content per leaf dry mass
+## 155                                             leaf carbon content per leaf nitrogen content
+## 156                                                                              Leaf Cd mass
+## 157                                                  leaf cellulose content per leaf dry mass
+## 158                                                                          Leaf Chlorophyll
+## 159                                                                          leaf circularity
+## 160                                                                         leaf compoundness
+## 161                                                                        leaf crude protein
+## 162                                                                              Leaf Cu mass
+## 163                                                                              leaf density
+## 164                                                                             leaf dry mass
+## 165                                                               leaf dry mass of 1-8 leaves
+## 166                                                             Leaf dry mass per 5-20 leaves
+## 167                                                         leaf dry mass per leaf dry volume
+## 168                                                         leaf dry mass per leaf fresh mass
+## 169                                                                      Leaf elongation rate
+## 170                                                                       Leaf emergence rate
+## 171                                                                              Leaf Fe mass
+## 172                                                                       leaf flame duration
+## 173                                                                           leaf fresh mass
+## 174     leaf fresh mass minus leaf dry mass per leaf water saturated mass minus leaf dry mass
+## 175                                                     leaf fresh mass per leaf fresh volume
+## 176                                                                  leaf fresh water content
+## 177                                              leaf hemicellulose content per leaf dry mass
+## 178                                                                        leaf ignition time
+## 179                                                                               Leaf K mass
+## 180                                                                       leaf lamina density
+## 181                                               leaf lamina dry mass per leaf lamina volume
+## 182                                                            Leaf lamina fracture toughness
+## 183                                                    Leaf lamina fracture toughness (light)
+## 184                                                    Leaf lamina fracture toughness (shade)
+## 185                                                                     leaf lamina thickness
+## 186                                                             Leaf lamina thickness (light)
+## 187                                                             Leaf lamina thickness (shade)
+## 188                                                                               leaf length
+## 189                                                              leaf length:leaf width ratio
+## 190                                                                            leaf life span
+## 191                                                                               leaf lignin
+## 192                                                     leaf lignin content per leaf dry mass
+## 193                                                                                 Leaf Mass
+## 194                                                                           Leaf Mass Ratio
+## 195                                                                              Leaf Mg mass
+## 196                                                                     leaf midrib thickness
+## 197                                                                              leaf Mn mass
+## 198                                                                              Leaf Mn mass
+## 199                                                                      Leaf Molybdenum mass
+## 200                                                                              Leaf Na mass
+## 201                                                               leaf natural detergen fiber
+## 202                                                       leaf nitrogen content per leaf area
+## 203                                                   leaf nitrogen content per leaf dry mass
+## 204                                                                            Leaf N:P ratio
+## 205                                                                                leaf Parea
+## 206                                                                            leaf perimeter
+## 207                                                     leaf phosphorus content per leaf area
+## 208                                                 leaf phosphorus content per leaf dry mass
+## 209                                                    leaf photosynthetic rate per leaf area
+## 210                                                leaf photosynthetic rate per leaf dry mass
+## 211                                                                              Leaf Pi mass
+## 212                                                                                leaf Pmass
+## 213                                                                              Leaf Po mass
+## 214                                                                          leaf punch force
+## 215                                                                 leaf relative growth rate
+## 216                                                                                leaf shape
+## 217                                                                               Leaf S mass
+## 218                                                                     leaf smolder duration
+## 219                                                                           leaf:stem ratio
+## 220                                           leaf stomatal conductance for H2O per leaf area
+## 221                                                   leaf stomatal conductance per leaf area
+## 222                                                                          Leaf tannin mass
+## 223                                                                     leaf tensile strength
+## 224                                                                     Leaf Tensile Strength
+## 225                                                                            leaf thickness
+## 226                                                                       leaf tissue density
+## 227                                                                       Leaf tissue density
+## 228                                                                            leaf toughness
+## 229                                                                            Leaf toughness
+## 230                                                                            Leaf Toughness
+## 231                                                              Leaf vein fracture toughness
+## 232                                                      Leaf vein fracture toughness (light)
+## 233                                                      Leaf vein fracture toughness (shade)
+## 234                                                                               leaf volume
+## 235                                                                                leaf width
+## 236                                                                              Leaf Zn mass
+## 237                                                                          leaves per plant
+## 238                                                             length of the largest stamens
+## 239                                                            length of the smallest stamens
+## 240                                                                  light compensation point
+## 241                                    light saturated leaf photosynthetic rate per leaf area
+## 242                                                                                Litter 13C
+## 243                                                                                Litter 15N
+## 244                                                                                  Litter C
+## 245                                                                              litter Cmass
+## 246                                                                              Litter Cmass
+## 247                                                                          Litter C:N ratio
+## 248                                                                              litter Nmass
+## 249                                                                              Litter Nmass
+## 250                                                                          Litter N:P ratio
+## 251                                                                              Litter Pmass
+## 252                                                                            Litter Po mass
+## 253                                                             longest whole plant longevity
+## 254                                                                          main root length
+## 255                                                                 male inflorescence length
+## 256                                                                             maturity time
+## 257                                                           Maximum electron transport rate
+## 258                                                                      maximum fruit length
+## 259                                                                       maximum fruit width
+## 260                                                                       maximum leaf length
+## 261                                                                        maximum leaf width
+## 262                                                             Maximum rate of carboxylation
+## 263                                                           maximum whole plant canopy area
+## 264                                                                maximum whole plant height
+## 265                                                             maximum whole plant longevity
+## 266                                                          maximum width of enlarging xylem
+## 267                                                                          mean nodule mass
+## 268                                                                     Mesophyll conductance
+## 269                                                                         microfibril angle
+## 270                                                       middle segment cross sectional area
+## 271                                                                   middle segment dry mass
+## 272                                                                 middle segment fresh mass
+## 273                                                               middle segment fresh volume
+## 274                                                                     middle segment length
+## 275                                                      middle segment wood specific gravity
+## 276                                                                      minimum fruit length
+## 277                                                                       minimum fruit width
+## 278                                                                       minimum leaf length
+## 279                                                                        minimum leaf width
+## 280                                             minimum length of whole plant juvenile period
+## 281                                                                minimum whole plant height
+## 282                                                                     modulus of elasticity
+## 283                                                                          moisture content
+## 284                                                                                Needle 13C
+## 285                                                                                Needle 15N
+## 286                                                                               needle area
+## 287                                                                              Needle Nmass
+## 288                                                                 Net CO2 assimilation rate
+## 289                                                                                Nmass leaf
+## 290                                                                                Nmass root
+## 291                                                                               Node amount
+## 292                                                                            Nodes per gram
+## 293                                                                               nodule mass
+## 294                                                                                 N:P ratio
+## 295                                                                        number of branches
+## 296                                                                     number of empty seeds
+## 297                                                                    number of filled seeds
+## 298                                                                         number of flowers
+## 299                                                          number of flowers on main branch
+## 300                                                                          number of fruits
+## 301                                                                number of fruits per plant
+## 302                                                                  number of inflorescences
+## 303                                                                          number of leaves
+## 304                                                             number of leaves per seedling
+## 305                                                            number of living stump sprouts
+## 306                                                                           number of nodes
+## 307                                                                         number of nodules
+## 308                                                                        number of rosettes
+## 309                                                                 number of secondary stems
+## 310                                                                           number of seeds
+## 311                                                               number of seeds per capsule
+## 312                                                                 number of seeds per fruit
+## 313                                                                 number of seeds per plant
+## 314                                                                           number of stems
+## 315                                                                         number of stolons
+## 316                                                                           number of teeth
+## 317                                                                         number of tillers
+## 318                                                                      outer bark thickness
+## 319                                                                outer cross sectional area
+## 320                                                                    outer segment dry mass
+## 321                                                                  outer segment fresh mass
+## 322                                                                outer segment fresh volume
+## 323                                                                      outer segment length
+## 324                                                       outer segment wood specific gravity
+## 325                                                                      palisade cell length
+## 326                                                                palisade cell SA:vol ratio
+## 327                                                                        palisade cell size
+## 328                                                                       palisade cell width
+## 329                                                                        palisade thickness
+## 330                                                                            Peak flowering
+## 331                                                                             peak sap flow
+## 332                                                                        Peak transpiration
+## 333                                                               Perimeter:Leaf length ratio
+## 334                                                                              petal length
+## 335                                                                               petal width
+## 336                                                                          Petiole dry mass
+## 337                                                                Petiole dry matter content
+## 338                                                                        Petiole fresh mass
+## 339                                                                            petiole length
+## 340                                                                             petiole width
+## 341                                                                   phenolics concentration
+## 342                                                                               phloem path
+## 343                                                                             pistil length
+## 344                                                                              pistil width
+## 345                                                                               plant cover
+## 346                                                                     plant flowering begin
+## 347                                                      Plant flowering begin trait (Julien)
+## 348                                                                  plant flowering duration
+## 349                                                                   plant fruiting duration
+## 350                                                                              Plant height
+## 351                                                                          Plant narrowness
+## 352                                                                              plant volume
+## 353                                                                           pods per branch
+## 354                                                                            pods per plant
+## 355                                                                                pollinator
+## 356                                                                pollinator visitation rate
+## 357                                                  Predicted freezing vulnerability at -15C
+## 358                                                                                     Rarea
+## 359                                                              Relative biomass growth rate
+## 360                                                                Relative growth daily rate
+## 361                                                                      reproductive biomass
+## 362                                                                    resistance to drilling
+## 363                                                                             Ring porosity
+## 364                                                                                ring width
+## 365                                                                                     Rmass
+## 366                                                                                Root Angle
+## 367                                                                              root Ca mass
+## 368                                                                              Root Ca mass
+## 369                                                                                Root Cmass
+## 370                                                                            Root C:N Ratio
+## 371                                                                             root diameter
+## 372                                                                             root dry mass
+## 373                                                                             Root dry mass
+## 374                                                                                root Kmass
+## 375                                                                                Root Kmass
+## 376                                                                               root length
+## 377                                                                               Root length
+## 378                                                             root length per root dry mass
+## 379                                                                                 Root Mass
+## 380                                                                        root mass fraction
+## 381                                                                              root Mg mass
+## 382                                                                              Root Mg mass
+## 383                                                                                root Nmass
+## 384                                                                                Root Nmass
+## 385                                                                                root Pmass
+## 386                                                                                Root Pmass
+## 387                                                                          root:shoot ratio
+## 388                                                                         root surface area
+## 389                                                                     root tensile strength
+## 390                                                                       root tissue density
+## 391                                                                       Root Tissue Density
+## 392                                            root total non-structural carbohydrate content
+## 393                                                                               root volume
+## 394                                                    sap flow under high evaporative demand
+## 395                                                     sap flow under low evaporative demand
+## 396                                                                              sapwood area
+## 397                                                                             sapwood depth
+## 398                                                            sapwood relative water content
+## 399                                                                   sapwood water potential
+## 400                                                                              seed density
+## 401                                                                       seed dispersal mode
+## 402                                                               Seed germination proportion
+## 403                                                                               seed height
+## 404                                                                               seed length
+## 405                                                      Seedling Absolute Height Growth Rate
+## 406                                                                   seedling basal diameter
+## 407                                                                            seedling Cmass
+## 408                                                                           seedling height
+## 409                                                                     seedling leaf biomass
+## 410                                                                            seedling Nmass
+## 411                                                                     seedling root biomass
+## 412                                                                     seedling stem biomass
+## 413                                                                    seedling stem diameter
+## 414                                                                      seedling stem height
+## 415                                                                    seedling total biomass
+## 416                                                                                 seed mass
+## 417                                                                     seed number per plant
+## 418                                                                         seeds per capsule
+## 419                                                                          seeds per catkin
+## 420                                                                            seed thickness
+## 421                                                                            seed toughness
+## 422                                                                               seed volume
+## 423                                                                                seed width
+## 424                                                                              sepal length
+## 425                                                                               sepal width
+## 426                                                                             shoot biomass
+## 427                                                                             shoot density
+## 428                                                                            shoot dry mass
+## 429                                                                              Shoot Height
+## 430                                                                                Shoot Mass
+## 431                                           shoot total non-structural carbohydrate content
+## 432                                                                       Shoot transpiration
+## 433                                                                        shoot weight ratio
+## 434                                                                          Single leaf area
+## 435                                                                          Single Leaf Area
+## 436                                                                    specific fibre surface
+## 437                                                                       specific peak force
+## 438                                                                        Specific Root Area
+## 439                                                               specific root tip abundance
+## 440                                                                   specific seed toughness
+## 441                                                                     specific stem density
+## 442                                                                           sprout dry mass
+## 443                                                                             sprout length
+## 444                                                                                  Stem 18O
+## 445                                                                           stem basal area
+## 446                                                                  stem basal area per area
+## 447                                                                              stem Ca mass
+## 448                                                                              Stem Ca mass
+## 449                                                                         stem circumfrence
+## 450                                                                              stem density
+## 451                                                                             stem diameter
+## 452                                                                             stem dry mass
+## 453                                                                   stem dry matter content
+## 454                                                                               stem height
+## 455                                                                                stem Kmass
+## 456                                                                   Stem:Leaf Biomass Ratio
+## 457                                                                              stem Mg mass
+## 458                                                                                Stem Nmass
+## 459                                                                                Stem Pmass
+## 460                                                                 stem relative growth rate
+## 461                                                                         stem straightness
+## 462                                                                               stem volume
+## 463                                                                        Stem water content
+## 464                                           stem wood carbon content per stem wood dry mass
+## 465                                                                         stem wood density
+## 466                                                                             stigma length
+## 467                                                                              stigma width
+## 468                                                                  Stomatal conductance CO2
+## 469                                                                          stomatal density
+## 470                                                                          Stomatal density
+## 471                                                                            stomata length
+## 472                                                                            stomatal index
+## 473                                                                      stump basal diameter
+## 474                                                                              style length
+## 475                                                                      style midpoint width
+## 476                                                                             Survival rate
+## 477                                                                           syconium height
+## 478                                                                           syconium volume
+## 479                                                                            syconium width
+## 480                                                                      tannin concentration
+## 481                                                                             total biomass
+## 482                                                                            total dry mass
+## 483                                                                          total fresh mass
+## 484                                                             total leaf area of 1-8 leaves
+## 485                                                                         total nodule mass
+## 486                                                                           total phenolics
+## 487                                                                             transpiration
+## 488                                                                      transversal porosity
+## 489                                                                           tree basal area
+## 490                                                                     Tree crown exposition
+## 491                                                                               tree height
+## 492                                                                         trichrome density
+## 493                                                                              trunk height
+## 494                                                                        vegetative biomass
+## 495                                                                 vein length per unit area
+## 496                                                                         vessel lumen area
+## 497                                                                             vessel number
+## 498                                                                   water storage cell size
+## 499                                                                      water use efficiency
+## 500                                                          whole plant aboveground dry mass
+## 501                                                        whole plant aboveground fresh mass
+## 502                                                        whole plant belowground fresh mass
+## 503                                                                   whole plant canopy area
+## 504                                                                whole plant crown dry mass
+## 505                                                            whole plant dispersal syndrome
+## 506                                                                    whole plant fresh mass
+## 507                                                                   whole plant growth form
+## 508                                                         whole plant growth form diversity
+## 509                                                                        whole plant height
+## 510                                                                     whole plant leaf area
+## 511                                            whole plant leaf area per whole plant dry mass
+## 512                                                               whole plant leaf fresh mass
+## 513                                                               whole plant longevity range
+## 514                                                whole plant primary juvenile period length
+## 515                                                         whole plant reproductive lifespan
+## 516                                                                 whole plant root dry mass
+## 517                                                               whole plant root fresh mass
+## 518                                                                 whole plant sexual system
+## 519                                                                 whole plant stem dry mass
+## 520                                                               whole plant stem fresh mass
+## 521                                                          whole plant vegetative phenology
+## 522                                                                     whole plant woodiness
+## 523                                                                                     width
+## 524                                                                                  Wood 15N
+## 525                                                                  wood acid detergen fiber
+## 526                                                                              wood Ca mass
+## 527                                                                        wood crude protein
+## 528                                                                              wood density
+## 529                                                                               wood lignin
+## 530                                                                              wood Mn mass
+## 531                                                              wood neutral detergent fiber
+## 532                                                                                wood Nmass
+## 533                                                                                Wood Nmass
+## 534                                                                                wood Pmass
+## 535                                                                            wood stiffness
+## 536                                                                     xylem vessel diameter
+## 537                                                                                      &lt;NA&gt;
 </code></pre>
 
 <p>If we&#39;re interested in leaf area, we see that this is indeed called &ldquo;leaf area&rdquo; in the database.  Now that we know the proper spelling, we can use the function <code>BIEN_trait_trait</code> to download all observations of that trait.</p>
@@ -687,7 +1196,7 @@ Asclepias_species&lt;-unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclep
 plot.phylo(x = phylo, show.tip.label =  FALSE)
 </code></pre>
 
-<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfgAAAH4CAMAAACR9g9NAAAABlBMVEUAAAD///+l2Z/dAAAACXBIWXMAAAsSAAALEgHS3X78AAAL+UlEQVR4nO3d0ZaqOBRF0fD/P92j6yoCSSAhCeScvdZDeVUEZXYAleoKC0kW3n4C9E7Aiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowIsGvGjAiwa8aMCLBrxowJstNNkBb7LwV9Mcej0VejLgRQNeswC8ZsCLFv7ZN86CzBX+fy8HvF5hYVMvGfCShcDBnWSBo3rNgBftYwa8Wv/MGPFqBQ7uFAsBeMnWHTzwWq07eOC1Ct+fwGu1fjEHvFLfTXzga1mZPuZhHfTASxQSNc2v1xOjsW2P5oEXihEvWgwFvETAC5barrOpFygseyj28SLt4Tm4k2kDz1G9Un/wvJ3TK4UOvN/OhIF3XIj+8bnKiPddDM+mXqIIPhwO7bvMnKYrN9AZ8c7b2wAvUQwb1puBd1ziU9p40LcugObrAL+sX8cB77sf/IaYEe+/DfwSKwHvts1WfUl/Jwu8y+L9O2/nJMqMceC9l3QB3n/pL+R2V4D32BF+eyPwjksas6n33H6rvr8ReMftt+rXUzYthuYJeNGAF60Ynn28r0rhObhzVjE8m3pfrfAX79iAd9YPfmFTr1QhPB/geGrz6WwWnk/uHLY74SoHn/jXzUXRLO1PsVxinu84Z8T7ame9Xtl/L7M/G69pUTRLSfjMd7LAOyqG3w924J0WwW8uGfGOS8CnT8EA3ld7+MtaF0WzlHgH9yEG3nUb+OvxDryTPpQ7VeAFCjsNRrxMoU4DeC/VwDPiHVUBz6beU2fw7OMdF8FzcOe91fEAv70TeIftTrrZUEfTAe+rI/z2Zjb1jtufSr+Cso/321Zw/33spTrwlgvRz6XMHHjbJeHjqYD31g6+uvYl0xutdpWf2wBvvPiNOyNeov1vRwAv0/eN+9VkwDsrrBeMeKkqTqsE3lP31j3w5rux7hnxHroDz4h30D34zz+At9steDb19qtf93/awFuvYt3zds5TF+ue9/FeqzyLHngv5eEL6YcsnIZ3An+4DryrUus+JcqId1YSProjpP5HZ8BbrhB+cxV4F53D/3jZ1DsrXvch7M0v6rtweqoEfKEH8Ka7Cc+It14tPJt6JyXha+q7cHqoBFyVBvBG+8HVj2FGvOE28NE/jlOyqXfUNXwkDLyHCuA/0zHiXXUBn5UF3nibj2fXm7Z3/64y4l0V1i9k0vvw3T4eeD8l4Hd3f6diH++sM/gzbuCNd7qpT00OvI828BElI95xP/jfTccpgHdYCr6upqW3PJhaSsBfPQB4D1XCM+K9VArPpt5Z1/AnvsDb7Qr+K3v85oYRb7xLeN7O+ewafjst8G4qhU8YA2+5YvjdVIx481XBs6n30wn8z/XoC7z9zuA/P0Li746G3y9ONy295cHU0jV8CEvurCvg7Xait8Kf17T0lgdTS/Hncvu7Tn91Fni7ZeC3x3Wpuxjx1svBf288O54H3nCl8OzjnXUFz58Rd9oRfsMJvOci+N/FJTnwhjuB57x6z2XhC8c78EbLwZf/Pk370umFMvDbvfz3BuA9lYf/ojLiXZaF/7vCPt5tp/Dx1MB7qQSeEe+wInj+Vyj+KoA/+/MUwFutCP70G7r2pdMLMeJFi8by7s7jbcC7KTqxKr5yNtyBt1oJ/L+fwLuqfMRvbwfefAXwy/nWvufS6bHK4D9XgfdTEj6Dmv7voOfS6bHS8NGde2NGvP1K4f9+sKn3Uw38krTvuXR6rEr4+PHA26wRnhFvtXP4iw06m3q7ncJvbuYDHGdF8BWYwBsuueqvPRjx1rsFz6beftfwJ7t34O1WAJ+aAHjrZeEjWUa8q/Lw6xU29R5Lw2dBgfdS/kP443VGvKuK4D/AwDvq5Gu3woYsnUZXvuqBN1xPN+ANlfjarWFewJupKzwj3k794NnHm6ojPCPeUp3hF062NFJP+OXzmU7f50NDAl603vDs440EvGjt8Jt3cRzV26kD/O8y8AsVZuoIzwc4lmqD59s5s92Fz30lC7yRiuHPpIG31xV8hTfwlrqEr5kX8HbqBc+IN1YXeDb19uoBHz7fz/DJnaF6wfP78cZqheeo3mi34TfKwBvsPjy/UGG6HPyl4noH8CbLwmfvX5btl6/h7+SL3R3AW+ge/LLZxzPiTVYFv6U9+ctzfZ8PDakOfnu5vQd4cxXC70lzh/PA26kU/t/Psvo+HxpSFfw6CfDmu4SvwwTeSlfw2clS82LE26kBnk295YrhCw/sgDdSKXzmT8wBb7VC+OK3csAbqRi+aGbAm6kXPCPeWH3gw+5bur7Ph4bUCZ4Rb60u8IdD/r7Ph4bUDs9Rvck6wEf2fZ8PDakZfnPyHfCG6ge/Xgd+8jLDsxp+O84Z8QaKzpzb3FwBv16yqTdSFr5Kb7+JB95Aefjk7YkZ7Jg5uLNSO/x+BsAbqRs8H+DYqh/83yXwVmqCX4X/XTLiDdUGv5nmeEJe85Oiod2FX3UT7+SAN9Bt+O+PxAE98AZqh8/U/KRoaG3wJzU/KRpaE3zyDuBN1Bt+PcRrflI0tL7wbOrN1AV+ww28ke7Ar7B7ZQ7uLFUKf0Q9O6AH3kDF8Ns7S2p+UjS0O/DnM+RPjJpoBDwj3kBd4dnU26kVnn280Ti4Ey0HH87gN1MBb6UUUGpFl8BnZwr8fIXE1Sz8DrIEFfhpq4HfXw2Hu9jHm6oj/PERwM9cD/iULSN+8jrA7x7Kpt5IHeF/wMDPXz/4f7cz4o3UGT69DODn6wF4RvyM3YUvt2RTP2U34TNTpR4I/JQNhg+h8n+fk5xJy4Ppr6vD7b7wKzvwbxetw2HwvJ2bqqHw2TfxwL/eEPgzcODnqC98rAr8pHWGX8qGO/Cv1xM+xQn8pHWEP9zIiJ+6zvAR7eHXZoGfpfvwjXV90lRdGfyAuj5pqq4IvmJ2wE9eFmDA4AZ+osLh8u5sgDdWL/jKyYF/u8fhf97Av1kbfP3AZVM/SXXwWbbLh7OPn6xK+Nz1G0d1wD/W2Yq/Cd9e0wtqebBQZx+1l3x1XsEE/EyVwtfN4XsXI37aLuEvLQZ8vtf7BVHcNXx2su9UlW7AT9Ep/E+hfRTX1PsFUdzleRQDViTwE3QN/0K9XxDFjTiBBngDzbiegH+gGdcT8A8043oCvq3x+9NBAd9W0SqYcT0B3xbwogEvGvCiAe+wbgfsM64n4POVvDzgHQb8kAfPn2d4mS9pRn2BZQ6+y6eJM72gi+481X7wM3ZjhdS96jkaBj9udY/QvvdM4qfW8uBx9XqdI06IOr/3yca9jNe6PNOpYT6NPUp7XtPL6LU+LhfU/JpuwbuuyaPlweMWNOUpbtP1nMdjC3p7ldroOQ8LC9JIB/7lwTVlb3o8tiC2GL+A12vGET9wu7Row0++qb/4SGvo3F1lbR8P/K9iu6aanmGvl9oOP/BVjusR4BGrZCb4xsc/Xd3KB37Y40eWXe8jPItrekV9Vsz1rIzDp257vd6vaMisWl/HW/C163gkdNUKu3qeLQ/uO6vn4OvX7iC5xprWQZc12WVWE53aYqRxa/vRWb29Gu31ptaYWRkPeDc9RVlX0yvqtWoMww9cx8C/Vp8VOBbwbk3rpeXBw2ZVvMgua2e0z7CaVl3Lg+tm9c5LH7HUWRqpVTMrergmrV7sZCvgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNeNOBFA1404EUDXjTgRQNetP8A6latcL16SIQAAAAASUVORK5CYII=" alt="plot of chunk unnamed-chunk-17"/></p>
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-17"/></p>
 
 <pre><code class="r">#If we just want to see which species are included
 
@@ -754,20 +1263,27 @@ political_names&lt;-BIEN_metadata_list_political_names()
 head(political_names)
 </code></pre>
 
-<pre><code>##         country country.code state_province state_province_ascii
-## 1 Aland Islands           AX           &lt;NA&gt;                 &lt;NA&gt;
-## 2    Azerbaijan           AZ           &lt;NA&gt;                 &lt;NA&gt;
-## 3    Azerbaijan           AZ           &lt;NA&gt;                 &lt;NA&gt;
-## 4       Burundi           BI           &lt;NA&gt;                 &lt;NA&gt;
-## 5       Burundi           BI           &lt;NA&gt;                 &lt;NA&gt;
-## 6       Burundi           BI           &lt;NA&gt;                 &lt;NA&gt;
-##   state.code       county_parish county_parish_ascii county.code
-## 1         01   Landskapet Ã<U+0085>land    Landskapet Aland      830602
-## 2         00   MirbÇÅ<U+009F>ir Rayonu     Mirbasir Rayonu      585509
-## 3         00      Shaumyan Rayon      Shaumyan Rayon      585038
-## 4         02 Commune of Buterere Commune of Buterere     7670922
-## 5         02  Commune of Buyenzi  Commune of Buyenzi     8335225
-## 6         02  Commune of Gihanga  Commune of Gihanga     8303259
+<pre><code>##                  country country_iso                   state_province
+## 1            South Sudan          SS                             &lt;NA&gt;
+## 2              Argentina          AR Ciudad AutÃ³noma de Buenos Aires
+## 3                Austria          AT                  OberÃ¶sterreich
+## 4 Bosnia and Herzegovina          BA                 Republika Srpska
+## 5                 Brazil          BR                           GoiÃ¡s
+## 6                 Brazil          BR                           GoiÃ¡s
+##              state_province_ascii state_code county_parish
+## 1                            &lt;NA&gt;         01    Yei County
+## 2 Ciudad Autonoma de Buenos Aires         07     Comuna 11
+## 3                 Oberoesterreich         04    Wels Stadt
+## 4                Republika Srpska         02        Jezero
+## 5                           Goias         29         Posse
+## 6                           Goias         29         CaÃ§u
+##   county_parish_ascii county_code
+## 1          Yei County    10345968
+## 2           Comuna 11       02011
+## 3          Wels Stadt         403
+## 4              Jezero     3344112
+## 5               Posse     5218300
+## 6                Cacu     5204300
 </code></pre>
 
 <pre><code class="r">#In addition to the standardized country, state (state_province_ascii) and county (county_parish_ascii) names, we have the associated codes that can be used in BIEN functions.
@@ -776,6 +1292,10 @@ head(political_names)
 #Looking at the political_names dataframe, we see that the Dominican Republic has country code &quot;DO&quot;, and Haiti has country code &quot;HT&quot;
 
 Haiti_DR_from_codes &lt;- BIEN_list_country(country.code = c(&quot;HT&quot;,&quot;DO&quot;))
+</code></pre>
+
+<pre><code>## Warning in postgresqlQuickSQL(conn, statement, ...): Could not create execute: SELECT DISTINCT country, scrubbed_species_binomial   FROM species_by_political_division   WHERE country in (SELECT country FROM countries WHERE iso in ( &#39;HT&#39;, &#39;DO&#39; )) 
+##                        AND scrubbed_species_binomial IS NOT NULL  AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)  AND is_new_world = 1   ORDER BY scrubbed_species_binomial  ;
 </code></pre>
 
 <h1>Metadata</h1>
@@ -797,7 +1317,7 @@ Haiti_DR_from_codes &lt;- BIEN_list_country(country.code = c(&quot;HT&quot;,&quo
 </code></pre>
 
 <pre><code>##   db_version db_release_date
-## 1      3.4.5      2017-05-18
+## 1        4.0      2018-05-08
 </code></pre>
 
 <p>** Example 11: Citations**</p>

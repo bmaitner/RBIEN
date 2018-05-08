@@ -5,10 +5,13 @@ BIEN 1.2.1
 * Added BIEN_stem_sampling_protocol()
 
 ## OTHER NEWS
+* BIEN database updated to 4.0
+* Some functions now return slightly different fields, please take note!
 
 ## BUG FIXES
 * Updated example directories to use file.path() to construct OS-independent paths
 * Fixed a bug in BIEN_plot_sampling_protocol causing it to fail to return records for certain sampling protocols.
+* Updated code for several functions to utilize the new column names in BIEN 4.0
 
 BIEN 1.1.1
 ===============

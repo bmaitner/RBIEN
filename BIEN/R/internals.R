@@ -8,11 +8,11 @@
 #' @keywords internal
 .cultivated_check<-function(cultivated){
   if(!cultivated){
-    query<-"AND (is_cultivated = 0 OR is_cultivated IS NULL)"
+    query<-"AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)"
     select<-""
   }else{
     query<-""
-    select<-",is_cultivated,is_cultivated_in_region"
+    select<-",is_cultivated_observation,is_cultivated_in_region"
   }
   
   output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
@@ -53,7 +53,7 @@
   if(!all.taxonomy){
     select<-""
   }else{
-    select<-", verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,taxonomic_status,scrubbed_family,scrubbed_author"
+    select<-", verbatim_family,verbatim_scientific_name,family_matched,name_matched,name_matched_author,higher_plant_group,scrubbed_taxonomic_status,scrubbed_family,scrubbed_author"
   }
   
   output<-as.data.frame(cbind(select),stringsAsFactors = F)  
@@ -74,7 +74,7 @@
   if(!native.status){
     select<-""
   }else{
-    select<-",native_status, native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish"
+    select<-",native_status, native_status_reason,native_status_sources,is_introduced,native_status_country,native_status_state_province,native_status_county_parish"
   }
   
   output<-as.data.frame(cbind(select),stringsAsFactors = F)  
@@ -173,7 +173,7 @@
 #' @keywords internal
 .political_check_traits<-function(political.boundaries){
 if(political.boundaries){
-  select <- "region, country, stateprovince, lower_political, locality_description"  
+  select <- "region, country, state_province, locality_description"  
 }else{
   select <- ""  
   
@@ -246,11 +246,11 @@ if(all.taxonomy){
 #' @keywords internal
 .cultivated_check_plot<-function(cultivated){
   if(!cultivated){
-    query<-"AND (view_full_occurrence_individual.is_cultivated = 0 OR view_full_occurrence_individual.is_cultivated IS NULL)"
+    query<-"AND (view_full_occurrence_individual.is_cultivated_observation = 0 OR view_full_occurrence_individual.is_cultivated_observation IS NULL)"
     select<-""
   }else{
     query<-""
-    select<-",view_full_occurrence_individual.is_cultivated,view_full_occurrence_individual.is_cultivated_in_region"
+    select<-",view_full_occurrence_individual.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region"
   }
   output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
   colnames(output)<-c("query","select")
@@ -298,7 +298,7 @@ if(all.taxonomy){
   if(!all.taxonomy){
     select<-""
   }else{
-    select<-",view_full_occurrence_individual.verbatim_family,view_full_occurrence_individual.verbatim_scientific_name,view_full_occurrence_individual.family_matched,view_full_occurrence_individual.name_matched,view_full_occurrence_individual.name_matched_author,view_full_occurrence_individual.higher_plant_group,view_full_occurrence_individual.taxonomic_status,view_full_occurrence_individual.scrubbed_family,view_full_occurrence_individual.scrubbed_author"
+    select<-",view_full_occurrence_individual.verbatim_family,view_full_occurrence_individual.verbatim_scientific_name,view_full_occurrence_individual.family_matched,view_full_occurrence_individual.name_matched,view_full_occurrence_individual.name_matched_author,view_full_occurrence_individual.higher_plant_group,view_full_occurrence_individual.scrubbed_taxonomic_status,view_full_occurrence_individual.scrubbed_family,view_full_occurrence_individual.scrubbed_author"
   }
   output<-as.data.frame(cbind(select),stringsAsFactors = F)  
   colnames(output)<-c("select")
@@ -319,7 +319,7 @@ if(all.taxonomy){
   if(!native.status){
     select<-""
   }else{
-    select<-",view_full_occurrence_individual.native_status,view_full_occurrence_individual.native_status_reason,view_full_occurrence_individual.native_status_sources,view_full_occurrence_individual.isintroduced,view_full_occurrence_individual.native_status_country,view_full_occurrence_individual.native_status_state_province,view_full_occurrence_individual.native_status_county_parish"
+    select<-",view_full_occurrence_individual.native_status,view_full_occurrence_individual.native_status_reason,view_full_occurrence_individual.native_status_sources,view_full_occurrence_individual.is_introduced,view_full_occurrence_individual.native_status_country,view_full_occurrence_individual.native_status_state_province,view_full_occurrence_individual.native_status_county_parish"
   }
   
   output<-as.data.frame(cbind(select),stringsAsFactors = F)  
@@ -432,11 +432,11 @@ if(all.taxonomy){
 .cultivated_check_stem<-function(cultivated){    
   
   if(!cultivated){
-    query<-"AND (analytical_stem.is_cultivated = 0 OR analytical_stem.is_cultivated IS NULL)"
+    query<-"AND (analytical_stem.is_cultivated_observation = 0 OR analytical_stem.is_cultivated_observation IS NULL)"
     select<-""
   }else{
     query<-""
-    select<-",analytical_stem.is_cultivated,view_full_occurrence_individual.is_cultivated_in_region"
+    select<-",analytical_stem.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region"
   }
   
   
@@ -478,7 +478,7 @@ if(all.taxonomy){
   if(!all.taxonomy){
     select<-""
   }else{
-    select<-",analytical_stem.verbatim_family,analytical_stem.verbatim_scientific_name,analytical_stem.family_matched,analytical_stem.name_matched,analytical_stem.name_matched_author,analytical_stem.higher_plant_group,analytical_stem.taxonomic_status,analytical_stem.scrubbed_family,analytical_stem.scrubbed_author"
+    select<-",analytical_stem.verbatim_family,analytical_stem.verbatim_scientific_name,analytical_stem.family_matched,analytical_stem.name_matched,analytical_stem.name_matched_author,analytical_stem.higher_plant_group,analytical_stem.scrubbed_taxonomic_status,analytical_stem.scrubbed_family,analytical_stem.scrubbed_author"
   }
   output<-as.data.frame(cbind(select),stringsAsFactors = F)  
   colnames(output)<-c("select")
@@ -496,7 +496,7 @@ if(all.taxonomy){
   if(!native.status){
     select<-""
   }else{
-    select<-",native_status,native_status_reason,native_status_sources,isintroduced,native_status_country,native_status_state_province,native_status_county_parish"
+    select<-",analytical_stem.native_status,analytical_stem.native_status_reason,analytical_stem.native_status_sources,analytical_stem.is_introduced,analytical_stem.native_status_country,analytical_stem.native_status_state_province,analytical_stem.native_status_county_parish"
   }
   output<-as.data.frame(cbind(select),stringsAsFactors = F)  
   colnames(output)<-c("select")
