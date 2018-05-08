@@ -4,6 +4,8 @@ BIEN 1.2.2
 * BIEN database updated to 4.0
 * Updated code to work with updated BIEN4.0 database structure.
 * Some functions now return slightly different fields, please take note!
+* Added functionality to notify users of important updates and upcoming updates to the database.
+
 
 BIEN 1.2.1
 ===============
@@ -13,7 +15,6 @@ BIEN 1.2.1
 ## BUG FIXES
 * Updated example directories to use file.path() to construct OS-independent paths
 * Fixed a bug in BIEN_plot_sampling_protocol causing it to fail to return records for certain sampling protocols.
-* Updated code for several functions to utilize the new column names in BIEN 4.0
 
 BIEN 1.1.1
 ===============
