@@ -1294,10 +1294,6 @@ head(political_names)
 Haiti_DR_from_codes &lt;- BIEN_list_country(country.code = c(&quot;HT&quot;,&quot;DO&quot;))
 </code></pre>
 
-<pre><code>## Warning in postgresqlQuickSQL(conn, statement, ...): Could not create execute: SELECT DISTINCT country, scrubbed_species_binomial   FROM species_by_political_division   WHERE country in (SELECT country FROM countries WHERE iso in ( &#39;HT&#39;, &#39;DO&#39; )) 
-##                        AND scrubbed_species_binomial IS NOT NULL  AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)  AND is_new_world = 1   ORDER BY scrubbed_species_binomial  ;
-</code></pre>
-
 <h1>Metadata</h1>
 
 <p>The BIEN metadata functions start with the prefix <code>BIEN_metadata_...</code> and provide useful metadata for the BIEN database.</p>

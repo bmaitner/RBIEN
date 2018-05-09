@@ -6,6 +6,9 @@ BIEN 1.2.2
 * Some functions now return slightly different fields, please take note!
 * Added functionality to notify users of important updates and upcoming updates to the database.
 
+## BUG FIXES
+* Fixed rare bug caused when specifying a "limit" in functions relying on spatialpolygons
+
 
 BIEN 1.2.1
 ===============

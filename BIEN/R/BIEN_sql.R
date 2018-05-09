@@ -92,7 +92,7 @@
   
   
   if(!is.null(limit)){
-    query<-gsub(pattern = ";",replacement = paste(" LIMIT ",limit,";"),x = query)}
+    query<-gsub(pattern = " ;",replacement = paste(" LIMIT ",limit,";"),x = query)}
  
   
   
