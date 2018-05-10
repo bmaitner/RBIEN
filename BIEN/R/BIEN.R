@@ -14,7 +14,7 @@
 #' BIEN_occurrence_species(species_vector,all.taxonomy=TRUE)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
+BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
   
   #Test input
   .is_log(cultivated)
@@ -67,7 +67,7 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=TRUE,a
 #' species_occurrences<-BIEN_occurrence_spatialpolygons(spatialpolygons=sp)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
+BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -131,7 +131,7 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.
 #' BIEN_list_country(country_vector)}
 #' @family list functions
 #' @export
-BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only.new.world=TRUE,...){
+BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only.new.world=FALSE,...){
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_char(country)
@@ -189,7 +189,7 @@ BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only
 #' BIEN_list_state(country="United States", state= state_vector)}
 #' @family list functions
 #' @export
-BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=NULL,cultivated=FALSE,only.new.world=TRUE,...){
+BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=NULL,cultivated=FALSE,only.new.world=FALSE,...){
   .is_char(country)
   .is_char(country.code)
   .is_char(state)
@@ -310,7 +310,7 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
 #' BIEN_list_county(country = "United States", state = "Michigan", county = county_vector)}
 #' @family list functions
 #' @export
-BIEN_list_county<-function(country=NULL,state=NULL,county=NULL,country.code=NULL,state.code=NULL,county.code=NULL,cultivated=FALSE,only.new.world=TRUE, ...){
+BIEN_list_county<-function(country=NULL,state=NULL,county=NULL,country.code=NULL,state.code=NULL,county.code=NULL,cultivated=FALSE,only.new.world=FALSE, ...){
   .is_char(country.code)
   .is_char(state.code)
   .is_char(county.code)
@@ -456,7 +456,7 @@ BIEN_list_all<-function( ...){
 #' species_list<-BIEN_list_spatialpolygons(spatialpolygons=shape)}
 #' @family list functions
 #' @export
-BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.world=TRUE,...){
+BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.world=FALSE,...){
   .is_log(cultivated)
   .is_log(only.new.world)
   
@@ -519,7 +519,7 @@ BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.wo
 #' BIEN_occurrence_genus(genus = "Abutilon",cultivated = TRUE,only.new.world = FALSE)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   .is_char(genus)
   .is_log(cultivated)
   .is_log(all.taxonomy)
@@ -563,7 +563,7 @@ BIEN_occurrence_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.t
 #' BIEN_occurrence_family(family_vector)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,observation.type=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=FALSE,observation.type=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F, ...){
   .is_char(family)
   .is_log(cultivated)
   .is_log(only.new.world)
@@ -614,7 +614,7 @@ BIEN_occurrence_family<-function(family,cultivated=FALSE,only.new.world=TRUE,obs
 #' BIEN_occurrence_state(country="United States",state=state_vector)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=NULL,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE, native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   .is_char(country)
   .is_char(state)
   .is_char(country.code)
@@ -731,7 +731,7 @@ BIEN_occurrence_state<-function(country=NULL,state=NULL,country.code=NULL,state.
 #' BIEN_occurrence_country(country_vector)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   .is_char(country)
   .is_char(country.code)
   .is_log(cultivated)
@@ -798,7 +798,7 @@ BIEN_occurrence_country<-function(country=NULL,country.code=NULL,cultivated=FALS
 #' BIEN_occurrence_county(country=country_vector, state = state_vector, county = county_vector)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_county<-function(country=NULL, state=NULL, county=NULL,country.code=NULL, state.code=NULL, county.code=NULL, cultivated=FALSE, only.new.world=TRUE, all.taxonomy=FALSE, native.status=FALSE, natives.only=TRUE, observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_county<-function(country=NULL, state=NULL, county=NULL,country.code=NULL, state.code=NULL, county.code=NULL, cultivated=FALSE, only.new.world=FALSE, all.taxonomy=FALSE, native.status=FALSE, natives.only=TRUE, observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
   .is_char(country)
   .is_char(state)
   .is_char(county)
@@ -925,7 +925,7 @@ BIEN_occurrence_county<-function(country=NULL, state=NULL, county=NULL,country.c
 #' cultivated = TRUE, only.new.world = FALSE)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=TRUE,collection.info=F, ...){
+BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=TRUE,collection.info=F, ...){
   .is_num(min.lat)
   .is_num(max.lat)
   .is_num(min.long)
@@ -1992,7 +1992,7 @@ BIEN_trait_traits_per_species<-function( species=NULL, ...){
 #' BIEN_plot_datasource("SALVIAS")}
 #' @family plot functions
 #' @export
-BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_datasource<-function(datasource,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -2065,7 +2065,7 @@ BIEN_plot_list_datasource<-function(...){
 #' BIEN_plot_country(c("Costa Rica","Panama"))}
 #' @family plot functions
 #' @export
-BIEN_plot_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   .is_char(country.code)
   .is_log(cultivated)
   .is_log(only.new.world)
@@ -2149,7 +2149,7 @@ BIEN_plot_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,only
 #' BIEN_plot_state(country="United States",state= c("Colorado","California"))}
 #' @family plot functions
 #' @export
-BIEN_plot_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=NULL,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=NULL,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
   .is_char(country)
   .is_log(cultivated)
   .is_log(only.new.world)
@@ -2288,7 +2288,7 @@ BIEN_plot_list_sampling_protocols<-function(...){
 #' BIEN_plot_sampling_protocol("Point-intercept")}
 #' @family plot functions
 #' @export
-BIEN_plot_sampling_protocol <- function (sampling_protocol, cultivated = FALSE, only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE, 
+BIEN_plot_sampling_protocol <- function (sampling_protocol, cultivated = FALSE, only.new.world = FALSE, all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE, 
                                          political.boundaries = FALSE, collection.info = F, all.metadata = FALSE, ...){
   
   .is_log(cultivated)
@@ -2341,7 +2341,7 @@ BIEN_plot_sampling_protocol <- function (sampling_protocol, cultivated = FALSE, 
 #' BIEN_plot_name("SR-1")}
 #' @family plot functions
 #' @export
-BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -2394,7 +2394,7 @@ BIEN_plot_name<-function(plot.name,cultivated=FALSE,only.new.world=TRUE,all.taxo
 #' BIEN_plot_dataset("Gentry Transect Dataset")}
 #' @family plot functions
 #' @export
-BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_dataset<-function(dataset,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F,all.metadata=FALSE, ...){
   .is_log(cultivated)
   .is_log(only.new.world)
   .is_log(all.taxonomy)
@@ -3014,7 +3014,7 @@ BIEN_metadata_list_political_names<-function(...){
 #' BIEN_stem_species(species_vector,all.taxonomy=TRUE)}
 #' @family stem functions
 #' @export
-BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
+BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   .is_log(all.metadata)
   .is_log(cultivated)
   .is_log(only.new.world)
@@ -3071,7 +3071,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=TRUE,all.tax
 #' BIEN_stem_family(family = family_vector, all.taxonomy=TRUE, native.status=T)}
 #' @family stem functions
 #' @export
-BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
+BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   .is_log(all.metadata)
   .is_log(cultivated)
   .is_log(only.new.world)
@@ -3128,7 +3128,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=TRUE,all.taxon
 #' BIEN_stem_genus(genus = genus_vector, all.taxonomy=TRUE)}
 #' @family stem functions
 #' @export
-BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE, collection.info=F,all.metadata = F, ...){
+BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE, collection.info=F,all.metadata = F, ...){
   .is_log(all.metadata)
   .is_log(cultivated)
   .is_log(only.new.world)
@@ -3182,7 +3182,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=TRUE,all.taxonom
 #' BIEN_stem_datasource(datasource = "SALVIAS")}
 #' @family stem functions
 #' @export
-BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
+BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   .is_log(all.metadata)
   .is_log(cultivated)
   .is_log(only.new.world)
@@ -3237,7 +3237,7 @@ BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=TRUE,a
 #' BIEN_stem_sampling_protocol("Point-intercept")}
 #' @family stem functions
 #' @export
-BIEN_stem_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.new.world=TRUE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
+BIEN_stem_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE, native.status = FALSE,natives.only=TRUE, political.boundaries = FALSE,collection.info=F, all.metadata = F, ...){
   .is_log(all.metadata)
   .is_log(cultivated)
   .is_log(only.new.world)
