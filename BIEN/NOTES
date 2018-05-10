@@ -1,2 +1,2 @@
 The current version of the BIEN database (BIEN3.4.5) was replaced with BIEN4.0 on May 8th, 2018.  
-The current version of the BIEN R package will not be compatible with BIEN4.0, but a new version will be available for download shortly!
+The R package BIEN version 1.2.3 is compatible with BIEN4.0, but previous versions will no longer work correctly.  We apologize for any inconvenience.
