@@ -5,7 +5,7 @@
 \title{Extract species list by country}
 \usage{
 BIEN_list_country(country = NULL, country.code = NULL, cultivated = FALSE,
-  only.new.world = TRUE, ...)
+  only.new.world = FALSE, ...)
 }
 \arguments{
 \item{country}{A single country or a vector of countries.}

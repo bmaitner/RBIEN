@@ -37,7 +37,8 @@ species_vector<-c("Carex capitata","Betula nana")
 BIEN_trait_traitbyspecies(trait=trait_vector,species=species_vector)}
 }
 \seealso{
-Other trait functions: \code{\link{BIEN_trait_family}},
+Other trait functions: \code{\link{BIEN_trait_country}},
+  \code{\link{BIEN_trait_family}},
   \code{\link{BIEN_trait_list}},
   \code{\link{BIEN_trait_mean}},
   \code{\link{BIEN_trait_species}},

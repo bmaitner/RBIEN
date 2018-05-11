@@ -4,7 +4,7 @@
 \alias{BIEN_occurrence_family}
 \title{Extract species occurrences by family.}
 \usage{
-BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = TRUE,
+BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = FALSE,
   observation.type = FALSE, all.taxonomy = FALSE, native.status = FALSE,
   natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
   ...)

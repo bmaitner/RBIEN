@@ -5,7 +5,7 @@
 #' @section Getting started:
 #' Type vignette("BIEN") to view the vignette, which contains useful information on the BIEN package.
 #' 
-#' @references Enquist, B.J., Sandel, B., Boyle, B., Donoghue II, J.C., Regetz, J., Svenning, J.C., McGill, B.J., Peet, R.K., Jorgensen, P.M., Condit, R., Thiers, B., Schildhauer, M., Smith, S.A., Hinchliff, C.E., Wiser, S.K., Violle, C., Simova, I., Spencer, N., Dolins, S., Morueta-Holme, N., Marcuse-Kubitza, A., Kraft, N.J.B., Ott, J.E., Andelman, S., ter Steege, H., Phillips, O., Sloat, L.L., Narro, M.L., Casler, N., Guaderama, D.,  Merow, C., Maitner, B.S. (in prep) A general signature of taxonomic and phylogenetic diversity across the Land Plants of the New World.
+#' @references Maitner BS, Boyle B, Casler N, et al. The bien r package: A tool to access the Botanical Information and Ecology Network (BIEN) Database. Methods Ecol Evol. 2018;9:373–379. https://doi.org/10.1111/2041-210X.12861
 #' 
 #' @docType package
 #' @name BIEN

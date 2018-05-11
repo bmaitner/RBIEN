@@ -1,6 +1,10 @@
 BIEN 1.2.4
 ===============
+## NEW FEATURES
+* Added BIEN_trait_country function
 
+## BUG FIXES
+* Fixed bug that occaisionally occured with trait citations.
 
 BIEN 1.2.3
 ===============

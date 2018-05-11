@@ -5,7 +5,7 @@
 \title{Extract occurrence data for specified SpatialPolygons or SpatialPolygonsDataFrame}
 \usage{
 BIEN_occurrence_spatialpolygons(spatialpolygons, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
+  only.new.world = FALSE, all.taxonomy = FALSE, native.status = FALSE,
   natives.only = TRUE, observation.type = FALSE,
   political.boundaries = FALSE, collection.info = F, ...)
 }

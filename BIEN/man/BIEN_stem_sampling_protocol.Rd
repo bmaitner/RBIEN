@@ -5,7 +5,7 @@
 \title{Download stem data using a specified sampling protocol.}
 \usage{
 BIEN_stem_sampling_protocol(sampling_protocol, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
+  only.new.world = FALSE, all.taxonomy = FALSE, native.status = FALSE,
   natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
   all.metadata = F, ...)
 }

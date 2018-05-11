@@ -4,7 +4,7 @@
 \alias{BIEN_plot_name}
 \title{Download plot data by plot name.}
 \usage{
-BIEN_plot_name(plot.name, cultivated = FALSE, only.new.world = TRUE,
+BIEN_plot_name(plot.name, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
   political.boundaries = FALSE, collection.info = F, all.metadata = FALSE,
   ...)

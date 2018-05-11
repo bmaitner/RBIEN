@@ -4,7 +4,7 @@
 \alias{BIEN_stem_family}
 \title{Extract stem data for specified families from BIEN}
 \usage{
-BIEN_stem_family(family, cultivated = FALSE, only.new.world = TRUE,
+BIEN_stem_family(family, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
   political.boundaries = FALSE, collection.info = F, all.metadata = F,
   ...)

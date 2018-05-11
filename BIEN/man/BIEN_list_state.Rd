@@ -5,7 +5,7 @@
 \title{Extract a species list by state/province}
 \usage{
 BIEN_list_state(country = NULL, country.code = NULL, state = NULL,
-  state.code = NULL, cultivated = FALSE, only.new.world = TRUE, ...)
+  state.code = NULL, cultivated = FALSE, only.new.world = FALSE, ...)
 }
 \arguments{
 \item{country}{A single country or a vector of countries equal in length to the vector of states/provinces.}

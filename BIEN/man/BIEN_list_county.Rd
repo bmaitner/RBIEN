@@ -6,7 +6,7 @@
 \usage{
 BIEN_list_county(country = NULL, state = NULL, county = NULL,
   country.code = NULL, state.code = NULL, county.code = NULL,
-  cultivated = FALSE, only.new.world = TRUE, ...)
+  cultivated = FALSE, only.new.world = FALSE, ...)
 }
 \arguments{
 \item{country}{A single country or vector of countries}

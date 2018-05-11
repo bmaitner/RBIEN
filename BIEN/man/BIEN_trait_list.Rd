@@ -20,7 +20,8 @@ BIEN_trait_list produces a dataframe of all available types of trait data.
 BIEN_trait_list()}
 }
 \seealso{
-Other trait functions: \code{\link{BIEN_trait_family}},
+Other trait functions: \code{\link{BIEN_trait_country}},
+  \code{\link{BIEN_trait_family}},
   \code{\link{BIEN_trait_mean}},
   \code{\link{BIEN_trait_species}},
   \code{\link{BIEN_trait_traitbyfamily}},

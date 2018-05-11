@@ -34,7 +34,8 @@ trait_vector<-c("whole plant height", "leaf dry mass per leaf fresh mass")
 BIEN_trait_trait(trait_vector)}
 }
 \seealso{
-Other trait functions: \code{\link{BIEN_trait_family}},
+Other trait functions: \code{\link{BIEN_trait_country}},
+  \code{\link{BIEN_trait_family}},
   \code{\link{BIEN_trait_list}},
   \code{\link{BIEN_trait_mean}},
   \code{\link{BIEN_trait_species}},

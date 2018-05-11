@@ -4,7 +4,7 @@
 \alias{BIEN_occurrence_genus}
 \title{Extract occurrence data from BIEN for specified genera}
 \usage{
-BIEN_occurrence_genus(genus, cultivated = FALSE, only.new.world = TRUE,
+BIEN_occurrence_genus(genus, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
   observation.type = FALSE, political.boundaries = FALSE,
   collection.info = F, ...)

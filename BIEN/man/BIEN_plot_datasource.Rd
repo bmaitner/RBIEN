@@ -4,7 +4,7 @@
 \alias{BIEN_plot_datasource}
 \title{Download plot data from a given datasource.}
 \usage{
-BIEN_plot_datasource(datasource, cultivated = FALSE, only.new.world = TRUE,
+BIEN_plot_datasource(datasource, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
   political.boundaries = FALSE, collection.info = F, all.metadata = FALSE,
   ...)

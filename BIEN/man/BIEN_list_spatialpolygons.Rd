@@ -5,7 +5,7 @@
 \title{Extract a list of species within a given spatialpolygons.}
 \usage{
 BIEN_list_spatialpolygons(spatialpolygons, cultivated = FALSE,
-  only.new.world = TRUE, ...)
+  only.new.world = FALSE, ...)
 }
 \arguments{
 \item{spatialpolygons}{An object of class SpatialPolygonsDataFrame.  Note that the object must be in WGS84.}

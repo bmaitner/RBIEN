@@ -6,7 +6,7 @@
 \usage{
 BIEN_occurrence_county(country = NULL, state = NULL, county = NULL,
   country.code = NULL, state.code = NULL, county.code = NULL,
-  cultivated = FALSE, only.new.world = TRUE, all.taxonomy = FALSE,
+  cultivated = FALSE, only.new.world = FALSE, all.taxonomy = FALSE,
   native.status = FALSE, natives.only = TRUE, observation.type = FALSE,
   political.boundaries = FALSE, collection.info = F, ...)
 }

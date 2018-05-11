@@ -4,7 +4,7 @@
 \alias{BIEN_stem_species}
 \title{Extract stem data for specified species from BIEN}
 \usage{
-BIEN_stem_species(species, cultivated = FALSE, only.new.world = TRUE,
+BIEN_stem_species(species, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
   political.boundaries = FALSE, collection.info = F, all.metadata = F,
   ...)

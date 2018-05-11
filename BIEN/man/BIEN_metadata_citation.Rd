@@ -5,7 +5,7 @@
 \title{Generate citations for data extracted from BIEN.}
 \usage{
 BIEN_metadata_citation(dataframe = NULL, trait.dataframe = NULL,
-  bibtex_file = NULL, acknowledgement_file = NULL)
+  bibtex_file = NULL, acknowledgement_file = NULL, ...)
 }
 \arguments{
 \item{dataframe}{A data.frame of occurrence data downloaded from the BIEN R package.}

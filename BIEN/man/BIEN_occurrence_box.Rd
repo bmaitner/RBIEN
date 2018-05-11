@@ -5,7 +5,7 @@
 \title{Extract species occurrence records by a latitude/longitude bounding box.}
 \usage{
 BIEN_occurrence_box(min.lat, max.lat, min.long, max.long, cultivated = FALSE,
-  only.new.world = TRUE, all.taxonomy = FALSE, native.status = FALSE,
+  only.new.world = FALSE, all.taxonomy = FALSE, native.status = FALSE,
   natives.only = TRUE, observation.type = FALSE,
   political.boundaries = TRUE, collection.info = F, ...)
 }

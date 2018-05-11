@@ -5,7 +5,7 @@
 \title{Download plot data from specified states/provinces.}
 \usage{
 BIEN_plot_state(country = NULL, state = NULL, country.code = NULL,
-  state.code = NULL, cultivated = FALSE, only.new.world = TRUE,
+  state.code = NULL, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
   political.boundaries = TRUE, collection.info = F, all.metadata = FALSE,
   ...)
