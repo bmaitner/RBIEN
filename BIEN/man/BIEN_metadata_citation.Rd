@@ -15,6 +15,8 @@ BIEN_metadata_citation(dataframe = NULL, trait.dataframe = NULL,
 \item{bibtex_file}{Output file for writing bibtex citations.}
 
 \item{acknowledgement_file}{Output file for writing acknowledgements.}
+
+\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 A list object containing information needed for data attribution.  Full information for herbaria is available at http://sweetgum.nybg.org/science/ih/

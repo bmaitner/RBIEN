@@ -2,6 +2,7 @@ BIEN 1.2.4
 ===============
 ## NEW FEATURES
 * Added BIEN_trait_country function
+* BIEN_occurrence_box now offers the ability to constrain records by species and/or genus.
 
 ## BUG FIXES
 * Fixed bug that occaisionally occured with trait citations.

@@ -10,6 +10,8 @@ BIEN_trait_country(country, trait.name = NULL, all.taxonomy = FALSE,
 \arguments{
 \item{country}{A single country or a vector of countries.}
 
+\item{trait.name}{Optional.  The trait or traits you want returned.  If left blank, all traits will be returned.}
+
 \item{all.taxonomy}{Should full taxonomic information and TNRS output be returned?  Default is FALSE.}
 
 \item{political.boundaries}{Should political boundary information (country, state, etc.) be returned?  Default is FALSE.}
@@ -17,8 +19,6 @@ BIEN_trait_country(country, trait.name = NULL, all.taxonomy = FALSE,
 \item{source.citation}{Should readable source information be downloaded for each record?  Note that \code{\link{BIEN_metadata_citation}} may be more useful.}
 
 \item{...}{Additional arguments passed to internal functions.}
-
-\item{trait}{Optional.  The trait or traits you want returned.  If left blank, all traits will be returned.}
 }
 \value{
 A dataframe of all available trait data for the given country.

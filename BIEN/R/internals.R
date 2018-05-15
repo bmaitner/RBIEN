@@ -421,6 +421,51 @@ if(all.taxonomy){
   
   } 
 
+#
+
+#'Set query details
+#'
+#'Helper function to set query components.
+#' @param species Single species or vector of species.
+#' @keywords internal
+.species_check<-function(species){    
+  
+  if(is.null(species)){
+    query<-""
+  }else{
+    query<-species_select<-paste(" AND", "scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ")  
+  }
+  
+  output<-as.data.frame(cbind(query),stringsAsFactors = F)  
+  colnames(output)<-c("query")
+  
+  return(output)  
+  
+} 
+
+#
+
+#'Set query details
+#'
+#'Helper function to set query components.
+#' @param genus Single genus or vector of genera.
+#' @keywords internal
+.genus_check<-function(genus){    
+  
+  if(is.null(genus)){
+    query<-""
+  }else{
+    query<-species_select<-paste(" AND", "scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ") ")  
+  }
+  
+  output<-as.data.frame(cbind(query),stringsAsFactors = F)  
+  colnames(output)<-c("query")
+  
+  return(output)  
+  
+} 
+
+
 ########################################
 #Stem
 

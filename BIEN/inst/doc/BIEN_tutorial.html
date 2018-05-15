@@ -301,7 +301,7 @@ library(sp) # A package for spatial data
 <pre><code class="r">str(Xanthium_strumarium)
 </code></pre>
 
-<pre><code>## &#39;data.frame&#39;:    7579 obs. of  11 variables:
+<pre><code>## &#39;data.frame&#39;:    7578 obs. of  11 variables:
 ##  $ scrubbed_species_binomial  : chr  &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; ...
 ##  $ latitude                   : num  56.7 NA NA NA 39.4 ...
 ##  $ longitude                  : num  16.4 NA NA NA -84.6 ...
@@ -350,7 +350,7 @@ library(sp) # A package for spatial data
 str(Xanthium_strumarium_full)
 </code></pre>
 
-<pre><code>## &#39;data.frame&#39;:    7719 obs. of  34 variables:
+<pre><code>## &#39;data.frame&#39;:    7718 obs. of  34 variables:
 ##  $ scrubbed_species_binomial   : chr  &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; ...
 ##  $ verbatim_family             : chr  NA &quot;Asteraceae&quot; &quot;asteraceae&quot; NA ...
 ##  $ verbatim_scientific_name    : chr  &quot;Xanthium strumarium&quot; &quot;Xanthium strumarium&quot; &quot;xanthium strumarium&quot; &quot;Xanthium strumarium L.&quot; ...
@@ -598,544 +598,62 @@ head(LUQUILLO)
 <pre><code class="r">BIEN_trait_list()
 </code></pre>
 
-<pre><code>##                                                                                    trait_name
-## 1                                                                         aboveground biomass
-## 2                                                                     Aboveground stem length
-## 3                                                                           acoustic velocity
-## 4                                                                        active growth period
-## 5                                                                                        Amax
-## 6                                                                               annual growth
-## 7                                                        Annual relative basal area increment
-## 8                                                                        annual transpiration
-## 9                                                   annual transpiration per needle unit area
-## 10                                                                              anther length
-## 11                                                                               anther width
-## 12                                                                             bark thickness
-## 13                                                                        basal stem diameter
-## 14                                                                        bee visitation rate
-## 15                                                         Belowground:Aboveground mass ratio
-## 16                                                                       Belowground dry mass
-## 17                                                                          bending stiffness
-## 18                                                                                    biomass
-## 19                                                                            biomass density
-## 20                                                                               branch count
-## 21                                                                             breaking force
-## 22                                                                    bundle sheath cell size
-## 23                                                                               calyx length
-## 24                                                                    calyx midpoint diameter
-## 25                                                                                canopy area
-## 26                                                                               canopy cover
-## 27                                                                              Canopy Height
-## 28                                                                            canopy openness
-## 29                                                                        Canopy trasmittance
-## 30                                                                               capsule mass
-## 31                                                                        capsule seed weight
-## 32                                                                              catkin number
-## 33                                                                            cell population
-## 34                                                                       cell radial diameter
-## 35                                                                    cell tangental diameter
-## 36                                                                              Cellulose 13C
-## 37                                                                            Cellulose Cmass
-## 38                                                                        cell wall thickness
-## 39                                                                change in stem circumfrence
-## 40                                                                        chlorophyll content
-## 41                                                                          chlorophyll level
-## 42                                                        circumfrence at breast height (CBH)
-## 43                                                                               cluster size
-## 44                                                  CO2 net exchange rate on area basis (NPa)
-## 45                                            CO2 net exchange rate on dry weight basis (NPG)
-## 46                                      CO2 net exchange rate on individual shoot basis (NPi)
-## 47                                                                          condensed tannins
-## 48                                                                              cone dry mass
-## 49                                                                                core length
-## 50                                                                           corolla diameter
-## 51                                                  corolla diameter at the base of the calyx
-## 52                                                     corolla diameter at the mouth openness
-## 53                                                                             corolla length
-## 54                                                                      corolla limb diameter
-## 55                                                                        corolla tube length
-## 56                                                                             cotton biomass
-## 57                                                                                  C:P ratio
-## 58                                                                       cross sectional area
-## 59                                                                  cross sectional stem area
-## 60                                                                                 crown area
-## 61                                                                             crown diameter
-## 62                                                                      crown projection area
-## 63                                                                               crown radius
-## 64                                                                     crown vector direction
-## 65                                                                        crown vector length
-## 66                                                                               crown volume
-## 67                                                                          crystallite width
-## 68                                                                                       d13C
-## 69                                                                                       d15N
-## 70                                                                             Daily sap flow
-## 71                                                                        Daily transpiration
-## 72                                                                      Dark respiration rate
-## 73                                                                       DBH annual increment
-## 74                                                                         DBH (without bark)
-## 75                                                                    developed seeds in cone
-## 76                                                        developed seeds with embryo in cone
-## 77                                                                 diagonal length of a petal
-## 78                                                          diameter at breast height (1.3 m)
-## 79                                                                              diaspore area
-## 80                                                                              diaspore mass
-## 81                                                                   diaspore rate of descent
-## 82  distance from center of mesophyll chlorenchyma cells to center of nearest vascular bundle
-## 83                                       distance from center of vascular bundle to epidermis
-## 84                  distance from center of vascular bundle to nearest intercellular airspace
-## 85                                                                              dry leaf mass
-## 86                                                                                   dry mass
-## 87                                                                                    ECM 13C
-## 88                                                                                    ECM 15N
-## 89                                                                                  ECM Cmass
-## 90                                                                                  ECM Nmass
-## 91                                                                                embryo mass
-## 92                                                              Estimated aboveground biomass
-## 93                                                                             Feret-diameter
-## 94                                                                           fibre courseness
-## 95                                                                         floral tube length
-## 96                                                                               flower color
-## 97                                                                            flower diameter
-## 98                                                                            flower dry mass
-## 99                                                                              flower height
-## 100                                                                            flowering time
-## 101                                                               flower pollination syndrome
-## 102                                                                         flower tube depth
-## 103                                                                       fly visitation rate
-## 104                                                                      follicles per flower
-## 105                                                                          Frond narrowness
-## 106                                                                               fruit color
-## 107                                                                               fruit count
-## 108                                                                         fruiting duration
-## 109                                                                        fruiting intensity
-## 110                                                                            fruiting month
-## 111                                                                              fruit length
-## 112                                                                                fruit type
-## 113                                                                               fruit width
-## 114                                                                     fuel moisture content
-## 115                                                             gas exchange rate in the dark
-## 116                                                            gas exchange rate in the light
-## 117                                                                          Germination time
-## 118                                                                                 greenness
-## 119                                                                     growing season length
-## 120                                                                              Growing time
-## 121                                                              Height of first major branch
-## 122                                                            height of living stump sprouts
-## 123                                                                      height to crown base
-## 124                                                                    height to first branch
-## 125                                                                                 herkogamy
-## 126                                                                      inflorescence length
-## 127                                                                            initial height
-## 128                                                                      inner bark thickness
-## 129                                                        inner segment cross sectional area
-## 130                                                                    inner segment dry mass
-## 131                                                                  inner segment fresh mass
-## 132                                                                inner segment fresh volume
-## 133                                                                      inner segment length
-## 134                                                       inner segment wood specific gravity
-## 135                                                        instantaneous water use efficiency
-## 136                                                                          Internode Length
-## 137                         interveinal distance between centers of adjacent vascular bundles
-## 138                                                            intrinsic water-use efficiency
-## 139                                                                       Lateral Root Length
-## 140                                                                                  Leaf 13C
-## 141                                                                                  Leaf 15N
-## 142                                                                                  Leaf 18O
-## 143                                                                  leaf acid detergen fiber
-## 144                                                                              Leaf Al mass
-## 145                                                                    Leaf angle inclination
-## 146                                                                                 leaf area
-## 147                                                                 Leaf area per 5-20 leaves
-## 148                                                               leaf area per leaf dry mass
-## 149                                                                 leaf area per leaf volume
-## 150                                                              leaf area:sapwood area ratio
-## 151                                                                               Leaf B mass
-## 152                                                                              leaf Ca mass
-## 153                                                                              Leaf Ca mass
-## 154                                                     leaf carbon content per leaf dry mass
-## 155                                             leaf carbon content per leaf nitrogen content
-## 156                                                                              Leaf Cd mass
-## 157                                                  leaf cellulose content per leaf dry mass
-## 158                                                                          Leaf Chlorophyll
-## 159                                                                          leaf circularity
-## 160                                                                         leaf compoundness
-## 161                                                                        leaf crude protein
-## 162                                                                              Leaf Cu mass
-## 163                                                                              leaf density
-## 164                                                                             leaf dry mass
-## 165                                                               leaf dry mass of 1-8 leaves
-## 166                                                             Leaf dry mass per 5-20 leaves
-## 167                                                         leaf dry mass per leaf dry volume
-## 168                                                         leaf dry mass per leaf fresh mass
-## 169                                                                      Leaf elongation rate
-## 170                                                                       Leaf emergence rate
-## 171                                                                              Leaf Fe mass
-## 172                                                                       leaf flame duration
-## 173                                                                           leaf fresh mass
-## 174     leaf fresh mass minus leaf dry mass per leaf water saturated mass minus leaf dry mass
-## 175                                                     leaf fresh mass per leaf fresh volume
-## 176                                                                  leaf fresh water content
-## 177                                              leaf hemicellulose content per leaf dry mass
-## 178                                                                        leaf ignition time
-## 179                                                                               Leaf K mass
-## 180                                                                       leaf lamina density
-## 181                                               leaf lamina dry mass per leaf lamina volume
-## 182                                                            Leaf lamina fracture toughness
-## 183                                                    Leaf lamina fracture toughness (light)
-## 184                                                    Leaf lamina fracture toughness (shade)
-## 185                                                                     leaf lamina thickness
-## 186                                                             Leaf lamina thickness (light)
-## 187                                                             Leaf lamina thickness (shade)
-## 188                                                                               leaf length
-## 189                                                              leaf length:leaf width ratio
-## 190                                                                            leaf life span
-## 191                                                                               leaf lignin
-## 192                                                     leaf lignin content per leaf dry mass
-## 193                                                                                 Leaf Mass
-## 194                                                                           Leaf Mass Ratio
-## 195                                                                              Leaf Mg mass
-## 196                                                                     leaf midrib thickness
-## 197                                                                              leaf Mn mass
-## 198                                                                              Leaf Mn mass
-## 199                                                                      Leaf Molybdenum mass
-## 200                                                                              Leaf Na mass
-## 201                                                               leaf natural detergen fiber
-## 202                                                       leaf nitrogen content per leaf area
-## 203                                                   leaf nitrogen content per leaf dry mass
-## 204                                                                            Leaf N:P ratio
-## 205                                                                                leaf Parea
-## 206                                                                            leaf perimeter
-## 207                                                     leaf phosphorus content per leaf area
-## 208                                                 leaf phosphorus content per leaf dry mass
-## 209                                                    leaf photosynthetic rate per leaf area
-## 210                                                leaf photosynthetic rate per leaf dry mass
-## 211                                                                              Leaf Pi mass
-## 212                                                                                leaf Pmass
-## 213                                                                              Leaf Po mass
-## 214                                                                          leaf punch force
-## 215                                                                 leaf relative growth rate
-## 216                                                                                leaf shape
-## 217                                                                               Leaf S mass
-## 218                                                                     leaf smolder duration
-## 219                                                                           leaf:stem ratio
-## 220                                           leaf stomatal conductance for H2O per leaf area
-## 221                                                   leaf stomatal conductance per leaf area
-## 222                                                                          Leaf tannin mass
-## 223                                                                     leaf tensile strength
-## 224                                                                     Leaf Tensile Strength
-## 225                                                                            leaf thickness
-## 226                                                                       leaf tissue density
-## 227                                                                       Leaf tissue density
-## 228                                                                            leaf toughness
-## 229                                                                            Leaf toughness
-## 230                                                                            Leaf Toughness
-## 231                                                              Leaf vein fracture toughness
-## 232                                                      Leaf vein fracture toughness (light)
-## 233                                                      Leaf vein fracture toughness (shade)
-## 234                                                                               leaf volume
-## 235                                                                                leaf width
-## 236                                                                              Leaf Zn mass
-## 237                                                                          leaves per plant
-## 238                                                             length of the largest stamens
-## 239                                                            length of the smallest stamens
-## 240                                                                  light compensation point
-## 241                                    light saturated leaf photosynthetic rate per leaf area
-## 242                                                                                Litter 13C
-## 243                                                                                Litter 15N
-## 244                                                                                  Litter C
-## 245                                                                              litter Cmass
-## 246                                                                              Litter Cmass
-## 247                                                                          Litter C:N ratio
-## 248                                                                              litter Nmass
-## 249                                                                              Litter Nmass
-## 250                                                                          Litter N:P ratio
-## 251                                                                              Litter Pmass
-## 252                                                                            Litter Po mass
-## 253                                                             longest whole plant longevity
-## 254                                                                          main root length
-## 255                                                                 male inflorescence length
-## 256                                                                             maturity time
-## 257                                                           Maximum electron transport rate
-## 258                                                                      maximum fruit length
-## 259                                                                       maximum fruit width
-## 260                                                                       maximum leaf length
-## 261                                                                        maximum leaf width
-## 262                                                             Maximum rate of carboxylation
-## 263                                                           maximum whole plant canopy area
-## 264                                                                maximum whole plant height
-## 265                                                             maximum whole plant longevity
-## 266                                                          maximum width of enlarging xylem
-## 267                                                                          mean nodule mass
-## 268                                                                     Mesophyll conductance
-## 269                                                                         microfibril angle
-## 270                                                       middle segment cross sectional area
-## 271                                                                   middle segment dry mass
-## 272                                                                 middle segment fresh mass
-## 273                                                               middle segment fresh volume
-## 274                                                                     middle segment length
-## 275                                                      middle segment wood specific gravity
-## 276                                                                      minimum fruit length
-## 277                                                                       minimum fruit width
-## 278                                                                       minimum leaf length
-## 279                                                                        minimum leaf width
-## 280                                             minimum length of whole plant juvenile period
-## 281                                                                minimum whole plant height
-## 282                                                                     modulus of elasticity
-## 283                                                                          moisture content
-## 284                                                                                Needle 13C
-## 285                                                                                Needle 15N
-## 286                                                                               needle area
-## 287                                                                              Needle Nmass
-## 288                                                                 Net CO2 assimilation rate
-## 289                                                                                Nmass leaf
-## 290                                                                                Nmass root
-## 291                                                                               Node amount
-## 292                                                                            Nodes per gram
-## 293                                                                               nodule mass
-## 294                                                                                 N:P ratio
-## 295                                                                        number of branches
-## 296                                                                     number of empty seeds
-## 297                                                                    number of filled seeds
-## 298                                                                         number of flowers
-## 299                                                          number of flowers on main branch
-## 300                                                                          number of fruits
-## 301                                                                number of fruits per plant
-## 302                                                                  number of inflorescences
-## 303                                                                          number of leaves
-## 304                                                             number of leaves per seedling
-## 305                                                            number of living stump sprouts
-## 306                                                                           number of nodes
-## 307                                                                         number of nodules
-## 308                                                                        number of rosettes
-## 309                                                                 number of secondary stems
-## 310                                                                           number of seeds
-## 311                                                               number of seeds per capsule
-## 312                                                                 number of seeds per fruit
-## 313                                                                 number of seeds per plant
-## 314                                                                           number of stems
-## 315                                                                         number of stolons
-## 316                                                                           number of teeth
-## 317                                                                         number of tillers
-## 318                                                                      outer bark thickness
-## 319                                                                outer cross sectional area
-## 320                                                                    outer segment dry mass
-## 321                                                                  outer segment fresh mass
-## 322                                                                outer segment fresh volume
-## 323                                                                      outer segment length
-## 324                                                       outer segment wood specific gravity
-## 325                                                                      palisade cell length
-## 326                                                                palisade cell SA:vol ratio
-## 327                                                                        palisade cell size
-## 328                                                                       palisade cell width
-## 329                                                                        palisade thickness
-## 330                                                                            Peak flowering
-## 331                                                                             peak sap flow
-## 332                                                                        Peak transpiration
-## 333                                                               Perimeter:Leaf length ratio
-## 334                                                                              petal length
-## 335                                                                               petal width
-## 336                                                                          Petiole dry mass
-## 337                                                                Petiole dry matter content
-## 338                                                                        Petiole fresh mass
-## 339                                                                            petiole length
-## 340                                                                             petiole width
-## 341                                                                   phenolics concentration
-## 342                                                                               phloem path
-## 343                                                                             pistil length
-## 344                                                                              pistil width
-## 345                                                                               plant cover
-## 346                                                                     plant flowering begin
-## 347                                                      Plant flowering begin trait (Julien)
-## 348                                                                  plant flowering duration
-## 349                                                                   plant fruiting duration
-## 350                                                                              Plant height
-## 351                                                                          Plant narrowness
-## 352                                                                              plant volume
-## 353                                                                           pods per branch
-## 354                                                                            pods per plant
-## 355                                                                                pollinator
-## 356                                                                pollinator visitation rate
-## 357                                                  Predicted freezing vulnerability at -15C
-## 358                                                                                     Rarea
-## 359                                                              Relative biomass growth rate
-## 360                                                                Relative growth daily rate
-## 361                                                                      reproductive biomass
-## 362                                                                    resistance to drilling
-## 363                                                                             Ring porosity
-## 364                                                                                ring width
-## 365                                                                                     Rmass
-## 366                                                                                Root Angle
-## 367                                                                              root Ca mass
-## 368                                                                              Root Ca mass
-## 369                                                                                Root Cmass
-## 370                                                                            Root C:N Ratio
-## 371                                                                             root diameter
-## 372                                                                             root dry mass
-## 373                                                                             Root dry mass
-## 374                                                                                root Kmass
-## 375                                                                                Root Kmass
-## 376                                                                               root length
-## 377                                                                               Root length
-## 378                                                             root length per root dry mass
-## 379                                                                                 Root Mass
-## 380                                                                        root mass fraction
-## 381                                                                              root Mg mass
-## 382                                                                              Root Mg mass
-## 383                                                                                root Nmass
-## 384                                                                                Root Nmass
-## 385                                                                                root Pmass
-## 386                                                                                Root Pmass
-## 387                                                                          root:shoot ratio
-## 388                                                                         root surface area
-## 389                                                                     root tensile strength
-## 390                                                                       root tissue density
-## 391                                                                       Root Tissue Density
-## 392                                            root total non-structural carbohydrate content
-## 393                                                                               root volume
-## 394                                                    sap flow under high evaporative demand
-## 395                                                     sap flow under low evaporative demand
-## 396                                                                              sapwood area
-## 397                                                                             sapwood depth
-## 398                                                            sapwood relative water content
-## 399                                                                   sapwood water potential
-## 400                                                                              seed density
-## 401                                                                       seed dispersal mode
-## 402                                                               Seed germination proportion
-## 403                                                                               seed height
-## 404                                                                               seed length
-## 405                                                      Seedling Absolute Height Growth Rate
-## 406                                                                   seedling basal diameter
-## 407                                                                            seedling Cmass
-## 408                                                                           seedling height
-## 409                                                                     seedling leaf biomass
-## 410                                                                            seedling Nmass
-## 411                                                                     seedling root biomass
-## 412                                                                     seedling stem biomass
-## 413                                                                    seedling stem diameter
-## 414                                                                      seedling stem height
-## 415                                                                    seedling total biomass
-## 416                                                                                 seed mass
-## 417                                                                     seed number per plant
-## 418                                                                         seeds per capsule
-## 419                                                                          seeds per catkin
-## 420                                                                            seed thickness
-## 421                                                                            seed toughness
-## 422                                                                               seed volume
-## 423                                                                                seed width
-## 424                                                                              sepal length
-## 425                                                                               sepal width
-## 426                                                                             shoot biomass
-## 427                                                                             shoot density
-## 428                                                                            shoot dry mass
-## 429                                                                              Shoot Height
-## 430                                                                                Shoot Mass
-## 431                                           shoot total non-structural carbohydrate content
-## 432                                                                       Shoot transpiration
-## 433                                                                        shoot weight ratio
-## 434                                                                          Single leaf area
-## 435                                                                          Single Leaf Area
-## 436                                                                    specific fibre surface
-## 437                                                                       specific peak force
-## 438                                                                        Specific Root Area
-## 439                                                               specific root tip abundance
-## 440                                                                   specific seed toughness
-## 441                                                                     specific stem density
-## 442                                                                           sprout dry mass
-## 443                                                                             sprout length
-## 444                                                                                  Stem 18O
-## 445                                                                           stem basal area
-## 446                                                                  stem basal area per area
-## 447                                                                              stem Ca mass
-## 448                                                                              Stem Ca mass
-## 449                                                                         stem circumfrence
-## 450                                                                              stem density
-## 451                                                                             stem diameter
-## 452                                                                             stem dry mass
-## 453                                                                   stem dry matter content
-## 454                                                                               stem height
-## 455                                                                                stem Kmass
-## 456                                                                   Stem:Leaf Biomass Ratio
-## 457                                                                              stem Mg mass
-## 458                                                                                Stem Nmass
-## 459                                                                                Stem Pmass
-## 460                                                                 stem relative growth rate
-## 461                                                                         stem straightness
-## 462                                                                               stem volume
-## 463                                                                        Stem water content
-## 464                                           stem wood carbon content per stem wood dry mass
-## 465                                                                         stem wood density
-## 466                                                                             stigma length
-## 467                                                                              stigma width
-## 468                                                                  Stomatal conductance CO2
-## 469                                                                          stomatal density
-## 470                                                                          Stomatal density
-## 471                                                                            stomata length
-## 472                                                                            stomatal index
-## 473                                                                      stump basal diameter
-## 474                                                                              style length
-## 475                                                                      style midpoint width
-## 476                                                                             Survival rate
-## 477                                                                           syconium height
-## 478                                                                           syconium volume
-## 479                                                                            syconium width
-## 480                                                                      tannin concentration
-## 481                                                                             total biomass
-## 482                                                                            total dry mass
-## 483                                                                          total fresh mass
-## 484                                                             total leaf area of 1-8 leaves
-## 485                                                                         total nodule mass
-## 486                                                                           total phenolics
-## 487                                                                             transpiration
-## 488                                                                      transversal porosity
-## 489                                                                           tree basal area
-## 490                                                                     Tree crown exposition
-## 491                                                                               tree height
-## 492                                                                         trichrome density
-## 493                                                                              trunk height
-## 494                                                                        vegetative biomass
-## 495                                                                 vein length per unit area
-## 496                                                                         vessel lumen area
-## 497                                                                             vessel number
-## 498                                                                   water storage cell size
-## 499                                                                      water use efficiency
-## 500                                                          whole plant aboveground dry mass
-## 501                                                        whole plant aboveground fresh mass
-## 502                                                        whole plant belowground fresh mass
-## 503                                                                   whole plant canopy area
-## 504                                                                whole plant crown dry mass
-## 505                                                            whole plant dispersal syndrome
-## 506                                                                    whole plant fresh mass
-## 507                                                                   whole plant growth form
-## 508                                                         whole plant growth form diversity
-## 509                                                                        whole plant height
-## 510                                                                     whole plant leaf area
-## 511                                            whole plant leaf area per whole plant dry mass
-## 512                                                               whole plant leaf fresh mass
-## 513                                                               whole plant longevity range
-## 514                                                whole plant primary juvenile period length
-## 515                                                         whole plant reproductive lifespan
-## 516                                                                 whole plant root dry mass
-## 517                                                               whole plant root fresh mass
-## 518                                                                 whole plant sexual system
-## 519                                                                 whole plant stem dry mass
-## 520                                                               whole plant stem fresh mass
-## 521                                                          whole plant vegetative phenology
-## 522                                                                     whole plant woodiness
-## 523                                                                                     width
-## 524                                                                                  Wood 15N
-## 525                                                                  wood acid detergen fiber
-## 526                                                                              wood Ca mass
-## 527                                                                        wood crude protein
-## 528                                                                              wood density
-## 529                                                                               wood lignin
-## 530                                                                              wood Mn mass
-## 531                                                              wood neutral detergent fiber
-## 532                                                                                wood Nmass
-## 533                                                                                Wood Nmass
-## 534                                                                                wood Pmass
-## 535                                                                            wood stiffness
-## 536                                                                     xylem vessel diameter
-## 537                                                                                      &lt;NA&gt;
+<pre><code>##                                         trait_name
+## 1                diameter at breast height (1.3 m)
+## 2                                     flower color
+## 3                      flower pollination syndrome
+## 4                                       fruit type
+## 5                             inflorescence length
+## 6                                        leaf area
+## 7                      leaf area per leaf dry mass
+## 8            leaf carbon content per leaf dry mass
+## 9    leaf carbon content per leaf nitrogen content
+## 10                               leaf compoundness
+## 11                                   leaf dry mass
+## 12               leaf dry mass per leaf fresh mass
+## 13                                 leaf fresh mass
+## 14                  Leaf lamina fracture toughness
+## 15                                  leaf life span
+## 16             leaf nitrogen content per leaf area
+## 17         leaf nitrogen content per leaf dry mass
+## 18           leaf phosphorus content per leaf area
+## 19       leaf phosphorus content per leaf dry mass
+## 20          leaf photosynthetic rate per leaf area
+## 21      leaf photosynthetic rate per leaf dry mass
+## 22                       leaf relative growth rate
+## 23 leaf stomatal conductance for H2O per leaf area
+## 24         leaf stomatal conductance per leaf area
+## 25                                  leaf thickness
+## 26                   longest whole plant longevity
+## 27                            maximum fruit length
+## 28                             maximum leaf length
+## 29                              maximum leaf width
+## 30                      maximum whole plant height
+## 31                   maximum whole plant longevity
+## 32                            minimum fruit length
+## 33                             minimum leaf length
+## 34                              minimum leaf width
+## 35                      minimum whole plant height
+## 36                           plant flowering begin
+## 37                        plant flowering duration
+## 38                         plant fruiting duration
+## 39                                   root dry mass
+## 40                                     seed length
+## 41                                       seed mass
+## 42                                   stem dry mass
+## 43                       stem relative growth rate
+## 44                               stem wood density
+## 45                               vessel lumen area
+## 46                                   vessel number
+## 47                  whole plant dispersal syndrome
+## 48                         whole plant growth form
+## 49               whole plant growth form diversity
+## 50                              whole plant height
+## 51      whole plant primary juvenile period length
+## 52                       whole plant sexual system
+## 53                whole plant vegetative phenology
+## 54                           whole plant woodiness
+## 55                                            &lt;NA&gt;
 </code></pre>
 
 <p>If we&#39;re interested in leaf area, we see that this is indeed called &ldquo;leaf area&rdquo; in the database.  Now that we know the proper spelling, we can use the function <code>BIEN_trait_trait</code> to download all observations of that trait.</p>
@@ -1314,7 +832,7 @@ Haiti_DR_from_codes &lt;- BIEN_list_country(country.code = c(&quot;HT&quot;,&quo
 </code></pre>
 
 <pre><code>##   db_version db_release_date
-## 1        4.0      2018-05-08
+## 1      4.0.1      2018-05-14
 </code></pre>
 
 <p>** Example 11: Citations**</p>

@@ -917,15 +917,18 @@ BIEN_occurrence_county<-function(country=NULL, state=NULL, county=NULL,country.c
 #' @param max.lat Maximum latitude
 #' @param min.long Minimum longitude
 #' @param max.long Maximum longitude
+#' @param species Optional.  A single species or a vector of species.
+#' @param genus Optional. A single genus or a vector of genera.
 #' @template occurrence
 #' @return Dataframe containing occurrence records for the specified area.
+#' @note Specifying species and/or genera will limit records returned to that set of taxa.
 #' @examples \dontrun{
 #' output_test<-
 #' BIEN_occurrence_box(min.lat = 32,max.lat = 33,min.long = -114,max.long = -113,
 #' cultivated = TRUE, only.new.world = FALSE)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=TRUE,collection.info=F, ...){
+BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,species=NULL,genus=NULL,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=TRUE,collection.info=F, ...){
   .is_num(min.lat)
   .is_num(max.lat)
   .is_num(min.long)
@@ -937,6 +940,8 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
   .is_log(natives.only)
   .is_log(observation.type)
   .is_log(collection.info)
+  .is_char(species)
+  .is_char(genus)
   
   #set conditions for query
   cultivated_<-.cultivated_check(cultivated)  
@@ -947,10 +952,13 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,cultivated=FALSE
   political_<-.political_check(political.boundaries)  
   natives_<-.natives_check(natives.only)
   collection_<-.collection_check(collection.info)
+  species_<-.species_check(species)
+  genus_<-.genus_check(genus)  
+  
   
   # set the query
   query <- paste("SELECT scrubbed_species_binomial", taxonomy_$select,political_$select,native_$select,",latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
-                 FROM view_full_occurrence_individual WHERE latitude between " , paste(shQuote(min.lat, type = "sh"),collapse = ', '), "AND " , paste(shQuote(max.lat, type = "sh"),collapse = ', '),"AND longitude between ", paste(shQuote(min.long, type = "sh"),collapse = ', '), "AND " , paste(shQuote(max.long, type = "sh"),collapse = ', '), cultivated_$query,newworld_$query,natives_$query,  "AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) 
+                 FROM view_full_occurrence_individual WHERE latitude between " , paste(shQuote(min.lat, type = "sh"),collapse = ', '), "AND " , paste(shQuote(max.lat, type = "sh"),collapse = ', '),"AND longitude between ", paste(shQuote(min.long, type = "sh"),collapse = ', '), "AND " , paste(shQuote(max.long, type = "sh"),collapse = ', '), cultivated_$query,newworld_$query,natives_$query, species_$query, genus_$query  ,  "AND higher_plant_group IS NOT NULL AND (is_geovalid = 1 OR is_geovalid IS NULL) 
                  ORDER BY scrubbed_species_binomial ;")
   
   return(.BIEN_sql(query, ...))
@@ -1923,7 +1931,7 @@ BIEN_trait_list<-function( ...){
 #'
 #'BIEN_trait_species extracts trait data for the species country.
 #' @param country A single country or a vector of countries.
-#' @param trait Optional.  The trait or traits you want returned.  If left blank, all traits will be returned.
+#' @param trait.name Optional.  The trait or traits you want returned.  If left blank, all traits will be returned.
 #' @template trait
 #' @return A dataframe of all available trait data for the given country.
 #' @examples \dontrun{
@@ -1936,6 +1944,7 @@ BIEN_trait_country<-function(country, trait.name=NULL, all.taxonomy = FALSE, pol
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
   .is_log(source.citation)
+  .is_char(trait.name)
   
   # set the query
   taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
@@ -2755,6 +2764,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #' @param trait.dataframe A data.frame of trait data downloaded from the BIEN R package.
 #' @param bibtex_file Output file for writing bibtex citations.
 #' @param acknowledgement_file Output file for writing acknowledgements.
+#' @param ... Additional arguments passed to internal functions.
 #' @return A list object containing information needed for data attribution.  Full information for herbaria is available at http://sweetgum.nybg.org/science/ih/
 #' @examples \dontrun{
 #' BIEN_metadata_citation()#If you are referencing the phylogeny or range maps.
@@ -2770,7 +2780,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
   BIEN_cite<-gsub(pattern = "\n",replacement = "",BIEN_cite)
   
   R_package_cite<-'@article{doi:10.1111/2041-210X.12861,
-  author = {Maitner Brian S. and Boyle Brad and Casler Nathan and Condit Rick and Donoghue John and Durán Sandra M. and Guaderrama Daniel and Hinchliff Cody E. and Jørgensen Peter M. and Kraft Nathan J.B. and McGill Brian and Merow Cory and Morueta‐Holme Naia and Peet Robert K. and Sandel Brody and Schildhauer Mark and Smith Stephen A. and Svenning Jens‐Christian and Thiers Barbara and Violle Cyrille and Wiser Susan and Enquist Brian J.},
+  author = {Maitner Brian S. and Boyle Brad and Casler Nathan and Condit Rick and Donoghue John and Duran Sandra M. and Guaderrama Daniel and Hinchliff Cody E. and Jorgensen Peter M. and Kraft Nathan J.B. and McGill Brian and Merow Cory and Morueta-Holme Naia and Peet Robert K. and Sandel Brody and Schildhauer Mark and Smith Stephen A. and Svenning Jens-Christian and Thiers Barbara and Violle Cyrille and Wiser Susan and Enquist Brian J.},
   title = {The bien r package: A tool to access the Botanical Information and Ecology Network (BIEN) database},
   journal = {Methods in Ecology and Evolution},
   volume = {9},
@@ -2780,7 +2790,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
   doi = {10.1111/2041-210X.12861},
   url = {https://besjournals.onlinelibrary.wiley.com/doi/abs/10.1111/2041-210X.12861},
   eprint = {https://besjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/2041-210X.12861},
-  abstract = {Abstract There is an urgent need for large‐scale botanical data to improve our understanding of community assembly, coexistence, biogeography, evolution, and many other fundamental biological processes. Understanding these processes is critical for predicting and handling human‐biodiversity interactions and global change dynamics such as food and energy security, ecosystem services, climate change, and species invasions. The Botanical Information and Ecology Network (BIEN) database comprises an unprecedented wealth of cleaned and standardised botanical data, containing roughly 81 million occurrence records from c. 375,000 species, c. 915,000 trait observations across 28 traits from c. 93,000 species, and co‐occurrence records from 110,000 ecological plots globally, as well as 100,000 range maps and 100 replicated phylogenies (each containing 81,274 species) for New World species. Here, we describe an r package that provides easy access to these data. The bien r package allows users to access the multiple types of data in the BIEN database. Functions in this package query the BIEN database by turning user inputs into optimised PostgreSQL functions. Function names follow a convention designed to make it easy to understand what each function does. We have also developed a protocol for providing customised citations and herbarium acknowledgements for data downloaded through the bien r package. The development of the BIEN database represents a significant achievement in biological data integration, cleaning and standardization. Likewise, the bien r package represents an important tool for open science that makes the BIEN database freely and easily accessible to everyone.}
+  abstract = {Abstract There is an urgent need for large-scale botanical data to improve our understanding of community assembly, coexistence, biogeography, evolution, and many other fundamental biological processes. Understanding these processes is critical for predicting and handling human-biodiversity interactions and global change dynamics such as food and energy security, ecosystem services, climate change, and species invasions. The Botanical Information and Ecology Network (BIEN) database comprises an unprecedented wealth of cleaned and standardised botanical data, containing roughly 81 million occurrence records from c. 375,000 species, c. 915,000 trait observations across 28 traits from c. 93,000 species, and co-occurrence records from 110,000 ecological plots globally, as well as 100,000 range maps and 100 replicated phylogenies (each containing 81,274 species) for New World species. Here, we describe an r package that provides easy access to these data. The bien r package allows users to access the multiple types of data in the BIEN database. Functions in this package query the BIEN database by turning user inputs into optimised PostgreSQL functions. Function names follow a convention designed to make it easy to understand what each function does. We have also developed a protocol for providing customised citations and herbarium acknowledgements for data downloaded through the bien r package. The development of the BIEN database represents a significant achievement in biological data integration, cleaning and standardization. Likewise, the bien r package represents an important tool for open science that makes the BIEN database freely and easily accessible to everyone.}
   }' 
   
   R_package_cite<-gsub(pattern = "\n",replacement = "",R_package_cite)
