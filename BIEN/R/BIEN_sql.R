@@ -13,6 +13,7 @@
 #' @param plot_metadata Alternative value to be substituted for "plot_metadata" in queries when not NULL.
 #' @param analytical_stem Alternative value to be substituted for "analytical_stem" in queries when not NULL.
 #' @param datasource Alternative value to be substituted for "datasource" in queries when not NULL.
+#' @param centroid Alternative value to be substituted for "centroid" in queries when not NULL.
 #' @param limit A limit on the number of records to be returned.  Should be a single number or NULL (the default).
 #' @param return.query Should  the query used be returned rather than executed?  Default is FALSE
 #' @param schema An alternative schema to be accessed.  Used for testing purposes.
@@ -25,7 +26,7 @@
 #' WHERE country in ( 'United States' );")}
 .BIEN_sql<-function(query,view_full_occurrence_individual=NULL,agg_traits=NULL,species_by_political_division=NULL,
                     bien_species_all=NULL,ranges=NULL,bien_taxonomy=NULL,phylogeny=NULL,bien_metadata=NULL,plot_metadata=NULL,
-                    analytical_stem=NULL,datasource=NULL,limit=NULL,return.query=FALSE,schema=NULL,print.query=FALSE){
+                    analytical_stem=NULL,datasource=NULL,centroid=NULL,limit=NULL,return.query=FALSE,schema=NULL,print.query=FALSE){
   .is_char(query)
 
   
@@ -47,7 +48,7 @@
     plot_metadata <- paste(schema,"plot_metadata",sep = ".")
     analytical_stem <- paste(schema,"analytical_stem",sep = ".")
     datasource <- paste(schema,"datasource",sep = ".")
-    
+    centroid <- paste(schema,"centroid",sep = ".")
   }
   
   
@@ -89,6 +90,8 @@
   if(!is.null(datasource)){
     query<-gsub(pattern = "(?<=\\s)datasource(?=\\s)",replacement = datasource,x = query,perl = T)}  
   
+  if(!is.null(centroid)){
+    query<-gsub(pattern = "(?<=\\s)centroid(?=\\s)",replacement = datasource,x = query,perl = T)}  
   
   
   if(!is.null(limit)){
