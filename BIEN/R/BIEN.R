@@ -2311,6 +2311,74 @@ BIEN_plot_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=N
   return(.BIEN_sql(query, ...))
   
   }
+###############################
+
+#'Download plot data from specified spatialPolygons object.
+#'
+#'BIEN_plot_spatialpolygons downloads all plot data falling within a supplied spatialPolygon.
+#' @param spatialpolygons An object of class SpatialPolygons or SpatialPolygonsDataFrame.  Note that the file must be in WGS84.
+#' @template plot
+#' @return A dataframe containing all data from the specified spatialPolygon.
+#' @examples \dontrun{
+#' BIEN_plot_state(country="United States", state="Colorado")
+#' BIEN_plot_state(country="United States",state= c("Colorado","California"))
+#' library(rgdal)
+#' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
+#' sp<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
+#' saguaro_plot_data<-BIEN_plot_spatialpolygons(spatialpolygons=sp)}
+#' @family plot functions
+#' @export
+BIEN_plot_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
+  .is_log(cultivated)
+  .is_log(only.new.world)
+  .is_log(all.taxonomy)
+  .is_log(native.status)
+  .is_log(natives.only)
+  .is_log(political.boundaries)
+  .is_log(collection.info)
+  .is_log(all.metadata)
+  
+  
+  wkt<-rgeos::writeWKT(spatialpolygons)
+  
+  #set conditions for query
+  cultivated_<-.cultivated_check_plot(cultivated)
+  newworld_<-.newworld_check_plot(only.new.world)
+  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
+  native_<-.native_check_plot(native.status)
+  natives_<-.natives_check_plot(natives.only)
+  collection_<-.collection_check_plot(collection.info)
+  md_<-.md_check_plot(all.metadata)
+  
+  if(!political.boundaries){
+    political_select<-"view_full_occurrence_individual.country,"
+  }else{
+    political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
+  }
+  
+  
+  # set the query
+  query <- paste("SELECT ",political_select," view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, 
+                 view_full_occurrence_individual.plot_area_ha,view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count",
+                 taxonomy_$select,native_$select," ,view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,
+                 view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,
+                 collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,md_$select,"
+                 FROM 
+                 (SELECT * FROM view_full_occurrence_individual ",
+                 
+                 "WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom) ",cultivated_$query,newworld_$query,natives_$query,  "
+                 AND higher_plant_group IS NOT NULL AND (view_full_occurrence_individual.is_geovalid = 1 OR view_full_occurrence_individual.is_geovalid IS NULL) 
+                 AND observation_type='plot' 
+                 ORDER BY country,plot_name,subplot,scrubbed_species_binomial) as view_full_occurrence_individual 
+                 JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
+                 ;")
+  
+  # create query to retrieve
+  return(.BIEN_sql(query, ...))
+  
+}
+
+
 
 ###############################
 #'List available sampling protocols.

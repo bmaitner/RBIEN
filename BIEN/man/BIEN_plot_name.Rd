@@ -53,5 +53,6 @@ Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_list_sampling_protocols}},
   \code{\link{BIEN_plot_metadata}},
   \code{\link{BIEN_plot_sampling_protocol}},
+  \code{\link{BIEN_plot_spatialpolygons}},
   \code{\link{BIEN_plot_state}}
 }
