@@ -23,5 +23,6 @@ Information on the construction of the BIEN phylogenies is available online at h
 BIEN_phylo<-BIEN_phylogeny_conservative()}
 }
 \seealso{
-Other phylogeny functions: \code{\link{BIEN_phylogeny_complete}}
+Other phylogeny functions: \code{\link{BIEN_phylogeny_complete}},
+  \code{\link{BIEN_phylogeny_label_nodes}}
 }

@@ -2755,6 +2755,87 @@ BIEN_phylogeny_conservative<-function(...){
   
 }
 
+#################################
+
+
+#'Label nodes on a phylogeny
+#'
+#'BIEN_phylogeny_label_nodes will label the nodes on a phylogeny based on either the BIEN taxonomy or user-supplied taxa.
+#' @param phylogeny A single phylogeny.
+#' @param family Should family-level nodes be labeled?  Default is TRUE.
+#' @param genus Should genus-level nodes be labeled?  Default is FALSE.  Overwrites family-level nodes where a family contains a single genera.
+#' @param other_taxa A dataframe containing two columns: 1) the taxa to be labelled; 2) the species associated with each taxon.
+#' @template phylogeny
+#' @return Input phylogeny with labeled nodes.
+#' @examples \dontrun{
+#' phylogeny<-BIEN_phylogeny_conservative()
+#'
+#'phylogeny<-drop.tip(phy = phylogeny,tip = 101:length(phylogeny$tip.label))
+#'plot.phylo(x = phylogeny,show.tip.label = F)
+#'
+#'fam_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = T)
+#'plot.phylo(x = fam_nodes,show.tip.label = F,show.node.label = T)
+#'
+#'gen_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = F,genus = T)
+#'plot.phylo(x = gen_nodes,show.tip.label = F,show.node.label = T)
+#'
+#'other_taxa<-as.data.frame(matrix(nrow = 10,ncol = 2))
+#'colnames(other_taxa)<-c("taxon","species")
+#'other_taxa$taxon[1:5]<-"A" #Randomly assign a few species to taxon A
+#'other_taxa$taxon[6:10]<-"B" #Randomly assign a few species to taxon B
+#'tax_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = F,genus = F,other_taxa = other_taxa)
+#'plot.phylo(x = tax_nodes,show.tip.label = F,show.node.label = T)}
+#' @family phylogeny functions
+#' @export
+BIEN_phylogeny_label_nodes<-function(phylogeny,family=T,genus=F,other_taxa=NULL){
+  
+  if(is.null(phylogeny$node.label)){
+    phylogeny$node.label[1:phylogeny$Nnode]<-NA
+  }
+  
+  taxonomy <- BIEN_taxonomy_species(species = gsub(pattern = "_",replacement = " ",x = phylogeny$tip.label))
+  
+  if(family==T){
+    for(i in 1:length(unique(taxonomy$scrubbed_family))){
+      
+      fam_i <- unique(taxonomy$scrubbed_family)[i]  
+      spp_i <- taxonomy$scrubbed_species_binomial[which(taxonomy$scrubbed_family == fam_i)]
+      mrca_i <- ape::getMRCA(phy = phylogeny,
+                             tip = which(phylogeny$tip.label %in% gsub(pattern = " ",replacement = "_", x = spp_i   ) )) 
+      phylogeny$node.label[mrca_i-length(phylogeny$tip.label)]<-fam_i  
+      
+    }}
+  
+  if(genus==T){
+    for(i in 1:length(unique(taxonomy$scrubbed_genus))){
+      
+      gen_i <- unique(taxonomy$scrubbed_genus)[i]  
+      spp_i <- taxonomy$scrubbed_species_binomial[which(taxonomy$scrubbed_genus == gen_i)]
+      mrca_i <- ape::getMRCA(phy = phylogeny,
+                             tip = which(phylogeny$tip.label %in% gsub(pattern = " ",replacement = "_", x = spp_i   ) )) 
+      phylogeny$node.label[mrca_i-length(phylogeny$tip.label)]<-gen_i  
+      
+    }}
+  
+  
+  if(!is.null(other_taxa)){
+    for(i in 1:length(unique(other_taxa[,1]))){
+      
+      tax_i <- unique(other_taxa[,1])[i]  
+      spp_i <- other_taxa[,2][which(other_taxa[,1]==tax_i)]
+      mrca_i <- ape::getMRCA(phy = phylogeny,
+                             tip = which(phylogeny$tip.label %in% gsub(pattern = " ",replacement = "_", x = spp_i   ) )) 
+      phylogeny$node.label[mrca_i-length(phylogeny$tip.label)]<-tax_i  
+      
+    }}
+  
+  
+  return(phylogeny)  
+  
+  
+  
+}#end fx
+
 
 #################################
 

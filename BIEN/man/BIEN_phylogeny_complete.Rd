@@ -31,5 +31,6 @@ phylos<-BIEN_phylogeny_complete(n_phylogenies = 10,seed = 1)
 phylos<-BIEN_phylogeny_complete(replicates = c(1,2,99,100))}
 }
 \seealso{
-Other phylogeny functions: \code{\link{BIEN_phylogeny_conservative}}
+Other phylogeny functions: \code{\link{BIEN_phylogeny_conservative}},
+  \code{\link{BIEN_phylogeny_label_nodes}}
 }
