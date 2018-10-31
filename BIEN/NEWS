@@ -1,8 +1,11 @@
 BIEN 1.2.4
 ===============
 ## NEW FEATURES
+* BIEN database updated to 4.1
+* Updated functions to utilize new validations (e.g. is_centroid)
 * Added BIEN_trait_country function
 * BIEN_occurrence_box now offers the ability to constrain records by species and/or genus.
+* Added function BIEN_phylogeny_label_nodes().
 
 ## BUG FIXES
 * Fixed bug that occaisionally occured with trait citations.
@@ -16,7 +19,7 @@ BIEN 1.2.3
 * Added functionality to notify users of important updates and upcoming updates to the database.
 
 ## BUG FIXES
-* Fixed rare bug caused when specifying a "limit" in functions relying on spatialpolygons
+* Fixed rare bug arising when specifying a "limit" in functions relying on spatialpolygons
 
 
 BIEN 1.2.1

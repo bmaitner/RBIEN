@@ -97,7 +97,7 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.
   
   # set the query
   query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," , latitude, longitude,date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,a.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"FROM 
-                 (SELECT * FROM view_full_occurrence_individual WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0)   AND latitude BETWEEN ",lat_min," AND ",lat_max,"AND longitude BETWEEN ",long_min," AND ",long_max,") a 
+                 (SELECT * FROM view_full_occurrence_individual WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0)   AND latitude BETWEEN ",lat_min," AND ",lat_max,"AND longitude BETWEEN ",long_min," AND ",long_max,") a 
                  WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_$query,newworld_$query,natives_$query, "AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0)    ORDER BY scrubbed_species_binomial ;")
   
   # create query to retrieve
@@ -2438,7 +2438,7 @@ BIEN_plot_sampling_protocol <- function (sampling_protocol, cultivated = FALSE, 
                  FROM (SELECT * FROM view_full_occurrence_individual 
                  WHERE view_full_occurrence_individual.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"), collapse = ", "), ")",
                  cultivated_$query, newworld_$query, natives_$query, 
-                 "AND AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
+                 "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
                  AND (view_full_occurrence_individual.is_geovalid = 1 ) AND (view_full_occurrence_individual.georef_protocol is NULL OR view_full_occurrence_individual.georef_protocol<>'county centroid') AND (view_full_occurrence_individual.is_centroid IS NULL OR view_full_occurrence_individual.is_centroid=0) 
                  AND view_full_occurrence_individual.observation_type='plot' 
                  ORDER BY view_full_occurrence_individual.country,view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, 
@@ -2783,7 +2783,8 @@ BIEN_phylogeny_conservative<-function(...){
 #'colnames(other_taxa)<-c("taxon","species")
 #'other_taxa$taxon[1:5]<-"A" #Randomly assign a few species to taxon A
 #'other_taxa$taxon[6:10]<-"B" #Randomly assign a few species to taxon B
-#'tax_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = F,genus = F,other_taxa = other_taxa)
+#'tax_nodes <- 
+#'  BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = F,genus = F,other_taxa = other_taxa)
 #'plot.phylo(x = tax_nodes,show.tip.label = F,show.node.label = T)}
 #' @family phylogeny functions
 #' @export
@@ -3258,7 +3259,7 @@ BIEN_stem_species<-function(species,cultivated=FALSE,only.new.world=FALSE,all.ta
                  (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
                  vfoi_$join ," 
                  WHERE analytical_stem.scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",
-                 cultivated_$query,newworld_$query,natives_$query,  "AND AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0) 
+                 cultivated_$query,newworld_$query,natives_$query,  "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0) 
                  ORDER BY analytical_stem.scrubbed_species_binomial ;")
   
   return(.BIEN_sql(query, ...))
@@ -3316,7 +3317,7 @@ BIEN_stem_family<-function(family,cultivated=FALSE,only.new.world=FALSE,all.taxo
                  (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
                  vfoi_$join ," 
                  WHERE analytical_stem.scrubbed_family in (", paste(shQuote(family, type = "sh"),collapse = ', '), ")",
-                 cultivated_$query,newworld_$query,natives_$query,  "AND AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
+                 cultivated_$query,newworld_$query,natives_$query,  "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
                  ORDER BY analytical_stem.scrubbed_genus, analytical_stem.scrubbed_species_binomial ;")
   
   return(.BIEN_sql(query, ...))
@@ -3372,7 +3373,7 @@ BIEN_stem_genus<-function(genus,cultivated=FALSE,only.new.world=FALSE,all.taxono
                  (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
                  vfoi_$join ," 
                  WHERE analytical_stem.scrubbed_genus in (", paste(shQuote(genus, type = "sh"),collapse = ', '), ")",
-                 cultivated_$query,newworld_$query,natives_$query, "AND AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
+                 cultivated_$query,newworld_$query,natives_$query, "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
                  ORDER BY analytical_stem.scrubbed_genus, analytical_stem.scrubbed_species_binomial ;")
   
   return(.BIEN_sql(query, ...))
@@ -3427,7 +3428,7 @@ BIEN_stem_datasource<-function(datasource,cultivated=FALSE,only.new.world=FALSE,
                  (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
                  vfoi_$join ," 
                  WHERE analytical_stem.datasource in (", paste(shQuote(datasource, type = "sh"),collapse = ', '), ")",
-                 cultivated_$query,newworld_$query,native_$query,  "AND AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
+                 cultivated_$query,newworld_$query,native_$query,  "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
                  ORDER BY analytical_stem.scrubbed_species_binomial ;")
   
   return(.BIEN_sql(query, ...))
@@ -3482,7 +3483,7 @@ BIEN_stem_sampling_protocol<-function(sampling_protocol,cultivated=FALSE,only.ne
                  (analytical_stem.plot_metadata_id= plot_metadata.plot_metadata_id)",
                  vfoi_$join ," 
                  WHERE analytical_stem.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"),collapse = ', '), ")",
-                 cultivated_$query,newworld_$query,natives_$query,  "AND AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
+                 cultivated_$query,newworld_$query,natives_$query,  "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (analytical_stem.is_geovalid = 1) AND (analytical_stem.georef_protocol is NULL OR analytical_stem.georef_protocol<>'county centroid') AND (analytical_stem.is_centroid IS NULL OR analytical_stem.is_centroid=0)  
                  ORDER BY analytical_stem.scrubbed_species_binomial ;")
   
   return(.BIEN_sql(query, ...))
