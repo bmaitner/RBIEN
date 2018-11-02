@@ -2438,8 +2438,10 @@ BIEN_plot_sampling_protocol <- function (sampling_protocol, cultivated = FALSE, 
                  FROM (SELECT * FROM view_full_occurrence_individual 
                  WHERE view_full_occurrence_individual.sampling_protocol in (", paste(shQuote(sampling_protocol, type = "sh"), collapse = ", "), ")",
                  cultivated_$query, newworld_$query, natives_$query, 
-                 "AND analytical_stem.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
-                 AND (view_full_occurrence_individual.is_geovalid = 1 ) AND (view_full_occurrence_individual.georef_protocol is NULL OR view_full_occurrence_individual.georef_protocol<>'county centroid') AND (view_full_occurrence_individual.is_centroid IS NULL OR view_full_occurrence_individual.is_centroid=0) 
+                 "AND view_full_occurrence_individual.higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
+                 AND (view_full_occurrence_individual.is_geovalid = 1 ) 
+                 AND (view_full_occurrence_individual.georef_protocol is NULL OR view_full_occurrence_individual.georef_protocol<>'county centroid') 
+                 AND (view_full_occurrence_individual.is_centroid IS NULL OR view_full_occurrence_individual.is_centroid=0) 
                  AND view_full_occurrence_individual.observation_type='plot' 
                  ORDER BY view_full_occurrence_individual.country,view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, 
                  view_full_occurrence_individual.scrubbed_species_binomial) as view_full_occurrence_individual
@@ -2784,7 +2786,8 @@ BIEN_phylogeny_conservative<-function(...){
 #'other_taxa$taxon[1:5]<-"A" #Randomly assign a few species to taxon A
 #'other_taxa$taxon[6:10]<-"B" #Randomly assign a few species to taxon B
 #'tax_nodes <- 
-#'  BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = F,genus = F,other_taxa = other_taxa)
+#'  BIEN_phylogeny_label_nodes(phylogeny = phylogeny,
+#'                             family = F,genus = F,other_taxa = other_taxa)
 #'plot.phylo(x = tax_nodes,show.tip.label = F,show.node.label = T)}
 #' @family phylogeny functions
 #' @export
