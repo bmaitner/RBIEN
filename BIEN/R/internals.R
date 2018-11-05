@@ -8,11 +8,11 @@
 #' @keywords internal
 .cultivated_check<-function(cultivated){
   if(!cultivated){
-    query<-"AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)"
+    query<-"AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) AND is_location_cultivated IS NULL"
     select<-""
   }else{
     query<-""
-    select<-",is_cultivated_observation,is_cultivated_in_region"
+    select<-",is_cultivated_observation,is_cultivated_in_region, is_location_cultivated"
   }
   
   output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
@@ -246,11 +246,11 @@ if(all.taxonomy){
 #' @keywords internal
 .cultivated_check_plot<-function(cultivated){
   if(!cultivated){
-    query<-"AND (view_full_occurrence_individual.is_cultivated_observation = 0 OR view_full_occurrence_individual.is_cultivated_observation IS NULL)"
+    query<-"AND (view_full_occurrence_individual.is_cultivated_observation = 0 OR view_full_occurrence_individual.is_cultivated_observation IS NULL) AND view_full_occurrence_individual.is_location_cultivated IS NULL"
     select<-""
   }else{
     query<-""
-    select<-",view_full_occurrence_individual.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region"
+    select<-",view_full_occurrence_individual.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region,view_full_occurrence_individual.is_location_cultivated"
   }
   output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
   colnames(output)<-c("query","select")
@@ -477,11 +477,11 @@ if(all.taxonomy){
 .cultivated_check_stem<-function(cultivated){    
   
   if(!cultivated){
-    query<-"AND (analytical_stem.is_cultivated_observation = 0 OR analytical_stem.is_cultivated_observation IS NULL)"
+    query<-"AND (analytical_stem.is_cultivated_observation = 0 OR analytical_stem.is_cultivated_observation IS NULL) AND analytical_stem.is_location_cultivated IS NULL"
     select<-""
   }else{
     query<-""
-    select<-",analytical_stem.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region"
+    select<-",analytical_stem.is_cultivated_observation,view_full_occurrence_individual.is_cultivated_in_region,analytical_stem.is_location_cultivated"
   }
   
   

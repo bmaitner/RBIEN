@@ -6,6 +6,7 @@ BIEN 1.2.4
 * Added BIEN_trait_country function
 * BIEN_occurrence_box now offers the ability to constrain records by species and/or genus.
 * Added function BIEN_phylogeny_label_nodes().
+* Now excluding locations known to be cultivated by default (using is_location_cultivated field)
 
 ## BUG FIXES
 * Fixed bug that occaisionally occured with trait citations.
