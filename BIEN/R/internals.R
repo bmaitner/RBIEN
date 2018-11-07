@@ -134,7 +134,7 @@
   if(!natives.only){
     query<-""
   }else{
-    query<-"AND ( native_status IS NULL OR native_status NOT IN ( 'I', 'Ie' ) )"
+    query<-"AND (is_introduced=0 OR is_introduced IS NULL) "
   }  
   
   output<-as.data.frame(cbind(query),stringsAsFactors = F)  
@@ -341,7 +341,7 @@ if(all.taxonomy){
   if(!natives.only){
     query<-""
   }else{
-    query<-"AND ( view_full_occurrence_individual.native_status IS NULL OR view_full_occurrence_individual.native_status NOT IN ( 'I', 'Ie' ) )"
+    query<-"AND (view_full_occurrence_individual.is_introduced=0 OR view_full_occurrence_individual.is_introduced IS NULL) "
   }  
   
   output<-as.data.frame(cbind(query),stringsAsFactors = F)  
@@ -562,7 +562,7 @@ if(all.taxonomy){
   if(!natives.only){
     query<-""
   }else{
-    query<-"AND ( view_full_occurrence_individual.native_status IS NULL OR view_full_occurrence_individual.native_status NOT IN ( 'I', 'Ie' ) )"
+    query<-"AND (view_full_occurrence_individual.is_introduced=0 OR view_full_occurrence_individual.is_introduced IS NULL)"
   }  
   
   output<-as.data.frame(cbind(query),stringsAsFactors = F)  
