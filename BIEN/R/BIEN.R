@@ -1729,7 +1729,7 @@ BIEN_ranges_shapefile_to_skinny<-function(directory, raster, skinny_ranges_file=
 
 #'Build a richness raster from a skinny range file
 #'
-#'BIEN_skinny_ranges_to_richness_raster takes in "skinny" range data and converts it to a richness raster.
+#'BIEN_ranges_skinny_ranges_to_richness_raster takes in "skinny" range data and converts it to a richness raster.
 #' @param skinny_ranges A matrix output by the function "BIEN_ranges_skinny" or equivalent methods.
 #' @param raster The raster that was used in building the skinny_ranges matrix.
 #' @return Raster
@@ -1748,14 +1748,14 @@ BIEN_ranges_shapefile_to_skinny<-function(directory, raster, skinny_ranges_file=
 #' raster = template_raster)
 #' 
 #' #Convert from skinny format to richness raster                                                 
-#' richness_raster<- BIEN_skinny_ranges_to_richness_raster(
+#' richness_raster<- BIEN_ranges_skinny_ranges_to_richness_raster(
 #'  skinny_ranges = skinny_ranges,raster = template_raster)
 #'  
 #'  plot(richness_raster)
 #' }
 #' @family range functions
 #' @export
-BIEN_skinny_ranges_to_richness_raster<-function(skinny_ranges,raster){
+BIEN_ranges_skinny_ranges_to_richness_raster<-function(skinny_ranges,raster){
   
   #Create empty output raster
   output_raster<-raster
