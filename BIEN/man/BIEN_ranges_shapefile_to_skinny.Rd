@@ -22,7 +22,9 @@ BIEN_ranges_shapefile_to_skinny converts ranges to a "skinny" format to save spa
 \examples{
 \dontrun{
 BIEN_ranges_shapefile_to_skinny(directory = BIEN_ranges_species_bulk(species = c("Acer rubrum")),
-raster = raster::raster(crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
+raster = raster::raster(crs=CRS( 
+"+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
+ +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
 ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
 )
 }

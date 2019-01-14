@@ -1146,6 +1146,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #' }
 #' @family range functions
 #' @export
+#' @import foreach
 BIEN_ranges_species_bulk<-function(species=NULL, directory=NULL,batch_size=1000, return_directory=TRUE){
   
   #Set species list and directory if NULL
@@ -1165,15 +1166,15 @@ BIEN_ranges_species_bulk<-function(species=NULL, directory=NULL,batch_size=1000,
     
     
     #Download range maps
-    cl<-makePSOCKcluster(detectCores())
+    cl<-parallel::makePSOCKcluster(parallel::detectCores())
     
-    doParallel::registerDoParallel(cl = cl,cores = detectCores())
+    doParallel::registerDoParallel(cl = cl,cores = parallel::detectCores())
     
-    foreach(i = 1:ceiling(length(species)/batch_size  )) %dopar%
+    foreach::foreach(i = 1:ceiling(length(species)/batch_size  )) %dopar%
       
       BIEN::BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],directory = file.path(directory,i),matched = F)
     
-    stopCluster(cl)
+    parallel::stopCluster(cl)
     rm(cl)
     
   }else{
@@ -1684,7 +1685,9 @@ BIEN_ranges_list<-function( ...){
 #' @return Matrix containing 2 columns: 1) Species name; and 2) the raster cell number it occurs within.
 #' @examples \dontrun{
 #' BIEN_ranges_shapefile_to_skinny(directory = BIEN_ranges_species_bulk(species = c("Acer rubrum")),
-#' raster = raster::raster(crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
+#' raster = raster::raster(crs=CRS( 
+#' "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
+#'  +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
 #' ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
 #' )
 #' }
@@ -1700,12 +1703,12 @@ BIEN_ranges_shapefile_to_skinny<-function(directory, raster, skinny_ranges_file=
   for(i in range_maps){
     
     #print(i)
-    map_i<-read_sf(i)  
-    map_i<-st_transform(x = map_i,crs = paste(raster@crs))
+    map_i<-sf::read_sf(i)  
+    map_i<-sf::st_transform(x = map_i,crs = paste(raster@crs))
     raster_i<-fasterize::fasterize(sf = map_i,raster = raster,fun = "any")
     
-    if(length(which(getValues(raster_i)>0))>0){
-      skinny_occurrences<-rbind(skinny_occurrences,cbind(map_i$Species,which(getValues(raster_i)>0)))
+    if(length(which(raster::getValues(raster_i)>0))>0){
+      skinny_occurrences<-rbind(skinny_occurrences,cbind(map_i$Species,which(raster::getValues(raster_i)>0)))
     }#end if statement
   }#end i loop
   
@@ -1734,17 +1737,21 @@ BIEN_ranges_shapefile_to_skinny<-function(directory, raster, skinny_ranges_file=
 #' 
 #' 
 #' #Make a raster that will be used to calculate richness
-#' template_raster <- raster::raster(crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
-#'                                            +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
-#'                                            ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
+#' template_raster <- raster::raster(
+#' crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
+#'  +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
+#'  ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
 #' 
 #' #Download ranges and convert to a "skinny" format
-#' skinny_ranges <- BIEN_ranges_shapefile_to_skinny(directory = BIEN_ranges_species_bulk(species = c("Acer rubrum"),
-#'                                                                      raster = template_raster)
-#' #Convert from skinny format to richness raster                                                 
-#' richness_raster<- BIEN_skinny_ranges_to_richness_raster(skinny_ranges = skinny_ranges,raster = template_raster)                                                
+#' skinny_ranges <- BIEN_ranges_shapefile_to_skinny(
+#' directory = BIEN_ranges_species_bulk(species = c("Acer rubrum"), 
+#' raster = template_raster)
 #' 
-#' plot(richness_raster)
+#' #Convert from skinny format to richness raster                                                 
+#' richness_raster<- BIEN_skinny_ranges_to_richness_raster(
+#'  skinny_ranges = skinny_ranges,raster = template_raster)
+#'  
+#'  plot(richness_raster)
 #' }
 #' @family range functions
 #' @export
@@ -1752,7 +1759,7 @@ BIEN_skinny_ranges_to_richness_raster<-function(skinny_ranges,raster){
   
   #Create empty output raster
   output_raster<-raster
-  output_raster<-setValues(x = output_raster,values = NA)
+  output_raster<-raster::setValues(x = output_raster,values = NA)
   
   #iterate through all cells with at least one occurrence, record 
   

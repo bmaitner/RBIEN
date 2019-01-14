@@ -14,7 +14,13 @@ Imports:
     sp,
     DBI,
     ape,
-    methods
+    methods,
+    sf,
+    fasterize,
+    raster,
+    doParallel,
+    parallel,
+    foreach
 Suggests:
     knitr,
     rmarkdown,
