@@ -1128,6 +1128,74 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
     
   } #matched_names_only ==TRUE
 }
+
+####################################
+
+#'Extract range data for large numbers of species
+#'
+#'BIEN_ranges_species_bulk downloads ranges for a large number of species using parrallel processing.
+#' @param species A vector of species or NULL (the default).  If NULL, all available ranges will be used.
+#' @param directory The directory where range shapefiles will be stored.  If NULL, a tempprary directoray will be used.
+#' @param batch_size The number of ranges to download at once.
+#' @param return_directory Should the directory be returned? Default is TRUE
+#' @return Optionally, the directory to which the files were saved.
+#' @note This function may take a long time (hours) to run depending on the number of cores, download speed, etc.
+#' @examples \dontrun{
+#' #To download all BIEN ranges maps:
+#' BIEN_ranges_species_bulk()
+#' }
+#' @family range functions
+#' @export
+BIEN_ranges_species_bulk<-function(species=NULL, directory=NULL,batch_size=1000, return_directory=TRUE){
+  
+  #Set species list and directory if NULL
+  
+  if(is.null(species)){ species <- BIEN_ranges_list()$species }  
+  
+  if(is.null(directory)){directory <- file.path(tempdir(), "BIEN_temp")
+  print(paste("Files will be saved to ",directory))}  
+  
+  if(!file.exists(directory)){
+    dir.create(directory)
+  }
+  
+  
+  
+  if(nzchar(system.file(package = "doParallel"))  & nzchar(system.file(package = "foreach")) ){
+    
+    
+    #Download range maps
+    cl<-makePSOCKcluster(detectCores())
+    
+    doParallel::registerDoParallel(cl = cl,cores = detectCores())
+    
+    foreach(i = 1:ceiling(length(species)/batch_size  )) %dopar%
+      
+      BIEN::BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],directory = file.path(directory,i),matched = F)
+    
+    stopCluster(cl)
+    rm(cl)
+    
+  }else{
+    
+    
+    for(i in 1:ceiling(length(species)/batch_size  )){
+      
+      BIEN::BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],directory = file.path(directory,i),matched = F)
+      
+    }
+    
+  }
+  
+  
+  
+  
+  if(return_directory){return(directory)}
+  
+}#end fx
+
+
+
 ####################################
 #'Download range maps for given genus.
 #'
@@ -1605,6 +1673,97 @@ BIEN_ranges_list<-function( ...){
   
 }
 
+########################################
+
+#'Extract range data and convert to smaller "skinny" format
+#'
+#'BIEN_ranges_shapefile_to_skinny converts ranges to a "skinny" format to save space.
+#' @param directory The directory where range shapefiles will be stored.  If NULL, a tempprary directoray will be used.
+#' @param raster A raster (which must have a CRS specified) to be used for rasterizing the ranges.
+#' @param skinny_ranges_file A filename that will be used to write the skinny ranges will be written to (RDS format).  If NULL, this will not be written.
+#' @return Matrix containing 2 columns: 1) Species name; and 2) the raster cell number it occurs within.
+#' @examples \dontrun{
+#' BIEN_ranges_shapefile_to_skinny(directory = BIEN_ranges_species_bulk(species = c("Acer rubrum")),
+#' raster = raster::raster(crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
+#' ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
+#' )
+#' }
+#' @family range functions
+#' @export
+BIEN_ranges_shapefile_to_skinny<-function(directory, raster, skinny_ranges_file=NULL){
+  
+  
+  range_maps<-list.files(path = directory,pattern = ".shp",full.names = T,recursive = T)
+  
+  skinny_occurrences<-NULL
+  
+  for(i in range_maps){
+    
+    #print(i)
+    map_i<-read_sf(i)  
+    map_i<-st_transform(x = map_i,crs = paste(raster@crs))
+    raster_i<-fasterize::fasterize(sf = map_i,raster = raster,fun = "any")
+    
+    if(length(which(getValues(raster_i)>0))>0){
+      skinny_occurrences<-rbind(skinny_occurrences,cbind(map_i$Species,which(getValues(raster_i)>0)))
+    }#end if statement
+  }#end i loop
+  
+  
+  
+  #Save skinny occurrences if filename specified
+  
+  if(!is.null(skinny_ranges_file)){
+    saveRDS(object = skinny_occurrences,file = skinny_ranges_file)  
+  }
+  
+  #return skinny occurrences
+  return(skinny_occurrences)
+  
+}#end fx
+
+########################################
+
+#'Build a richness raster from a skinny range file
+#'
+#'BIEN_skinny_ranges_to_richness_raster takes in "skinny" range data and converts it to a richness raster.
+#' @param skinny_ranges A matrix output by the function "BIEN_ranges_skinny" or equivalent methods.
+#' @param raster The raster that was used in building the skinny_ranges matrix.
+#' @return Raster
+#' @examples \dontrun{
+#' 
+#' 
+#' #Make a raster that will be used to calculate richness
+#' template_raster <- raster::raster(crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
+#'                                            +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
+#'                                            ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
+#' 
+#' #Download ranges and convert to a "skinny" format
+#' skinny_ranges <- BIEN_ranges_shapefile_to_skinny(directory = BIEN_ranges_species_bulk(species = c("Acer rubrum"),
+#'                                                                      raster = template_raster)
+#' #Convert from skinny format to richness raster                                                 
+#' richness_raster<- BIEN_skinny_ranges_to_richness_raster(skinny_ranges = skinny_ranges,raster = template_raster)                                                
+#' 
+#' plot(richness_raster)
+#' }
+#' @family range functions
+#' @export
+BIEN_skinny_ranges_to_richness_raster<-function(skinny_ranges,raster){
+  
+  #Create empty output raster
+  output_raster<-raster
+  output_raster<-setValues(x = output_raster,values = NA)
+  
+  #iterate through all cells with at least one occurrence, record 
+  
+  output_raster[as.numeric(unique(skinny_ranges[,2]))] <- sapply(X = unique(skinny_ranges[,2]),FUN = function(x){ length(unique(skinny_ranges[which(skinny_ranges[,2]==x),1]))} )
+  
+  #return output raster  
+  
+  return(output_raster)
+  
+  
+}
 
 
 ########################################
