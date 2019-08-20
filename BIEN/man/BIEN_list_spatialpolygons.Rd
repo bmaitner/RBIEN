@@ -12,7 +12,7 @@ BIEN_list_spatialpolygons(spatialpolygons, cultivated = FALSE,
 
 \item{cultivated}{Return cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is true}
+\item{only.new.world}{Return only records from the New World?  Default is FALSE}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

@@ -80,7 +80,7 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.
   .is_log(natives.only)
   .is_log(collection.info)
   
-  wkt<-rgeos::writeWKT(spatialpolygons)
+  wkt<-writeWKT(spatialpolygons)
   long_min<-spatialpolygons@bbox[1,1]
   long_max<-spatialpolygons@bbox[1,2]
   lat_min<-spatialpolygons@bbox[2,1]
@@ -469,12 +469,13 @@ BIEN_list_all<-function( ...){
 #' #spatialpolygons should be read with readOGR(), see note.
 #' species_list<-BIEN_list_spatialpolygons(spatialpolygons=shape)}
 #' @family list functions
+#' @importFrom rgeos writeWKT
 #' @export
 BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.world=FALSE,...){
   .is_log(cultivated)
   .is_log(only.new.world)
   
-  wkt<-rgeos::writeWKT(spatialpolygons)
+  wkt<-writeWKT(spatialpolygons)
   long_min<-spatialpolygons@bbox[1,1]
   long_max<-spatialpolygons@bbox[1,2]
   lat_min<-spatialpolygons@bbox[2,1]
@@ -509,7 +510,7 @@ BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.wo
                WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_query,newworld_query," ;")
   
   # create query to retrieve
-  df <- .BIEN_sql(query)
+  df <- .BIEN_sql(query,...)
   
   if(length(df)==0){
     message("No species found")
@@ -1045,6 +1046,8 @@ BIEN_occurrence_box<-function(min.lat,max.lat,min.long,max.long,species=NULL,gen
 #' #Getting data from the files (currently only species names)
 #' Abies_poly$Species#gives the species name associated with "Abies_poly"}
 #' @family range functions
+#' @importFrom rgeos readWKT
+#' @importFrom sp SpatialPolygonsDataFrame
 #' @export
 BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_only=FALSE,include.gid=FALSE, ...){
   .is_char(species)
@@ -1075,11 +1078,11 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
       
       for(l in 1:length(df$species)){
         Species<-df$species[l]
-        sp_range<-rgeos::readWKT(df$st_astext[l],p4s="+init=epsg:4326")
+        sp_range<-readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         
         #convert shapepoly into a spatialpolygon dataframe(needed to save)
         spdf<-as.data.frame(Species)
-        spdf<-sp::SpatialPolygonsDataFrame(sp_range,spdf)
+        spdf<-SpatialPolygonsDataFrame(sp_range,spdf)
         
         #Make sure that the directory doesn't have a "/" at the end-this confuses rgdal.  Probably a more eloquent way to do this with regex...
         if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
@@ -1135,7 +1138,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #'
 #'BIEN_ranges_species_bulk downloads ranges for a large number of species using parrallel processing.
 #' @param species A vector of species or NULL (the default).  If NULL, all available ranges will be used.
-#' @param directory The directory where range shapefiles will be stored.  If NULL, a tempprary directoray will be used.
+#' @param directory The directory where range shapefiles will be stored.  If NULL, a temporary directoray will be used.
 #' @param batch_size The number of ranges to download at once.
 #' @param return_directory Should the directory be returned? Default is TRUE
 #' @return Optionally, the directory to which the files were saved.
@@ -1147,6 +1150,7 @@ BIEN_ranges_species<-function(species,directory=NULL,matched=TRUE,match_names_on
 #' @family range functions
 #' @export
 #' @import foreach
+#' @import doParallel
 BIEN_ranges_species_bulk<-function(species=NULL, directory=NULL,batch_size=1000, return_directory=TRUE){
   
   #Set species list and directory if NULL
@@ -1172,7 +1176,7 @@ BIEN_ranges_species_bulk<-function(species=NULL, directory=NULL,batch_size=1000,
     
     foreach::foreach(i = 1:ceiling(length(species)/batch_size  )) %dopar%
       
-      BIEN::BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],directory = file.path(directory,i),matched = F)
+      BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],directory = file.path(directory,i),matched = F)
     
     parallel::stopCluster(cl)
     rm(cl)
@@ -1182,7 +1186,7 @@ BIEN_ranges_species_bulk<-function(species=NULL, directory=NULL,batch_size=1000,
     
     for(i in 1:ceiling(length(species)/batch_size  )){
       
-      BIEN::BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],directory = file.path(directory,i),matched = F)
+      BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],directory = file.path(directory,i),matched = F)
       
     }
     
@@ -1227,6 +1231,7 @@ BIEN_ranges_species_bulk<-function(species=NULL, directory=NULL,batch_size=1000,
 #' #Getting data from the files (currently only species names)
 #' Abies_poly$Species#gives the species name associated with "Abies_poly"}
 #' @family range functions
+#' @importFrom sp SpatialPolygonsDataFrame
 #' @export
 BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=FALSE,include.gid=FALSE, ...){
   .is_char(genus)
@@ -1257,11 +1262,11 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
       
       for(l in 1:length(df$species)){
         Species<-df$species[l]
-        sp_range<-rgeos::readWKT(df$st_astext[l],p4s="+init=epsg:4326")
+        sp_range<-readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         
         #convert shapepoly into a spatialpolygon dataframe(needed to save)
         spdf<-as.data.frame(Species)
-        spdf<-sp::SpatialPolygonsDataFrame(sp_range,spdf)
+        spdf<-SpatialPolygonsDataFrame(sp_range,spdf)
         
         #Make sure that the directory doesn't have a "/" at the end-this confuses rgdal.  Probably a more eloquent way to do this with regex...
         if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
@@ -1322,6 +1327,7 @@ BIEN_ranges_genus<-function(genus,directory=NULL,matched=TRUE,match_names_only=F
 #' BIEN_ranges_box(42,43,-85,-84,species.names.only = TRUE)
 #' BIEN_ranges_box(42,43,-85,-84,directory = temp_dir)}
 #' @family range functions
+#' @importFrom sp SpatialPolygonsDataFrame
 #' @export
 BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE, ...){
   .is_num(min.lat)
@@ -1355,11 +1361,11 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
       
       for(l in 1:length(df$species)){
         Species<-df$species[l]
-        sp_range<-rgeos::readWKT(df$st_astext[l],p4s="+init=epsg:4326")
+        sp_range<-readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         
         #convert shapepoly into a spatialpolygon dataframe(needed to save)
         spdf<-as.data.frame(Species)
-        spdf<-sp::SpatialPolygonsDataFrame(sp_range,spdf)
+        spdf<-SpatialPolygonsDataFrame(sp_range,spdf)
               
         #Make sure that the directory doesn't have a "/" at the end-this confuses rgdal.  Probably a more eloquent way to do this with regex...
         if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
@@ -1416,6 +1422,8 @@ BIEN_ranges_box<-function(min.lat, max.lat, min.long, max.long, directory=NULL, 
 #' BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
 #' @family range functions
 #' @author Daniel Guaderrama
+#' @importFrom rgeos readWKT
+#' @importFrom sp SpatialPolygonsDataFrame
 #' @export
 BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.only=FALSE, include.focal=TRUE,return.species.list=TRUE,include.gid=FALSE, ...){
   .is_char(species)
@@ -1453,11 +1461,11 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
       for(l in 1:length(df$intersecting_species)){
         Species<-df$intersecting_species[l]
         
-        sp_range<-rgeos::readWKT(df$geom[l],p4s="+init=epsg:4326")
+        sp_range<-readWKT(df$geom[l],p4s="+init=epsg:4326")
         
         #convert shapepoly into a spatialpolygon dataframe
         spdf<-as.data.frame(Species)
-        spdf<-sp::SpatialPolygonsDataFrame(sp_range,spdf)
+        spdf<-SpatialPolygonsDataFrame(sp_range,spdf)
         
         #Make sure that the directory doesn't have a "/" at the end-this confuses rgdal.  Probably a more eloquent way to do this with regex...
         if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
@@ -1519,6 +1527,8 @@ BIEN_ranges_intersect_species<-function(species, directory=NULL, species.names.o
 #' #Note that this will save many SpatialPolygonsDataFrames to the working directory.
 #' }
 #' @family range functions
+#' @importFrom rgeos readWKT writeWKT
+#' @importFrom sp SpatialPolygonsDataFrame
 #' @export
 BIEN_ranges_spatialpolygons<-function(spatialpolygons, directory=NULL, species.names.only=FALSE, return.species.list = TRUE ,crop.ranges=FALSE,include.gid=FALSE,...){
   .is_log(return.species.list)
@@ -1526,7 +1536,7 @@ BIEN_ranges_spatialpolygons<-function(spatialpolygons, directory=NULL, species.n
   .is_log(crop.ranges)
   .is_log(include.gid)
   
-  wkt<-rgeos::writeWKT(spatialpolygons)
+  wkt<-writeWKT(spatialpolygons)
   
   if(species.names.only==FALSE){
     
@@ -1552,12 +1562,12 @@ BIEN_ranges_spatialpolygons<-function(spatialpolygons, directory=NULL, species.n
       
       for(l in 1:length(df$species)){
         Species<-df$species[l]
-        sp_range<-rgeos::readWKT(df$st_astext[l],p4s="+init=epsg:4326")
+        sp_range<-readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         if(!is.null(sp_range)){
           
           #convert shapepoly into a spatialpolygon dataframe(needed to save)
           spdf<-as.data.frame(Species)
-          spdf<-sp::SpatialPolygonsDataFrame(sp_range,spdf)
+          spdf<-SpatialPolygonsDataFrame(sp_range,spdf)
           
           #Make sure that the directory doesn't have a "/" at the end-this confuses rgdal.  Probably a more eloquent way to do this with regex...
           if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
@@ -1618,6 +1628,8 @@ BIEN_ranges_spatialpolygons<-function(spatialpolygons, directory=NULL, species.n
 #' plot(xanthium_strumarium,col="forest green",add=TRUE) #adds the range of X. strumarium
 #' plot(abies_maps[1,], add = T, col ="light green")}
 #' @family range functions
+#' @importFrom rgeos readWKT
+#' @importFrom sp SpatialPolygonsDataFrame SpatialPolygons CRS
 #' @export
 BIEN_ranges_load_species<-function(species, ...){
   .is_char(species)
@@ -1639,16 +1651,16 @@ BIEN_ranges_load_species<-function(species, ...){
     for(l in 1:length(df$species)){
       Species<-df$species[l]
       #sp_range<-readWKT(df$st_astext[l])
-      poly[[l]]<-rgeos::readWKT(df$st_astext[l],p4s="+init=epsg:4326")
+      poly[[l]]<-readWKT(df$st_astext[l],p4s="+init=epsg:4326")
       methods::slot(object = poly[[l]]@polygons[[1]],name = "ID")<-as.character(df$gid[l])#assigns a unique ID to each species' polygon
       
     }#for species in df loop
     
     
   }#else
-  poly<-sp::SpatialPolygons(unlist(lapply(poly, function(x) x@polygons)))
-  poly<-sp::SpatialPolygonsDataFrame(Sr = poly,data = df['species'],match.ID = FALSE)    
-  poly@proj4string<-sp::CRS(projargs = "+init=epsg:4326")
+  poly<-SpatialPolygons(unlist(lapply(poly, function(x) x@polygons)))
+  poly<-SpatialPolygonsDataFrame(Sr = poly,data = df['species'],match.ID = FALSE)    
+  poly@proj4string<-CRS(projargs = "+init=epsg:4326")
   return(poly) 
   
 }
@@ -1692,6 +1704,9 @@ BIEN_ranges_list<-function( ...){
 #' )
 #' }
 #' @family range functions
+#' @importFrom sf read_sf st_transform
+#' @importFrom fasterize fasterize
+#' @importFrom raster getValues setValues
 #' @export
 BIEN_ranges_shapefile_to_skinny<-function(directory, raster, skinny_ranges_file=NULL){
   
@@ -1703,12 +1718,12 @@ BIEN_ranges_shapefile_to_skinny<-function(directory, raster, skinny_ranges_file=
   for(i in range_maps){
     
     #print(i)
-    map_i<-sf::read_sf(i)  
-    map_i<-sf::st_transform(x = map_i,crs = paste(raster@crs))
-    raster_i<-fasterize::fasterize(sf = map_i,raster = raster,fun = "any")
+    map_i<-read_sf(i)  
+    map_i<-st_transform(x = map_i,crs = paste(raster@crs))
+    raster_i<-fasterize(sf = map_i,raster = raster,fun = "any")
     
-    if(length(which(raster::getValues(raster_i)>0))>0){
-      skinny_occurrences<-rbind(skinny_occurrences,cbind(map_i$Species,which(raster::getValues(raster_i)>0)))
+    if(length(which(getValues(raster_i)>0))>0){
+      skinny_occurrences<-rbind(skinny_occurrences,cbind(map_i$Species,which(getValues(raster_i)>0)))
     }#end if statement
   }#end i loop
   
@@ -1759,7 +1774,7 @@ BIEN_ranges_skinny_ranges_to_richness_raster<-function(skinny_ranges,raster){
   
   #Create empty output raster
   output_raster<-raster
-  output_raster<-raster::setValues(x = output_raster,values = NA)
+  output_raster<-setValues(x = output_raster,values = NA)
   
   #iterate through all cells with at least one occurrence, record 
   
@@ -2560,6 +2575,7 @@ BIEN_plot_state<-function(country=NULL,state=NULL,country.code=NULL,state.code=N
 #' sp<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
 #' saguaro_plot_data<-BIEN_plot_spatialpolygons(spatialpolygons=sp)}
 #' @family plot functions
+#' @importFrom rgeos writeWKT
 #' @export
 BIEN_plot_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
   .is_log(cultivated)
@@ -2572,7 +2588,7 @@ BIEN_plot_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,only.new.wo
   .is_log(all.metadata)
   
   
-  wkt<-rgeos::writeWKT(spatialpolygons)
+  wkt<-writeWKT(spatialpolygons)
   
   #set conditions for query
   cultivated_<-.cultivated_check_plot(cultivated)
@@ -2934,6 +2950,7 @@ BIEN_taxonomy_family<-function(family, ...){
 #' phylos<-BIEN_phylogeny_complete(n_phylogenies = 10,seed = 1)
 #' phylos<-BIEN_phylogeny_complete(replicates = c(1,2,99,100))}
 #' @family phylogeny functions
+#' @importFrom ape read.tree
 #' @export
 BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...){
   .is_num(n_phylogenies)  
@@ -2944,7 +2961,7 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
     
     df<-.BIEN_sql(query, ...)
     
-    tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
+    tree<-read.tree(text = df$phylogeny,tree.names = df$replicate)
     
     return(tree)
     
@@ -2972,7 +2989,7 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
   
   df<-.BIEN_sql(query, ...)
   
-  tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
+  tree<-read.tree(text = df$phylogeny,tree.names = df$replicate)
   
   return(tree)
   
@@ -2987,6 +3004,7 @@ BIEN_phylogeny_complete<-function(n_phylogenies=1,seed=NULL,replicates=NULL, ...
 #' @examples \dontrun{
 #' BIEN_phylo<-BIEN_phylogeny_conservative()}
 #' @family phylogeny functions
+#' @importFrom ape read.tree
 #' @export
 BIEN_phylogeny_conservative<-function(...){
   
@@ -2994,7 +3012,7 @@ BIEN_phylogeny_conservative<-function(...){
   
   df<-.BIEN_sql(query, ...)
   
-  tree<-ape::read.tree(text = df$phylogeny,tree.names = df$replicate)
+  tree<-read.tree(text = df$phylogeny,tree.names = df$replicate)
   
   return(tree)
   
@@ -3033,6 +3051,7 @@ BIEN_phylogeny_conservative<-function(...){
 #'                             family = F,genus = F,other_taxa = other_taxa)
 #'plot.phylo(x = tax_nodes,show.tip.label = F,show.node.label = T)}
 #' @family phylogeny functions
+#' @importFrom ape getMRCA
 #' @export
 BIEN_phylogeny_label_nodes<-function(phylogeny,family=T,genus=F,other_taxa=NULL){
   
@@ -3047,7 +3066,7 @@ BIEN_phylogeny_label_nodes<-function(phylogeny,family=T,genus=F,other_taxa=NULL)
       
       fam_i <- unique(taxonomy$scrubbed_family)[i]  
       spp_i <- taxonomy$scrubbed_species_binomial[which(taxonomy$scrubbed_family == fam_i)]
-      mrca_i <- ape::getMRCA(phy = phylogeny,
+      mrca_i <- getMRCA(phy = phylogeny,
                              tip = which(phylogeny$tip.label %in% gsub(pattern = " ",replacement = "_", x = spp_i   ) )) 
       phylogeny$node.label[mrca_i-length(phylogeny$tip.label)]<-fam_i  
       
@@ -3058,7 +3077,7 @@ BIEN_phylogeny_label_nodes<-function(phylogeny,family=T,genus=F,other_taxa=NULL)
       
       gen_i <- unique(taxonomy$scrubbed_genus)[i]  
       spp_i <- taxonomy$scrubbed_species_binomial[which(taxonomy$scrubbed_genus == gen_i)]
-      mrca_i <- ape::getMRCA(phy = phylogeny,
+      mrca_i <- getMRCA(phy = phylogeny,
                              tip = which(phylogeny$tip.label %in% gsub(pattern = " ",replacement = "_", x = spp_i   ) )) 
       phylogeny$node.label[mrca_i-length(phylogeny$tip.label)]<-gen_i  
       
@@ -3070,7 +3089,7 @@ BIEN_phylogeny_label_nodes<-function(phylogeny,family=T,genus=F,other_taxa=NULL)
       
       tax_i <- unique(other_taxa[,1])[i]  
       spp_i <- other_taxa[,2][which(other_taxa[,1]==tax_i)]
-      mrca_i <- ape::getMRCA(phy = phylogeny,
+      mrca_i <- getMRCA(phy = phylogeny,
                              tip = which(phylogeny$tip.label %in% gsub(pattern = " ",replacement = "_", x = spp_i   ) )) 
       phylogeny$node.label[mrca_i-length(phylogeny$tip.label)]<-tax_i  
       

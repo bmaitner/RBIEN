@@ -105,22 +105,22 @@
   user='public_bien'
   password='bien_public'
   # Name the database type that will be used
-  drv <- DBI::dbDriver('PostgreSQL')
+  drv <- dbDriver('PostgreSQL')
   # establish connection with database
-  con <- DBI::dbConnect(drv, host=host, dbname=dbname, user=user, password = password)
+  con <- dbConnect(drv, host=host, dbname=dbname, user=user, password = password)
   
   
   if(return.query){
     query<-gsub(pattern = "\n",replacement = "",query)
     query<-gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
-    DBI::dbDisconnect(con)
+    dbDisconnect(con)
     return(query)
   }
   
   # create query to retrieve
-  df <- RPostgreSQL::dbGetQuery(con, statement = query);
+  df <- dbGetQuery(con, statement = query);
   
-  DBI::dbDisconnect(con)
+  dbDisconnect(con)
   
   if(print.query){
     query<-gsub(pattern = "\n",replacement = "",query)
