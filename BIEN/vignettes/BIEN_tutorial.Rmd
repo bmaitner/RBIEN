@@ -70,23 +70,23 @@ These functions begin with the prefix `BIEN_occurrence_...` and allow you to que
 
 Each of these functions has a number of different arguments that modify your query, either refining your search criteria or returning more data for each record.  These arguments include:
 
-1. cultivated  If TRUE, records known to be cultivated will be returned.
+1. `cultivated`  If `TRUE`, records known to be cultivated will be returned.
 
-2. only.new.world If TRUE, records returned are limited to those in North and South America, where greater data cleaing and validation has been done.
+2. `only.new.world` If `TRUE`, records returned are limited to those in North and South America, where greater data cleaing and validation has been done.
 
 * Note that the arguments cultivated and only.new.world may change the number of records returned.
 
-3. all.taxonomy If TRUE, the query will return additional taxonomic data, including the uncorrected taxonomic information for those records.
+3. `all.taxonomy` If `TRUE`, the query will return additional taxonomic data, including the uncorrected taxonomic information for those records.
 
-4. native.status If TRUE, additional information will be returned regarding whether a species is native in a given region.
+4. `native.status` If `TRUE`, additional information will be returned regarding whether a species is native in a given region.
 
-5. natives.only If TRUE, the default, information for occurrences flagged as introduced will not be returned.
+5. `natives.only` If `TRUE`, the default, information for occurrences flagged as introduced will not be returned.
 
-6. observation.type  If TRUE, the query will return whether each record is from either a plot or a specimen.  This may be useful if a user believes one type of information may be more accurate.
+6. `observation.type`  If `TRUE`, the query will return whether each record is from either a plot or a specimen.  This may be useful if a user believes one type of information may be more accurate.
 
-7. political.boundaries If TRUE, the query will return information on which country, state, etc. that an occurrence is found within.
+7. `political.boundaries` If `TRUE`, the query will return information on which country, state, etc. that an occurrence is found within.
 
-8. collection.info If TRUE, the quest will return additional information about the collection and identification of that specimen.
+8. `collection.info` If `TRUE`, the quest will return additional information about the collection and identification of that specimen.
 
 
 **Example 1: Occurrence records for a species**
@@ -176,13 +176,13 @@ Functions include:
 
 The range functions have different arguments than we have seen so far, including:
 
-1. directory This is where the function will be saving the shapefiles you download
+1. `directory` This is where the function will be saving the shapefiles you download
 
-2.  matched  If TRUE, the function will return a dataframe listing which species ranges were downloaded and which weren't.
+2.  `matched`  If `TRUE`, the function will return a dataframe listing which species ranges were downloaded and which weren't.
 
-3.  match_names_only If TRUE, the function will check whether a map is available for each species without actually downloading it
+3.  `match_names_only` If `TRUE`, the function will check whether a map is available for each species without actually downloading it
 
-4. include.gid If TRUE, the function will append a unique gid number to each range map's filename.  This argument is designed to allow forward compatibility when BIEN contains multiple range maps for each species.
+4. `include.gid` If `TRUE`, the function will append a unique gid number to each range map's filename.  This argument is designed to allow forward compatibility when BIEN contains multiple range maps for each species.
 
 **Example 3: Range maps and occurrence points**
 
@@ -242,7 +242,7 @@ These functions begin with the prefix "BIEN_plot_" and return ecological plot da
 
 8. `BIEN_plot_name` Downloads data for a specific plot name (these are nested within a given dataset)
 
-Again we have some of the same arguments available for these queries that we saw for the occurrence functions.  We also have the new argument *all.metadata*, which causes the functions to return more metadata for each plot.
+Again we have some of the same arguments available for these queries that we saw for the occurrence functions.  We also have the new argument *`all.metadata`*, which causes the functions to return more metadata for each plot.
 
 
 **Example 4: Plot data by plot name**
@@ -259,7 +259,7 @@ LUQUILLO_full <- BIEN_plot_name(plot.name = "LUQUILLO",cultivated = T,all.taxono
 
 ```
 
-The dataframe LUQUILLO_full contains more useful information, including metadata on which taxa were included, which growth forms were included and information on whether species are known to be native or introduced.
+The dataframe `LUQUILLO_full` contains more useful information, including metadata on which taxa were included, which growth forms were included and information on whether species are known to be native or introduced.
 
 
 
@@ -357,11 +357,11 @@ The BIEN database currently contains 101 phylogenies for new world plants.  This
 
 Arguments: The function `BIEN_phylogeny_complete` has a few arguments that are worth explaining:
 
-1. n_phylogenies This is the number of replicated phylogenies that you want to download (between 1 and 100)
+1. `n_phylogenies` This is the number of replicated phylogenies that you want to download (between 1 and 100)
 
-2. seed This function sets the seed for the random number generator before randomly drawing the phylogenies to be downloaded.  This is useful for replicating analyses.
+2. `seed` This function sets the seed for the random number generator before randomly drawing the phylogenies to be downloaded.  This is useful for replicating analyses.
 
-3. replicates This function allows you to specify WHICH of the 100 phylogenies to download, rather than having them selected randomly.
+3. `replicates` This function allows you to specify WHICH of the 100 phylogenies to download, rather than having them selected randomly.
 
 
 **Example 7: Phylogenies**
@@ -419,7 +419,7 @@ These functions begin with the prefix `BIEN_list_` and allow you to quickly get 
 
 3.  `BIEN_list_county` Returns all species found within a given county/parish/or other 3rd level political division.
 
-Some of the same arguments we saw in the occurrence functions appear here as well, including "cultivated" and "only.new.world".
+Some of the same arguments we saw in the occurrence functions appear here as well, including `cultivated` and `only.new.world`.
 
 
 **Example 9: Species list for a country**
@@ -522,7 +522,7 @@ citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occ
 
 
 ```
-Now, we have a bibtex file, selaginella_selaginoides.bib, that can be loaded into a reference manages (e.g. Endnote, Paperpile, etc.), and a text file, selaginella_selaginoides.txt, containing text that can be pasted into the acknowledgements section of a publication.
+Now, we have a bibtex file, `selaginella_selaginoides.bib`, that can be loaded into a reference manages (e.g. Endnote, Paperpile, etc.), and a text file, selaginella_selaginoides.txt, containing text that can be pasted into the acknowledgements section of a publication.
 
 What if we also have some trait data?  No problem there, the code handles that as well:
 
