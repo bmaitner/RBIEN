@@ -318,7 +318,7 @@ leaf_area <- BIEN_trait_trait(trait = "leaf area")
 
 Note that the units have been standardized and that there is a full set of attribution data for each trait.
 
-#Taxonomy Data
+# Taxonomy Data
 
 While there are existing packages that query taxonomic data (e.g. those included in the excellent taxize package), the RBIEN taxonomy functions access the taxonomic information that underlies the BIEN database, ensuring consistency.
 
@@ -364,7 +364,7 @@ Arguments: The function `BIEN_phylogeny_complete` has a few arguments that are w
 3. replicates This function allows you to specify WHICH of the 100 phylogenies to download, rather than having them selected randomly.
 
 
-**Example 7: Phylogenies **
+**Example 7: Phylogenies**
 
 Let's say we want to download the conservative phylogeny.
 
@@ -397,7 +397,7 @@ Arguments:
 
 The arguments for this function are the same that we have seen in the occurrence and plot functions.
 
-**Example 8: Stem data **
+**Example 8: Stem data**
 
 If we'd like stem data for the species *Cupressus arizonica*
 
@@ -475,7 +475,7 @@ The BIEN metadata functions start with the prefix `BIEN_metadata_...` and provid
 
 4. `BIEN_metadata_list_political_names` Returns a dataframe containing political division names and associate codes.
 
-**Example 10: Metadata **
+**Example 10: Metadata**
 
 To check what the current version of the BIEN database is (which we recommend reporting when using BIEN data):
 
@@ -485,7 +485,7 @@ BIEN_metadata_database_version()
 
 ```
 
-** Example 11: Citations**
+**Example 11: Citations**
 
 One of the more innovative features of the BIEN package is that it will generate custom attribution data for you based on what data you downloaded through the package.
 
