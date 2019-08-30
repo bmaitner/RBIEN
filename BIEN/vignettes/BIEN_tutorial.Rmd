@@ -122,7 +122,7 @@ Let's take a quick look at where those occurrences are.
 ```{r}
 # Make a quick map to plot our points on
 
-map('world',fill=T , col= "grey", bg="light blue") 
+map('world', fill=T, col= "grey", bg="light blue") 
 
 #Plot the points from the full query in red
 
@@ -296,7 +296,7 @@ If you're interested in accessing all traits for a taxon, say the genus *Salix*,
 
 ```{r}
 
-Salix_traits<-BIEN_trait_genus(genus = "Salix")
+Salix_traits <- BIEN_trait_genus(genus = "Salix")
 
 ```
 
@@ -334,14 +334,14 @@ Let's say we're interested in the genus *Asclepias*, and we'd like to get an ide
 
 ```{r}
 
-Asclepias_taxonomy<-BIEN_taxonomy_genus(genus = "Asclepias")
+Asclepias_taxonomy <- BIEN_taxonomy_genus(genus = "Asclepias")
 
 #We see that the genus Asclepias falls within the family Apocynaceae and the order Gentianales.
 
 #You'll also notice that a given species may appear more than once (due to multiple circumscriptions, some of which may be illegitimate).
 
 #If we'd just like to know all the speciess that aren't illegitimate:
-Asclepias_species<-unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclepias_taxonomy$scrubbed_taxonomic_status %in% c("accepted",  "no opinion")])
+Asclepias_species <- unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclepias_taxonomy$scrubbed_taxonomic_status %in% c("accepted",  "no opinion")])
 
 
 ```
@@ -403,7 +403,7 @@ If we'd like stem data for the species *Cupressus arizonica*
 
 ```{r}
 
-Cupressus_arizonica_stems<-BIEN_stem_species("Cupressus arizonica")
+Cupressus_arizonica_stems <- BIEN_stem_species("Cupressus arizonica")
 
 ```
 
@@ -427,7 +427,7 @@ Some of the same arguments we saw in the occurrence functions appear here as wel
 Let's return to our previous example.  What if we just need a list of the species in the Bahamas, rather than the specific details of each occurrence record?  We can instead use the function `BIEN_list_country` to download a list of species, which should be much faster than using `BIEN_occurrence_country` to get a species list.
 
 ```{r}
-Bahamas_species_list<-BIEN_list_country(country = "Bahamas")
+Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
 
 #Notice that this time, we have 998 species, whereas previously we saw that there were 999 unique species.  What happened?  The list functions ignore NA values for species names, but R does not.  R counted NA values as a unique species name, giving one extra unique value.
 
@@ -437,7 +437,7 @@ If we wanted to retrieve the results for multiple countries at once, that is sim
 
 ```{r}
 
-country_vector<-c("Haiti","Dominican Republic")
+country_vector <- c("Haiti","Dominican Republic")
 Haiti_DR <- BIEN_list_country(country = country_vector)
 
 ```
@@ -447,7 +447,7 @@ We can also use political division codes (from geonames.org) instead of writing 
 ```{r}
 #To see all of the political division names, and associated codes, we can use this function:
 
-political_names<-BIEN_metadata_list_political_names()
+political_names <- BIEN_metadata_list_political_names()
 
 #Let's take a look at what the dataframe contains:
 
@@ -493,7 +493,7 @@ Let's say we're interested in *Selaginella selaginoides*, and we'd like to downl
 
 ```{r}
 
-Selaginella_selaginoides_occurrences<-BIEN_occurrence_species("Selaginella selaginoides",only.new.world = F)
+Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella selaginoides",only.new.world = F)
 
 ```
 
@@ -501,7 +501,7 @@ If we plan on using those data in a publication ,we'll need proper attribution. 
 
 ```{r}
 
-citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
+citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
 
 ```
 citation_info is a list that contains 3 elements:
@@ -516,7 +516,7 @@ To make things even easier on ourselves, we can use some of the additional funct
 temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a temporary working directory
 
 
-citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
                                      bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
                                       acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
 
@@ -528,13 +528,13 @@ What if we also have some trait data?  No problem there, the code handles that a
 
 ```{r, eval=FALSE}
 #First, let's get some trait data:
-selaginella_selaginoides_traits<-BIEN_trait_species(species = "Selaginella selaginoides")
+selaginella_selaginoides_traits <- BIEN_trait_species(species = "Selaginella selaginoides")
 
 #Now, we just need to modify our previous bit of code to include the trait data as well:
 
 temp_dir <- file.path(tempdir(), "BIEN_temp")
 
-citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
                                       trait.dataframe = selaginella_selaginoides_traits,
                                       bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
                                       acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
