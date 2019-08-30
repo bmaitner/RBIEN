@@ -7,13 +7,13 @@
 title: "BIEN tutorial"
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Setup
 
-```{r message=F,warning=FALSE, results='hide'}
+```{r message = F,warning = FALSE, results = 'hide'}
 library(BIEN)
 library(ape) #Package for working with phylogenies in R
 library(maps) #Useful for making quick maps of occurrences
@@ -23,7 +23,7 @@ library(sp) # A package for spatial data
 # An overview of the package
 We try to make this package as easy and intuitive to use as possible, but it is still often easiest to start with our vignette.  Particularly useful are the "Function Names" and "Function Directory" sections.
 
-```{r, eval=FALSE}
+```{r, eval = FALSE}
 vignette("BIEN")
 ```
 
@@ -122,15 +122,15 @@ Let's take a quick look at where those occurrences are.
 ```{r}
 # Make a quick map to plot our points on
 
-map('world', fill=T, col= "grey", bg="light blue") 
+map('world', fill = T, col= "grey", bg = "light blue") 
 
 #Plot the points from the full query in red
 
-points(cbind(Xanthium_strumarium_full$longitude,Xanthium_strumarium_full$latitude),col="red",pch=20,cex=1) 
+points(cbind(Xanthium_strumarium_full$longitude,Xanthium_strumarium_full$latitude),col = "red",pch = 20,cex = 1) 
 
 # Plot the points from the default query in blue
 
-points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col="blue",pch=20,cex=1) 
+points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col = "blue",pch = 20,cex = 1) 
 
 ```
 
@@ -151,9 +151,9 @@ length(unique(Bahamas$scrubbed_species_binomial))
 #Nearly 1000 species, not bad.
 
 #Now, let's take a look at where those occurrences are:
-map(regions = "Bahamas" ,fill=T , col= "grey", bg="light blue")
+map(regions = "Bahamas" ,fill = T , col= "grey", bg = "light blue")
 
-points(cbind(Bahamas$longitude,Bahamas$latitude),col="blue",pch=20,cex=1) 
+points(cbind(Bahamas$longitude,Bahamas$latitude),col = "blue",pch = 20,cex = 1) 
 
 #Looks like some islands are considerably better sampled than others.
 
@@ -199,10 +199,10 @@ The range map is now in our global environment as a SpatialPolygonsDataFrame.  L
 ```{r}
 #First, let's add a base map so that our range has some context:
 
-map('world',fill=T , col= "grey", bg="light blue",xlim = c(-180,-20),ylim = c(-60,80))
+map('world',fill = T , col= "grey", bg = "light blue",xlim = c(-180,-20),ylim = c(-60,80))
 
 #Now, we can add the range map:
-plot(Xanthium_strumarium_range,col="green",add=T)
+plot(Xanthium_strumarium_range,col = "green",add = T)
 
 
 
@@ -211,9 +211,9 @@ plot(Xanthium_strumarium_range,col="green",add=T)
 Now, let's add those occurrence points from earlier to this map:
 
 ```{r}
-map('world',fill=T , col= "grey", bg="light blue",xlim = c(-180,-20),ylim = c(-60,80))
-plot(Xanthium_strumarium_range,col="green",add=T)
-points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col="blue",pch=20,cex=1)
+map('world',fill = T , col= "grey", bg = "light blue",xlim = c(-180,-20),ylim = c(-60,80))
+plot(Xanthium_strumarium_range,col = "green",add = T)
+points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col = "blue",pch = 20,cex = 1)
 
 
 ```
@@ -511,14 +511,14 @@ citation_info is a list that contains 3 elements:
 
 To make things even easier on ourselves, we can use some of the additional functionality of the `BIEN_metadata_citation` function:
 
-```{r, eval=FALSE}
+```{r, eval = FALSE}
 
 temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a temporary working directory
 
 
 citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
                                      bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
-                                      acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
+                                      acknowledgement_file = file.path(temp_dir,"selaginella_selaginoides.txt"))
 
 
 ```
@@ -526,7 +526,7 @@ Now, we have a bibtex file, `selaginella_selaginoides.bib`, that can be loaded i
 
 What if we also have some trait data?  No problem there, the code handles that as well:
 
-```{r, eval=FALSE}
+```{r, eval = FALSE}
 #First, let's get some trait data:
 selaginella_selaginoides_traits <- BIEN_trait_species(species = "Selaginella selaginoides")
 
@@ -537,7 +537,7 @@ temp_dir <- file.path(tempdir(), "BIEN_temp")
 citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
                                       trait.dataframe = selaginella_selaginoides_traits,
                                       bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
-                                      acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
+                                      acknowledgement_file = file.path(temp_dir,"selaginella_selaginoides.txt"))
 
 ```
 
