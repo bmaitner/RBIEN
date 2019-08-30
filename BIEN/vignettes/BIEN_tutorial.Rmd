@@ -72,7 +72,7 @@ Each of these functions has a number of different arguments that modify your que
 
 1. `cultivated`  If `TRUE`, records known to be cultivated will be returned.
 
-2. `only.new.world` If `TRUE`, records returned are limited to those in North and South America, where greater data cleaing and validation has been done.
+2. `only.new.world` If `TRUE`, records returned are limited to those in North and South America, where greater data cleaning and validation has been done.
 
 * Note that the arguments cultivated and only.new.world may change the number of records returned.
 
@@ -106,7 +106,7 @@ str(Xanthium_strumarium)
 head(Xanthium_strumarium)
 ```
 
-The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  The meaning of some of these columns is obvious (e.g. latitude, longitide), however others may be less clear.  The meanings of these columns and the information within is explained in more detail in our data dictionary, available at http://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/
+The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  The meaning of some of these columns is obvious (e.g. latitude, longitude), however others may be less clear.  The meanings of these columns and the information within is explained in more detail in our data dictionary, available at http://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/
 
 If we want more information on these occurrences, we just need to change the arguments:
 ```{r}
@@ -522,7 +522,7 @@ citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occ
 
 
 ```
-Now, we have a bibtex file, `selaginella_selaginoides.bib`, that can be loaded into a reference manages (e.g. Endnote, Paperpile, etc.), and a text file, selaginella_selaginoides.txt, containing text that can be pasted into the acknowledgements section of a publication.
+Now, we have a bibtex file, `selaginella_selaginoides.bib`, that can be loaded into a reference manager (e.g. Endnote, Paperpile, etc.), and a text file, `selaginella_selaginoides.txt`, containing text that can be pasted into the acknowledgements section of a publication.
 
 What if we also have some trait data?  No problem there, the code handles that as well:
 
