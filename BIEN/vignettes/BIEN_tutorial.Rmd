@@ -7,13 +7,13 @@
 title: "BIEN tutorial"
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Setup
 
-```{r message=F,warning=FALSE, results='hide'}
+```{r message = F,warning = FALSE, results = 'hide'}
 library(BIEN)
 library(ape) #Package for working with phylogenies in R
 library(maps) #Useful for making quick maps of occurrences
@@ -23,7 +23,7 @@ library(sp) # A package for spatial data
 # An overview of the package
 We try to make this package as easy and intuitive to use as possible, but it is still often easiest to start with our vignette.  Particularly useful are the "Function Names" and "Function Directory" sections.
 
-```{r, eval=FALSE}
+```{r, eval = FALSE}
 vignette("BIEN")
 ```
 
@@ -70,23 +70,23 @@ These functions begin with the prefix `BIEN_occurrence_...` and allow you to que
 
 Each of these functions has a number of different arguments that modify your query, either refining your search criteria or returning more data for each record.  These arguments include:
 
-1. cultivated  If TRUE, records known to be cultivated will be returned.
+1. `cultivated`  If `TRUE`, records known to be cultivated will be returned.
 
-2. only.new.world If TRUE, records returned are limited to those in North and South America, where greater data cleaing and validation has been done.
+2. `only.new.world` If `TRUE`, records returned are limited to those in North and South America, where greater data cleaning and validation has been done.
 
 * Note that the arguments cultivated and only.new.world may change the number of records returned.
 
-3. all.taxonomy If TRUE, the query will return additional taxonomic data, including the uncorrected taxonomic information for those records.
+3. `all.taxonomy` If `TRUE`, the query will return additional taxonomic data, including the uncorrected taxonomic information for those records.
 
-4. native.status If TRUE, additional information will be returned regarding whether a species is native in a given region.
+4. `native.status` If `TRUE`, additional information will be returned regarding whether a species is native in a given region.
 
-5. natives.only If TRUE, the default, information for occurrences flagged as introduced will not be returned.
+5. `natives.only` If `TRUE`, the default, information for occurrences flagged as introduced will not be returned.
 
-6. observation.type  If TRUE, the query will return whether each record is from either a plot or a specimen.  This may be useful if a user believes one type of information may be more accurate.
+6. `observation.type`  If `TRUE`, the query will return whether each record is from either a plot or a specimen.  This may be useful if a user believes one type of information may be more accurate.
 
-7. political.boundaries If TRUE, the query will return information on which country, state, etc. that an occurrence is found within.
+7. `political.boundaries` If `TRUE`, the query will return information on which country, state, etc. that an occurrence is found within.
 
-8. collection.info If TRUE, the quest will return additional information about the collection and identification of that specimen.
+8. `collection.info` If `TRUE`, the quest will return additional information about the collection and identification of that specimen.
 
 
 **Example 1: Occurrence records for a species**
@@ -106,7 +106,7 @@ str(Xanthium_strumarium)
 head(Xanthium_strumarium)
 ```
 
-The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  The meaning of some of these columns is obvious (e.g. latitude, longitide), however others may be less clear.  The meanings of these columns and the information within is explained in more detail in our data dictionary, available at http://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/
+The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  The meaning of some of these columns is obvious (e.g. latitude, longitude), however others may be less clear.  The meanings of these columns and the information within is explained in more detail in our data dictionary, available at http://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/
 
 If we want more information on these occurrences, we just need to change the arguments:
 ```{r}
@@ -122,15 +122,15 @@ Let's take a quick look at where those occurrences are.
 ```{r}
 # Make a quick map to plot our points on
 
-map('world',fill=T , col= "grey", bg="light blue") 
+map('world', fill = T, col= "grey", bg = "light blue") 
 
 #Plot the points from the full query in red
 
-points(cbind(Xanthium_strumarium_full$longitude,Xanthium_strumarium_full$latitude),col="red",pch=20,cex=1) 
+points(cbind(Xanthium_strumarium_full$longitude,Xanthium_strumarium_full$latitude),col = "red",pch = 20,cex = 1) 
 
 # Plot the points from the default query in blue
 
-points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col="blue",pch=20,cex=1) 
+points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col = "blue",pch = 20,cex = 1) 
 
 ```
 
@@ -151,9 +151,9 @@ length(unique(Bahamas$scrubbed_species_binomial))
 #Nearly 1000 species, not bad.
 
 #Now, let's take a look at where those occurrences are:
-map(regions = "Bahamas" ,fill=T , col= "grey", bg="light blue")
+map(regions = "Bahamas" ,fill = T , col= "grey", bg = "light blue")
 
-points(cbind(Bahamas$longitude,Bahamas$latitude),col="blue",pch=20,cex=1) 
+points(cbind(Bahamas$longitude,Bahamas$latitude),col = "blue",pch = 20,cex = 1) 
 
 #Looks like some islands are considerably better sampled than others.
 
@@ -176,13 +176,13 @@ Functions include:
 
 The range functions have different arguments than we have seen so far, including:
 
-1. directory This is where the function will be saving the shapefiles you download
+1. `directory` This is where the function will be saving the shapefiles you download
 
-2.  matched  If TRUE, the function will return a dataframe listing which species ranges were downloaded and which weren't.
+2.  `matched`  If `TRUE`, the function will return a dataframe listing which species ranges were downloaded and which weren't.
 
-3.  match_names_only If TRUE, the function will check whether a map is available for each species without actually downloading it
+3.  `match_names_only` If `TRUE`, the function will check whether a map is available for each species without actually downloading it
 
-4. include.gid If TRUE, the function will append a unique gid number to each range map's filename.  This argument is designed to allow forward compatibility when BIEN contains multiple range maps for each species.
+4. `include.gid` If `TRUE`, the function will append a unique gid number to each range map's filename.  This argument is designed to allow forward compatibility when BIEN contains multiple range maps for each species.
 
 **Example 3: Range maps and occurrence points**
 
@@ -199,10 +199,10 @@ The range map is now in our global environment as a SpatialPolygonsDataFrame.  L
 ```{r}
 #First, let's add a base map so that our range has some context:
 
-map('world',fill=T , col= "grey", bg="light blue",xlim = c(-180,-20),ylim = c(-60,80))
+map('world',fill = T , col= "grey", bg = "light blue",xlim = c(-180,-20),ylim = c(-60,80))
 
 #Now, we can add the range map:
-plot(Xanthium_strumarium_range,col="green",add=T)
+plot(Xanthium_strumarium_range,col = "green",add = T)
 
 
 
@@ -211,9 +211,9 @@ plot(Xanthium_strumarium_range,col="green",add=T)
 Now, let's add those occurrence points from earlier to this map:
 
 ```{r}
-map('world',fill=T , col= "grey", bg="light blue",xlim = c(-180,-20),ylim = c(-60,80))
-plot(Xanthium_strumarium_range,col="green",add=T)
-points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col="blue",pch=20,cex=1)
+map('world',fill = T , col= "grey", bg = "light blue",xlim = c(-180,-20),ylim = c(-60,80))
+plot(Xanthium_strumarium_range,col = "green",add = T)
+points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col = "blue",pch = 20,cex = 1)
 
 
 ```
@@ -242,7 +242,7 @@ These functions begin with the prefix "BIEN_plot_" and return ecological plot da
 
 8. `BIEN_plot_name` Downloads data for a specific plot name (these are nested within a given dataset)
 
-Again we have some of the same arguments available for these queries that we saw for the occurrence functions.  We also have the new argument *all.metadata*, which causes the functions to return more metadata for each plot.
+Again we have some of the same arguments available for these queries that we saw for the occurrence functions.  We also have the new argument *`all.metadata`*, which causes the functions to return more metadata for each plot.
 
 
 **Example 4: Plot data by plot name**
@@ -259,7 +259,7 @@ LUQUILLO_full <- BIEN_plot_name(plot.name = "LUQUILLO",cultivated = T,all.taxono
 
 ```
 
-The dataframe LUQUILLO_full contains more useful information, including metadata on which taxa were included, which growth forms were included and information on whether species are known to be native or introduced.
+The dataframe `LUQUILLO_full` contains more useful information, including metadata on which taxa were included, which growth forms were included and information on whether species are known to be native or introduced.
 
 
 
@@ -296,7 +296,7 @@ If you're interested in accessing all traits for a taxon, say the genus *Salix*,
 
 ```{r}
 
-Salix_traits<-BIEN_trait_genus(genus = "Salix")
+Salix_traits <- BIEN_trait_genus(genus = "Salix")
 
 ```
 
@@ -318,7 +318,7 @@ leaf_area <- BIEN_trait_trait(trait = "leaf area")
 
 Note that the units have been standardized and that there is a full set of attribution data for each trait.
 
-#Taxonomy Data
+# Taxonomy Data
 
 While there are existing packages that query taxonomic data (e.g. those included in the excellent taxize package), the RBIEN taxonomy functions access the taxonomic information that underlies the BIEN database, ensuring consistency.
 
@@ -334,14 +334,14 @@ Let's say we're interested in the genus *Asclepias*, and we'd like to get an ide
 
 ```{r}
 
-Asclepias_taxonomy<-BIEN_taxonomy_genus(genus = "Asclepias")
+Asclepias_taxonomy <- BIEN_taxonomy_genus(genus = "Asclepias")
 
 #We see that the genus Asclepias falls within the family Apocynaceae and the order Gentianales.
 
 #You'll also notice that a given species may appear more than once (due to multiple circumscriptions, some of which may be illegitimate).
 
 #If we'd just like to know all the speciess that aren't illegitimate:
-Asclepias_species<-unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclepias_taxonomy$scrubbed_taxonomic_status %in% c("accepted",  "no opinion")])
+Asclepias_species <- unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclepias_taxonomy$scrubbed_taxonomic_status %in% c("accepted",  "no opinion")])
 
 
 ```
@@ -357,14 +357,14 @@ The BIEN database currently contains 101 phylogenies for new world plants.  This
 
 Arguments: The function `BIEN_phylogeny_complete` has a few arguments that are worth explaining:
 
-1. n_phylogenies This is the number of replicated phylogenies that you want to download (between 1 and 100)
+1. `n_phylogenies` This is the number of replicated phylogenies that you want to download (between 1 and 100)
 
-2. seed This function sets the seed for the random number generator before randomly drawing the phylogenies to be downloaded.  This is useful for replicating analyses.
+2. `seed` This function sets the seed for the random number generator before randomly drawing the phylogenies to be downloaded.  This is useful for replicating analyses.
 
-3. replicates This function allows you to specify WHICH of the 100 phylogenies to download, rather than having them selected randomly.
+3. `replicates` This function allows you to specify WHICH of the 100 phylogenies to download, rather than having them selected randomly.
 
 
-**Example 7: Phylogenies **
+**Example 7: Phylogenies**
 
 Let's say we want to download the conservative phylogeny.
 
@@ -397,13 +397,13 @@ Arguments:
 
 The arguments for this function are the same that we have seen in the occurrence and plot functions.
 
-**Example 8: Stem data **
+**Example 8: Stem data**
 
 If we'd like stem data for the species *Cupressus arizonica*
 
 ```{r}
 
-Cupressus_arizonica_stems<-BIEN_stem_species("Cupressus arizonica")
+Cupressus_arizonica_stems <- BIEN_stem_species("Cupressus arizonica")
 
 ```
 
@@ -419,7 +419,7 @@ These functions begin with the prefix `BIEN_list_` and allow you to quickly get 
 
 3.  `BIEN_list_county` Returns all species found within a given county/parish/or other 3rd level political division.
 
-Some of the same arguments we saw in the occurrence functions appear here as well, including "cultivated" and "only.new.world".
+Some of the same arguments we saw in the occurrence functions appear here as well, including `cultivated` and `only.new.world`.
 
 
 **Example 9: Species list for a country**
@@ -427,7 +427,7 @@ Some of the same arguments we saw in the occurrence functions appear here as wel
 Let's return to our previous example.  What if we just need a list of the species in the Bahamas, rather than the specific details of each occurrence record?  We can instead use the function `BIEN_list_country` to download a list of species, which should be much faster than using `BIEN_occurrence_country` to get a species list.
 
 ```{r}
-Bahamas_species_list<-BIEN_list_country(country = "Bahamas")
+Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
 
 #Notice that this time, we have 998 species, whereas previously we saw that there were 999 unique species.  What happened?  The list functions ignore NA values for species names, but R does not.  R counted NA values as a unique species name, giving one extra unique value.
 
@@ -437,7 +437,7 @@ If we wanted to retrieve the results for multiple countries at once, that is sim
 
 ```{r}
 
-country_vector<-c("Haiti","Dominican Republic")
+country_vector <- c("Haiti","Dominican Republic")
 Haiti_DR <- BIEN_list_country(country = country_vector)
 
 ```
@@ -447,7 +447,7 @@ We can also use political division codes (from geonames.org) instead of writing 
 ```{r}
 #To see all of the political division names, and associated codes, we can use this function:
 
-political_names<-BIEN_metadata_list_political_names()
+political_names <- BIEN_metadata_list_political_names()
 
 #Let's take a look at what the dataframe contains:
 
@@ -475,7 +475,7 @@ The BIEN metadata functions start with the prefix `BIEN_metadata_...` and provid
 
 4. `BIEN_metadata_list_political_names` Returns a dataframe containing political division names and associate codes.
 
-**Example 10: Metadata **
+**Example 10: Metadata**
 
 To check what the current version of the BIEN database is (which we recommend reporting when using BIEN data):
 
@@ -485,7 +485,7 @@ BIEN_metadata_database_version()
 
 ```
 
-** Example 11: Citations**
+**Example 11: Citations**
 
 One of the more innovative features of the BIEN package is that it will generate custom attribution data for you based on what data you downloaded through the package.
 
@@ -493,7 +493,7 @@ Let's say we're interested in *Selaginella selaginoides*, and we'd like to downl
 
 ```{r}
 
-Selaginella_selaginoides_occurrences<-BIEN_occurrence_species("Selaginella selaginoides",only.new.world = F)
+Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella selaginoides",only.new.world = F)
 
 ```
 
@@ -501,7 +501,7 @@ If we plan on using those data in a publication ,we'll need proper attribution. 
 
 ```{r}
 
-citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
+citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
 
 ```
 citation_info is a list that contains 3 elements:
@@ -511,33 +511,33 @@ citation_info is a list that contains 3 elements:
 
 To make things even easier on ourselves, we can use some of the additional functionality of the `BIEN_metadata_citation` function:
 
-```{r, eval=FALSE}
+```{r, eval = FALSE}
 
 temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a temporary working directory
 
 
-citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
                                      bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
-                                      acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
+                                      acknowledgement_file = file.path(temp_dir,"selaginella_selaginoides.txt"))
 
 
 ```
-Now, we have a bibtex file, selaginella_selaginoides.bib, that can be loaded into a reference manages (e.g. Endnote, Paperpile, etc.), and a text file, selaginella_selaginoides.txt, containing text that can be pasted into the acknowledgements section of a publication.
+Now, we have a bibtex file, `selaginella_selaginoides.bib`, that can be loaded into a reference manager (e.g. Endnote, Paperpile, etc.), and a text file, `selaginella_selaginoides.txt`, containing text that can be pasted into the acknowledgements section of a publication.
 
 What if we also have some trait data?  No problem there, the code handles that as well:
 
-```{r, eval=FALSE}
+```{r, eval = FALSE}
 #First, let's get some trait data:
-selaginella_selaginoides_traits<-BIEN_trait_species(species = "Selaginella selaginoides")
+selaginella_selaginoides_traits <- BIEN_trait_species(species = "Selaginella selaginoides")
 
 #Now, we just need to modify our previous bit of code to include the trait data as well:
 
 temp_dir <- file.path(tempdir(), "BIEN_temp")
 
-citation_info<-BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
+citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences,
                                       trait.dataframe = selaginella_selaginoides_traits,
                                       bibtex_file = file.path(temp_dir,"selaginella_selaginoides.bib"),
-                                      acknowledgement_file=file.path(temp_dir,"selaginella_selaginoides.txt"))
+                                      acknowledgement_file = file.path(temp_dir,"selaginella_selaginoides.txt"))
 
 ```
 
