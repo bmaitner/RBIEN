@@ -4,7 +4,8 @@
 \alias{BIEN_ranges_shapefile_to_skinny}
 \title{Extract range data and convert to smaller "skinny" format}
 \usage{
-BIEN_ranges_shapefile_to_skinny(directory, raster, skinny_ranges_file = NULL)
+BIEN_ranges_shapefile_to_skinny(directory, raster,
+  skinny_ranges_file = NULL)
 }
 \arguments{
 \item{directory}{The directory where range shapefiles will be stored.  If NULL, a tempprary directoray will be used.}
@@ -40,3 +41,4 @@ Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_species_bulk}},
   \code{\link{BIEN_ranges_species}}
 }
+\concept{range functions}

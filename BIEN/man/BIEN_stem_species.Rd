@@ -6,8 +6,8 @@
 \usage{
 BIEN_stem_species(species, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, collection.info = F, all.metadata = F,
-  ...)
+  political.boundaries = FALSE, collection.info = F,
+  all.metadata = F, ...)
 }
 \arguments{
 \item{species}{A single species, or a vector of species.  Genus and species should be separated by a space. Genus should be capitalized.}
@@ -54,3 +54,4 @@ Other stem functions: \code{\link{BIEN_stem_datasource}},
   \code{\link{BIEN_stem_genus}},
   \code{\link{BIEN_stem_sampling_protocol}}
 }
+\concept{stem functions}

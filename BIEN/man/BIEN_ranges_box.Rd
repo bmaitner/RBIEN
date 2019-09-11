@@ -55,3 +55,4 @@ Other range functions: \code{\link{BIEN_ranges_genus}},
   \code{\link{BIEN_ranges_species_bulk}},
   \code{\link{BIEN_ranges_species}}
 }
+\concept{range functions}

@@ -53,3 +53,4 @@ plot.phylo(x = tax_nodes,show.tip.label = F,show.node.label = T)}
 Other phylogeny functions: \code{\link{BIEN_phylogeny_complete}},
   \code{\link{BIEN_phylogeny_conservative}}
 }
+\concept{phylogeny functions}

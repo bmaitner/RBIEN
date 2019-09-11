@@ -43,3 +43,4 @@ Other list functions: \code{\link{BIEN_list_all}},
   \code{\link{BIEN_list_county}},
   \code{\link{BIEN_list_spatialpolygons}}
 }
+\concept{list functions}

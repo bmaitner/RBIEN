@@ -5,12 +5,15 @@
 \title{Generate citations for data extracted from BIEN.}
 \usage{
 BIEN_metadata_citation(dataframe = NULL, trait.dataframe = NULL,
-  bibtex_file = NULL, acknowledgement_file = NULL, ...)
+  trait.mean.dataframe = NULL, bibtex_file = NULL,
+  acknowledgement_file = NULL, ...)
 }
 \arguments{
 \item{dataframe}{A data.frame of occurrence data downloaded from the BIEN R package.}
 
 \item{trait.dataframe}{A data.frame of trait data downloaded from the BIEN R package.}
+
+\item{trait.mean.dataframe}{A data.frame of species mean trait data from the function BIEN_trait_mean.}
 
 \item{bibtex_file}{Output file for writing bibtex citations.}
 
@@ -37,3 +40,4 @@ Other metadata functions: \code{\link{BIEN_metadata_database_version}},
   \code{\link{BIEN_plot_metadata}},
   \code{\link{BIEN_ranges_list}}
 }
+\concept{metadata functions}

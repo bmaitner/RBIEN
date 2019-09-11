@@ -4,8 +4,9 @@
 \alias{BIEN_occurrence_species}
 \title{Extract occurrence data for specified species from BIEN}
 \usage{
-BIEN_occurrence_species(species, cultivated = FALSE, only.new.world = FALSE,
-  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
+BIEN_occurrence_species(species, cultivated = FALSE,
+  only.new.world = FALSE, all.taxonomy = FALSE,
+  native.status = FALSE, natives.only = TRUE,
   observation.type = FALSE, political.boundaries = FALSE,
   collection.info = F, ...)
 }
@@ -56,3 +57,4 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_spatialpolygons}},
   \code{\link{BIEN_occurrence_state}}
 }
+\concept{occurrence functions}

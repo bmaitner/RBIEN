@@ -7,8 +7,8 @@
 BIEN_plot_state(country = NULL, state = NULL, country.code = NULL,
   state.code = NULL, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  political.boundaries = TRUE, collection.info = F, all.metadata = FALSE,
-  ...)
+  political.boundaries = TRUE, collection.info = F,
+  all.metadata = FALSE, ...)
 }
 \arguments{
 \item{country}{A single country.}
@@ -66,3 +66,4 @@ Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_sampling_protocol}},
   \code{\link{BIEN_plot_spatialpolygons}}
 }
+\concept{plot functions}

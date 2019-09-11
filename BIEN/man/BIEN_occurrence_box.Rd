@@ -68,3 +68,4 @@ Other occurrence functions: \code{\link{BIEN_occurrence_country}},
   \code{\link{BIEN_occurrence_species}},
   \code{\link{BIEN_occurrence_state}}
 }
+\concept{occurrence functions}

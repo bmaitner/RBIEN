@@ -1855,6 +1855,7 @@ BIEN_trait_mean<-function(species,trait, ...){
   
   
   taxonomy_for_traits <- .BIEN_sql(query, ...)
+  #taxonomy_for_traits <- .BIEN_sql(query)
   if(length(taxonomy_for_traits)==0){stop("Taxonomic data missing, check species name(s)")}
   
   
@@ -1863,7 +1864,9 @@ BIEN_trait_mean<-function(species,trait, ...){
   
   query <- paste("SELECT * FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") AND (scrubbed_family in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_family)  , type = "sh"),collapse = ', '), ") or  scrubbed_genus in (", paste(shQuote(unique(taxonomy_for_traits$scrubbed_genus)  , type = "sh"),collapse = ', '), ")) ORDER BY scrubbed_family,scrubbed_species_binomial,trait_name ;")
   
-  traits_df <- .BIEN_sql(query, ...)
+  traits_df <- suppressWarnings(.BIEN_sql(query, ...)) #suppress warnings to avoid the geom message
+  #traits_df <- suppressWarnings(.BIEN_sql(query))
+  
   if(length(traits_df)==0){stop("No matching trait data for these taxa.")}
   
   #finally, choose the best available trait data
@@ -1872,15 +1875,15 @@ BIEN_trait_mean<-function(species,trait, ...){
   for(i in 1:length(species)){
     
     species_i_data<-list()
-    species_i_data[[1]]<-traits_df$trait_value[which(traits_df$scrubbed_species_binomial==species[i])]
-    species_i_data[[2]]<-traits_df$trait_value[which(traits_df$scrubbed_genus==taxonomy_for_traits$scrubbed_genus[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])]
+    species_i_data[[1]]<-cbind(traits_df$trait_value[which(traits_df$scrubbed_species_binomial==species[i])],traits_df$id[which(traits_df$scrubbed_species_binomial==species[i])]  )
+    species_i_data[[2]]<-cbind(traits_df$trait_value[which(traits_df$scrubbed_genus==taxonomy_for_traits$scrubbed_genus[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])],traits_df$id[which(traits_df$scrubbed_genus==taxonomy_for_traits$scrubbed_genus[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])])
     if(length(species_i_data[[2]])==0){
-      species_i_data[[2]]<-traits_df$trait_value[which(traits_df$scrubbed_genus==strsplit(species[i]," ")[[1]][1])]
+      species_i_data[[2]]<-cbind(traits_df$trait_value[which(traits_df$scrubbed_genus==strsplit(species[i]," ")[[1]][1])],traits_df$id[which(traits_df$scrubbed_genus==strsplit(species[i]," ")[[1]][1])])
     }
     #species_i_data[[3]]<-traits_df$trait_value[which(traits_df$family==taxonomy_for_traits$scrubbed_family[i])]
-    species_i_data[[3]]<-traits_df$trait_value[which(traits_df$scrubbed_family==taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])]
+    species_i_data[[3]]<-cbind(traits_df$trait_value[which(traits_df$scrubbed_family==taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])],traits_df$id[which(traits_df$scrubbed_family==taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_species_binomial==species[i])])])
     if(length(species_i_data[[3]])==0){
-      species_i_data[[3]]<-traits_df$trait_value[which(traits_df$scrubbed_family==unique(taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_genus==strsplit(species[i]," ")[[1]][1])]))]
+      species_i_data[[3]]<-cbind(traits_df$trait_value[which(traits_df$scrubbed_family==unique(taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_genus==strsplit(species[i]," ")[[1]][1])]))],traits_df$id[which(traits_df$scrubbed_family==unique(taxonomy_for_traits$scrubbed_family[which(taxonomy_for_traits$scrubbed_genus==strsplit(species[i]," ")[[1]][1])]))])
     }
     species_i_data[[4]]<-"NA"
     
@@ -1892,10 +1895,12 @@ BIEN_trait_mean<-function(species,trait, ...){
     
     if(length(species_i_data)>0){
       level_used<-names(species_i_data[1])
-      if(species_i_data[[1]][1]=="NA"){sample_size<-0}else{sample_size<-length(species_i_data[[1]])}
-      if(species_i_data[[1]][1]=="NA"){mean_value<-"NA"}else{mean_value<-mean(as.numeric(species_i_data[[1]]))}
+      if(species_i_data[[1]][1]=="NA"){sample_size<-0}else{sample_size<-nrow(species_i_data[[1]])}
+      if(species_i_data[[1]][1]=="NA"){mean_value<-"NA"}else{mean_value<-mean(as.numeric(species_i_data[[1]][,1]))}
+      if(species_i_data[[1]][1]=="NA"){ids <-"NA"}else{ids<-paste(as.numeric(species_i_data[[1]][,2]),collapse = ",")}
       unit<-unique(traits_df$unit)
-      output_data<-rbind(output_data,cbind(species[i],mean_value,trait,unit,level_used,sample_size))
+      
+      output_data<-rbind(output_data,cbind(species[i],mean_value,trait,unit,level_used,sample_size,ids))
     }#if data is available
     
     
@@ -3177,6 +3182,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #'BIEN_metadata_citation guides a user through the proper documentation for data downloaded from the BIEN database.
 #' @param dataframe A data.frame of occurrence data downloaded from the BIEN R package.
 #' @param trait.dataframe A data.frame of trait data downloaded from the BIEN R package.
+#' @param trait.mean.dataframe A data.frame of species mean trait data from the function BIEN_trait_mean.
 #' @param bibtex_file Output file for writing bibtex citations.
 #' @param acknowledgement_file Output file for writing acknowledgements.
 #' @param ... Additional arguments passed to internal functions.
@@ -3187,7 +3193,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #' citations<-BIEN_metadata_citation(dataframe=Xanthium_data)#If you are referencing occurrence data}
 #' @family metadata functions
 #' @export
-BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file=NULL,acknowledgement_file=NULL, ...){
+BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,trait.mean.dataframe=NULL,bibtex_file=NULL,acknowledgement_file=NULL, ...){
   
   
   BIEN_cite<-'@ARTICLE{Enquist_undated-aw, title  = "Botanical big data shows that plant diversity in the New World is driven by climatic-linked differences in evolutionary rates and 
@@ -3206,7 +3212,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
   url = {https://besjournals.onlinelibrary.wiley.com/doi/abs/10.1111/2041-210X.12861},
   eprint = {https://besjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/2041-210X.12861},
   abstract = {Abstract There is an urgent need for large-scale botanical data to improve our understanding of community assembly, coexistence, biogeography, evolution, and many other fundamental biological processes. Understanding these processes is critical for predicting and handling human-biodiversity interactions and global change dynamics such as food and energy security, ecosystem services, climate change, and species invasions. The Botanical Information and Ecology Network (BIEN) database comprises an unprecedented wealth of cleaned and standardised botanical data, containing roughly 81 million occurrence records from c. 375,000 species, c. 915,000 trait observations across 28 traits from c. 93,000 species, and co-occurrence records from 110,000 ecological plots globally, as well as 100,000 range maps and 100 replicated phylogenies (each containing 81,274 species) for New World species. Here, we describe an r package that provides easy access to these data. The bien r package allows users to access the multiple types of data in the BIEN database. Functions in this package query the BIEN database by turning user inputs into optimised PostgreSQL functions. Function names follow a convention designed to make it easy to understand what each function does. We have also developed a protocol for providing customised citations and herbarium acknowledgements for data downloaded through the bien r package. The development of the BIEN database represents a significant achievement in biological data integration, cleaning and standardization. Likewise, the bien r package represents an important tool for open science that makes the BIEN database freely and easily accessible to everyone.}
-  }' 
+}' 
   
   R_package_cite<-gsub(pattern = "\n",replacement = "",R_package_cite)
   
@@ -3218,6 +3224,32 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
     trait.query<-paste("SELECT DISTINCT citation_bibtex,source_citation,source, url_source, access, project_pi, project_pi_contact FROM agg_traits 
                        WHERE id in (", paste(shQuote(as.integer(trait.dataframe$id), type = "sh"),collapse = ', '),") ;")
     trait.sources<-.BIEN_sql(trait.query, ...)}
+  
+  
+  if(!is.null(trait.mean.dataframe)){
+    
+    ids<-paste(trait.mean.dataframe$ids,collapse = ",")
+    ids<-unique(unlist(strsplit(x = ids2,split = ",")))
+    ids<-ids[which(ids!="NA")]
+    
+    trait.mean.query<-paste("SELECT DISTINCT citation_bibtex,source_citation,source, url_source, access, project_pi, project_pi_contact FROM agg_traits 
+                            WHERE id in (", paste(shQuote(as.integer(ids), type = "sh"),collapse = ', '),") ;")
+    
+    trait.mean.sources <- .BIEN_sql(trait.mean.query, ...)
+    #trait.mean.sources <- .BIEN_sql(trait.mean.query)
+  }
+  
+  
+  if(!is.null(trait.dataframe) & !is.null(trait.mean.dataframe)){
+    trait.sources<- rbind(trait.sources,trait.mean.sources)
+    trait.sources<-unique(trait.sources)
+    
+  }
+  
+  if(is.null(trait.dataframe) & !is.null(trait.mean.dataframe)){
+    trait.sources <- trait.mean.sources
+    
+  }
   
   
   
@@ -3360,14 +3392,15 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
     citation[[2]]<-gsub(citation[[2]],pattern = "note", replacement = "\nnote")
     citation[[2]]<-iconv(citation[[2]],to="ASCII//TRANSLIT")
     names(citation)<-c("general information","references")
-
+    
   }#if dataframe is null
   
   #######
   #####  
   
   
-  if(!is.null(trait.dataframe) & is.null(dataframe)){  
+  
+  if((!is.null(trait.dataframe) |!is.null(trait.mean.dataframe)) & is.null(dataframe)){  
     citation<-list()
     citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
     The references in this list should be added to any publication using these data.  This is most easily done by specifying a bibtex_file and importing the bibtex formatted references into a reference manager.
@@ -3377,7 +3410,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
     
     
     #Cleaning up the bibtex so that it loads properly into reference managers.  Better too many new lines than not enough...for some reason...
-    if(!is.null(trait.dataframe)){dl_cites<-c(trait.sources$citation_bibtex)}
+    if(!is.null(trait.dataframe)| !is.null(trait.mean.dataframe)){dl_cites<-c(trait.sources$citation_bibtex)}
     dl_cites<-gsub(dl_cites,pattern = '"@',replacement = '@')
     dl_cites<-gsub(dl_cites,pattern = '" @',replacement = '@')
     dl_cites<-unique(dl_cites[which(!is.na(dl_cites))])
@@ -3448,7 +3481,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,bibtex_file
   
   return(citation)    
   
-}
+  }
 
 #####################
 

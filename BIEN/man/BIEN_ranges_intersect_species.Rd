@@ -54,3 +54,4 @@ Other range functions: \code{\link{BIEN_ranges_box}},
 \author{
 Daniel Guaderrama
 }
+\concept{range functions}

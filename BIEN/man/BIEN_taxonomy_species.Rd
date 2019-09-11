@@ -27,3 +27,4 @@ BIEN_taxonomy_species(species_vector)}
 Other taxonomy functions: \code{\link{BIEN_taxonomy_family}},
   \code{\link{BIEN_taxonomy_genus}}
 }
+\concept{taxonomy functions}

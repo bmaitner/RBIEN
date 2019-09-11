@@ -5,9 +5,10 @@
 \title{Extract occurrence data for specified SpatialPolygons or SpatialPolygonsDataFrame}
 \usage{
 BIEN_occurrence_spatialpolygons(spatialpolygons, cultivated = FALSE,
-  only.new.world = FALSE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, observation.type = FALSE,
-  political.boundaries = FALSE, collection.info = F, ...)
+  only.new.world = FALSE, all.taxonomy = FALSE,
+  native.status = FALSE, natives.only = TRUE,
+  observation.type = FALSE, political.boundaries = FALSE,
+  collection.info = F, ...)
 }
 \arguments{
 \item{spatialpolygons}{An object of class SpatialPolygons or SpatialPolygonsDataFrame.  Note that the file must be in WGS84.}
@@ -59,3 +60,4 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_species}},
   \code{\link{BIEN_occurrence_state}}
 }
+\concept{occurrence functions}

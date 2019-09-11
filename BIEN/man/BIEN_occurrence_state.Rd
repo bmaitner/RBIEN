@@ -4,9 +4,10 @@
 \alias{BIEN_occurrence_state}
 \title{Extract species occurrence records by state.}
 \usage{
-BIEN_occurrence_state(country = NULL, state = NULL, country.code = NULL,
-  state.code = NULL, cultivated = FALSE, only.new.world = FALSE,
-  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
+BIEN_occurrence_state(country = NULL, state = NULL,
+  country.code = NULL, state.code = NULL, cultivated = FALSE,
+  only.new.world = FALSE, all.taxonomy = FALSE,
+  native.status = FALSE, natives.only = TRUE,
   observation.type = FALSE, political.boundaries = FALSE,
   collection.info = F, ...)
 }
@@ -66,3 +67,4 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_spatialpolygons}},
   \code{\link{BIEN_occurrence_species}}
 }
+\concept{occurrence functions}

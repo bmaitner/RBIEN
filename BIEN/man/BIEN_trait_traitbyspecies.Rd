@@ -47,3 +47,4 @@ Other trait functions: \code{\link{BIEN_trait_country}},
   \code{\link{BIEN_trait_traits_per_species}},
   \code{\link{BIEN_trait_trait}}
 }
+\concept{trait functions}

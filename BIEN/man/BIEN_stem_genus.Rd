@@ -6,8 +6,8 @@
 \usage{
 BIEN_stem_genus(genus, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, collection.info = F, all.metadata = F,
-  ...)
+  political.boundaries = FALSE, collection.info = F,
+  all.metadata = F, ...)
 }
 \arguments{
 \item{genus}{A single genus, or a vector of genera. Genera should be capitalized.}
@@ -54,3 +54,4 @@ Other stem functions: \code{\link{BIEN_stem_datasource}},
   \code{\link{BIEN_stem_sampling_protocol}},
   \code{\link{BIEN_stem_species}}
 }
+\concept{stem functions}

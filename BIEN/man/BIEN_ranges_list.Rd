@@ -36,3 +36,5 @@ Other metadata functions: \code{\link{BIEN_metadata_citation}},
   \code{\link{BIEN_metadata_match_data}},
   \code{\link{BIEN_plot_metadata}}
 }
+\concept{metadata functions}
+\concept{range functions}

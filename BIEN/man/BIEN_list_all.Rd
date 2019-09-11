@@ -25,3 +25,4 @@ Other list functions: \code{\link{BIEN_list_country}},
   \code{\link{BIEN_list_spatialpolygons}},
   \code{\link{BIEN_list_state}}
 }
+\concept{list functions}

@@ -26,3 +26,4 @@ BIEN_phylo<-BIEN_phylogeny_conservative()}
 Other phylogeny functions: \code{\link{BIEN_phylogeny_complete}},
   \code{\link{BIEN_phylogeny_label_nodes}}
 }
+\concept{phylogeny functions}

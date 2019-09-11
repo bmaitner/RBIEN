@@ -30,3 +30,4 @@ Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_spatialpolygons}},
   \code{\link{BIEN_plot_state}}
 }
+\concept{plot functions}

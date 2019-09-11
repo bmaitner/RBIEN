@@ -6,8 +6,8 @@
 \usage{
 BIEN_plot_name(plot.name, cultivated = FALSE, only.new.world = FALSE,
   all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, collection.info = F, all.metadata = FALSE,
-  ...)
+  political.boundaries = FALSE, collection.info = F,
+  all.metadata = FALSE, ...)
 }
 \arguments{
 \item{plot.name}{A plot name or vector of names. See BIEN_plot_metadata for more information on plots.}
@@ -56,3 +56,4 @@ Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_spatialpolygons}},
   \code{\link{BIEN_plot_state}}
 }
+\concept{plot functions}

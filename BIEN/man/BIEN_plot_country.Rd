@@ -4,9 +4,10 @@
 \alias{BIEN_plot_country}
 \title{Download plot data from specified countries.}
 \usage{
-BIEN_plot_country(country = NULL, country.code = NULL, cultivated = FALSE,
-  only.new.world = FALSE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
+BIEN_plot_country(country = NULL, country.code = NULL,
+  cultivated = FALSE, only.new.world = FALSE, all.taxonomy = FALSE,
+  native.status = FALSE, natives.only = TRUE,
+  political.boundaries = FALSE, collection.info = F,
   all.metadata = FALSE, ...)
 }
 \arguments{
@@ -59,3 +60,4 @@ Other plot functions: \code{\link{BIEN_plot_dataset}},
   \code{\link{BIEN_plot_spatialpolygons}},
   \code{\link{BIEN_plot_state}}
 }
+\concept{plot functions}

@@ -10,7 +10,7 @@ BIEN_ranges_species_bulk(species = NULL, directory = NULL,
 \arguments{
 \item{species}{A vector of species or NULL (the default).  If NULL, all available ranges will be used.}
 
-\item{directory}{The directory where range shapefiles will be stored.  If NULL, a tempprary directoray will be used.}
+\item{directory}{The directory where range shapefiles will be stored.  If NULL, a temporary directoray will be used.}
 
 \item{batch_size}{The number of ranges to download at once.}
 
@@ -42,3 +42,4 @@ Other range functions: \code{\link{BIEN_ranges_box}},
   \code{\link{BIEN_ranges_spatialpolygons}},
   \code{\link{BIEN_ranges_species}}
 }
+\concept{range functions}

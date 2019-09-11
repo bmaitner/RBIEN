@@ -4,7 +4,6 @@
 \name{BIEN}
 \alias{BIEN}
 \alias{BIEN-package}
-\alias{BIEN-package}
 \title{BIEN: Tools for accessing the BIEN database.}
 \description{
 The Botanical Information and Ecology Network(BIEN) R package provides access to the BIEN database as well as useful tools for working with the BIEN data.

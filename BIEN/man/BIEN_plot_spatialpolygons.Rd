@@ -5,8 +5,9 @@
 \title{Download plot data from specified spatialPolygons object.}
 \usage{
 BIEN_plot_spatialpolygons(spatialpolygons, cultivated = FALSE,
-  only.new.world = FALSE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, political.boundaries = TRUE, collection.info = F,
+  only.new.world = FALSE, all.taxonomy = FALSE,
+  native.status = FALSE, natives.only = TRUE,
+  political.boundaries = TRUE, collection.info = F,
   all.metadata = FALSE, ...)
 }
 \arguments{
@@ -59,3 +60,4 @@ Other plot functions: \code{\link{BIEN_plot_country}},
   \code{\link{BIEN_plot_sampling_protocol}},
   \code{\link{BIEN_plot_state}}
 }
+\concept{plot functions}

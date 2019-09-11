@@ -4,8 +4,8 @@
 \alias{BIEN_phylogeny_complete}
 \title{Download the complete BIEN phylogenies}
 \usage{
-BIEN_phylogeny_complete(n_phylogenies = 1, seed = NULL, replicates = NULL,
-  ...)
+BIEN_phylogeny_complete(n_phylogenies = 1, seed = NULL,
+  replicates = NULL, ...)
 }
 \arguments{
 \item{n_phylogenies}{The number of phylogenies to download.  Should be an integer between 1 and 100.  Default is 1.}
@@ -34,3 +34,4 @@ phylos<-BIEN_phylogeny_complete(replicates = c(1,2,99,100))}
 Other phylogeny functions: \code{\link{BIEN_phylogeny_conservative}},
   \code{\link{BIEN_phylogeny_label_nodes}}
 }
+\concept{phylogeny functions}

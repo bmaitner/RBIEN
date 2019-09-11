@@ -4,10 +4,10 @@
 \alias{BIEN_occurrence_family}
 \title{Extract species occurrences by family.}
 \usage{
-BIEN_occurrence_family(family, cultivated = FALSE, only.new.world = FALSE,
-  observation.type = FALSE, all.taxonomy = FALSE, native.status = FALSE,
-  natives.only = TRUE, political.boundaries = FALSE, collection.info = F,
-  ...)
+BIEN_occurrence_family(family, cultivated = FALSE,
+  only.new.world = FALSE, observation.type = FALSE,
+  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
+  political.boundaries = FALSE, collection.info = F, ...)
 }
 \arguments{
 \item{family}{A single family or a vector of families.}
@@ -55,3 +55,4 @@ Other occurrence functions: \code{\link{BIEN_occurrence_box}},
   \code{\link{BIEN_occurrence_species}},
   \code{\link{BIEN_occurrence_state}}
 }
+\concept{occurrence functions}
