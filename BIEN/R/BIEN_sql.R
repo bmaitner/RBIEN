@@ -19,6 +19,7 @@
 #' @param schema An alternative schema to be accessed.  Used for testing purposes.
 #' @param print.query Should  the query used be printed?  Default is FALSE
 #' @import RPostgreSQL
+#' @importFrom DBI dbDriver
 #' @return A dataframe returned by the query.
 #' @keywords internal
 #' @examples \dontrun{

@@ -11,6 +11,7 @@ BIEN 1.2.4
 
 ## BUG FIXES
 * Fixed bug that occaisionally occured with trait citations.
+* Fixed bug caused by documentation for argument '...' in BIEN_metadata_match. (PR#16223, see <https://bugs.r-project.org/bugzilla/show_bug.cgi?id=16223>)
 
 BIEN 1.2.3
 ===============

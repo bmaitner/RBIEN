@@ -3135,7 +3135,6 @@ BIEN_metadata_database_version<-function(...){
 #' @param old A dataframe that is to be compared to a (typically) newer dataframe.
 #' @param new A dataframe that is to be compared to a (typically) older dataframe.
 #' @param return What information should be returned?  Current options are: "identical" (Logical, are the two dataframes identical?), "additions" (numeric, which rows are new?), "deletions" (numeric, which rows are no longer present?), "logical" (logical, which elements of the old dataframe are in the new one?).
-#' @param ... Additional arguments passed to internal functions.
 #' @return Logical of varying length (depending on choice of "return" parameter)
 #' @note Since comparisons are done by row (except when using return="identical"), this function may fail to flag additions or deletions if they are exact duplicates of existing rows.
 #' @family metadata functions
@@ -3193,7 +3192,7 @@ BIEN_metadata_match_data<-function(old,new,return="identical"){
 #' citations<-BIEN_metadata_citation(dataframe=Xanthium_data)#If you are referencing occurrence data}
 #' @family metadata functions
 #' @export
-BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,trait.mean.dataframe=NULL,bibtex_file=NULL,acknowledgement_file=NULL, ...){
+BIEN_metadata_citation <- function(dataframe=NULL,trait.dataframe=NULL,trait.mean.dataframe=NULL,bibtex_file=NULL,acknowledgement_file=NULL, ...){
   
   
   BIEN_cite<-'@ARTICLE{Enquist_undated-aw, title  = "Botanical big data shows that plant diversity in the New World is driven by climatic-linked differences in evolutionary rates and 
@@ -3229,7 +3228,7 @@ BIEN_metadata_citation<-function(dataframe=NULL,trait.dataframe=NULL,trait.mean.
   if(!is.null(trait.mean.dataframe)){
     
     ids<-paste(trait.mean.dataframe$ids,collapse = ",")
-    ids<-unique(unlist(strsplit(x = ids2,split = ",")))
+    ids<-unique(unlist(strsplit(x = ids,split = ",")))
     ids<-ids[which(ids!="NA")]
     
     trait.mean.query<-paste("SELECT DISTINCT citation_bibtex,source_citation,source, url_source, access, project_pi, project_pi_contact FROM agg_traits 
