@@ -4,11 +4,18 @@
 \alias{BIEN_occurrence_genus}
 \title{Extract occurrence data from BIEN for specified genera}
 \usage{
-BIEN_occurrence_genus(genus, cultivated = FALSE,
-  only.new.world = FALSE, all.taxonomy = FALSE,
-  native.status = FALSE, natives.only = TRUE,
-  observation.type = FALSE, political.boundaries = FALSE,
-  collection.info = F, ...)
+BIEN_occurrence_genus(
+  genus,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  observation.type = FALSE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  ...
+)
 }
 \arguments{
 \item{genus}{A single genus, or a vector of genera. Genera should be capitalized.}
@@ -48,13 +55,14 @@ BIEN_occurrence_genus(genus_vector)
 BIEN_occurrence_genus(genus = "Abutilon",cultivated = TRUE,only.new.world = FALSE)}
 }
 \seealso{
-Other occurrence functions: \code{\link{BIEN_occurrence_box}},
-  \code{\link{BIEN_occurrence_country}},
-  \code{\link{BIEN_occurrence_county}},
-  \code{\link{BIEN_occurrence_family}},
-  \code{\link{BIEN_occurrence_records_per_species}},
-  \code{\link{BIEN_occurrence_spatialpolygons}},
-  \code{\link{BIEN_occurrence_species}},
-  \code{\link{BIEN_occurrence_state}}
+Other occurrence functions: 
+\code{\link{BIEN_occurrence_box}()},
+\code{\link{BIEN_occurrence_country}()},
+\code{\link{BIEN_occurrence_county}()},
+\code{\link{BIEN_occurrence_family}()},
+\code{\link{BIEN_occurrence_records_per_species}()},
+\code{\link{BIEN_occurrence_spatialpolygons}()},
+\code{\link{BIEN_occurrence_species}()},
+\code{\link{BIEN_occurrence_state}()}
 }
 \concept{occurrence functions}

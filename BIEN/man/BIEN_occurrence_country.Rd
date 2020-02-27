@@ -4,11 +4,19 @@
 \alias{BIEN_occurrence_country}
 \title{Extract species occurrence records by country.}
 \usage{
-BIEN_occurrence_country(country = NULL, country.code = NULL,
-  cultivated = FALSE, only.new.world = FALSE, all.taxonomy = FALSE,
-  native.status = FALSE, natives.only = TRUE,
-  observation.type = FALSE, political.boundaries = FALSE,
-  collection.info = F, ...)
+BIEN_occurrence_country(
+  country = NULL,
+  country.code = NULL,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  observation.type = FALSE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  ...
+)
 }
 \arguments{
 \item{country}{A single country or a vector of country.}
@@ -51,13 +59,14 @@ country_vector<-c("Cuba","Bahamas")
 BIEN_occurrence_country(country_vector)}
 }
 \seealso{
-Other occurrence functions: \code{\link{BIEN_occurrence_box}},
-  \code{\link{BIEN_occurrence_county}},
-  \code{\link{BIEN_occurrence_family}},
-  \code{\link{BIEN_occurrence_genus}},
-  \code{\link{BIEN_occurrence_records_per_species}},
-  \code{\link{BIEN_occurrence_spatialpolygons}},
-  \code{\link{BIEN_occurrence_species}},
-  \code{\link{BIEN_occurrence_state}}
+Other occurrence functions: 
+\code{\link{BIEN_occurrence_box}()},
+\code{\link{BIEN_occurrence_county}()},
+\code{\link{BIEN_occurrence_family}()},
+\code{\link{BIEN_occurrence_genus}()},
+\code{\link{BIEN_occurrence_records_per_species}()},
+\code{\link{BIEN_occurrence_spatialpolygons}()},
+\code{\link{BIEN_occurrence_species}()},
+\code{\link{BIEN_occurrence_state}()}
 }
 \concept{occurrence functions}
