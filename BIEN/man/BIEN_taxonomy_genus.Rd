@@ -24,7 +24,8 @@ genus_vector<-c("Acer","Quercus")
 BIEN_taxonomy_genus(genus_vector)}
 }
 \seealso{
-Other taxonomy functions: \code{\link{BIEN_taxonomy_family}},
-  \code{\link{BIEN_taxonomy_species}}
+Other taxonomy functions: 
+\code{\link{BIEN_taxonomy_family}()},
+\code{\link{BIEN_taxonomy_species}()}
 }
 \concept{taxonomy functions}

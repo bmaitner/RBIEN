@@ -24,7 +24,8 @@ species_vector<-c("Acer nigrum","Cannabis sativa")
 BIEN_taxonomy_species(species_vector)}
 }
 \seealso{
-Other taxonomy functions: \code{\link{BIEN_taxonomy_family}},
-  \code{\link{BIEN_taxonomy_genus}}
+Other taxonomy functions: 
+\code{\link{BIEN_taxonomy_family}()},
+\code{\link{BIEN_taxonomy_genus}()}
 }
 \concept{taxonomy functions}

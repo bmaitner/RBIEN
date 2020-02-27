@@ -4,9 +4,15 @@
 \alias{BIEN_ranges_spatialpolygons}
 \title{Download range maps that intersect a user-supplied SpatialPolygons object.}
 \usage{
-BIEN_ranges_spatialpolygons(spatialpolygons, directory = NULL,
-  species.names.only = FALSE, return.species.list = TRUE,
-  crop.ranges = FALSE, include.gid = FALSE, ...)
+BIEN_ranges_spatialpolygons(
+  spatialpolygons,
+  directory = NULL,
+  species.names.only = FALSE,
+  return.species.list = TRUE,
+  crop.ranges = FALSE,
+  include.gid = FALSE,
+  ...
+)
 }
 \arguments{
 \item{spatialpolygons}{An object of class SpatialPolygonsDataFrame or SpatialPolygons.}
@@ -45,14 +51,15 @@ BIEN_ranges_spatialpolygons(spatialpolygons = shape)
 }
 }
 \seealso{
-Other range functions: \code{\link{BIEN_ranges_box}},
-  \code{\link{BIEN_ranges_genus}},
-  \code{\link{BIEN_ranges_intersect_species}},
-  \code{\link{BIEN_ranges_list}},
-  \code{\link{BIEN_ranges_load_species}},
-  \code{\link{BIEN_ranges_shapefile_to_skinny}},
-  \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}},
-  \code{\link{BIEN_ranges_species_bulk}},
-  \code{\link{BIEN_ranges_species}}
+Other range functions: 
+\code{\link{BIEN_ranges_box}()},
+\code{\link{BIEN_ranges_genus}()},
+\code{\link{BIEN_ranges_intersect_species}()},
+\code{\link{BIEN_ranges_list}()},
+\code{\link{BIEN_ranges_load_species}()},
+\code{\link{BIEN_ranges_shapefile_to_skinny}()},
+\code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
+\code{\link{BIEN_ranges_species_bulk}()},
+\code{\link{BIEN_ranges_species}()}
 }
 \concept{range functions}

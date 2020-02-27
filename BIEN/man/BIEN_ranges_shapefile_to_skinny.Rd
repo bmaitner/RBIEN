@@ -4,8 +4,7 @@
 \alias{BIEN_ranges_shapefile_to_skinny}
 \title{Extract range data and convert to smaller "skinny" format}
 \usage{
-BIEN_ranges_shapefile_to_skinny(directory, raster,
-  skinny_ranges_file = NULL)
+BIEN_ranges_shapefile_to_skinny(directory, raster, skinny_ranges_file = NULL)
 }
 \arguments{
 \item{directory}{The directory where range shapefiles will be stored.  If NULL, a tempprary directoray will be used.}
@@ -31,14 +30,15 @@ ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
 }
 }
 \seealso{
-Other range functions: \code{\link{BIEN_ranges_box}},
-  \code{\link{BIEN_ranges_genus}},
-  \code{\link{BIEN_ranges_intersect_species}},
-  \code{\link{BIEN_ranges_list}},
-  \code{\link{BIEN_ranges_load_species}},
-  \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}},
-  \code{\link{BIEN_ranges_spatialpolygons}},
-  \code{\link{BIEN_ranges_species_bulk}},
-  \code{\link{BIEN_ranges_species}}
+Other range functions: 
+\code{\link{BIEN_ranges_box}()},
+\code{\link{BIEN_ranges_genus}()},
+\code{\link{BIEN_ranges_intersect_species}()},
+\code{\link{BIEN_ranges_list}()},
+\code{\link{BIEN_ranges_load_species}()},
+\code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
+\code{\link{BIEN_ranges_spatialpolygons}()},
+\code{\link{BIEN_ranges_species_bulk}()},
+\code{\link{BIEN_ranges_species}()}
 }
 \concept{range functions}

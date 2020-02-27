@@ -4,11 +4,18 @@
 \alias{BIEN_stem_datasource}
 \title{Extract stem data for a given datasource from BIEN}
 \usage{
-BIEN_stem_datasource(datasource, cultivated = FALSE,
-  only.new.world = FALSE, all.taxonomy = FALSE,
-  native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, collection.info = F,
-  all.metadata = F, ...)
+BIEN_stem_datasource(
+  datasource,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  all.metadata = F,
+  ...
+)
 }
 \arguments{
 \item{datasource}{A single datasource, or a vector of datasources.}
@@ -49,9 +56,10 @@ Setting either "cultivated" or "native.status" to TRUE will significantly slow t
 BIEN_stem_datasource(datasource = "SALVIAS")}
 }
 \seealso{
-Other stem functions: \code{\link{BIEN_stem_family}},
-  \code{\link{BIEN_stem_genus}},
-  \code{\link{BIEN_stem_sampling_protocol}},
-  \code{\link{BIEN_stem_species}}
+Other stem functions: 
+\code{\link{BIEN_stem_family}()},
+\code{\link{BIEN_stem_genus}()},
+\code{\link{BIEN_stem_sampling_protocol}()},
+\code{\link{BIEN_stem_species}()}
 }
 \concept{stem functions}

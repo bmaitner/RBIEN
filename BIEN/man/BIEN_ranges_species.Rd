@@ -4,8 +4,14 @@
 \alias{BIEN_ranges_species}
 \title{Download range maps for given species.}
 \usage{
-BIEN_ranges_species(species, directory = NULL, matched = TRUE,
-  match_names_only = FALSE, include.gid = FALSE, ...)
+BIEN_ranges_species(
+  species,
+  directory = NULL,
+  matched = TRUE,
+  match_names_only = FALSE,
+  include.gid = FALSE,
+  ...
+)
 }
 \arguments{
 \item{species}{A single species or a vector of species.}
@@ -54,14 +60,15 @@ plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa
 Abies_poly$Species#gives the species name associated with "Abies_poly"}
 }
 \seealso{
-Other range functions: \code{\link{BIEN_ranges_box}},
-  \code{\link{BIEN_ranges_genus}},
-  \code{\link{BIEN_ranges_intersect_species}},
-  \code{\link{BIEN_ranges_list}},
-  \code{\link{BIEN_ranges_load_species}},
-  \code{\link{BIEN_ranges_shapefile_to_skinny}},
-  \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}},
-  \code{\link{BIEN_ranges_spatialpolygons}},
-  \code{\link{BIEN_ranges_species_bulk}}
+Other range functions: 
+\code{\link{BIEN_ranges_box}()},
+\code{\link{BIEN_ranges_genus}()},
+\code{\link{BIEN_ranges_intersect_species}()},
+\code{\link{BIEN_ranges_list}()},
+\code{\link{BIEN_ranges_load_species}()},
+\code{\link{BIEN_ranges_shapefile_to_skinny}()},
+\code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
+\code{\link{BIEN_ranges_spatialpolygons}()},
+\code{\link{BIEN_ranges_species_bulk}()}
 }
 \concept{range functions}

@@ -24,7 +24,8 @@ family_vector<-c("Orchidaceae","Poaceae")
 BIEN_taxonomy_family(family_vector)}
 }
 \seealso{
-Other taxonomy functions: \code{\link{BIEN_taxonomy_genus}},
-  \code{\link{BIEN_taxonomy_species}}
+Other taxonomy functions: 
+\code{\link{BIEN_taxonomy_genus}()},
+\code{\link{BIEN_taxonomy_species}()}
 }
 \concept{taxonomy functions}
