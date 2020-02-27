@@ -143,12 +143,12 @@ Since we may be interested in a particular geographic area, rather than a partic
 
 We'll choose a relatively small region, the Bahamas, for our demonstration.  
 
-```{r}
+```{r, eval = FALSE}
 Bahamas <- BIEN_occurrence_country(country =  "Bahamas")
 
 #Let's see how many species we have
 length(unique(Bahamas$scrubbed_species_binomial))
-#Nearly 1000 species, not bad.
+#About 300 species with valid occurrence records.
 
 #Now, let's take a look at where those occurrences are:
 map(regions = "Bahamas" ,fill = T , col= "grey", bg = "light blue")
@@ -248,13 +248,13 @@ Again we have some of the same arguments available for these queries that we saw
 **Example 4: Plot data by plot name**
 
 Let's take a look at the data for an individual plot.
-```{r}
+```{r, eval = FALSE}
 LUQUILLO <- BIEN_plot_name(plot.name = "LUQUILLO")
 head(LUQUILLO)
 ```
 
 We can see that this is a 0.1 hectare transect where stems >= 2.5 cm diameter at breast height were included.  If we'd like more detail, we can use additional arguments:
-```{r}
+```{r, eval = FALSE}
 LUQUILLO_full <- BIEN_plot_name(plot.name = "LUQUILLO",cultivated = T,all.taxonomy = T,native.status = T,political.boundaries = T,all.metadata = T)
 
 ```
@@ -429,7 +429,7 @@ Let's return to our previous example.  What if we just need a list of the specie
 ```{r}
 Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
 
-#Notice that this time, we have 998 species, whereas previously we saw that there were 999 unique species.  What happened?  The list functions ignore NA values for species names, but R does not.  R counted NA values as a unique species name, giving one extra unique value.
+#Notice that we find many more species listed than we found occurrence records for.  What happened?  There are many records coming from the Bahamas that lack coordinates.  These records are used used in the "_list_" functions, but not the occurrence functions.
 
 ```
 

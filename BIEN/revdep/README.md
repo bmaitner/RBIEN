@@ -1,33 +1,46 @@
-# Setup
+# Platform
 
-## Platform
-
-|setting  |value                        |
+|field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.5.0 (2018-04-23) |
+|version  |R version 3.6.2 (2019-12-12) |
+|os       |Windows 10 x64               |
 |system   |x86_64, mingw32              |
-|ui       |RStudio (1.0.153)            |
+|ui       |RStudio                      |
 |language |(EN)                         |
 |collate  |English_United States.1252   |
+|ctype    |English_United States.1252   |
 |tz       |America/Phoenix              |
-|date     |2018-05-09                   |
+|date     |2020-02-25                   |
 
-## Packages
+# Dependencies
 
-|package     |*  |version |date       |source         |
-|:-----------|:--|:-------|:----------|:--------------|
-|ape         |   |5.1     |2018-04-04 |CRAN (R 3.5.0) |
-|BIEN        |   |1.2.3   |2018-05-09 |local (@1.2.3) |
-|DBI         |   |1.0.0   |2018-05-02 |CRAN (R 3.5.0) |
-|rgdal       |   |1.2-20  |2018-05-07 |CRAN (R 3.5.0) |
-|rgeos       |   |0.3-26  |2017-10-31 |CRAN (R 3.5.0) |
-|RPostgreSQL |   |0.6-2   |2017-06-24 |CRAN (R 3.5.0) |
-|sp          |*  |1.2-7   |2018-01-19 |CRAN (R 3.5.0) |
+|package       |old   |new         |<U+0394>  |
+|:-------------|:-----|:-----------|:--|
+|BIEN          |1.2.3 |1.2.4       |*  |
+|ape           |5.3   |5.3         |   |
+|classInt      |NA    |0.4-2       |*  |
+|DBI           |1.1.0 |1.1.0       |   |
+|doParallel    |NA    |1.0.15      |*  |
+|e1071         |NA    |1.7-3       |*  |
+|fasterize     |NA    |1.0.0       |*  |
+|foreach       |NA    |1.4.8       |*  |
+|iterators     |NA    |1.0.12      |*  |
+|magrittr      |NA    |1.5         |*  |
+|raster        |NA    |3.0-12      |*  |
+|Rcpp          |1.0.3 |1.0.3       |   |
+|RcppArmadillo |NA    |0.9.850.1.0 |*  |
+|rgdal         |1.4-8 |1.4-8       |   |
+|rgeos         |0.5-2 |0.5-2       |   |
+|RPostgreSQL   |0.6-2 |0.6-2       |   |
+|sf            |NA    |0.8-1       |*  |
+|sp            |1.4-0 |1.4-0       |   |
+|units         |NA    |0.6-5       |*  |
 
-# Check results
+# Revdeps
 
-0 packages
+## Failed to check (1)
 
-
-
+|package            |version |error |warning |note |
+|:------------------|:-------|:-----|:-------|:----|
+|rangeModelMetadata |?       |      |        |     |
 
