@@ -63,12 +63,12 @@ test_that("Ranges functions return a SpatialPolygonsDataFrame",{
 })
 
 #Stem
-test_that("Stem functions return a dataframe",{
-  expect_that(BIEN_stem_species(species = "Abies amabilis",natives.only = T,native.status = T,collection.info = T,schema=schema) ,is_a("data.frame"))
-  expect_that(BIEN_stem_genus(genus = "Abies",natives.only = T,native.status = T,schema=schema,limit=1) ,is_a("data.frame"))
-  expect_that(BIEN_stem_family(family = "Selaginellaceae",natives.only = T,native.status = T,schema=schema) ,is_a("data.frame"))
-  
-})
+#test_that("Stem functions return a dataframe",{
+#  expect_that(BIEN_stem_species(species = "Abies amabilis",natives.only = T,native.status = T,collection.info = T,schema=schema) ,is_a("data.frame"))
+#  expect_that(BIEN_stem_genus(genus = "Abies",natives.only = T,native.status = T,schema=schema,limit=1) ,is_a("data.frame"))
+#  expect_that(BIEN_stem_family(family = "Selaginellaceae",natives.only = T,native.status = T,schema=schema) ,is_a("data.frame"))
+#  
+#})
 
 #Taxonomy
 test_that("Taxonomy functions return a dataframe",{
@@ -79,16 +79,16 @@ test_that("Taxonomy functions return a dataframe",{
 
 #trait
 test_that("Trait functions return a dataframe",{
-  expect_that(BIEN_trait_family("Cactaceae",schema=schema,limit=1) ,is_a("data.frame"))
-  expect_that(BIEN_trait_genus("Xanthium",schema=schema,limit=1) ,is_a("data.frame"))
+  expect_that(BIEN_trait_family("Cactaceae",schema=schema) ,is_a("data.frame"))
+  expect_that(BIEN_trait_genus("Xanthium",schema=schema) ,is_a("data.frame"))
   expect_that(BIEN_trait_list(schema=schema) ,is_a("data.frame"))
   expect_that(BIEN_trait_mean(species = "Xanthium strumarium",trait = "leaf dry mass per leaf fresh mass",schema=schema) ,is_a("data.frame"))
-  expect_that(BIEN_trait_species("Xanthium strumrium",all.taxonomy = T,political.boundaries = T,schema=schema,limit=1) ,is_a("data.frame"))
+  expect_that(BIEN_trait_species("Xanthium strumrium",all.taxonomy = T,political.boundaries = T,schema=schema) ,is_a("data.frame"))
   expect_that(BIEN_trait_trait("leaf dry mass per leaf fresh mass",schema=schema,limit=1) ,is_a("data.frame"))
   expect_that(BIEN_trait_traitbyfamily(trait = "leaf dry mass per leaf fresh mass",family = "Asteraceae",schema=schema,limit=1) ,is_a("data.frame"))
   expect_that(BIEN_trait_traitbygenus(trait = "leaf dry mass per leaf fresh mass",genus = "Xanthium",schema=schema,limit=1) ,is_a("data.frame"))
   expect_that(BIEN_trait_traitbyspecies(trait = "leaf dry mass per leaf fresh mass",species = "Xanthium strumarium",schema=schema,limit=1) ,is_a("data.frame"))
-  expect_that(BIEN_trait_traits_per_species(schema=schema) ,is_a("data.frame"))
+  #expect_that(BIEN_trait_traits_per_species(schema=schema) ,is_a("data.frame"))
 })
 
 
