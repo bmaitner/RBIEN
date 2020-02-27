@@ -20,10 +20,11 @@ BIEN_metadata_database_version downloads the current version number and release 
 BIEN_metadata_database_version()}
 }
 \seealso{
-Other metadata functions: \code{\link{BIEN_metadata_citation}},
-  \code{\link{BIEN_metadata_list_political_names}},
-  \code{\link{BIEN_metadata_match_data}},
-  \code{\link{BIEN_plot_metadata}},
-  \code{\link{BIEN_ranges_list}}
+Other metadata functions: 
+\code{\link{BIEN_metadata_citation}()},
+\code{\link{BIEN_metadata_list_political_names}()},
+\code{\link{BIEN_metadata_match_data}()},
+\code{\link{BIEN_plot_metadata}()},
+\code{\link{BIEN_ranges_list}()}
 }
 \concept{metadata functions}

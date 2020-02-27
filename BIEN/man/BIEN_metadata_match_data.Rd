@@ -12,8 +12,6 @@ BIEN_metadata_match_data(old, new, return = "identical")
 \item{new}{A dataframe that is to be compared to a (typically) older dataframe.}
 
 \item{return}{What information should be returned?  Current options are: "identical" (Logical, are the two dataframes identical?), "additions" (numeric, which rows are new?), "deletions" (numeric, which rows are no longer present?), "logical" (logical, which elements of the old dataframe are in the new one?).}
-
-\item{...}{Additional arguments passed to internal functions.}
 }
 \value{
 Logical of varying length (depending on choice of "return" parameter)
@@ -32,10 +30,11 @@ BIEN_metadata_match_data(old,new,return="identical")
 BIEN_metadata_match_data(old,new,return="additions")}
 }
 \seealso{
-Other metadata functions: \code{\link{BIEN_metadata_citation}},
-  \code{\link{BIEN_metadata_database_version}},
-  \code{\link{BIEN_metadata_list_political_names}},
-  \code{\link{BIEN_plot_metadata}},
-  \code{\link{BIEN_ranges_list}}
+Other metadata functions: 
+\code{\link{BIEN_metadata_citation}()},
+\code{\link{BIEN_metadata_database_version}()},
+\code{\link{BIEN_metadata_list_political_names}()},
+\code{\link{BIEN_plot_metadata}()},
+\code{\link{BIEN_ranges_list}()}
 }
 \concept{metadata functions}
