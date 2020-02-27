@@ -4,3 +4,5 @@
 man-roxygen
 ^revdep$
 NOTES
+^doc$
+^Meta$

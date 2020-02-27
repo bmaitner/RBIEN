@@ -20,9 +20,10 @@ BIEN_list_all produces a list of all species in the BIEN database.
 species_list<-BIEN_list_all()}
 }
 \seealso{
-Other list functions: \code{\link{BIEN_list_country}},
-  \code{\link{BIEN_list_county}},
-  \code{\link{BIEN_list_spatialpolygons}},
-  \code{\link{BIEN_list_state}}
+Other list functions: 
+\code{\link{BIEN_list_country}()},
+\code{\link{BIEN_list_county}()},
+\code{\link{BIEN_list_spatialpolygons}()},
+\code{\link{BIEN_list_state}()}
 }
 \concept{list functions}

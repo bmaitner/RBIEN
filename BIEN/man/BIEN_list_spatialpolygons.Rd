@@ -4,8 +4,12 @@
 \alias{BIEN_list_spatialpolygons}
 \title{Extract a list of species within a given spatialpolygons.}
 \usage{
-BIEN_list_spatialpolygons(spatialpolygons, cultivated = FALSE,
-  only.new.world = FALSE, ...)
+BIEN_list_spatialpolygons(
+  spatialpolygons,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  ...
+)
 }
 \arguments{
 \item{spatialpolygons}{An object of class SpatialPolygonsDataFrame.  Note that the object must be in WGS84.}
@@ -33,9 +37,10 @@ shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
 species_list<-BIEN_list_spatialpolygons(spatialpolygons=shape)}
 }
 \seealso{
-Other list functions: \code{\link{BIEN_list_all}},
-  \code{\link{BIEN_list_country}},
-  \code{\link{BIEN_list_county}},
-  \code{\link{BIEN_list_state}}
+Other list functions: 
+\code{\link{BIEN_list_all}()},
+\code{\link{BIEN_list_country}()},
+\code{\link{BIEN_list_county}()},
+\code{\link{BIEN_list_state}()}
 }
 \concept{list functions}

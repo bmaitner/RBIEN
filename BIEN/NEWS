@@ -8,6 +8,7 @@ BIEN 1.2.4
 * Added function BIEN_phylogeny_label_nodes().
 * Now excluding locations known to be cultivated by default (using is_location_cultivated field)
 * Added new functions BIEN_ranges_species_bulk, BIEN_ranges_shapefiles_to_skinny, and BIEN_ranges_skinny_ranges_to_richness_raster
+* Changes SQL queries to omit an "ORDER BY" clause in order to speed things up
 
 ## BUG FIXES
 * Fixed bug that occaisionally occured with trait citations.

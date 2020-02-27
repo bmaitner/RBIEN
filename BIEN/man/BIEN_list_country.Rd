@@ -4,8 +4,13 @@
 \alias{BIEN_list_country}
 \title{Extract species list by country}
 \usage{
-BIEN_list_country(country = NULL, country.code = NULL,
-  cultivated = FALSE, only.new.world = FALSE, ...)
+BIEN_list_country(
+  country = NULL,
+  country.code = NULL,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  ...
+)
 }
 \arguments{
 \item{country}{A single country or a vector of countries.}
@@ -34,9 +39,10 @@ country_vector<-c("Canada","United States")
 BIEN_list_country(country_vector)}
 }
 \seealso{
-Other list functions: \code{\link{BIEN_list_all}},
-  \code{\link{BIEN_list_county}},
-  \code{\link{BIEN_list_spatialpolygons}},
-  \code{\link{BIEN_list_state}}
+Other list functions: 
+\code{\link{BIEN_list_all}()},
+\code{\link{BIEN_list_county}()},
+\code{\link{BIEN_list_spatialpolygons}()},
+\code{\link{BIEN_list_state}()}
 }
 \concept{list functions}
