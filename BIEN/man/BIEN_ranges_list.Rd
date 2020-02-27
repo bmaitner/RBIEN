@@ -20,21 +20,23 @@ BIEN_ranges_list a data.frame containing listing all range maps currently availa
 available_maps<-BIEN_ranges_list()}
 }
 \seealso{
-Other range functions: \code{\link{BIEN_ranges_box}},
-  \code{\link{BIEN_ranges_genus}},
-  \code{\link{BIEN_ranges_intersect_species}},
-  \code{\link{BIEN_ranges_load_species}},
-  \code{\link{BIEN_ranges_shapefile_to_skinny}},
-  \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}},
-  \code{\link{BIEN_ranges_spatialpolygons}},
-  \code{\link{BIEN_ranges_species_bulk}},
-  \code{\link{BIEN_ranges_species}}
+Other range functions: 
+\code{\link{BIEN_ranges_box}()},
+\code{\link{BIEN_ranges_genus}()},
+\code{\link{BIEN_ranges_intersect_species}()},
+\code{\link{BIEN_ranges_load_species}()},
+\code{\link{BIEN_ranges_shapefile_to_skinny}()},
+\code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
+\code{\link{BIEN_ranges_spatialpolygons}()},
+\code{\link{BIEN_ranges_species_bulk}()},
+\code{\link{BIEN_ranges_species}()}
 
-Other metadata functions: \code{\link{BIEN_metadata_citation}},
-  \code{\link{BIEN_metadata_database_version}},
-  \code{\link{BIEN_metadata_list_political_names}},
-  \code{\link{BIEN_metadata_match_data}},
-  \code{\link{BIEN_plot_metadata}}
+Other metadata functions: 
+\code{\link{BIEN_metadata_citation}()},
+\code{\link{BIEN_metadata_database_version}()},
+\code{\link{BIEN_metadata_list_political_names}()},
+\code{\link{BIEN_metadata_match_data}()},
+\code{\link{BIEN_plot_metadata}()}
 }
 \concept{metadata functions}
 \concept{range functions}

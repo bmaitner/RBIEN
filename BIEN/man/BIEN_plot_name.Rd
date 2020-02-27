@@ -4,10 +4,18 @@
 \alias{BIEN_plot_name}
 \title{Download plot data by plot name.}
 \usage{
-BIEN_plot_name(plot.name, cultivated = FALSE, only.new.world = FALSE,
-  all.taxonomy = FALSE, native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, collection.info = F,
-  all.metadata = FALSE, ...)
+BIEN_plot_name(
+  plot.name,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  all.metadata = FALSE,
+  ...
+)
 }
 \arguments{
 \item{plot.name}{A plot name or vector of names. See BIEN_plot_metadata for more information on plots.}
@@ -46,14 +54,15 @@ Plot names can be looked up with \code{\link{BIEN_plot_metadata}}.
 BIEN_plot_name("SR-1")}
 }
 \seealso{
-Other plot functions: \code{\link{BIEN_plot_country}},
-  \code{\link{BIEN_plot_dataset}},
-  \code{\link{BIEN_plot_datasource}},
-  \code{\link{BIEN_plot_list_datasource}},
-  \code{\link{BIEN_plot_list_sampling_protocols}},
-  \code{\link{BIEN_plot_metadata}},
-  \code{\link{BIEN_plot_sampling_protocol}},
-  \code{\link{BIEN_plot_spatialpolygons}},
-  \code{\link{BIEN_plot_state}}
+Other plot functions: 
+\code{\link{BIEN_plot_country}()},
+\code{\link{BIEN_plot_dataset}()},
+\code{\link{BIEN_plot_datasource}()},
+\code{\link{BIEN_plot_list_datasource}()},
+\code{\link{BIEN_plot_list_sampling_protocols}()},
+\code{\link{BIEN_plot_metadata}()},
+\code{\link{BIEN_plot_sampling_protocol}()},
+\code{\link{BIEN_plot_spatialpolygons}()},
+\code{\link{BIEN_plot_state}()}
 }
 \concept{plot functions}

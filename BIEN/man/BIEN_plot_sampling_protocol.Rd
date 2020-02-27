@@ -4,11 +4,18 @@
 \alias{BIEN_plot_sampling_protocol}
 \title{Download plot data using a specified sampling protocol.}
 \usage{
-BIEN_plot_sampling_protocol(sampling_protocol, cultivated = FALSE,
-  only.new.world = FALSE, all.taxonomy = FALSE,
-  native.status = FALSE, natives.only = TRUE,
-  political.boundaries = FALSE, collection.info = F,
-  all.metadata = FALSE, ...)
+BIEN_plot_sampling_protocol(
+  sampling_protocol,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  all.metadata = FALSE,
+  ...
+)
 }
 \arguments{
 \item{sampling_protocol}{A sampling protocol or vector of sampling protocols. See \code{\link{BIEN_plot_list_sampling_protocols}} for options.}
@@ -45,14 +52,15 @@ US FIA coordinates have been fuzzed and swapped, for more details see: https://w
 BIEN_plot_sampling_protocol("Point-intercept")}
 }
 \seealso{
-Other plot functions: \code{\link{BIEN_plot_country}},
-  \code{\link{BIEN_plot_dataset}},
-  \code{\link{BIEN_plot_datasource}},
-  \code{\link{BIEN_plot_list_datasource}},
-  \code{\link{BIEN_plot_list_sampling_protocols}},
-  \code{\link{BIEN_plot_metadata}},
-  \code{\link{BIEN_plot_name}},
-  \code{\link{BIEN_plot_spatialpolygons}},
-  \code{\link{BIEN_plot_state}}
+Other plot functions: 
+\code{\link{BIEN_plot_country}()},
+\code{\link{BIEN_plot_dataset}()},
+\code{\link{BIEN_plot_datasource}()},
+\code{\link{BIEN_plot_list_datasource}()},
+\code{\link{BIEN_plot_list_sampling_protocols}()},
+\code{\link{BIEN_plot_metadata}()},
+\code{\link{BIEN_plot_name}()},
+\code{\link{BIEN_plot_spatialpolygons}()},
+\code{\link{BIEN_plot_state}()}
 }
 \concept{plot functions}

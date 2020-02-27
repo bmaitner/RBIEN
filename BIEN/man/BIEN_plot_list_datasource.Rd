@@ -20,14 +20,15 @@ BIEN_plot_list_datasource list all plot datasources in the BIEN database.
 BIEN_plot_list_datasource()}
 }
 \seealso{
-Other plot functions: \code{\link{BIEN_plot_country}},
-  \code{\link{BIEN_plot_dataset}},
-  \code{\link{BIEN_plot_datasource}},
-  \code{\link{BIEN_plot_list_sampling_protocols}},
-  \code{\link{BIEN_plot_metadata}},
-  \code{\link{BIEN_plot_name}},
-  \code{\link{BIEN_plot_sampling_protocol}},
-  \code{\link{BIEN_plot_spatialpolygons}},
-  \code{\link{BIEN_plot_state}}
+Other plot functions: 
+\code{\link{BIEN_plot_country}()},
+\code{\link{BIEN_plot_dataset}()},
+\code{\link{BIEN_plot_datasource}()},
+\code{\link{BIEN_plot_list_sampling_protocols}()},
+\code{\link{BIEN_plot_metadata}()},
+\code{\link{BIEN_plot_name}()},
+\code{\link{BIEN_plot_sampling_protocol}()},
+\code{\link{BIEN_plot_spatialpolygons}()},
+\code{\link{BIEN_plot_state}()}
 }
 \concept{plot functions}

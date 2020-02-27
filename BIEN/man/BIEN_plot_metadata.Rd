@@ -20,21 +20,23 @@ BIEN_plot_metadata downloads the plot metadata table.
 BIEN_plot_metadata()}
 }
 \seealso{
-Other plot functions: \code{\link{BIEN_plot_country}},
-  \code{\link{BIEN_plot_dataset}},
-  \code{\link{BIEN_plot_datasource}},
-  \code{\link{BIEN_plot_list_datasource}},
-  \code{\link{BIEN_plot_list_sampling_protocols}},
-  \code{\link{BIEN_plot_name}},
-  \code{\link{BIEN_plot_sampling_protocol}},
-  \code{\link{BIEN_plot_spatialpolygons}},
-  \code{\link{BIEN_plot_state}}
+Other plot functions: 
+\code{\link{BIEN_plot_country}()},
+\code{\link{BIEN_plot_dataset}()},
+\code{\link{BIEN_plot_datasource}()},
+\code{\link{BIEN_plot_list_datasource}()},
+\code{\link{BIEN_plot_list_sampling_protocols}()},
+\code{\link{BIEN_plot_name}()},
+\code{\link{BIEN_plot_sampling_protocol}()},
+\code{\link{BIEN_plot_spatialpolygons}()},
+\code{\link{BIEN_plot_state}()}
 
-Other metadata functions: \code{\link{BIEN_metadata_citation}},
-  \code{\link{BIEN_metadata_database_version}},
-  \code{\link{BIEN_metadata_list_political_names}},
-  \code{\link{BIEN_metadata_match_data}},
-  \code{\link{BIEN_ranges_list}}
+Other metadata functions: 
+\code{\link{BIEN_metadata_citation}()},
+\code{\link{BIEN_metadata_database_version}()},
+\code{\link{BIEN_metadata_list_political_names}()},
+\code{\link{BIEN_metadata_match_data}()},
+\code{\link{BIEN_ranges_list}()}
 }
 \concept{metadata functions}
 \concept{plot functions}

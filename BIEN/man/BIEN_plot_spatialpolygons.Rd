@@ -4,11 +4,18 @@
 \alias{BIEN_plot_spatialpolygons}
 \title{Download plot data from specified spatialPolygons object.}
 \usage{
-BIEN_plot_spatialpolygons(spatialpolygons, cultivated = FALSE,
-  only.new.world = FALSE, all.taxonomy = FALSE,
-  native.status = FALSE, natives.only = TRUE,
-  political.boundaries = TRUE, collection.info = F,
-  all.metadata = FALSE, ...)
+BIEN_plot_spatialpolygons(
+  spatialpolygons,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  political.boundaries = TRUE,
+  collection.info = F,
+  all.metadata = FALSE,
+  ...
+)
 }
 \arguments{
 \item{spatialpolygons}{An object of class SpatialPolygons or SpatialPolygonsDataFrame.  Note that the file must be in WGS84.}
@@ -50,14 +57,15 @@ sp<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
 saguaro_plot_data<-BIEN_plot_spatialpolygons(spatialpolygons=sp)}
 }
 \seealso{
-Other plot functions: \code{\link{BIEN_plot_country}},
-  \code{\link{BIEN_plot_dataset}},
-  \code{\link{BIEN_plot_datasource}},
-  \code{\link{BIEN_plot_list_datasource}},
-  \code{\link{BIEN_plot_list_sampling_protocols}},
-  \code{\link{BIEN_plot_metadata}},
-  \code{\link{BIEN_plot_name}},
-  \code{\link{BIEN_plot_sampling_protocol}},
-  \code{\link{BIEN_plot_state}}
+Other plot functions: 
+\code{\link{BIEN_plot_country}()},
+\code{\link{BIEN_plot_dataset}()},
+\code{\link{BIEN_plot_datasource}()},
+\code{\link{BIEN_plot_list_datasource}()},
+\code{\link{BIEN_plot_list_sampling_protocols}()},
+\code{\link{BIEN_plot_metadata}()},
+\code{\link{BIEN_plot_name}()},
+\code{\link{BIEN_plot_sampling_protocol}()},
+\code{\link{BIEN_plot_state}()}
 }
 \concept{plot functions}

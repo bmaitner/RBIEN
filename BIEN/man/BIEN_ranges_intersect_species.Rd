@@ -4,9 +4,15 @@
 \alias{BIEN_ranges_intersect_species}
 \title{Download range maps that intersect the range of a given species.}
 \usage{
-BIEN_ranges_intersect_species(species, directory = NULL,
-  species.names.only = FALSE, include.focal = TRUE,
-  return.species.list = TRUE, include.gid = FALSE, ...)
+BIEN_ranges_intersect_species(
+  species,
+  directory = NULL,
+  species.names.only = FALSE,
+  include.focal = TRUE,
+  return.species.list = TRUE,
+  include.gid = FALSE,
+  ...
+)
 }
 \arguments{
 \item{species}{Focal species (or a vector of species) for which to extract intersecting ranges.}
@@ -41,15 +47,16 @@ species_vector<-c("Carnegiea_gigantea","Echinocereus coccineus")
 BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
 }
 \seealso{
-Other range functions: \code{\link{BIEN_ranges_box}},
-  \code{\link{BIEN_ranges_genus}},
-  \code{\link{BIEN_ranges_list}},
-  \code{\link{BIEN_ranges_load_species}},
-  \code{\link{BIEN_ranges_shapefile_to_skinny}},
-  \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}},
-  \code{\link{BIEN_ranges_spatialpolygons}},
-  \code{\link{BIEN_ranges_species_bulk}},
-  \code{\link{BIEN_ranges_species}}
+Other range functions: 
+\code{\link{BIEN_ranges_box}()},
+\code{\link{BIEN_ranges_genus}()},
+\code{\link{BIEN_ranges_list}()},
+\code{\link{BIEN_ranges_load_species}()},
+\code{\link{BIEN_ranges_shapefile_to_skinny}()},
+\code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
+\code{\link{BIEN_ranges_spatialpolygons}()},
+\code{\link{BIEN_ranges_species_bulk}()},
+\code{\link{BIEN_ranges_species}()}
 }
 \author{
 Daniel Guaderrama
