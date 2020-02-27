@@ -4,8 +4,13 @@
 \alias{BIEN_phylogeny_label_nodes}
 \title{Label nodes on a phylogeny}
 \usage{
-BIEN_phylogeny_label_nodes(phylogeny, family = T, genus = F,
-  other_taxa = NULL)
+BIEN_phylogeny_label_nodes(
+  phylogeny,
+  family = T,
+  genus = F,
+  other_taxa = NULL,
+  ...
+)
 }
 \arguments{
 \item{phylogeny}{A single phylogeny.}
@@ -50,7 +55,8 @@ tax_nodes <-
 plot.phylo(x = tax_nodes,show.tip.label = F,show.node.label = T)}
 }
 \seealso{
-Other phylogeny functions: \code{\link{BIEN_phylogeny_complete}},
-  \code{\link{BIEN_phylogeny_conservative}}
+Other phylogeny functions: 
+\code{\link{BIEN_phylogeny_complete}()},
+\code{\link{BIEN_phylogeny_conservative}()}
 }
 \concept{phylogeny functions}

@@ -4,11 +4,18 @@
 \alias{BIEN_occurrence_species}
 \title{Extract occurrence data for specified species from BIEN}
 \usage{
-BIEN_occurrence_species(species, cultivated = FALSE,
-  only.new.world = FALSE, all.taxonomy = FALSE,
-  native.status = FALSE, natives.only = TRUE,
-  observation.type = FALSE, political.boundaries = FALSE,
-  collection.info = F, ...)
+BIEN_occurrence_species(
+  species,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  observation.type = FALSE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  ...
+)
 }
 \arguments{
 \item{species}{A single species, or a vector of species.  Genus and species should be separated by a space. Genus should be capitalized.}
@@ -48,13 +55,14 @@ BIEN_occurrence_species(species_vector)
 BIEN_occurrence_species(species_vector,all.taxonomy=TRUE)}
 }
 \seealso{
-Other occurrence functions: \code{\link{BIEN_occurrence_box}},
-  \code{\link{BIEN_occurrence_country}},
-  \code{\link{BIEN_occurrence_county}},
-  \code{\link{BIEN_occurrence_family}},
-  \code{\link{BIEN_occurrence_genus}},
-  \code{\link{BIEN_occurrence_records_per_species}},
-  \code{\link{BIEN_occurrence_spatialpolygons}},
-  \code{\link{BIEN_occurrence_state}}
+Other occurrence functions: 
+\code{\link{BIEN_occurrence_box}()},
+\code{\link{BIEN_occurrence_country}()},
+\code{\link{BIEN_occurrence_county}()},
+\code{\link{BIEN_occurrence_family}()},
+\code{\link{BIEN_occurrence_genus}()},
+\code{\link{BIEN_occurrence_records_per_species}()},
+\code{\link{BIEN_occurrence_spatialpolygons}()},
+\code{\link{BIEN_occurrence_state}()}
 }
 \concept{occurrence functions}

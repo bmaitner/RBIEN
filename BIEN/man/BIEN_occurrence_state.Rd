@@ -4,12 +4,21 @@
 \alias{BIEN_occurrence_state}
 \title{Extract species occurrence records by state.}
 \usage{
-BIEN_occurrence_state(country = NULL, state = NULL,
-  country.code = NULL, state.code = NULL, cultivated = FALSE,
-  only.new.world = FALSE, all.taxonomy = FALSE,
-  native.status = FALSE, natives.only = TRUE,
-  observation.type = FALSE, political.boundaries = FALSE,
-  collection.info = F, ...)
+BIEN_occurrence_state(
+  country = NULL,
+  state = NULL,
+  country.code = NULL,
+  state.code = NULL,
+  cultivated = FALSE,
+  only.new.world = FALSE,
+  all.taxonomy = FALSE,
+  native.status = FALSE,
+  natives.only = TRUE,
+  observation.type = FALSE,
+  political.boundaries = FALSE,
+  collection.info = F,
+  ...
+)
 }
 \arguments{
 \item{country}{A single country or vector of countries.}
@@ -58,13 +67,14 @@ state_vector<-c("Rhode Island","Maryland")
 BIEN_occurrence_state(country="United States",state=state_vector)}
 }
 \seealso{
-Other occurrence functions: \code{\link{BIEN_occurrence_box}},
-  \code{\link{BIEN_occurrence_country}},
-  \code{\link{BIEN_occurrence_county}},
-  \code{\link{BIEN_occurrence_family}},
-  \code{\link{BIEN_occurrence_genus}},
-  \code{\link{BIEN_occurrence_records_per_species}},
-  \code{\link{BIEN_occurrence_spatialpolygons}},
-  \code{\link{BIEN_occurrence_species}}
+Other occurrence functions: 
+\code{\link{BIEN_occurrence_box}()},
+\code{\link{BIEN_occurrence_country}()},
+\code{\link{BIEN_occurrence_county}()},
+\code{\link{BIEN_occurrence_family}()},
+\code{\link{BIEN_occurrence_genus}()},
+\code{\link{BIEN_occurrence_records_per_species}()},
+\code{\link{BIEN_occurrence_spatialpolygons}()},
+\code{\link{BIEN_occurrence_species}()}
 }
 \concept{occurrence functions}
