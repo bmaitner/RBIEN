@@ -4,13 +4,25 @@
 \alias{.BIEN_sql}
 \title{Run an SQL query on the BIEN database.}
 \usage{
-.BIEN_sql(query, view_full_occurrence_individual = NULL,
-  agg_traits = NULL, species_by_political_division = NULL,
-  bien_species_all = NULL, ranges = NULL, bien_taxonomy = NULL,
-  phylogeny = NULL, bien_metadata = NULL, plot_metadata = NULL,
-  analytical_stem = NULL, datasource = NULL, centroid = NULL,
-  limit = NULL, return.query = FALSE, schema = NULL,
-  print.query = FALSE)
+.BIEN_sql(
+  query,
+  view_full_occurrence_individual = NULL,
+  agg_traits = NULL,
+  species_by_political_division = NULL,
+  bien_species_all = NULL,
+  ranges = NULL,
+  bien_taxonomy = NULL,
+  phylogeny = NULL,
+  bien_metadata = NULL,
+  plot_metadata = NULL,
+  analytical_stem = NULL,
+  datasource = NULL,
+  centroid = NULL,
+  limit = NULL,
+  return.query = FALSE,
+  schema = NULL,
+  print.query = FALSE
+)
 }
 \arguments{
 \item{query}{A PostgreSQL query.}

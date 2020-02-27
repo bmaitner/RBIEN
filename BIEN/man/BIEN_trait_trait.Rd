@@ -4,8 +4,13 @@
 \alias{BIEN_trait_trait}
 \title{Download all measurements of a specific trait(s).}
 \usage{
-BIEN_trait_trait(trait, all.taxonomy = FALSE,
-  political.boundaries = FALSE, source.citation = F, ...)
+BIEN_trait_trait(
+  trait,
+  all.taxonomy = FALSE,
+  political.boundaries = FALSE,
+  source.citation = F,
+  ...
+)
 }
 \arguments{
 \item{trait}{A single trait or a vector of traits.}
@@ -34,14 +39,15 @@ trait_vector<-c("whole plant height", "leaf dry mass per leaf fresh mass")
 BIEN_trait_trait(trait_vector)}
 }
 \seealso{
-Other trait functions: \code{\link{BIEN_trait_country}},
-  \code{\link{BIEN_trait_family}},
-  \code{\link{BIEN_trait_list}},
-  \code{\link{BIEN_trait_mean}},
-  \code{\link{BIEN_trait_species}},
-  \code{\link{BIEN_trait_traitbyfamily}},
-  \code{\link{BIEN_trait_traitbygenus}},
-  \code{\link{BIEN_trait_traitbyspecies}},
-  \code{\link{BIEN_trait_traits_per_species}}
+Other trait functions: 
+\code{\link{BIEN_trait_country}()},
+\code{\link{BIEN_trait_family}()},
+\code{\link{BIEN_trait_list}()},
+\code{\link{BIEN_trait_mean}()},
+\code{\link{BIEN_trait_species}()},
+\code{\link{BIEN_trait_traitbyfamily}()},
+\code{\link{BIEN_trait_traitbygenus}()},
+\code{\link{BIEN_trait_traitbyspecies}()},
+\code{\link{BIEN_trait_traits_per_species}()}
 }
 \concept{trait functions}

@@ -27,14 +27,15 @@ Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_
 BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="leaf dry mass per leaf fresh mass") }
 }
 \seealso{
-Other trait functions: \code{\link{BIEN_trait_country}},
-  \code{\link{BIEN_trait_family}},
-  \code{\link{BIEN_trait_list}},
-  \code{\link{BIEN_trait_species}},
-  \code{\link{BIEN_trait_traitbyfamily}},
-  \code{\link{BIEN_trait_traitbygenus}},
-  \code{\link{BIEN_trait_traitbyspecies}},
-  \code{\link{BIEN_trait_traits_per_species}},
-  \code{\link{BIEN_trait_trait}}
+Other trait functions: 
+\code{\link{BIEN_trait_country}()},
+\code{\link{BIEN_trait_family}()},
+\code{\link{BIEN_trait_list}()},
+\code{\link{BIEN_trait_species}()},
+\code{\link{BIEN_trait_traitbyfamily}()},
+\code{\link{BIEN_trait_traitbygenus}()},
+\code{\link{BIEN_trait_traitbyspecies}()},
+\code{\link{BIEN_trait_traits_per_species}()},
+\code{\link{BIEN_trait_trait}()}
 }
 \concept{trait functions}

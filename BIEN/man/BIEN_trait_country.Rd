@@ -4,8 +4,14 @@
 \alias{BIEN_trait_country}
 \title{Download trait data for given country.}
 \usage{
-BIEN_trait_country(country, trait.name = NULL, all.taxonomy = FALSE,
-  political.boundaries = TRUE, source.citation = F, ...)
+BIEN_trait_country(
+  country,
+  trait.name = NULL,
+  all.taxonomy = FALSE,
+  political.boundaries = TRUE,
+  source.citation = F,
+  ...
+)
 }
 \arguments{
 \item{country}{A single country or a vector of countries.}
@@ -32,14 +38,15 @@ BIEN_trait_country("South Africa")
 BIEN_trait_country(country="South Africa",trait="whole plant growth form")}
 }
 \seealso{
-Other trait functions: \code{\link{BIEN_trait_family}},
-  \code{\link{BIEN_trait_list}},
-  \code{\link{BIEN_trait_mean}},
-  \code{\link{BIEN_trait_species}},
-  \code{\link{BIEN_trait_traitbyfamily}},
-  \code{\link{BIEN_trait_traitbygenus}},
-  \code{\link{BIEN_trait_traitbyspecies}},
-  \code{\link{BIEN_trait_traits_per_species}},
-  \code{\link{BIEN_trait_trait}}
+Other trait functions: 
+\code{\link{BIEN_trait_family}()},
+\code{\link{BIEN_trait_list}()},
+\code{\link{BIEN_trait_mean}()},
+\code{\link{BIEN_trait_species}()},
+\code{\link{BIEN_trait_traitbyfamily}()},
+\code{\link{BIEN_trait_traitbygenus}()},
+\code{\link{BIEN_trait_traitbyspecies}()},
+\code{\link{BIEN_trait_traits_per_species}()},
+\code{\link{BIEN_trait_trait}()}
 }
 \concept{trait functions}

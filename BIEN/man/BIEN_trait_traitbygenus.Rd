@@ -4,8 +4,14 @@
 \alias{BIEN_trait_traitbygenus}
 \title{Download trait data for given genus/genera and trait(s).}
 \usage{
-BIEN_trait_traitbygenus(genus, trait, all.taxonomy = FALSE,
-  political.boundaries = FALSE, source.citation = F, ...)
+BIEN_trait_traitbygenus(
+  genus,
+  trait,
+  all.taxonomy = FALSE,
+  political.boundaries = FALSE,
+  source.citation = F,
+  ...
+)
 }
 \arguments{
 \item{genus}{A single genus or a vector of genera.}
@@ -37,14 +43,15 @@ genus_vector<-c("Carex","Betula")
 BIEN_trait_traitbygenus(trait=trait_vector,genus=genus_vector)}
 }
 \seealso{
-Other trait functions: \code{\link{BIEN_trait_country}},
-  \code{\link{BIEN_trait_family}},
-  \code{\link{BIEN_trait_list}},
-  \code{\link{BIEN_trait_mean}},
-  \code{\link{BIEN_trait_species}},
-  \code{\link{BIEN_trait_traitbyfamily}},
-  \code{\link{BIEN_trait_traitbyspecies}},
-  \code{\link{BIEN_trait_traits_per_species}},
-  \code{\link{BIEN_trait_trait}}
+Other trait functions: 
+\code{\link{BIEN_trait_country}()},
+\code{\link{BIEN_trait_family}()},
+\code{\link{BIEN_trait_list}()},
+\code{\link{BIEN_trait_mean}()},
+\code{\link{BIEN_trait_species}()},
+\code{\link{BIEN_trait_traitbyfamily}()},
+\code{\link{BIEN_trait_traitbyspecies}()},
+\code{\link{BIEN_trait_traits_per_species}()},
+\code{\link{BIEN_trait_trait}()}
 }
 \concept{trait functions}

@@ -4,8 +4,14 @@
 \alias{BIEN_trait_traitbyfamily}
 \title{Download trait data for given families and traits.}
 \usage{
-BIEN_trait_traitbyfamily(family, trait, all.taxonomy = FALSE,
-  political.boundaries = FALSE, source.citation = F, ...)
+BIEN_trait_traitbyfamily(
+  family,
+  trait,
+  all.taxonomy = FALSE,
+  political.boundaries = FALSE,
+  source.citation = F,
+  ...
+)
 }
 \arguments{
 \item{family}{A single family or a vector of families.}
@@ -37,14 +43,15 @@ family_vector<-c("Orchidaceae","Poaceae")
 BIEN_trait_traitbyfamily(trait=trait_vector,family=family_vector)}
 }
 \seealso{
-Other trait functions: \code{\link{BIEN_trait_country}},
-  \code{\link{BIEN_trait_family}},
-  \code{\link{BIEN_trait_list}},
-  \code{\link{BIEN_trait_mean}},
-  \code{\link{BIEN_trait_species}},
-  \code{\link{BIEN_trait_traitbygenus}},
-  \code{\link{BIEN_trait_traitbyspecies}},
-  \code{\link{BIEN_trait_traits_per_species}},
-  \code{\link{BIEN_trait_trait}}
+Other trait functions: 
+\code{\link{BIEN_trait_country}()},
+\code{\link{BIEN_trait_family}()},
+\code{\link{BIEN_trait_list}()},
+\code{\link{BIEN_trait_mean}()},
+\code{\link{BIEN_trait_species}()},
+\code{\link{BIEN_trait_traitbygenus}()},
+\code{\link{BIEN_trait_traitbyspecies}()},
+\code{\link{BIEN_trait_traits_per_species}()},
+\code{\link{BIEN_trait_trait}()}
 }
 \concept{trait functions}

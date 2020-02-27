@@ -4,8 +4,13 @@
 \alias{BIEN_trait_genus}
 \title{Download trait data for given genera.}
 \usage{
-BIEN_trait_genus(genus, all.taxonomy = FALSE,
-  political.boundaries = FALSE, source.citation = F, ...)
+BIEN_trait_genus(
+  genus,
+  all.taxonomy = FALSE,
+  political.boundaries = FALSE,
+  source.citation = F,
+  ...
+)
 }
 \arguments{
 \item{genus}{A single genus or a vector of genera.}
