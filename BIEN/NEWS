@@ -1,6 +1,11 @@
 BIEN 1.2.4
 ===============
 ## NEW FEATURES
+* Now returning elevation information for BIEN_occurrence_... queries when political.boundaries = T
+
+BIEN 1.2.4
+===============
+## NEW FEATURES
 * BIEN database updated to 4.1
 * Updated functions to utilize new validations (e.g. is_centroid)
 * Added BIEN_trait_country function

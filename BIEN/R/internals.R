@@ -113,7 +113,7 @@
   if(!political.boundaries){
     select<-""
   }else{
-    select<-", country,state_province,county,locality"
+    select<-", country,state_province,county,locality,elevation_m"
   }
   
   
