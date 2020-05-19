@@ -44,7 +44,33 @@
   
 }
 
+
 ##
+
+#'Set query details
+#'
+#'Helper function to set query components.
+#' @keywords internal
+.geovalid_check<-function(only.geovalid){
+  if(!only.geovalid){
+    query<-""
+    select<-",is_geovalid"
+  }else{
+    query<-"AND is_geovalid = 1"
+    select<-""
+  }
+  
+  output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
+  colnames(output)<-c("query","select")
+  
+  return(output)  
+  
+}
+
+
+##
+
+
 #'Set query details
 #'
 #'Helper function to set query components.
@@ -91,13 +117,15 @@
 #' @keywords internal
 .observation_check<-function(observation.type){
   if(!observation.type){
+    query<-"AND observation_type IN ('plot','specimen','literature','checklist')"
     select<-""
   }else{
+    query<-""
     select<-",observation_type"
   }
   
-  output<-as.data.frame(cbind(select),stringsAsFactors = F)  
-  colnames(output)<-c("select")
+  output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
+  colnames(output)<-c("query","select")
   
   return(output)  
   

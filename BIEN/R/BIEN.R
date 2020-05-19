@@ -5,6 +5,7 @@
 #'
 #'BIEN_occurrence_species downloads occurrence records for specific species from the BIEN database.
 #' @param species A single species, or a vector of species.  Genus and species should be separated by a space. Genus should be capitalized.
+#' @param only.geovalid Should the returned records be limited to those with validated coordinates?  Default is TRUE
 #' @template occurrence
 #' @return Dataframe containing occurrence records for the specified species.
 #' @examples \dontrun{
@@ -14,7 +15,7 @@
 #' BIEN_occurrence_species(species_vector,all.taxonomy=TRUE)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
+BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,only.geovalid=T, ...){
   
   #Test input
   .is_log(cultivated)
@@ -26,6 +27,7 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=FALSE,
   .is_log(political.boundaries)
   .is_log(natives.only)
   .is_log(collection.info)
+  .is_log(only.geovalid)
   
   #set conditions for query
   cultivated_<-.cultivated_check(cultivated)  
@@ -36,18 +38,21 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,only.new.world=FALSE,
   political_<-.political_check(political.boundaries)  
   natives_<-.natives_check(natives.only)
   collection_<-.collection_check(collection.info)
+  geovalid_<-.geovalid_check(only.geovalid)
+  
   
   # set the query
   query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," ,latitude, longitude,date_collected,
                  datasource,dataset,dataowner,custodial_institution_codes,collection_code,view_full_occurrence_individual.datasource_id",
-                 collection_$select,cultivated_$select,newworld_$select,observation_$select,"
+                 collection_$select,cultivated_$select,newworld_$select,observation_$select,geovalid_$select,"
                  FROM view_full_occurrence_individual 
                  WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ")",
-                 cultivated_$query,newworld_$query,natives_$query,  "
+                 cultivated_$query,newworld_$query,natives_$query,observation_$query, geovalid_$query, "
                  AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
-                 AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
-                 AND (is_centroid IS NULL OR is_centroid=0) AND observation_type IN ('plot','specimen','literature','checklist')
-                 AND scrubbed_species_binomial IS NOT NULL ;")
+                 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
+                 AND (is_centroid IS NULL OR is_centroid=0) 
+                 AND scrubbed_species_binomial IS NOT NULL 
+                 ORDER BY scrubbed_species_binomial ;")
   
   return(.BIEN_sql(query, ...))
   
