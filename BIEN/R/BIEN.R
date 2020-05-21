@@ -1899,7 +1899,7 @@ BIEN_trait_mean<-function(species,trait, ...){
     if(length(species_i_data)>0){
       level_used<-names(species_i_data[1])
       if(species_i_data[[1]][1]=="NA"){sample_size<-0}else{sample_size<-nrow(species_i_data[[1]])}
-      if(species_i_data[[1]][1]=="NA"){mean_value<-"NA"}else{mean_value<-mean(as.numeric(species_i_data[[1]][,1]))}
+      if(species_i_data[[1]][1]=="NA"){mean_value<-"NA"}else{mean_value<-mean(as.numeric(species_i_data[[1]][,1]), na.rm = TRUE)}
       if(species_i_data[[1]][1]=="NA"){ids <-"NA"}else{ids<-paste(as.numeric(species_i_data[[1]][,2]),collapse = ",")}
       unit<-unique(traits_df$unit)
       
