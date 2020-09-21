@@ -4,7 +4,7 @@
 \alias{.newworld_check}
 \title{Set query details}
 \usage{
-.newworld_check(only.new.world)
+.newworld_check(new.world)
 }
 \description{
 Helper function to set query components.

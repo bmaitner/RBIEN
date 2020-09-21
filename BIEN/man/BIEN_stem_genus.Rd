@@ -7,7 +7,7 @@
 BIEN_stem_genus(
   genus,
   cultivated = FALSE,
-  only.new.world = FALSE,
+  new.world = NULL,
   all.taxonomy = FALSE,
   native.status = FALSE,
   natives.only = TRUE,
@@ -22,7 +22,7 @@ BIEN_stem_genus(
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is FALSE}
+\item{new.world}{NULL (The default) returns global records, TRUE returns only New World, and FALSE only Old World.}
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 

@@ -4,7 +4,7 @@
 \alias{.newworld_check_stem}
 \title{Set query details}
 \usage{
-.newworld_check_stem(only.new.world)
+.newworld_check_stem(new.world)
 }
 \description{
 Helper function to set query components.

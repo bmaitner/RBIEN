@@ -12,7 +12,7 @@ BIEN_occurrence_box(
   species = NULL,
   genus = NULL,
   cultivated = FALSE,
-  only.new.world = FALSE,
+  new.world = NULL,
   all.taxonomy = FALSE,
   native.status = FALSE,
   natives.only = TRUE,
@@ -37,7 +37,7 @@ BIEN_occurrence_box(
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is FALSE}
+\item{new.world}{NULL (The default) returns global records, TRUE returns only New World, and FALSE only Old World.}
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
@@ -68,7 +68,7 @@ Specifying species and/or genera will limit records returned to that set of taxa
 \dontrun{
 output_test<-
 BIEN_occurrence_box(min.lat = 32,max.lat = 33,min.long = -114,max.long = -113,
-cultivated = TRUE, only.new.world = FALSE)}
+cultivated = TRUE, new.world = FALSE)}
 }
 \seealso{
 Other occurrence functions: 

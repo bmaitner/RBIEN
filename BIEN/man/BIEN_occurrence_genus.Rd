@@ -7,7 +7,7 @@
 BIEN_occurrence_genus(
   genus,
   cultivated = FALSE,
-  only.new.world = FALSE,
+  new.world = NULL,
   all.taxonomy = FALSE,
   native.status = FALSE,
   natives.only = TRUE,
@@ -22,7 +22,7 @@ BIEN_occurrence_genus(
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is FALSE}
+\item{new.world}{NULL (The default) returns global records, TRUE returns only New World, and FALSE only Old World.}
 
 \item{all.taxonomy}{Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.}
 
@@ -52,7 +52,7 @@ US FIA coordinates have been fuzzed and swapped, for more details see: https://w
 BIEN_occurrence_genus("Abutilon")
 genus_vector<-c("Abutilon","Abronia")
 BIEN_occurrence_genus(genus_vector)
-BIEN_occurrence_genus(genus = "Abutilon",cultivated = TRUE,only.new.world = FALSE)}
+BIEN_occurrence_genus(genus = "Abutilon",cultivated = TRUE,new.world = FALSE)}
 }
 \seealso{
 Other occurrence functions: 

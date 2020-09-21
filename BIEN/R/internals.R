@@ -28,19 +28,32 @@
 #'
 #'Helper function to set query components.
 #' @keywords internal
-.newworld_check<-function(only.new.world){
-  if(!only.new.world){
+.newworld_check<-function(new.world){
+  
+  if(is.null(new.world)){
     query<-""
-    select<-",is_new_world"
-  }else{
-    query<-"AND is_new_world = 1 "
     select<-""
+    output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
+    colnames(output)<-c("query","select")
+    return(output)  
+    
   }
+  
+  if(!new.world){
+    query<-"AND is_new_world = 0 "    
+    select<-", is_new_world"}
+  
+  if(new.world){
+    query<-"AND is_new_world = 1 "    
+    select<-", is_new_world"}
+  
+  
+  
+  
   output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
   colnames(output)<-c("query","select")
   
   return(output)  
-  
   
 }
 
@@ -296,15 +309,25 @@ if(all.taxonomy){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-.newworld_check_plot<-function(only.new.world){
+.newworld_check_plot<-function(new.world){
   
-  if(!only.new.world){
+  if(is.null(new.world)){
     query<-""
-    select<-",view_full_occurrence_individual.is_new_world"
-  }else{
-    query<-"AND view_full_occurrence_individual.is_new_world = 1 "
     select<-""
+    output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
+    colnames(output)<-c("query","select")
+    return(output)  
+    
   }
+  
+  if(!new.world){
+    query<-"AND view_full_occurrence_individual.is_new_world = 0 "    
+    select<-",view_full_occurrence_individual.is_new_world"}
+  
+  if(new.world){
+    query<-"AND view_full_occurrence_individual.is_new_world = 1 "    
+    select<-",view_full_occurrence_individual.is_new_world"}
+  
   output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
   colnames(output)<-c("query","select")
   
@@ -526,20 +549,37 @@ if(all.taxonomy){
 #'
 #'Helper function to set query components.
 #' @keywords internal
-.newworld_check_stem<-function(only.new.world){    
+.newworld_check_stem<-function(new.world){
   
-  if(!only.new.world){
+  if(is.null(new.world)){
     query<-""
-    select<-",analytical_stem.is_new_world"
-  }else{
-    query<-"AND analytical_stem.is_new_world = 1 "
     select<-""
+    output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
+    colnames(output)<-c("query","select")
+    return(output)  
+    
   }
+  
+  
+  if(!new.world){
+    query<-"AND analytical_stem.is_new_world = 0 "    
+    select<-",analytical_stem.is_new_world"}
+  
+  if(new.world){
+    query<-"AND analytical_stem.is_new_world = 1 "    
+    select<-",analytical_stem.is_new_world"}
+  
   output<-as.data.frame(cbind(query,select),stringsAsFactors = F)  
   colnames(output)<-c("query","select")
   
   return(output)  
-}   
+  
+}
+
+
+
+
+
 #
 
 #'Set query details
@@ -689,10 +729,24 @@ if(all.taxonomy){
 #'Helper function to check data format.
 #' @keywords internal
 #' @examples \dontrun{
-#' is_log(only.new.world)}
+#' is_log(TRUE)}
 .is_log <- function(x) {
   if (!inherits(x, 'logical')) {
     stop(sys.call()[-1], " should be logical", call. = FALSE)
+  }
+}
+
+
+##################################
+#'Check that value is logical or null
+#'
+#'Helper function to check data format.
+#' @keywords internal
+#' @examples \dontrun{
+#' is_log_or_null(new.world)}
+.is_log_or_null <- function(x) {
+  if (!inherits(x, c('logical','NULL'))) {
+    stop(sys.call()[-1], " should be logical or NULL", call. = FALSE)
   }
 }
 

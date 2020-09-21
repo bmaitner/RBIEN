@@ -7,7 +7,7 @@
 BIEN_occurrence_family(
   family,
   cultivated = FALSE,
-  only.new.world = FALSE,
+  new.world = NULL,
   observation.type = FALSE,
   all.taxonomy = FALSE,
   native.status = FALSE,
@@ -22,7 +22,7 @@ BIEN_occurrence_family(
 
 \item{cultivated}{Return known cultivated records as well?  Default is FALSE.}
 
-\item{only.new.world}{Return only records from the New World?  Default is FALSE}
+\item{new.world}{NULL (The default) returns global records, TRUE returns only New World, and FALSE only Old World.}
 
 \item{observation.type}{Return information on type of observation (i.e. specimen vs. plot)?  The default value is FALSE.}
 

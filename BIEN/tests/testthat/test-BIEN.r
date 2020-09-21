@@ -8,7 +8,7 @@ schema<-"public"
 test_that("List functions return a dataframe",{
 expect_that(BIEN_list_all(schema=schema),is_a("data.frame"))
 expect_that(BIEN_list_country("Bahamas",schema=schema),is_a("data.frame"))
-expect_that(BIEN_list_county(country = "United States",state = "Michigan",county = "Kent",cultivated = T,only.new.world = F,schema=schema),is_a("data.frame"))
+expect_that(BIEN_list_county(country = "United States",state = "Michigan",county = "Kent",cultivated = T,new.world = F,schema=schema),is_a("data.frame"))
 expect_that(BIEN_list_state(country = "United States",state = "Rhode Island",schema=schema),is_a("data.frame"))
 })
 
@@ -25,12 +25,12 @@ test_that("Metadata_citation function returns a list",{
 
 #Occurrence tests
 #test_that("Occurrence functions return a dataframe",{
-#  #expect_that(BIEN_occurrence_box(min.lat = 32.9,max.lat = 33,min.long = -114,max.long = -113.9, cultivated = TRUE, only.new.world = FALSE,all.taxonomy = T,native.status = T,natives.only = T,observation.type = T,political.boundaries = T,schema=schema),is_a("data.frame"))
+#  #expect_that(BIEN_occurrence_box(min.lat = 32.9,max.lat = 33,min.long = -114,max.long = -113.9, cultivated = TRUE, new.world = FALSE,all.taxonomy = T,native.status = T,natives.only = T,observation.type = T,political.boundaries = T,schema=schema),is_a("data.frame"))
 #  expect_that(BIEN_occurrence_country("Bahamas",schema=schema,collection.info = T,limit=1) ,is_a("data.frame"))
 #  expect_that(BIEN_occurrence_county(country = "United States",state = "Arizona",county = "Pima",limit=1,schema=schema) ,is_a("data.frame"))
 #  expect_that(BIEN_occurrence_family(family = "Cactaceae",limit=1,schema=schema) ,is_a("data.frame"))
 #  expect_that(BIEN_occurrence_genus(genus = "Xanthium",schema=schema,limit=10) ,is_a("data.frame"))
-#  expect_that(BIEN_occurrence_species(species = "Xanthium strumarium",cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T,limit=1,schema=schema) ,is_a("data.frame"))
+#  expect_that(BIEN_occurrence_species(species = "Xanthium strumarium",cultivated = T,new.world = F,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T,limit=1,schema=schema) ,is_a("data.frame"))
 #  expect_that(BIEN_occurrence_state(country = "United States",state = "Rhode Island",schema=schema,limit=10) ,is_a("data.frame"))
 #  #expect_that(BIEN_occurrence_spatialpolygons( BIEN_ranges_load_species(species = "Aa argyrolepis"), limit = 100),is_a("data.frame"))
 #  #expect_that(BIEN_occurrence_records_per_species() ,is_a("data.frame"))
@@ -46,7 +46,7 @@ test_that("Phylogeny functions return a phylogeny",{
 
 #Plot
 #test_that("Plot functions return a dataframe",{
-#  expect_that(BIEN_plot_country("Puerto Rico",cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,political.boundaries = T,all.metadata = T,schema=schema,limit=1) ,is_a("data.frame"))
+#  expect_that(BIEN_plot_country("Puerto Rico",cultivated = T,new.world = F,all.taxonomy = T,native.status = T,political.boundaries = T,all.metadata = T,schema=schema,limit=1) ,is_a("data.frame"))
 #  expect_that(BIEN_plot_dataset(dataset = "SALVIAS",schema=schema,limit=1) ,is_a("data.frame"))
 #  expect_that(BIEN_plot_datasource("test",schema=schema) ,is_a("data.frame"))
 #  expect_that(BIEN_plot_list_datasource(schema=schema) ,is_a("data.frame"))

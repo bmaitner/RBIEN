@@ -1,5 +1,5 @@
 #' @param cultivated Return known cultivated records as well?  Default is FALSE.
-#' @param only.new.world Return only records from the New World?  Default is FALSE
+#' @param new.world NULL (The default) returns global records, TRUE returns only New World, and FALSE only Old World.
 #' @param all.taxonomy Return all taxonomic information?  This includes the raw data as well as the "scrubbed" data.
 #' @param native.status Return information on introduction status?  The default value is FALSE. A value of TRUE also returns additional information on introduction status.
 #' @param natives.only Exclude detected introduced species?  Default is TRUE.

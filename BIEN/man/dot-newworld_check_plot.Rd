@@ -4,7 +4,7 @@
 \alias{.newworld_check_plot}
 \title{Set query details}
 \usage{
-.newworld_check_plot(only.new.world)
+.newworld_check_plot(new.world)
 }
 \description{
 Helper function to set query components.

@@ -72,9 +72,9 @@ Each of these functions has a number of different arguments that modify your que
 
 1. `cultivated`  If `TRUE`, records known to be cultivated will be returned.
 
-2. `only.new.world` If `TRUE`, records returned are limited to those in North and South America, where greater data cleaning and validation has been done.
+2. `new.world` If `TRUE`, records returned are limited to those in North and South America, where greater data cleaning and validation has been done. IF `FALSE`, records will be limited to the Old World.  If `NULL` (the default), global records will be returned.
 
-* Note that the arguments cultivated and only.new.world may change the number of records returned.
+* Note that the arguments cultivated and new.world may change the number of records returned.
 
 3. `all.taxonomy` If `TRUE`, the query will return additional taxonomic data, including the uncorrected taxonomic information for those records.
 
@@ -110,7 +110,7 @@ The default data that is returned consists of the latitude, longitude and date c
 
 If we want more information on these occurrences, we just need to change the arguments:
 ```{r}
-Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumarium",cultivated = T,only.new.world = F,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T)
+Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumarium",cultivated = T,new.world = NULL,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T)
 
 str(Xanthium_strumarium_full)
 ```
@@ -419,7 +419,7 @@ These functions begin with the prefix `BIEN_list_` and allow you to quickly get 
 
 3.  `BIEN_list_county` Returns all species found within a given county/parish/or other 3rd level political division.
 
-Some of the same arguments we saw in the occurrence functions appear here as well, including `cultivated` and `only.new.world`.
+Some of the same arguments we saw in the occurrence functions appear here as well, including `cultivated` and `new.world`.
 
 
 **Example 9: Species list for a country**
@@ -493,7 +493,7 @@ Let's say we're interested in *Selaginella selaginoides*, and we'd like to downl
 
 ```{r}
 
-Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella selaginoides",only.new.world = F)
+Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella selaginoides",new.world = NULL)
 
 ```
 
