@@ -218,7 +218,7 @@ points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col="bl
 
 These functions begin with the prefix "BIEN_plot_" and return ecological plot data.  Functions include:
 
-1. `BIEN_plot_list_sampling_protocol` Returns the different plot sampling protocols found in the BIEN database.
+1. `BIEN_plot_list_sampling_protocols` Returns the different plot sampling protocols found in the BIEN database.
 
 2. `BIEN_plot_list_datasource` Returns the different datasources that are available in the BIEN database.  
 
