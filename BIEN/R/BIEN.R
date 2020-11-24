@@ -1865,9 +1865,13 @@ BIEN_trait_species<-function(species, all.taxonomy = FALSE, political.boundaries
 #' @export
 BIEN_trait_mean<-function(species,trait, ...){
   
+  
   #first, get taxonomic info for the species
   .is_char(trait)
   .is_char(species)
+  
+  #make sure there is only one trait
+  if( length(trait) > 1){stop("Multiple traits submitted. This function only handles one trait at a time.")}
   
   #make sure trait exists
   traits_available<-BIEN_trait_list(...)
