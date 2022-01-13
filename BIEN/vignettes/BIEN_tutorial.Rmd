@@ -96,23 +96,35 @@ Okay, enough reading.  Let's get some data.
 Let's say we're interested in the species *Xanthium strumarium* and we'd like some occurrence data.  We'll use the function `BIEN_occurrence_species` to grab the occurrence data.
 
 ```{r}
+
 Xanthium_strumarium <- BIEN_occurrence_species(species = "Xanthium strumarium")
+
 ```
 
 Take a moment and view the dataframe and take a look at the structure
 
 ```{r}
+
 str(Xanthium_strumarium)
+
 head(Xanthium_strumarium)
+
 ```
 
 The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  The meaning of some of these columns is obvious (e.g. latitude, longitude), however others may be less clear.  The meanings of these columns and the information within is explained in more detail in our data dictionary, available at http://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/
 
 If we want more information on these occurrences, we just need to change the arguments:
 ```{r}
-Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumarium",cultivated = T,new.world = NULL,all.taxonomy = T,native.status = T,observation.type = T,political.boundaries = T)
+
+Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumarium",
+                                                    cultivated = T,
+                                                    all.taxonomy = T,
+                                                    native.status = T,
+                                                    observation.type = T,
+                                                    political.boundaries = T)
 
 str(Xanthium_strumarium_full)
+
 ```
 
 We now have considerably more information.
@@ -122,15 +134,21 @@ Let's take a quick look at where those occurrences are.
 ```{r}
 # Make a quick map to plot our points on
 
-map('world', fill = T, col= "grey", bg = "light blue") 
+  map('world', fill = T, col= "grey", bg = "light blue") 
 
-#Plot the points from the full query in red
+# Plot the points from the full query in red
 
-points(cbind(Xanthium_strumarium_full$longitude,Xanthium_strumarium_full$latitude),col = "red",pch = 20,cex = 1) 
+  points(cbind(Xanthium_strumarium_full$longitude,Xanthium_strumarium_full$latitude),
+         col = "red",
+         pch = 20,
+         cex = 1) 
 
 # Plot the points from the default query in blue
 
-points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col = "blue",pch = 20,cex = 1) 
+  points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),
+         col = "blue",
+         pch = 20,
+         cex = 1) 
 
 ```
 
@@ -144,16 +162,19 @@ Since we may be interested in a particular geographic area, rather than a partic
 We'll choose a relatively small region, the Bahamas, for our demonstration.  
 
 ```{r, eval = FALSE}
+
 Bahamas <- BIEN_occurrence_country(country =  "Bahamas")
 
 #Let's see how many species we have
-length(unique(Bahamas$scrubbed_species_binomial))
-#About 300 species with valid occurrence records.
+
+  length(unique(Bahamas$scrubbed_species_binomial))
+  #About 400 species with valid occurrence records.
 
 #Now, let's take a look at where those occurrences are:
-map(regions = "Bahamas" ,fill = T , col= "grey", bg = "light blue")
-
-points(cbind(Bahamas$longitude,Bahamas$latitude),col = "blue",pch = 20,cex = 1) 
+  
+  map(regions = "Bahamas" ,fill = T , col= "grey", bg = "light blue")
+  
+  points(cbind(Bahamas$longitude,Bahamas$latitude),col = "blue",pch = 20,cex = 1) 
 
 #Looks like some islands are considerably better sampled than others.
 
@@ -197,12 +218,15 @@ Xanthium_strumarium_range <- BIEN_ranges_load_species(species = "Xanthium struma
 The range map is now in our global environment as a SpatialPolygonsDataFrame.  Let's plot the map and see what it looks like.
 
 ```{r}
+
 #First, let's add a base map so that our range has some context:
 
-map('world',fill = T , col= "grey", bg = "light blue",xlim = c(-180,-20),ylim = c(-60,80))
+  map('world',fill = T , col= "grey", bg = "light blue",
+      xlim = c(-180, -20),
+      ylim = c(-60, 80))
 
 #Now, we can add the range map:
-plot(Xanthium_strumarium_range,col = "green",add = T)
+  plot(Xanthium_strumarium_range, col = "green", add = T)
 
 
 
@@ -211,9 +235,15 @@ plot(Xanthium_strumarium_range,col = "green",add = T)
 Now, let's add those occurrence points from earlier to this map:
 
 ```{r}
-map('world',fill = T , col= "grey", bg = "light blue",xlim = c(-180,-20),ylim = c(-60,80))
-plot(Xanthium_strumarium_range,col = "green",add = T)
-points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),col = "blue",pch = 20,cex = 1)
+
+map('world', fill = T , col = "grey", bg = "light blue",
+    xlim = c(-180, -20),
+    ylim = c(-60, 80))
+
+plot(Xanthium_strumarium_range, col = "green", add = T)
+
+points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),
+       col = "blue", pch = 20, cex = 1)
 
 
 ```
@@ -249,13 +279,22 @@ Again we have some of the same arguments available for these queries that we saw
 
 Let's take a look at the data for an individual plot.
 ```{r, eval = FALSE}
+
 LUQUILLO <- BIEN_plot_name(plot.name = "LUQUILLO")
+
 head(LUQUILLO)
+  
 ```
 
 We can see that this is a 0.1 hectare transect where stems >= 2.5 cm diameter at breast height were included.  If we'd like more detail, we can use additional arguments:
 ```{r, eval = FALSE}
-LUQUILLO_full <- BIEN_plot_name(plot.name = "LUQUILLO",cultivated = T,all.taxonomy = T,native.status = T,political.boundaries = T,all.metadata = T)
+
+LUQUILLO_full <- BIEN_plot_name(plot.name = "LUQUILLO",
+                                cultivated = T,
+                                all.taxonomy = T,
+                                native.status = T,
+                                political.boundaries = T,
+                                all.metadata = T)
 
 ```
 
@@ -341,6 +380,7 @@ Asclepias_taxonomy <- BIEN_taxonomy_genus(genus = "Asclepias")
 #You'll also notice that a given species may appear more than once (due to multiple circumscriptions, some of which may be illegitimate).
 
 #If we'd just like to know all the speciess that aren't illegitimate:
+
 Asclepias_species <- unique(Asclepias_taxonomy$scrubbed_species_binomial[Asclepias_taxonomy$scrubbed_taxonomic_status %in% c("accepted",  "no opinion")])
 
 
@@ -374,11 +414,11 @@ phylo <- BIEN_phylogeny_conservative()
 
 #Let's make sure it looks alright
 
-plot.phylo(x = phylo, show.tip.label =  FALSE)
+  plot.phylo(x = phylo, show.tip.label =  FALSE)
 
 #If we just want to see which species are included
 
-phylo_species <- phylo$tip.label
+  phylo_species <- phylo$tip.label
 
 
 ```
@@ -427,6 +467,7 @@ Some of the same arguments we saw in the occurrence functions appear here as wel
 Let's return to our previous example.  What if we just need a list of the species in the Bahamas, rather than the specific details of each occurrence record?  We can instead use the function `BIEN_list_country` to download a list of species, which should be much faster than using `BIEN_occurrence_country` to get a species list.
 
 ```{r}
+
 Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
 
 #Notice that we find many more species listed than we found occurrence records for.  What happened?  There are many records coming from the Bahamas that lack coordinates.  These records are used used in the "_list_" functions, but not the occurrence functions.
@@ -438,6 +479,7 @@ If we wanted to retrieve the results for multiple countries at once, that is sim
 ```{r}
 
 country_vector <- c("Haiti","Dominican Republic")
+
 Haiti_DR <- BIEN_list_country(country = country_vector)
 
 ```

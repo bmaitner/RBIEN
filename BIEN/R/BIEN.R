@@ -57,6 +57,7 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,new.world=NULL,all.ta
   return(.BIEN_sql(query, ...))
   
 }
+
 ##############
 
 #'Extract occurrence data for specified SpatialPolygons or SpatialPolygonsDataFrame
@@ -148,14 +149,19 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,new.w
 #' BIEN_list_country(country_vector)}
 #' @family list functions
 #' @export
-BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,new.world=NULL,...){
+BIEN_list_country<-function(country = NULL,
+                            country.code = NULL,
+                            cultivated = FALSE,
+                            new.world = NULL,
+                            ...){
+  
   .is_log(cultivated)
   .is_log_or_null(new.world)
   .is_char(country)
   .is_char(country.code)
-  if(is.null(country)& is.null(country.code))  {stop("Please supply either a country name or 2-digit ISO code")}
+  if(is.null(country) & is.null(country.code))  {stop("Please supply either a country name or 2-digit ISO code")}
   
-  newworld_<-.newworld_check(new.world)
+  newworld_ <- .newworld_check(new.world)
   
   
   #set base query components
@@ -163,8 +169,11 @@ BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,new.
   sql_from <- paste(" FROM species_by_political_division ")
   
   if(is.null(country.code)){
+    
     sql_where <- paste(" WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ") AND scrubbed_species_binomial IS NOT NULL")
+    
   }else{
+    
     sql_where <- paste(" WHERE country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                        AND scrubbed_species_binomial IS NOT NULL")  
   }
@@ -172,10 +181,14 @@ BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,new.
   sql_order_by <- paste(" ORDER BY scrubbed_species_binomial ")
   
   # adjust for optional parameters
+  
   if(!cultivated){
-    sql_where <- paste(sql_where, " AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) ")
+    
+    # sql_where <- paste(sql_where, " AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) ")
+    
   }else{
-    sql_select  <- paste(sql_select, ",is_cultivated_observation,is_cultivated_in_region")
+    
+    sql_select  <- paste(sql_select, ",is_cultivated_in_region")
   }
   
   #if(!new.world){
@@ -193,10 +206,12 @@ BIEN_list_country<-function(country=NULL,country.code=NULL,cultivated=FALSE,new.
   
   
   return(.BIEN_sql(query, ...))
+  #return(.BIEN_sql(query))
   
   }
 
 ############################
+
 
 #'Extract a species list by state/province
 #'
@@ -222,7 +237,11 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
   .is_log(cultivated)
   .is_log_or_null(new.world)
   
-  if(is.null(country)& is.null(country.code))  {stop("Please supply either a country name or 2-digit ISO code")}  
+  if(is.null(country)& is.null(country.code)) {
+    
+    stop("Please supply either a country name or 2-digit ISO code")
+    
+    }  
   
   # set base query components
   sql_select <-  paste("SELECT DISTINCT country, state_province, scrubbed_species_binomial ")
@@ -292,9 +311,13 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
   
   # adjust for optional parameters
   if(!cultivated){
-    sql_where <- paste(sql_where, " AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) ")
+    
+    #sql_where <- paste(sql_where, " AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) ")
+    
   }else{
-    sql_select  <- paste(sql_select, ",is_cultivated_observation,is_cultivated_in_region")
+    
+    sql_select  <- paste(sql_select, ",is_cultivated_in_region")
+
   }
   
   #if(!new.world){
@@ -303,7 +326,7 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
   #  sql_where <- paste(sql_where, "AND is_new_world = 1 ")
   #}
   
-  newworld_<-.newworld_check(new.world)
+  newworld_ <- .newworld_check(new.world)
   
   # form the final query
   query <- paste(sql_select,newworld_$select, sql_from, sql_where,newworld_$query, sql_order_by, " ;")
@@ -341,7 +364,16 @@ BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=N
 #' BIEN_list_county(country = "United States", state = "Michigan", county = county_vector)}
 #' @family list functions
 #' @export
-BIEN_list_county<-function(country=NULL,state=NULL,county=NULL,country.code=NULL,state.code=NULL,county.code=NULL,cultivated=FALSE,new.world=NULL, ...){
+BIEN_list_county<-function(country = NULL,
+                           state = NULL,
+                           county = NULL,
+                           country.code = NULL,
+                           state.code = NULL,
+                           county.code = NULL,
+                           cultivated = FALSE,
+                           new.world = NULL,
+                           ...){
+
   .is_char(country.code)
   .is_char(state.code)
   .is_char(county.code)
@@ -435,9 +467,13 @@ BIEN_list_county<-function(country=NULL,state=NULL,county=NULL,country.code=NULL
   
   # adjust for optional parameters
   if(!cultivated){
-    sql_where <- paste(sql_where, " AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) ")
+    
+    #sql_where <- paste(sql_where, " AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL) ")
+    
   }else{
-    sql_select  <- paste(sql_select, ",is_cultivated_observation,is_cultivated_in_region")
+    
+    sql_select  <- paste(sql_select, ",is_cultivated_in_region")
+    
   }
   
   #if(!new.world){
@@ -446,7 +482,7 @@ BIEN_list_county<-function(country=NULL,state=NULL,county=NULL,country.code=NULL
   #  sql_where <- paste(sql_where, "AND is_new_world = 1 ")
   #}
   
-  newworld_<-.newworld_check(new.world)
+  newworld_ <- .newworld_check(new.world)
   
   # form the final query
   query <- paste(sql_select,newworld_$select, sql_from, sql_where,newworld_$query, sql_order_by, " ;")
@@ -479,7 +515,7 @@ BIEN_list_all<-function( ...){
 }
 ###########################
 
-#'Extract a list of species within a given spatialpolygons.
+#'Extract a list of species within a given spatialpolygon.
 #'
 #'BIEN_list_spatialpolygons produces a list of all species with occurrence record falling within a user-supplied SpatialPolygons or SpatialPolygonsDataFrame.
 #' @param spatialpolygons An object of class SpatialPolygonsDataFrame.  Note that the object must be in WGS84.
@@ -498,20 +534,23 @@ BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,new.world=N
   .is_log(cultivated)
   .is_log_or_null(new.world)
   
-  wkt<-writeWKT(spatialpolygons)
-  long_min<-spatialpolygons@bbox[1,1]
-  long_max<-spatialpolygons@bbox[1,2]
-  lat_min<-spatialpolygons@bbox[2,1]
-  lat_max<-spatialpolygons@bbox[2,2]
+  wkt <- writeWKT(spatialpolygons)
+  long_min <- spatialpolygons@bbox[1,1]
+  long_max <- spatialpolygons@bbox[1,2]
+  lat_min <- spatialpolygons@bbox[2,1]
+  lat_max <- spatialpolygons@bbox[2,2]
   
   
   # adjust for optional parameters
   if(!cultivated){
-    cultivated_query<-"AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)"
-    cultivated_select<-""
+    
+    cultivated_query <- "AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)"
+    cultivated_select <- ""
   }else{
-    cultivated_query<-""
-    cultivated_select<-",is_cultivated_observation,is_cultivated_in_region"
+    
+    cultivated_query <- ""
+    cultivated_select <- ",is_cultivated_observation,is_cultivated_in_region"
+    
   }
   
   #if(!new.world){
@@ -522,11 +561,11 @@ BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,new.world=N
   #  newworld_select<-""
   #}
   
-  newworld_<-.newworld_check(new.world)
+  newworld_ <- .newworld_check(new.world)
   
 
   #rangeQuery <- paste("SELECT species FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species ;")
-  query<-paste("SELECT DISTINCT scrubbed_species_binomial",cultivated_select,newworld_$select ,"
+  query <- paste("SELECT DISTINCT scrubbed_species_binomial",cultivated_select,newworld_$select ,"
                 FROM  
                   (SELECT * FROM view_full_occurrence_individual WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
                   AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
