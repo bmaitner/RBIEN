@@ -13,7 +13,7 @@ BIEN_plot_country(
   native.status = FALSE,
   natives.only = TRUE,
   political.boundaries = FALSE,
-  collection.info = F,
+  collection.info = FALSE,
   all.metadata = FALSE,
   ...
 )

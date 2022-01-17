@@ -6,8 +6,8 @@
 \usage{
 BIEN_phylogeny_label_nodes(
   phylogeny,
-  family = T,
-  genus = F,
+  family = TRUE,
+  genus = FALSE,
   other_taxa = NULL,
   ...
 )

@@ -18,7 +18,7 @@ BIEN_occurrence_box(
   natives.only = TRUE,
   observation.type = FALSE,
   political.boundaries = TRUE,
-  collection.info = F,
+  collection.info = FALSE,
   ...
 )
 }

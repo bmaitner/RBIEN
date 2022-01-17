@@ -12,8 +12,8 @@ BIEN_stem_family(
   native.status = FALSE,
   natives.only = TRUE,
   political.boundaries = FALSE,
-  collection.info = F,
-  all.metadata = F,
+  collection.info = FALSE,
+  all.metadata = FALSE,
   ...
 )
 }

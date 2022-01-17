@@ -2,7 +2,7 @@
 % Please edit documentation in R/BIEN.R
 \name{BIEN_list_spatialpolygons}
 \alias{BIEN_list_spatialpolygons}
-\title{Extract a list of species within a given spatialpolygons.}
+\title{Extract a list of species within a given spatialpolygon.}
 \usage{
 BIEN_list_spatialpolygons(
   spatialpolygons,
@@ -14,7 +14,7 @@ BIEN_list_spatialpolygons(
 \arguments{
 \item{spatialpolygons}{An object of class SpatialPolygonsDataFrame.  Note that the object must be in WGS84.}
 
-\item{cultivated}{Return cultivated records as well?  Default is FALSE.}
+\item{cultivated}{Return information on cultivation status?  Default is FALSE.}
 
 \item{new.world}{NULL (The default) returns global records, TRUE returns only New World, and FALSE only Old World.}
 

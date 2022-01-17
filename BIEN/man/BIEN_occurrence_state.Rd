@@ -16,7 +16,7 @@ BIEN_occurrence_state(
   natives.only = TRUE,
   observation.type = FALSE,
   political.boundaries = FALSE,
-  collection.info = F,
+  collection.info = FALSE,
   ...
 )
 }

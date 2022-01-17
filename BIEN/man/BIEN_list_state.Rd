@@ -23,7 +23,7 @@ BIEN_list_state(
 
 \item{state.code}{A single state/province code, or a vector of states/province codes.}
 
-\item{cultivated}{Return cultivated records as well?  Default is FALSE.}
+\item{cultivated}{Return information on cultivation status?  Default is FALSE.}
 
 \item{new.world}{NULL (The default) returns global records, TRUE returns only New World, and FALSE only Old World.}
 

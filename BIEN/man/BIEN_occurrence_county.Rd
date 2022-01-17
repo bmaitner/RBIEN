@@ -18,7 +18,7 @@ BIEN_occurrence_county(
   natives.only = TRUE,
   observation.type = FALSE,
   political.boundaries = FALSE,
-  collection.info = F,
+  collection.info = FALSE,
   ...
 )
 }

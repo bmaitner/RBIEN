@@ -14,7 +14,7 @@ BIEN_occurrence_country(
   natives.only = TRUE,
   observation.type = FALSE,
   political.boundaries = FALSE,
-  collection.info = F,
+  collection.info = FALSE,
   ...
 )
 }
