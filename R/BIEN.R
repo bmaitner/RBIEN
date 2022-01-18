@@ -3957,7 +3957,7 @@ BIEN_stem_genus <- function(genus,
   #set conditions for query
     cultivated_ <- .cultivated_check_stem(cultivated)
     newworld_ <- .newworld_check_stem(new.world)
-    taxonomy_ < -.taxonomy_check_stem(all.taxonomy)
+    taxonomy_ <- .taxonomy_check_stem(all.taxonomy)
     native_ <- .native_check_stem(native.status)
     natives_ <- .natives_check_stem(natives.only)
     political_ <- .political_check_stem(political.boundaries)

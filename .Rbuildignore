@@ -6,3 +6,6 @@ man-roxygen
 NOTES
 ^doc$
 ^Meta$
+^misc$
+^old_versions$
+^tutorials$
