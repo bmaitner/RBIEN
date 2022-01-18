@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 *.Rproj
+*.rds
 doc
 Meta
 /doc/
