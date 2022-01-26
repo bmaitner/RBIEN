@@ -181,15 +181,15 @@
   }
   
   # create query to retrieve
-    #df <- dbGetQuery(con, statement = query); #dbGetQuery doesn't allow error catching, so we've stopped using it
+    df <- dbGetQuery(con, statement = query); #dbGetQuery doesn't allow error catching, so we've stopped using it
     
-  suppressWarnings(
-    
-    df <-  tryCatch(expr = postgresqlFetch(res = dbSendQuery(conn = con,
-                                                             statement = query)),
-                    error = function(e){e}
-                    )
-    )
+  # suppressWarnings(
+  #   
+  #   df <-  tryCatch(expr = postgresqlFetch(res = dbSendQuery(conn = con,
+  #                                                            statement = query)),
+  #                   error = function(e){e}
+  #                   )
+  #   )
   
   
   dbDisconnect(con)
