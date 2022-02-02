@@ -18,8 +18,10 @@
 #' @param return.query Should  the query used be returned rather than executed?  Default is FALSE
 #' @param schema An alternative schema to be accessed.  Used for testing purposes.
 #' @param print.query Should  the query used be printed?  Default is FALSE
+#' @param fetch.query If TRUE (the default) query is executed using dbFetch.  If FALSE, dbGetQuery is used.
+#' @note Using fetch.query = TRUE provides better error handling, but fetch.query = FALSE results in a more useful (but uncatchable) error.
 #' @import RPostgreSQL
-#' @importFrom DBI dbDriver
+#' @importFrom DBI dbDriver dbFetch
 #' @return A dataframe returned by the query.
 #' @keywords internal
 #' @examples \dontrun{
@@ -41,7 +43,8 @@
                       limit = NULL,
                       return.query = FALSE,
                       schema = NULL,
-                      print.query = FALSE){
+                      print.query = FALSE,
+                      fetch.query = TRUE){
   
   .is_char(query)
 
@@ -179,21 +182,34 @@
     dbDisconnect(con)
     return(query)
   }
+
+
+
+# Execute the query
   
-  # create query to retrieve
-    df <- dbGetQuery(con, statement = query); #dbGetQuery doesn't allow error catching, so we've stopped using it
+  if(fetch.query){
     
-  # suppressWarnings(
-  #   
-  #   df <-  tryCatch(expr = postgresqlFetch(res = dbSendQuery(conn = con,
-  #                                                            statement = query)),
-  #                   error = function(e){e}
-  #                   )
-  #   )
-  
-  
+    suppressWarnings(
+      
+      df <-  tryCatch(expr = dbFetch(res = dbSendQuery(conn = con,
+                                                       statement = query)),
+                      error = function(e){e}
+      ))
+    
+  }else{
+    
+   
+    df <- dbGetQuery(con, statement = query); #dbGetQuery doesn't allow error catching, so we've stopped using it by default
+    
+     
+  }
+
+     
+# Disconnect from the database
   dbDisconnect(con)
   
+  
+# Optionally print the query  
   if(print.query){
     
     query <- gsub(pattern = "\n",replacement = "", query)
@@ -218,3 +234,4 @@
   
   
 }
+

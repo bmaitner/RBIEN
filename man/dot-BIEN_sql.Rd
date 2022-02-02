@@ -21,7 +21,8 @@
   limit = NULL,
   return.query = FALSE,
   schema = NULL,
-  print.query = FALSE
+  print.query = FALSE,
+  fetch.query = TRUE
 )
 }
 \arguments{
@@ -58,12 +59,17 @@
 \item{schema}{An alternative schema to be accessed.  Used for testing purposes.}
 
 \item{print.query}{Should  the query used be printed?  Default is FALSE}
+
+\item{fetch.query}{If TRUE (the default) query is executed using dbFetch.  If FALSE, dbGetQuery is used.}
 }
 \value{
 A dataframe returned by the query.
 }
 \description{
 .BIEN_sql is an internal function used to submit SQL queries.
+}
+\note{
+Using fetch.query = TRUE provides better error handling, but fetch.query = FALSE results in a more useful (but uncatchable) error.
 }
 \examples{
 \dontrun{
