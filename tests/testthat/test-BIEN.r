@@ -195,6 +195,8 @@ test_that("Plot functions return a dataframe",{
 
 test_that("Ranges functions return a SpatialPolygonsDataFrame",{
   
+  skip_if_offline()
+  
   expect_that(BIEN_ranges_load_species(species = "Abies amabilis",
                                        schema = schema),
               is_a("SpatialPolygonsDataFrame"))
