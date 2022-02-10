@@ -58,19 +58,19 @@ test_that("postGIS Occurrence functions return a dataframe",{
   
   skip_on_cran()
   
-  expect_that(BIEN_occurrence_box(min.lat = 32.9,
-                                  max.lat = 33,
-                                  min.long = -114,
-                                  max.long = -113.9,
-                                  cultivated = TRUE,
-                                  new.world = FALSE,
-                                  all.taxonomy = T,
-                                  native.status = T,
-                                  natives.only = T,
-                                  observation.type = T,
-                                  political.boundaries = T,
-                                  schema=schema),
-              is_a("data.frame"))
+  # expect_that(BIEN_occurrence_box(min.lat = 32.9,
+  #                                 max.lat = 33,
+  #                                 min.long = -114,
+  #                                 max.long = -113.9,
+  #                                 cultivated = TRUE,
+  #                                 new.world = FALSE,
+  #                                 all.taxonomy = T,
+  #                                 native.status = T,
+  #                                 natives.only = T,
+  #                                 observation.type = T,
+  #                                 political.boundaries = T,
+  #                                 schema=schema),
+  #             is_a("data.frame"))
   
 
 })
