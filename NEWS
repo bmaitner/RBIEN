@@ -2,7 +2,7 @@ BIEN 1.2.5
 ===============
 ## NEW FEATURES
 * added the option "only.geovalid" to some functions to allow downloading of non-geovalid observations
-* for BIEN_occurrence_species, setting "observatio_type = T" will now return all observation types
+* for BIEN_occurrence_species, setting "observation_type = T" will now return all observation types
 * Replaced the argument "only.new.word", which was binary YES/NO, with "new.world", which is trinary, allowing users to download records globally (new.world=NULL), only in the New World (new.world=T), or only in the Old World (new.world = F).
 
 ## BUG FIXES
