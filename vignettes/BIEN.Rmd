@@ -13,7 +13,7 @@ vignette: >
 The Botanical Information and Ecology Network(BIEN) R package provides access to the BIEN database as well as useful tools for working with the BIEN data.
 
 ##Data Usage Agreement
-Please read the data usage agreement, available at: http://bien.nceas.ucsb.edu/bien/biendata/data-use-policy/
+Please read the data usage agreement, available at: https://bien.nceas.ucsb.edu/bien/biendata/data-use-policy/
 
 ##Data Usage: Warnings and Caveats
 

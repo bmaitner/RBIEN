@@ -14,4 +14,7 @@
 * Connection issues now print a message and return NULL (invisibly.)
 *The Fedora Linux environment on rhub failed because "ERROR: dependency ‘RPostgreSQL’ is not available for package ‘BIEN’""
 
+## Response to previous comments
+* We fixed the outdated links in our documentation (caused by transitions between http to https)
+
 
