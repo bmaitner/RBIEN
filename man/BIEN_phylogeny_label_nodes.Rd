@@ -30,7 +30,7 @@ Input phylogeny with labeled nodes.
 BIEN_phylogeny_label_nodes will label the nodes on a phylogeny based on either the BIEN taxonomy or user-supplied taxa.
 }
 \note{
-Information on the construction of the BIEN phylogenies is available online at http://bien.nceas.ucsb.edu/bien/biendata/bien-2/phylogeny/
+Information on the construction of the BIEN phylogenies is available online at https://bien.nceas.ucsb.edu/bien/biendata/bien-2/phylogeny/
 }
 \examples{
 \dontrun{

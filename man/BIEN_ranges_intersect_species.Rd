@@ -36,7 +36,7 @@ Range maps for all available species that intersect the range of the focal speci
 BIEN_ranges_intersect_species extracts range maps for a specified bounding box.
 }
 \note{
-Details on the construction of BIEN range maps is available at http://bien.nceas.ucsb.edu/bien/biendata/bien-3/
+Details on the construction of BIEN range maps is available at https://bien.nceas.ucsb.edu/bien/biendata/bien-3/
 }
 \examples{
 \dontrun{

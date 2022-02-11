@@ -16,7 +16,7 @@ A phylo object containing the BIEN conservative phylogeny
 BIEN_phylogeny_conservative downloads the conservative BIEN phylogeny, which only includes species with molecular data available.
 }
 \note{
-Information on the construction of the BIEN phylogenies is available online at http://bien.nceas.ucsb.edu/bien/biendata/bien-2/phylogeny/
+Information on the construction of the BIEN phylogenies is available online at https://bien.nceas.ucsb.edu/bien/biendata/bien-2/phylogeny/
 }
 \examples{
 \dontrun{
