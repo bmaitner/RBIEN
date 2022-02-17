@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Setup
 
-```{r message = F,warning = FALSE, results = 'hide'}
+```{r load-packages, message = F,warning = FALSE, results = 'hide'}
 library(BIEN)
 library(ape) #Package for working with phylogenies in R
 library(maps) #Useful for making quick maps of occurrences
@@ -23,7 +23,7 @@ library(sp) # A package for spatial data
 # An overview of the package
 We try to make this package as easy and intuitive to use as possible, but it is still often easiest to start with our vignette.  Particularly useful are the "Function Names" and "Function Directory" sections.
 
-```{r, eval = FALSE}
+```{r load-vignette, eval = FALSE}
 vignette("BIEN")
 ```
 
@@ -95,7 +95,7 @@ Okay, enough reading.  Let's get some data.
 
 Let's say we're interested in the species *Xanthium strumarium* and we'd like some occurrence data.  We'll use the function `BIEN_occurrence_species` to grab the occurrence data.
 
-```{r}
+```{r xs-occurrences}
 
 Xanthium_strumarium <- BIEN_occurrence_species(species = "Xanthium strumarium")
 
@@ -103,7 +103,7 @@ Xanthium_strumarium <- BIEN_occurrence_species(species = "Xanthium strumarium")
 
 Take a moment and view the dataframe and take a look at the structure
 
-```{r}
+```{r view-xs-occurrences}
 
 str(Xanthium_strumarium)
 
@@ -115,7 +115,7 @@ The default data that is returned consists of the latitude, longitude and date c
 https://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/
 
 If we want more information on these occurrences, we just need to change the arguments:
-```{r}
+```{r xs-occurrences-pt-2}
 
 Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumarium",
                                                     cultivated = T,
@@ -132,7 +132,7 @@ We now have considerably more information.
 
 Let's take a quick look at where those occurrences are.
 
-```{r}
+```{r map-xs}
 # Make a quick map to plot our points on
 
   map('world', fill = T, col= "grey", bg = "light blue") 
@@ -162,7 +162,7 @@ Since we may be interested in a particular geographic area, rather than a partic
 
 We'll choose a relatively small region, the Bahamas, for our demonstration.  
 
-```{r, eval = FALSE}
+```{r occs-bahamas, eval = FALSE}
 
 Bahamas <- BIEN_occurrence_country(country =  "Bahamas")
 
@@ -210,7 +210,7 @@ The range functions have different arguments than we have seen so far, including
 
 If we have a species we're interested in, and would like to load the range map into the environment,  we can use the function `BIEN_ranges_load_species`.  Let's try this for *Xanthium strumarium*.
 
-```{r}
+```{r xs-range}
 
 Xanthium_strumarium_range <- BIEN_ranges_load_species(species = "Xanthium strumarium")
 
@@ -218,7 +218,7 @@ Xanthium_strumarium_range <- BIEN_ranges_load_species(species = "Xanthium struma
 
 The range map is now in our global environment as a SpatialPolygonsDataFrame.  Let's plot the map and see what it looks like.
 
-```{r}
+```{r xs-range-map}
 
 #First, let's add a base map so that our range has some context:
 
@@ -235,7 +235,7 @@ The range map is now in our global environment as a SpatialPolygonsDataFrame.  L
 
 Now, let's add those occurrence points from earlier to this map:
 
-```{r}
+```{r xs-range-and-points}
 
 map('world', fill = T , col = "grey", bg = "light blue",
     xlim = c(-180, -20),
@@ -279,7 +279,7 @@ Again we have some of the same arguments available for these queries that we saw
 **Example 4: Plot data by plot name**
 
 Let's take a look at the data for an individual plot.
-```{r, eval = FALSE}
+```{r luq-occs, eval = FALSE}
 
 LUQUILLO <- BIEN_plot_name(plot.name = "LUQUILLO")
 
@@ -334,7 +334,7 @@ Functions include:
 
 If you're interested in accessing all traits for a taxon, say the genus *Salix*, just go ahead and use the corresponding function:
 
-```{r}
+```{r salix-traits}
 
 Salix_traits <- BIEN_trait_genus(genus = "Salix")
 
@@ -342,7 +342,7 @@ Salix_traits <- BIEN_trait_genus(genus = "Salix")
 
 If instead we're interested in a particular trait, the first step is to check if that trait is present and verify the spelling using the function `BIEN_trait_list`.
 
-```{r}
+```{r trait-list}
 
 BIEN_trait_list()
 
@@ -350,7 +350,7 @@ BIEN_trait_list()
 
 If we're interested in leaf area, we see that this is indeed called "leaf area" in the database.  Now that we know the proper spelling, we can use the function `BIEN_trait_trait` to download all observations of that trait.
 
-```{r}
+```{r leaf-area}
 
 leaf_area <- BIEN_trait_trait(trait = "leaf area")
 
@@ -372,7 +372,7 @@ While there are existing packages that query taxonomic data (e.g. those included
 
 Let's say we're interested in the genus *Asclepias*, and we'd like to get an idea of how many species there are in this genus and what higher taxa it falls within.
 
-```{r}
+```{r taxonomy}
 
 Asclepias_taxonomy <- BIEN_taxonomy_genus(genus = "Asclepias")
 
@@ -409,7 +409,7 @@ Arguments: The function `BIEN_phylogeny_complete` has a few arguments that are w
 
 Let's say we want to download the conservative phylogeny.
 
-```{r}
+```{r phylogeny}
 
 phylo <- BIEN_phylogeny_conservative()
 
@@ -442,7 +442,7 @@ The arguments for this function are the same that we have seen in the occurrence
 
 If we'd like stem data for the species *Cupressus arizonica*
 
-```{r}
+```{r stems}
 
 Cupressus_arizonica_stems <- BIEN_stem_species("Cupressus arizonica")
 
@@ -467,7 +467,7 @@ Some of the same arguments we saw in the occurrence functions appear here as wel
 
 Let's return to our previous example.  What if we just need a list of the species in the Bahamas, rather than the specific details of each occurrence record?  We can instead use the function `BIEN_list_country` to download a list of species, which should be much faster than using `BIEN_occurrence_country` to get a species list.
 
-```{r}
+```{r lists}
 
 Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
 
@@ -477,7 +477,7 @@ Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
 
 If we wanted to retrieve the results for multiple countries at once, that is simple as well.  We just need to supply a vector of countries.
 
-```{r}
+```{r lists-multi-country}
 
 country_vector <- c("Haiti","Dominican Republic")
 
@@ -487,7 +487,7 @@ Haiti_DR <- BIEN_list_country(country = country_vector)
 
 We can also use political division codes (from geonames.org) instead of writing out the full country names.
 
-```{r}
+```{r lists-pol-divs}
 #To see all of the political division names, and associated codes, we can use this function:
 
 political_names <- BIEN_metadata_list_political_names()
@@ -522,7 +522,7 @@ The BIEN metadata functions start with the prefix `BIEN_metadata_...` and provid
 
 To check what the current version of the BIEN database is (which we recommend reporting when using BIEN data):
 
-```{r}
+```{r md-1}
 
 BIEN_metadata_database_version()
 
@@ -534,7 +534,7 @@ One of the more innovative features of the BIEN package is that it will generate
 
 Let's say we're interested in *Selaginella selaginoides*, and we'd like to download some occurrence data:
 
-```{r}
+```{r selaginella-occs}
 
 Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella selaginoides",new.world = NULL)
 
@@ -542,7 +542,7 @@ Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella sel
 
 If we plan on using those data in a publication ,we'll need proper attribution.  We can use `BIEN_metadata_citation` to do this for us:
 
-```{r}
+```{r selaginella-md}
 
 citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
 
@@ -554,7 +554,7 @@ citation_info is a list that contains 3 elements:
 
 To make things even easier on ourselves, we can use some of the additional functionality of the `BIEN_metadata_citation` function:
 
-```{r, eval = FALSE}
+```{r md-2, eval = FALSE}
 
 temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a temporary working directory
 
@@ -569,7 +569,7 @@ Now, we have a bibtex file, `selaginella_selaginoides.bib`, that can be loaded i
 
 What if we also have some trait data?  No problem there, the code handles that as well:
 
-```{r, eval = FALSE}
+```{r md-3, eval = FALSE}
 #First, let's get some trait data:
 selaginella_selaginoides_traits <- BIEN_trait_species(species = "Selaginella selaginoides")
 
