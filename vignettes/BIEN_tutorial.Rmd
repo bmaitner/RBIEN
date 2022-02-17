@@ -306,7 +306,7 @@ The dataframe `LUQUILLO_full` contains more useful information, including metada
 
 # Trait data
 
-These functions begin with the prefix `BIEN_trait_...` and access the BIEN trait database.   Note that the spelling of the trait names must be precise, so we recommend using the function `BIEN_trait_list` first.  Traits names are standardized to follow https://www.top-thesaurus.org/ where available.  Trait units have been standardized for each trait.
+These functions begin with the prefix `BIEN_trait_...` and access the BIEN trait database.   Note that the spelling of the trait names must be precise, so we recommend using the function `BIEN_trait_list` first.  Traits names are standardized to follow https:<area>//www<area>.top-thesaurus.org/ where available.  Trait units have been standardized for each trait.
 
 
 Functions include:
@@ -540,7 +540,7 @@ Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella sel
 
 ```
 
-If we plan on using those data in a publication ,we'll need proper attribution.  We can use `BIEN_metadata_citation` to do this for us:
+If we plan on using those data in a publication, we'll need proper attribution.  We can use `BIEN_metadata_citation` to do this for us:
 
 ```{r selaginella-md}
 
