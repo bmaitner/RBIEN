@@ -27,7 +27,7 @@
 
 >Can you look for the long hangs in the vignettes?
 
-* The vignette build times may have been slow due to server load.  I've re-run them a few times locally and it takes approximately 2.5 minutes to build both per system.time(build_vignettes())
+* The vignette build times may have been slow due to server load.  I've re-run them a few times locally and it takes approximately 2.5 minutes to build both vignettes per system.time(build_vignettes())
 
 * Re: the certificate problem with https://www.top-thesaurus.org/: we don't maintain this website so we cannot fix this issue directly. By way of a solution, I've updated the vignette so that a hyperlink won't be generated and the link will be rendered as plain text.
 
