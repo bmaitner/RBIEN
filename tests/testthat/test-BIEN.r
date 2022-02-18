@@ -128,8 +128,8 @@ test_that("Occurrence functions return a dataframe",{
  expect_that(BIEN_occurrence_spatialpolygons( BIEN_ranges_load_species(species = "Aa argyrolepis"), limit = 100),
              is_a("data.frame"))
  
- expect_that(BIEN_occurrence_records_per_species(),
-             is_a("data.frame"))
+ # expect_that(BIEN_occurrence_records_per_species(),
+ #             is_a("data.frame"))
  
  })
 
