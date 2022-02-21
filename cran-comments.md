@@ -31,3 +31,11 @@
 
 * Re: the certificate problem with https://www.top-thesaurus.org/: we don't maintain this website so we cannot fix this issue directly. By way of a solution, I've updated the vignette so that a hyperlink won't be generated and the link will be rendered as plain text.
 
+
+>Thanks, we see:
+
+>Apart from the URL with an expired certificate, this still hangs (uses
+>almost no CPU) for 20+ minutes. We cannot affortd checking this.
+
+* I'm guessing that the hanging is because the queries are either being executed slowly on our end or downloaded slowly if the internet connection is limited.  I've updated our vignette so that the more complicated (slow on the server side) or large (slow to download) queries aren't executed. On my machine it now takes less than 50 seconds to rebuild both.  If the rebuild is still too slow on your side I can modify the vignette further.  Thanks for bearing with me on this, and apologies for the hassle.
+

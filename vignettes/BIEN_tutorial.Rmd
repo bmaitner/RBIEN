@@ -115,7 +115,7 @@ The default data that is returned consists of the latitude, longitude and date c
 https://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/
 
 If we want more information on these occurrences, we just need to change the arguments:
-```{r xs-occurrences-pt-2}
+```{r xs-occurrences-pt-2, eval = FALSE}
 
 Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumarium",
                                                     cultivated = T,
@@ -124,36 +124,35 @@ Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumari
                                                     observation.type = T,
                                                     political.boundaries = T)
 
-str(Xanthium_strumarium_full)
 
 ```
 
 We now have considerably more information.
 
-Let's take a quick look at where those occurrences are.
+If we want to take a quick look at where those occurrences are we could use:
 
-```{r map-xs}
+```{r map-xs, eval = FALSE}
 # Make a quick map to plot our points on
 
   map('world', fill = T, col= "grey", bg = "light blue") 
 
 # Plot the points from the full query in red
 
-  points(cbind(Xanthium_strumarium_full$longitude,Xanthium_strumarium_full$latitude),
+  points(cbind(Xanthium_strumarium_full$longitude,
+               Xanthium_strumarium_full$latitude),
          col = "red",
          pch = 20,
          cex = 1) 
 
 # Plot the points from the default query in blue
 
-  points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),
+  points(cbind(Xanthium_strumarium$longitude,
+               Xanthium_strumarium$latitude),
          col = "blue",
          pch = 20,
          cex = 1) 
 
 ```
-
-From the map, we can see that the points from the default query (in blue) all fall within the New World.  The points from the full query (red + blue) additionally include occurrences from the Old World.
 
 
 **Example 2: Occurrence records for a country**
@@ -334,7 +333,7 @@ Functions include:
 
 If you're interested in accessing all traits for a taxon, say the genus *Salix*, just go ahead and use the corresponding function:
 
-```{r salix-traits}
+```{r salix-traits, eval = FALSE}
 
 Salix_traits <- BIEN_trait_genus(genus = "Salix")
 
@@ -342,7 +341,7 @@ Salix_traits <- BIEN_trait_genus(genus = "Salix")
 
 If instead we're interested in a particular trait, the first step is to check if that trait is present and verify the spelling using the function `BIEN_trait_list`.
 
-```{r trait-list}
+```{r trait-list, eval = FALSE}
 
 BIEN_trait_list()
 
@@ -350,7 +349,7 @@ BIEN_trait_list()
 
 If we're interested in leaf area, we see that this is indeed called "leaf area" in the database.  Now that we know the proper spelling, we can use the function `BIEN_trait_trait` to download all observations of that trait.
 
-```{r leaf-area}
+```{r leaf-area, eval = FALSE}
 
 leaf_area <- BIEN_trait_trait(trait = "leaf area")
 
@@ -409,7 +408,7 @@ Arguments: The function `BIEN_phylogeny_complete` has a few arguments that are w
 
 Let's say we want to download the conservative phylogeny.
 
-```{r phylogeny}
+```{r phylogeny, eval = FALSE}
 
 phylo <- BIEN_phylogeny_conservative()
 
@@ -442,7 +441,7 @@ The arguments for this function are the same that we have seen in the occurrence
 
 If we'd like stem data for the species *Cupressus arizonica*
 
-```{r stems}
+```{r stems, eval = FALSE}
 
 Cupressus_arizonica_stems <- BIEN_stem_species("Cupressus arizonica")
 
@@ -467,7 +466,7 @@ Some of the same arguments we saw in the occurrence functions appear here as wel
 
 Let's return to our previous example.  What if we just need a list of the species in the Bahamas, rather than the specific details of each occurrence record?  We can instead use the function `BIEN_list_country` to download a list of species, which should be much faster than using `BIEN_occurrence_country` to get a species list.
 
-```{r lists}
+```{r lists, eval = FALSE}
 
 Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
 
@@ -477,7 +476,7 @@ Bahamas_species_list <- BIEN_list_country(country = "Bahamas")
 
 If we wanted to retrieve the results for multiple countries at once, that is simple as well.  We just need to supply a vector of countries.
 
-```{r lists-multi-country}
+```{r lists-multi-country, eval = FALSE}
 
 country_vector <- c("Haiti","Dominican Republic")
 
@@ -534,15 +533,15 @@ One of the more innovative features of the BIEN package is that it will generate
 
 Let's say we're interested in *Selaginella selaginoides*, and we'd like to download some occurrence data:
 
-```{r selaginella-occs}
+```{r selaginella-occs, eval = FALSE}
 
-Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella selaginoides",new.world = NULL)
+Selaginella_selaginoides_occurrences <- BIEN_occurrence_species("Selaginella selaginoides", new.world = NULL)
 
 ```
 
 If we plan on using those data in a publication, we'll need proper attribution.  We can use `BIEN_metadata_citation` to do this for us:
 
-```{r selaginella-md}
+```{r selaginella-md, eval = FALSE}
 
 citation_info <- BIEN_metadata_citation(dataframe = Selaginella_selaginoides_occurrences)
 
