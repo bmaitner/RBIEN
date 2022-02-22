@@ -52,7 +52,7 @@
   if(print.query){
     
     query <- gsub(pattern = "\n",replacement = "",query)
-    query <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl=TRUE)
+    query <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl = TRUE)
     print(query)
     
   }
@@ -78,7 +78,10 @@
   if(!is.null(view_full_occurrence_individual)){
     
     #query<-gsub(pattern = "\\<view_full_occurrence_individual\\>",replacement = view_full_occurrence_individual,x = query)}
-    query <- gsub(pattern = "(?<!as |AS )(?<!\\S)view_full_occurrence_individual(?!\\S)",replacement = view_full_occurrence_individual,x = query,perl = T)
+    query <- gsub(pattern = "(?<!as |AS )(?<!\\S)view_full_occurrence_individual(?!\\S)",
+                  replacement = view_full_occurrence_individual,
+                  x = query,
+                  perl = TRUE)
     
     }
   
@@ -86,75 +89,103 @@
   if(!is.null(plot_metadata)){
     
     #query<-gsub(pattern = "\\<view_full_occurrence_individual\\>",replacement = view_full_occurrence_individual,x = query)}
-    query <- gsub(pattern = "(?<!as |AS )(?<!\\S)plot_metadata(?!\\S)",replacement = plot_metadata,x = query,perl = T)
+    query <- gsub(pattern = "(?<!as |AS )(?<!\\S)plot_metadata(?!\\S)",
+                  replacement = plot_metadata,
+                  x = query,
+                  perl = TRUE)
     
     }
   
   if(!is.null(analytical_stem)){
     
     #query<-gsub(pattern = "\\<view_full_occurrence_individual\\>",replacement = view_full_occurrence_individual,x = query)}
-    query <- gsub(pattern = "(?<!as |AS )(?<!\\S)analytical_stem(?!\\S)",replacement = analytical_stem,x = query,perl = T)
+    query <- gsub(pattern = "(?<!as |AS )(?<!\\S)analytical_stem(?!\\S)",
+                  replacement = analytical_stem,
+                  x = query,
+                  perl = TRUE)
     
     }
   
   if(!is.null(agg_traits)){
     
-    query <- gsub(pattern = "agg_traits",replacement = agg_traits,x = query)
+    query <- gsub(pattern = "agg_traits",
+                  replacement = agg_traits,
+                  x = query)
     
     }
   
   if(!is.null(species_by_political_division)){
     
-    query <- gsub(pattern = "species_by_political_division",replacement = species_by_political_division,x = query)
+    query <- gsub(pattern = "species_by_political_division",
+                  replacement = species_by_political_division,
+                  x = query)
     
     }
   
   if(!is.null(bien_species_all)){
     
-    query <- gsub(pattern = "bien_species_all",replacement = bien_species_all,x = query)
+    query <- gsub(pattern = "bien_species_all",
+                  replacement = bien_species_all,
+                  x = query)
     }
   
   if(!is.null(ranges)){
     
-    query <- gsub(pattern = "ranges",replacement = ranges,x = query)
+    query <- gsub(pattern = "ranges",
+                  replacement = ranges,
+                  x = query)
     
     }
   
   if(!is.null(bien_taxonomy)){
     
-    query <- gsub(pattern = "bien_taxonomy",replacement = bien_taxonomy,x = query)
+    query <- gsub(pattern = "bien_taxonomy",
+                  replacement = bien_taxonomy,
+                  x = query)
     
     }
   
   if(!is.null(phylogeny)){
     
-    query <- gsub(pattern = "\\<phylogeny\\>",replacement = phylogeny,x = query)
+    query <- gsub(pattern = "\\<phylogeny\\>",
+                  replacement = phylogeny,
+                  x = query)
   
     }
   
   if(!is.null(bien_metadata)){
     
-    query <- gsub(pattern = "\\<bien_metadata\\>",replacement = bien_metadata,x = query)
+    query <- gsub(pattern = "\\<bien_metadata\\>",
+                  replacement = bien_metadata,
+                  x = query)
     
     }
   
   
   if(!is.null(datasource)){
     
-    query <- gsub(pattern = "(?<=\\s)datasource(?=\\s)",replacement = datasource,x = query,perl = T)
+    query <- gsub(pattern = "(?<=\\s)datasource(?=\\s)",
+                  replacement = datasource,
+                  x = query,
+                  perl = TRUE)
     
     }  
   
   if(!is.null(centroid)){
     
-    query <- gsub(pattern = "(?<=\\s)centroid(?=\\s)",replacement = datasource,x = query,perl = T)
+    query <- gsub(pattern = "(?<=\\s)centroid(?=\\s)",
+                  replacement = datasource,
+                  x = query,
+                  perl = TRUE)
     
     }  
   
   
   if(!is.null(limit)){
     
-    query <- gsub(pattern = " ;",replacement = paste(" LIMIT ",limit,";"),x = query)
+    query <- gsub(pattern = " ;",
+                  replacement = paste(" LIMIT ",limit,";"),
+                  x = query)
     
     }
  

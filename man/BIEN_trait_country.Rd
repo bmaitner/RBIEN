@@ -9,7 +9,7 @@ BIEN_trait_country(
   trait.name = NULL,
   all.taxonomy = FALSE,
   political.boundaries = TRUE,
-  source.citation = F,
+  source.citation = FALSE,
   ...
 )
 }

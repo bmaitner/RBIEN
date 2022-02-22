@@ -118,11 +118,11 @@ If we want more information on these occurrences, we just need to change the arg
 ```{r xs-occurrences-pt-2, eval = FALSE}
 
 Xanthium_strumarium_full <- BIEN_occurrence_species(species = "Xanthium strumarium",
-                                                    cultivated = T,
-                                                    all.taxonomy = T,
-                                                    native.status = T,
-                                                    observation.type = T,
-                                                    political.boundaries = T)
+                                                    cultivated = TRUE,
+                                                    all.taxonomy = TRUE,
+                                                    native.status = TRUE,
+                                                    observation.type = TRUE,
+                                                    political.boundaries = TRUE)
 
 
 ```
@@ -134,7 +134,7 @@ If we want to take a quick look at where those occurrences are we could use:
 ```{r map-xs, eval = FALSE}
 # Make a quick map to plot our points on
 
-  map('world', fill = T, col= "grey", bg = "light blue") 
+  map('world', fill = TRUE, col= "grey", bg = "light blue") 
 
 # Plot the points from the full query in red
 
@@ -172,9 +172,9 @@ Bahamas <- BIEN_occurrence_country(country =  "Bahamas")
 
 #Now, let's take a look at where those occurrences are:
   
-  map(regions = "Bahamas" ,fill = T , col= "grey", bg = "light blue")
+  map(regions = "Bahamas" ,fill = TRUE , col= "grey", bg = "light blue")
   
-  points(cbind(Bahamas$longitude,Bahamas$latitude),col = "blue",pch = 20,cex = 1) 
+  points(cbind(Bahamas$longitude,Bahamas$latitude), col = "blue", pch = 20, cex = 1) 
 
 #Looks like some islands are considerably better sampled than others.
 
@@ -221,12 +221,12 @@ The range map is now in our global environment as a SpatialPolygonsDataFrame.  L
 
 #First, let's add a base map so that our range has some context:
 
-  map('world',fill = T , col= "grey", bg = "light blue",
+  map('world', fill = TRUE , col= "grey", bg = "light blue",
       xlim = c(-180, -20),
       ylim = c(-60, 80))
 
 #Now, we can add the range map:
-  plot(Xanthium_strumarium_range, col = "green", add = T)
+  plot(Xanthium_strumarium_range, col = "green", add = TRUE)
 
 
 
@@ -236,11 +236,11 @@ Now, let's add those occurrence points from earlier to this map:
 
 ```{r xs-range-and-points}
 
-map('world', fill = T , col = "grey", bg = "light blue",
+map('world', fill = TRUE , col = "grey", bg = "light blue",
     xlim = c(-180, -20),
     ylim = c(-60, 80))
 
-plot(Xanthium_strumarium_range, col = "green", add = T)
+plot(Xanthium_strumarium_range, col = "green", add = TRUE)
 
 points(cbind(Xanthium_strumarium$longitude,Xanthium_strumarium$latitude),
        col = "blue", pch = 20, cex = 1)
@@ -290,11 +290,11 @@ We can see that this is a 0.1 hectare transect where stems >= 2.5 cm diameter at
 ```{r, eval = FALSE}
 
 LUQUILLO_full <- BIEN_plot_name(plot.name = "LUQUILLO",
-                                cultivated = T,
-                                all.taxonomy = T,
-                                native.status = T,
-                                political.boundaries = T,
-                                all.metadata = T)
+                                cultivated = TRUE,
+                                all.taxonomy = TRUE,
+                                native.status = TRUE,
+                                political.boundaries = TRUE,
+                                all.metadata = TRUE)
 
 ```
 

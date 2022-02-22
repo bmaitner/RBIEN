@@ -39,3 +39,29 @@
 
 * I'm guessing that the hanging is because the queries are either being executed slowly on our end or downloaded slowly if the internet connection is limited.  I've updated our vignette so that the more complicated (slow on the server side) or large (slow to download) queries aren't executed. On my machine it now takes less than 50 seconds to rebuild both.  If the rebuild is still too slow on your side I can modify the vignette further.  Thanks for bearing with me on this, and apologies for the hassle.
 
+>Please write TRUE and FALSE instead of T and F. (Please don't use 'T' or
+'F' as vector names.), e.g.:
+   man/BIEN_occurrence_family.Rd
+   man/BIEN_occurrence_genus.Rd
+   man/BIEN_occurrence_spatialpolygons.Rd
+   man/BIEN_occurrence_species.Rd
+   man/BIEN_plot_name.Rd
+   man/BIEN_plot_spatialpolygons.Rd
+   man/BIEN_plot_state.Rd
+   man/BIEN_trait_country.Rd
+   man/BIEN_trait_family.Rd
+   man/BIEN_trait_genus.Rd
+   man/BIEN_trait_traitbyfamily.Rd
+   man/BIEN_trait_traitbygenus.Rd
+   man/BIEN_trait_traitbyspecies.Rd
+
+* I've updated these accordingly.  I've also updated the code to us TRUE or FALSE instead of T or F throughout (e.g. internally, in vignettes, etc.)
+
+>Please ensure that you do not use more than 2 cores in your examples,
+vignettes, etc.
+
+* None of our tests, vignettes, or examples use multiple cores
+
+> Please fix and resubmit.
+
+

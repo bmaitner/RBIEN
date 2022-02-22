@@ -54,7 +54,7 @@ Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
 #Plotting files
 plot(Abies_poly)#plots the range, but doesn't mean much without any reference
 map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
-plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
+plot(Abies_poly,col="forest green",add = TRUE) #adds the range of Abies lasiocarpa to the map
 
 #Getting data from the files (currently only species names)
 Abies_poly$Species#gives the species name associated with "Abies_poly"}

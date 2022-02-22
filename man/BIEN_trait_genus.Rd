@@ -8,7 +8,7 @@ BIEN_trait_genus(
   genus,
   all.taxonomy = FALSE,
   political.boundaries = FALSE,
-  source.citation = F,
+  source.citation = FALSE,
   ...
 )
 }
@@ -32,7 +32,7 @@ BIEN_trait_genus extracts entries that contain the specified genera.
 \examples{
 \dontrun{
 BIEN_trait_genus("Acer")
-genus_vector<-c("Acer","Abies")
+genus_vector <- c("Acer","Abies")
 BIEN_trait_genus(genus_vector)}
 }
 \concept{trait funcitons}

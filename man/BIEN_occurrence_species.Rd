@@ -13,8 +13,8 @@ BIEN_occurrence_species(
   natives.only = TRUE,
   observation.type = FALSE,
   political.boundaries = FALSE,
-  collection.info = F,
-  only.geovalid = T,
+  collection.info = FALSE,
+  only.geovalid = TRUE,
   ...
 )
 }
@@ -55,7 +55,7 @@ US FIA coordinates have been fuzzed and swapped, for more details see: https://w
 BIEN_occurrence_species("Abies amabilis")
 species_vector<-c("Abies amabilis", "Acer nigrum")
 BIEN_occurrence_species(species_vector)
-BIEN_occurrence_species(species_vector,all.taxonomy=TRUE)}
+BIEN_occurrence_species(species_vector,all.taxonomy = TRUE)}
 }
 \seealso{
 Other occurrence functions: 

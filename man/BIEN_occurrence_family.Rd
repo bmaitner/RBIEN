@@ -13,7 +13,7 @@ BIEN_occurrence_family(
   native.status = FALSE,
   natives.only = TRUE,
   political.boundaries = FALSE,
-  collection.info = F,
+  collection.info = FALSE,
   ...
 )
 }

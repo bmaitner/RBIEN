@@ -9,7 +9,7 @@ BIEN_trait_traitbyfamily(
   trait,
   all.taxonomy = FALSE,
   political.boundaries = FALSE,
-  source.citation = F,
+  source.citation = FALSE,
   ...
 )
 }
@@ -38,9 +38,9 @@ Trait spelling needs to be exact and case-sensitive, see \code{\link{BIEN_trait_
 \examples{
 \dontrun{
 BIEN_trait_traitbyfamily(trait = "whole plant height", family = "Poaceae")
-trait_vector<-c("whole plant height", "leaf fresh mass")
-family_vector<-c("Orchidaceae","Poaceae")
-BIEN_trait_traitbyfamily(trait=trait_vector,family=family_vector)}
+trait_vector <- c("whole plant height", "leaf fresh mass")
+family_vector < -c("Orchidaceae","Poaceae")
+BIEN_trait_traitbyfamily(trait = trait_vector, family = family_vector)}
 }
 \seealso{
 Other trait functions: 

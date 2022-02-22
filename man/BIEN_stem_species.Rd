@@ -54,7 +54,7 @@ Setting either "cultivated" or "native.status" to TRUE will significantly slow t
 BIEN_stem_species("Abies amabilis")
 species_vector<-c("Abies amabilis", "Acer nigrum")
 BIEN_stem_species(species_vector)
-BIEN_stem_species(species_vector,all.taxonomy=TRUE)}
+BIEN_stem_species(species_vector,all.taxonomy = TRUE)}
 }
 \seealso{
 Other stem functions: 

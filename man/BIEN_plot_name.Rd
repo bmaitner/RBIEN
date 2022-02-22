@@ -12,7 +12,7 @@ BIEN_plot_name(
   native.status = FALSE,
   natives.only = TRUE,
   political.boundaries = FALSE,
-  collection.info = F,
+  collection.info = FALSE,
   all.metadata = FALSE,
   ...
 )

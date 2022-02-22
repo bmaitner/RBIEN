@@ -14,14 +14,14 @@ NULL
 ###################
 
 
-.onAttach <- function(libname,pkgname) {
+.onAttach <- function(libname, pkgname) {
   packageStartupMessage('Type vignette("BIEN") or vignette("BIEN_tutorial") to get started')
   
   
-  suppressWarnings(x <- try(readLines("https://raw.githubusercontent.com/bmaitner/RBIEN/master/NOTES", warn = F), silent = T))
+  suppressWarnings(x <- try(readLines("https://raw.githubusercontent.com/bmaitner/RBIEN/master/NOTES", warn = FALSE), silent = TRUE))
   if(class(x)=="character"){
     if(length(x) != 0){
-      packageStartupMessage(x, appendLF = T)  
+      packageStartupMessage(x, appendLF = TRUE)  
       
     }  
     

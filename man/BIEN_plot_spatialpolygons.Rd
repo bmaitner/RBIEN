@@ -12,7 +12,7 @@ BIEN_plot_spatialpolygons(
   native.status = FALSE,
   natives.only = TRUE,
   political.boundaries = TRUE,
-  collection.info = F,
+  collection.info = FALSE,
   all.metadata = FALSE,
   ...
 )

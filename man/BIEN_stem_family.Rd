@@ -54,7 +54,7 @@ Setting either "cultivated" or "native.status" to TRUE will significantly slow t
 BIEN_stem_family(family = "Marantaceae")
 family_vector<-c("Marantaceae", "Buxaceae")
 BIEN_stem_family(family = family_vector)
-BIEN_stem_family(family = family_vector, all.taxonomy=TRUE, native.status=T)}
+BIEN_stem_family(family = family_vector, all.taxonomy = TRUE, native.status = TRUE)}
 }
 \seealso{
 Other stem functions: 

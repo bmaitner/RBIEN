@@ -9,7 +9,7 @@ BIEN_trait_traitbyspecies(
   trait,
   all.taxonomy = FALSE,
   political.boundaries = FALSE,
-  source.citation = F,
+  source.citation = FALSE,
   ...
 )
 }

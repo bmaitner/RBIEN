@@ -12,10 +12,20 @@
 #' BIEN_occurrence_species("Abies amabilis")
 #' species_vector<-c("Abies amabilis", "Acer nigrum")
 #' BIEN_occurrence_species(species_vector)
-#' BIEN_occurrence_species(species_vector,all.taxonomy=TRUE)}
+#' BIEN_occurrence_species(species_vector,all.taxonomy = TRUE)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_species<-function(species,cultivated=FALSE,new.world=NULL,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,only.geovalid=T, ...){
+BIEN_occurrence_species<-function(species,
+                                  cultivated = FALSE,
+                                  new.world = NULL,
+                                  all.taxonomy = FALSE,
+                                  native.status = FALSE,
+                                  natives.only = TRUE,
+                                  observation.type = FALSE,
+                                  political.boundaries = FALSE,
+                                  collection.info = FALSE,
+                                  only.geovalid = TRUE,
+                                  ...){
   
   #Test input
   .is_log(cultivated)
@@ -75,7 +85,16 @@ BIEN_occurrence_species<-function(species,cultivated=FALSE,new.world=NULL,all.ta
 #' species_occurrences<-BIEN_occurrence_spatialpolygons(spatialpolygons=sp)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,new.world=NULL,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F,...){
+BIEN_occurrence_spatialpolygons<-function(spatialpolygons,
+                                          cultivated = FALSE,
+                                          new.world = NULL,
+                                          all.taxonomy = FALSE,
+                                          native.status = FALSE,
+                                          natives.only = TRUE,
+                                          observation.type = FALSE,
+                                          political.boundaries = FALSE,
+                                          collection.info = FALSE,
+                                          ...){
   .is_log(cultivated)
   .is_log_or_null(new.world)
   .is_log(all.taxonomy)
@@ -232,7 +251,13 @@ BIEN_list_country <- function(country = NULL,
 #' BIEN_list_state(country="United States", state= state_vector)}
 #' @family list functions
 #' @export
-BIEN_list_state<-function(country=NULL,country.code=NULL,state=NULL,state.code=NULL,cultivated=FALSE,new.world=NULL,...){
+BIEN_list_state <- function(country = NULL,
+                            country.code = NULL,
+                            state = NULL,
+                            state.code = NULL,
+                            cultivated = FALSE,
+                            new.world = NULL,
+                            ...){
   .is_char(country)
   .is_char(country.code)
   .is_char(state)
@@ -534,7 +559,10 @@ BIEN_list_all<-function( ...){
 #' @family list functions
 #' @importFrom rgeos writeWKT
 #' @export
-BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,new.world=NULL,...){
+BIEN_list_spatialpolygons <- function(spatialpolygons,
+                                      cultivated = FALSE,
+                                      new.world = NULL,
+                                      ...){
   .is_log(cultivated)
   .is_log_or_null(new.world)
   
@@ -611,7 +639,16 @@ BIEN_list_spatialpolygons<-function(spatialpolygons,cultivated=FALSE,new.world=N
 #' BIEN_occurrence_genus(genus = "Abutilon",cultivated = TRUE,new.world = FALSE)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_genus<-function(genus,cultivated=FALSE,new.world=NULL,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,observation.type=FALSE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_genus <- function(genus,
+                                  cultivated = FALSE,
+                                  new.world = NULL,
+                                  all.taxonomy = FALSE,
+                                  native.status = FALSE,
+                                  natives.only = TRUE,
+                                  observation.type = FALSE,
+                                  political.boundaries = FALSE,
+                                  collection.info = FALSE,
+                                  ...){
   .is_char(genus)
   .is_log(cultivated)
   .is_log(all.taxonomy)
@@ -658,7 +695,17 @@ BIEN_occurrence_genus<-function(genus,cultivated=FALSE,new.world=NULL,all.taxono
 #' BIEN_occurrence_family(family_vector)}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_family<-function(family,cultivated=FALSE,new.world=NULL,observation.type=FALSE,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=FALSE,collection.info=F, ...){
+BIEN_occurrence_family <- function(family,
+                                   cultivated = FALSE,
+                                   new.world = NULL,
+                                   observation.type = FALSE,
+                                   all.taxonomy = FALSE,
+                                   native.status = FALSE,
+                                   natives.only = TRUE,
+                                   political.boundaries = FALSE,
+                                   collection.info = FALSE,
+                                   ...){
+  
   .is_char(family)
   .is_log(cultivated)
   .is_log_or_null(new.world)
@@ -1173,7 +1220,7 @@ BIEN_occurrence_box<-function(min.lat,
 #' #Plotting files
 #' plot(Abies_poly)#plots the range, but doesn't mean much without any reference
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
-#' plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
+#' plot(Abies_poly,col="forest green",add = TRUE) #adds the range of Abies lasiocarpa to the map
 #'
 #' #Getting data from the files (currently only species names)
 #' Abies_poly$Species#gives the species name associated with "Abies_poly"}
@@ -1195,7 +1242,7 @@ BIEN_ranges_species<-function(species,
   #make sure there are no spaces in the species names
     species<-gsub(" ","_",species)
   
-  if(match_names_only==FALSE){
+  if(match_names_only == FALSE){
     
     #record original working directory,change to specified directory if given
     if(is.null(directory)){
@@ -1229,13 +1276,13 @@ BIEN_ranges_species<-function(species,
           directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
         }
         
-        if(include.gid==T){
+        if(include.gid == TRUE){
           
           rgdal::writeOGR(obj = spdf,
                           dsn = directory,
                           layer = paste(df$species[l],"_",df$gid[l],sep=""),
                           driver = "ESRI Shapefile",
-                          overwrite_layer = T)
+                          overwrite_layer = TRUE)
           
         }else{
           
@@ -1243,7 +1290,7 @@ BIEN_ranges_species<-function(species,
                           dsn = directory,
                           layer = paste(df$species[l]),
                           driver = "ESRI Shapefile",
-                          overwrite_layer = T)
+                          overwrite_layer = TRUE)
           
         }
         
@@ -1281,7 +1328,7 @@ BIEN_ranges_species<-function(species,
       
     }
     
-  } #matched_names_only ==TRUE
+  } #matched_names_only == TRUE
 }
 
 ####################################
@@ -1293,6 +1340,7 @@ BIEN_ranges_species<-function(species,
 #' @param directory The directory where range shapefiles will be stored.  If NULL, a temporary directoray will be used.
 #' @param batch_size The number of ranges to download at once.
 #' @param return_directory Should the directory be returned? Default is TRUE
+#' @param use_parallel Logical.  Should batches be downloaded in parallel?  If set to TRUE, AND if parallel and foreach are available, parallel processing of downloads will use n-1 clusters.
 #' @return Optionally, the directory to which the files were saved.
 #' @note This function may take a long time (hours) to run depending on the number of cores, download speed, etc.
 #' @examples \dontrun{
@@ -1306,7 +1354,8 @@ BIEN_ranges_species<-function(species,
 BIEN_ranges_species_bulk <- function(species = NULL,
                                      directory = NULL,
                                      batch_size = 1000,
-                                     return_directory = TRUE){
+                                     return_directory = TRUE,
+                                     use_parallel = FALSE){
   
   #Set species list and directory if NULL
   
@@ -1321,17 +1370,20 @@ BIEN_ranges_species_bulk <- function(species = NULL,
   
   
   
-  if(nzchar(system.file(package = "doParallel"))  & nzchar(system.file(package = "foreach")) ){
+  if(nzchar(system.file(package = "doParallel"))  & nzchar(system.file(package = "foreach")) & use_parallel){
     
     
     #Download range maps
     cl <- parallel::makePSOCKcluster(parallel::detectCores())
     
-    doParallel::registerDoParallel(cl = cl,cores = parallel::detectCores())
+    doParallel::registerDoParallel(cl = cl,
+                                   cores = parallel::detectCores() - 1)
     
     foreach::foreach(i = 1:ceiling(length(species)/batch_size  )) %dopar%
       
-      BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],directory = file.path(directory,i),matched = F)
+      BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],
+                          directory = file.path(directory,i),
+                          matched = FALSE)
     
     parallel::stopCluster(cl)
     rm(cl)
@@ -1341,7 +1393,9 @@ BIEN_ranges_species_bulk <- function(species = NULL,
     
     for(i in 1:ceiling(length(species)/batch_size  )){
       
-      BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],directory = file.path(directory,i),matched = F)
+      BIEN_ranges_species(species = species[(((i-1)*batch_size)+1):(i*batch_size)],
+                          directory = file.path(directory,i),
+                          matched = FALSE)
       
     }
     
@@ -1381,7 +1435,7 @@ BIEN_ranges_species_bulk <- function(species = NULL,
 #' #Plotting files
 #' plot(Abies_poly)#plots the range, but doesn't mean much without any reference
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
-#' plot(Abies_poly,col="forest green",add=TRUE) #adds the range of Abies lasiocarpa to the map
+#' plot(Abies_poly,col="forest green",add = TRUE) #adds the range of Abies lasiocarpa to the map
 #'
 #' #Getting data from the files (currently only species names)
 #' Abies_poly$Species#gives the species name associated with "Abies_poly"}
@@ -1403,7 +1457,7 @@ BIEN_ranges_genus<-function(genus,
   #modify the genus list to make searching easier
   genus<-paste("(",genus,"_",")",sep = "")
   
-  if(match_names_only==FALSE){
+  if(match_names_only == FALSE){
     #record original working directory,change to specified directory if given
     if(is.null(directory)){
       directory<-getwd()
@@ -1434,10 +1488,10 @@ BIEN_ranges_genus<-function(genus,
           directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
         }
         
-        if(include.gid==T){
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",overwrite_layer = T)
+        if(include.gid == TRUE){
+          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",overwrite_layer = TRUE)
         }else{
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",overwrite_layer = T)  
+          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",overwrite_layer = TRUE)  
         }
         
         #save output
@@ -1448,27 +1502,27 @@ BIEN_ranges_genus<-function(genus,
     #setwd(wd) #return wd to original
     
     #list matched species
-    if(matched==TRUE){
+    if(matched == TRUE){
       found<-as.data.frame(df$species)
       return(found)
     }#matched = true
   }#match names only if statement
   
-  if(match_names_only==TRUE){
+  if(match_names_only == TRUE){
     
     query <- paste("SELECT species FROM ranges WHERE species ~ '",paste(genus,collapse="|"),"' ORDER BY species ;",sep="")
     
     # create query to retrieve
     df <- .BIEN_sql(query, ...)
     
-    if(length(df)==0){
+    if(length(df) == 0){
       message("No species matched")
     }else{
       found<-as.data.frame(df$species)
       return(found)
     }
     
-  } #matched_names_only ==TRUE
+  } #matched_names_only == TRUE
   
 }
 
@@ -1490,16 +1544,16 @@ BIEN_ranges_genus<-function(genus,
 #' @family range functions
 #' @importFrom sp SpatialPolygonsDataFrame
 #' @export
-BIEN_ranges_box<-function(min.lat,
-                          max.lat,
-                          min.long,
-                          max.long,
-                          directory = NULL,
-                          species.names.only = FALSE,
-                          return.species.list = TRUE ,
-                          crop.ranges = FALSE,
-                          include.gid = FALSE,
-                          ...){
+BIEN_ranges_box <- function(min.lat,
+                            max.lat,
+                            min.long,
+                            max.long,
+                            directory = NULL,
+                            species.names.only = FALSE,
+                            return.species.list = TRUE ,
+                            crop.ranges = FALSE,
+                            include.gid = FALSE,
+                            ...){
 
   .is_num(min.lat)
   .is_num(max.lat)
@@ -1509,7 +1563,7 @@ BIEN_ranges_box<-function(min.lat,
   .is_log(return.species.list)
   .is_log(species.names.only)
   
-  if(species.names.only==FALSE){
+  if(species.names.only == FALSE){
     
     #record original working directory,change to specified directory if given
     if(is.null(directory)){
@@ -1543,10 +1597,12 @@ BIEN_ranges_box<-function(min.lat,
           directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
         }
         
-        if(include.gid==T){
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",overwrite_layer = T)
+        if(include.gid == TRUE){
+          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",
+                          overwrite_layer = TRUE)
         }else{
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",overwrite_layer = T)  
+          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",
+                          overwrite_layer = TRUE)  
         }
         
         #save output
@@ -1575,7 +1631,7 @@ BIEN_ranges_box<-function(min.lat,
       
     }
     
-  } #species.names.only ==TRUE
+  } #species.names.only == TRUE
 }
 #######################################
 #'Download range maps that intersect the range of a given species.
@@ -1650,10 +1706,12 @@ BIEN_ranges_intersect_species <- function(species,
           directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
         }
         
-        if(include.gid == T){
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",overwrite_layer = T)
+        if(include.gid == TRUE){
+          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",
+                          overwrite_layer = TRUE)
         }else{
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",overwrite_layer = T)  
+          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",
+                          overwrite_layer = TRUE)  
         }
         
         #save output
@@ -1684,7 +1742,7 @@ BIEN_ranges_intersect_species <- function(species,
       
     }
     
-  } #species.names.only ==TRUE
+  } #species.names.only == TRUE
 }
 
 #######################################
@@ -1759,10 +1817,12 @@ BIEN_ranges_spatialpolygons<-function(spatialpolygons,
             directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
           }
           
-          if(include.gid == T){
-            rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",overwrite_layer = T)
+          if(include.gid == TRUE){
+            rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",
+                            overwrite_layer = TRUE)
           }else{
-            rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",overwrite_layer = T)  
+            rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",
+                            overwrite_layer = TRUE)  
           }
           
           #save output
@@ -1791,7 +1851,7 @@ BIEN_ranges_spatialpolygons<-function(spatialpolygons,
       
     }
     
-  } #species.names.only ==TRUE
+  } #species.names.only == TRUE
 }
 
 #######################################
@@ -1810,13 +1870,14 @@ BIEN_ranges_spatialpolygons<-function(spatialpolygons,
 #' #Plotting files
 #' plot(abies_maps)#plots the spatialpolygons, but doesn't mean much without any reference
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
-#' plot(xanthium_strumarium,col="forest green",add=TRUE) #adds the range of X. strumarium
-#' plot(abies_maps[1,], add = T, col ="light green")}
+#' plot(xanthium_strumarium,col="forest green",add = TRUE) #adds the range of X. strumarium
+#' plot(abies_maps[1,], add = TRUE, col ="light green")}
 #' @family range functions
 #' @importFrom rgeos readWKT
 #' @importFrom sp SpatialPolygonsDataFrame SpatialPolygons CRS
 #' @export
-BIEN_ranges_load_species<-function(species, ...){
+BIEN_ranges_load_species <- function(species,
+                                     ...){
 
   .is_char(species)
   
@@ -1829,7 +1890,7 @@ BIEN_ranges_load_species<-function(species, ...){
   # create query to retrieve
   df <- .BIEN_sql(query, ...)
   
-  if(length(df)==0){
+  if(length(df) == 0){
     
     message("No species matched")
     
@@ -1902,7 +1963,9 @@ BIEN_ranges_shapefile_to_skinny <- function(directory,
                                             skinny_ranges_file = NULL){
   
   
-  range_maps <- list.files(path = directory,pattern = ".shp",full.names = T,recursive = T)
+  range_maps <- list.files(path = directory,pattern = ".shp",
+                           full.names = TRUE,
+                           recursive = TRUE)
   
   skinny_occurrences <- NULL
   
@@ -1911,10 +1974,10 @@ BIEN_ranges_shapefile_to_skinny <- function(directory,
     #print(i)
     map_i<-read_sf(i)  
     map_i<-st_transform(x = map_i,crs = paste(raster@crs))
-    raster_i<-fasterize(sf = map_i,raster = raster,fun = "any")
+    raster_i<-fasterize(sf = map_i,raster = raster, fun = "any")
     
-    if(length(which(getValues(raster_i)>0))>0){
-      skinny_occurrences<-rbind(skinny_occurrences,cbind(map_i$Species,which(getValues(raster_i)>0)))
+    if(length(which(getValues(raster_i) > 0)) > 0){
+      skinny_occurrences<-rbind(skinny_occurrences, cbind(map_i$Species, which(getValues(raster_i) > 0)))
     }#end if statement
   }#end i loop
   
@@ -1961,7 +2024,8 @@ BIEN_ranges_shapefile_to_skinny <- function(directory,
 #' }
 #' @family range functions
 #' @export
-BIEN_ranges_skinny_ranges_to_richness_raster<-function(skinny_ranges, raster){
+BIEN_ranges_skinny_ranges_to_richness_raster <- function(skinny_ranges,
+                                                         raster){
   
   #Create empty output raster
   output_raster <- raster
@@ -1994,11 +2058,11 @@ BIEN_ranges_skinny_ranges_to_richness_raster<-function(skinny_ranges, raster){
 #' BIEN_trait_species(species_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_species<-function(species,
-                             all.taxonomy = FALSE,
-                             political.boundaries = FALSE,
-                             source.citation = FALSE,
-                             ...){
+BIEN_trait_species <- function(species,
+                               all.taxonomy = FALSE,
+                               political.boundaries = FALSE,
+                               source.citation = FALSE,
+                               ...){
 
   .is_char(species)
   .is_log(all.taxonomy)
@@ -2033,9 +2097,9 @@ BIEN_trait_species<-function(species,
 #' BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="leaf dry mass per leaf fresh mass") }
 #' @family trait functions
 #' @export
-BIEN_trait_mean<-function(species,
-                          trait,
-                          ...){
+BIEN_trait_mean <- function(species,
+                            trait,
+                            ...){
   
   
   #first, get taxonomic info for the species
@@ -2131,11 +2195,10 @@ BIEN_trait_mean<-function(species,
 #' BIEN_trait_trait(trait_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_trait<-function(trait,
-                           all.taxonomy = FALSE,
-                           political.boundaries = FALSE,
-                           source.citation = FALSE,
-                           ...){
+BIEN_trait_trait <- function(trait,
+                             all.taxonomy = FALSE,
+                             political.boundaries = FALSE,
+                             source.citation = FALSE,...){
 
   .is_char(trait)
   .is_log(all.taxonomy)
@@ -2173,7 +2236,12 @@ BIEN_trait_trait<-function(trait,
 #' BIEN_trait_traitbyspecies(trait=trait_vector,species=species_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_traitbyspecies <- function(species, trait, all.taxonomy = FALSE, political.boundaries = FALSE,source.citation =F, ...){
+BIEN_trait_traitbyspecies <- function(species,
+                                      trait,
+                                      all.taxonomy = FALSE,
+                                      political.boundaries = FALSE,
+                                      source.citation = FALSE,
+                                      ...){
   .is_char(species)
   .is_char(trait)
   .is_log(all.taxonomy)
@@ -2181,9 +2249,9 @@ BIEN_trait_traitbyspecies <- function(species, trait, all.taxonomy = FALSE, poli
   .is_log(source.citation)
   
   # set the query
-  taxonomy_<-.taxonomy_check_traits(all.taxonomy)  
-  political_<-.political_check_traits(political.boundaries)
-  source_<-.source_check_traits(source.citation)
+  taxonomy_ <- .taxonomy_check_traits(all.taxonomy)  
+  political_ <- .political_check_traits(political.boundaries)
+  source_ <- .source_check_traits(source.citation)
   
   query <- paste("SELECT 
                  scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
@@ -2212,7 +2280,13 @@ BIEN_trait_traitbyspecies <- function(species, trait, all.taxonomy = FALSE, poli
 #' BIEN_trait_traitbygenus(trait=trait_vector,genus=genus_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_traitbygenus <- function(genus, trait, all.taxonomy = FALSE, political.boundaries = FALSE, source.citation =F, ...){
+BIEN_trait_traitbygenus <- function(genus,
+                                    trait,
+                                    all.taxonomy = FALSE,
+                                    political.boundaries = FALSE,
+                                    source.citation = FALSE,
+                                    ...){
+
   .is_char(genus)
   .is_char(trait)
   .is_log(all.taxonomy)
@@ -2246,12 +2320,18 @@ BIEN_trait_traitbygenus <- function(genus, trait, all.taxonomy = FALSE, politica
 #' @return A dataframe of all data matching the specified trait(s) and family/families.
 #' @examples \dontrun{
 #' BIEN_trait_traitbyfamily(trait = "whole plant height", family = "Poaceae")
-#' trait_vector<-c("whole plant height", "leaf fresh mass")
-#' family_vector<-c("Orchidaceae","Poaceae")
-#' BIEN_trait_traitbyfamily(trait=trait_vector,family=family_vector)}
+#' trait_vector <- c("whole plant height", "leaf fresh mass")
+#' family_vector < -c("Orchidaceae","Poaceae")
+#' BIEN_trait_traitbyfamily(trait = trait_vector, family = family_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, political.boundaries = FALSE,source.citation =F, ...){
+BIEN_trait_traitbyfamily <- function(family,
+                                     trait,
+                                     all.taxonomy = FALSE,
+                                     political.boundaries = FALSE,
+                                     source.citation = FALSE,
+                                     ...){
+
   .is_char(family)
   .is_char(trait)
   .is_log(all.taxonomy)
@@ -2284,11 +2364,16 @@ BIEN_trait_traitbyfamily<-function(family, trait, all.taxonomy = FALSE, politica
 #' @return A dataframe of all data matching the specified genera.
 #' @examples \dontrun{
 #' BIEN_trait_genus("Acer")
-#' genus_vector<-c("Acer","Abies")
+#' genus_vector <- c("Acer","Abies")
 #' BIEN_trait_genus(genus_vector)}
 #' @family trait funcitons
 #' @export
-BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = FALSE,source.citation =F, ...){
+BIEN_trait_genus <- function(genus,
+                             all.taxonomy = FALSE,
+                             political.boundaries = FALSE,
+                             source.citation = FALSE,
+                             ...){
+
   .is_char(genus)
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
@@ -2323,7 +2408,12 @@ BIEN_trait_genus<-function(genus, all.taxonomy = FALSE, political.boundaries = F
 #' BIEN_trait_family(family_vector)}
 #' @family trait functions
 #' @export
-BIEN_trait_family<-function(family, all.taxonomy = FALSE, political.boundaries = FALSE,source.citation =F, ...){
+BIEN_trait_family <- function(family,
+                              all.taxonomy = FALSE,
+                              political.boundaries = FALSE,
+                              source.citation = FALSE,
+                              ...){
+
   .is_char(family)
   .is_log(all.taxonomy)
   .is_log(political.boundaries)
@@ -2378,7 +2468,12 @@ BIEN_trait_list <- function( ...){
 #' BIEN_trait_country(country="South Africa",trait="whole plant growth form")}
 #' @family trait functions
 #' @export
-BIEN_trait_country <- function(country, trait.name=NULL, all.taxonomy = FALSE, political.boundaries = TRUE,source.citation =F, ...){
+BIEN_trait_country <- function(country,
+                               trait.name = NULL,
+                               all.taxonomy = FALSE,
+                               political.boundaries = TRUE,
+                               source.citation = FALSE,
+                               ...){
 
   .is_char(country)
   .is_log(all.taxonomy)
@@ -2419,7 +2514,8 @@ BIEN_trait_country <- function(country, trait.name=NULL, all.taxonomy = FALSE, p
 #' occurrence_counts<-BIEN_occurrence_records_per_species()}
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_records_per_species <- function(species=NULL, ...){
+BIEN_occurrence_records_per_species <- function(species = NULL,
+                                                ...){
   
   if(is.null(species)){    
     # set the query
@@ -2451,7 +2547,8 @@ BIEN_occurrence_records_per_species <- function(species=NULL, ...){
 #' trait_observation_counts<-BIEN_trait_traits_per_species()}
 #' @family trait functions
 #' @export
-BIEN_trait_traits_per_species<-function(species = NULL, ...){
+BIEN_trait_traits_per_species <- function(species = NULL,
+                                          ...){
 
   if(!is.null(species)){
     
@@ -2488,16 +2585,16 @@ BIEN_trait_traits_per_species<-function(species = NULL, ...){
 #' BIEN_plot_datasource("SALVIAS")}
 #' @family plot functions
 #' @export
-BIEN_plot_datasource<-function(datasource,
-                               cultivated = FALSE,
-                               new.world = NULL,
-                               all.taxonomy = FALSE,
-                               native.status = FALSE,
-                               natives.only = TRUE,
-                               political.boundaries = FALSE,
-                               collection.info = FALSE,
-                               all.metadata = FALSE,
-                               ...){
+BIEN_plot_datasource <- function(datasource,
+                                 cultivated = FALSE,
+                                 new.world = NULL,
+                                 all.taxonomy = FALSE,
+                                 native.status = FALSE,
+                                 natives.only = TRUE,
+                                 political.boundaries = FALSE,
+                                 collection.info = FALSE,
+                                 all.metadata = FALSE,
+                                 ...){
 
   .is_log(cultivated)
   .is_log_or_null(new.world)
@@ -2510,14 +2607,14 @@ BIEN_plot_datasource<-function(datasource,
   .is_log(all.metadata)
 
   #set conditions for query
-  cultivated_<-.cultivated_check_plot(cultivated)
-  newworld_<-.newworld_check_plot(new.world)
-  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
-  native_<-.native_check_plot(native.status)
-  natives_<-.natives_check_plot(natives.only)
-  political_<-.political_check_plot(political.boundaries)
-  collection_<-.collection_check_plot(collection.info)
-  md_<-.md_check_plot(all.metadata)
+  cultivated_ <- .cultivated_check_plot(cultivated)
+  newworld_ <- .newworld_check_plot(new.world)
+  taxonomy_ <- .taxonomy_check_plot(all.taxonomy)
+  native_ <- .native_check_plot(native.status)
+  natives_ <- .natives_check_plot(natives.only)
+  political_ <- .political_check_plot(political.boundaries)
+  collection_ <- .collection_check_plot(collection.info)
+  md_ <- .md_check_plot(all.metadata)
   
   # set the query
   query <- paste("SELECT view_full_occurrence_individual.plot_name,view_full_occurrence_individual.subplot, view_full_occurrence_individual.elevation_m,
@@ -2600,18 +2697,18 @@ BIEN_plot_country <- function(country = NULL,
   if(is.null(country)& is.null(country.code))  {stop("Please supply either a country name or 2-digit ISO code")}
   
   #set conditions for query
-    cultivated_<-.cultivated_check_plot(cultivated)
-    newworld_<-.newworld_check_plot(new.world)
-    taxonomy_<-.taxonomy_check_plot(all.taxonomy)
-    native_<-.native_check_plot(native.status)
-    natives_<-.natives_check_plot(natives.only)
-    collection_<-.collection_check_plot(collection.info)
-    md_<-.md_check_plot(all.metadata)
+    cultivated_ <- .cultivated_check_plot(cultivated)
+    newworld_ <- .newworld_check_plot(new.world)
+    taxonomy_ <- .taxonomy_check_plot(all.taxonomy)
+    native_ <- .native_check_plot(native.status)
+    natives_ <- .natives_check_plot(natives.only)
+    collection_ <- .collection_check_plot(collection.info)
+    md_ <- .md_check_plot(all.metadata)
   
   if(!political.boundaries){
-    political_select<-"view_full_occurrence_individual.country,"
+    political_select <- "view_full_occurrence_individual.country,"
   }else{
-    political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
+    political_select <- "view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
   }
   
   # set the query
@@ -2676,7 +2773,20 @@ BIEN_plot_country <- function(country = NULL,
 #' BIEN_plot_state(country="United States",state= c("Colorado","California"))}
 #' @family plot functions
 #' @export
-BIEN_plot_state <- function(country=NULL,state=NULL,country.code=NULL,state.code=NULL,cultivated=FALSE,new.world=NULL,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_state <- function(country = NULL,
+                            state = NULL,
+                            country.code = NULL,
+                            state.code = NULL,
+                            cultivated = FALSE,
+                            new.world = NULL,
+                            all.taxonomy = FALSE,
+                            native.status = FALSE,
+                            natives.only = TRUE,
+                            political.boundaries = TRUE,
+                            collection.info = FALSE,
+                            all.metadata = FALSE,
+                            ...){
+
   .is_char(country)
   .is_log(cultivated)
   .is_log_or_null(new.world)
@@ -2807,7 +2917,17 @@ BIEN_plot_state <- function(country=NULL,state=NULL,country.code=NULL,state.code
 #' @family plot functions
 #' @importFrom rgeos writeWKT
 #' @export
-BIEN_plot_spatialpolygons <- function(spatialpolygons,cultivated=FALSE,new.world=NULL,all.taxonomy=FALSE,native.status=FALSE,natives.only=TRUE,political.boundaries=TRUE,collection.info=F,all.metadata=FALSE, ...){
+BIEN_plot_spatialpolygons <- function(spatialpolygons,
+                                      cultivated = FALSE,
+                                      new.world = NULL,
+                                      all.taxonomy = FALSE,
+                                      native.status = FALSE,
+                                      natives.only = TRUE,
+                                      political.boundaries = TRUE,
+                                      collection.info = FALSE,
+                                      all.metadata = FALSE,
+                                      ...){
+
   .is_log(cultivated)
   .is_log_or_null(new.world)
   .is_log(all.taxonomy)
@@ -2958,7 +3078,7 @@ BIEN_plot_name <- function(plot.name,
                            native.status = FALSE,
                            natives.only = TRUE,
                            political.boundaries = FALSE,
-                           collection.info = F,
+                           collection.info = FALSE,
                            all.metadata = FALSE,
                            ...){
 
@@ -3108,7 +3228,8 @@ BIEN_plot_metadata <- function( ...){
 #' BIEN_taxonomy_species(species_vector)}
 #' @family taxonomy functions
 #' @export
-BIEN_taxonomy_species<-function(species, ...){
+BIEN_taxonomy_species <- function(species,
+                                  ...){
 
   .is_char(species)
   
@@ -3140,7 +3261,8 @@ BIEN_taxonomy_species<-function(species, ...){
 #' BIEN_taxonomy_genus(genus_vector)}
 #' @family taxonomy functions
 #' @export
-BIEN_taxonomy_genus<-function(genus, ...){
+BIEN_taxonomy_genus <- function(genus,
+                                ...){
 
   .is_char(genus)
   
@@ -3172,7 +3294,8 @@ BIEN_taxonomy_genus<-function(genus, ...){
 #' BIEN_taxonomy_family(family_vector)}
 #' @family taxonomy functions
 #' @export
-BIEN_taxonomy_family<-function(family, ...){
+BIEN_taxonomy_family <- function(family,
+                                 ...){
 
   .is_char(family)
   
@@ -3296,22 +3419,22 @@ BIEN_phylogeny_conservative <- function(...){
 #' phylogeny<-BIEN_phylogeny_conservative()
 #'
 #'phylogeny<-drop.tip(phy = phylogeny,tip = 101:length(phylogeny$tip.label))
-#'plot.phylo(x = phylogeny,show.tip.label = F)
+#'plot.phylo(x = phylogeny,show.tip.label = FALSE)
 #'
-#'fam_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = T)
-#'plot.phylo(x = fam_nodes,show.tip.label = F,show.node.label = T)
+#'fam_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = TRUE)
+#'plot.phylo(x = fam_nodes,show.tip.label = FALSE, show.node.label = TRUE)
 #'
-#'gen_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny,family = F,genus = T)
-#'plot.phylo(x = gen_nodes,show.tip.label = F,show.node.label = T)
+#'gen_nodes<-BIEN_phylogeny_label_nodes(phylogeny = phylogeny, family = FALSE, genus = TRUE)
+#'plot.phylo(x = gen_nodes, show.tip.label = FALSE, show.node.label = TRUE)
 #'
-#'other_taxa<-as.data.frame(matrix(nrow = 10,ncol = 2))
+#'other_taxa <- as.data.frame(matrix(nrow = 10,ncol = 2))
 #'colnames(other_taxa)<-c("taxon","species")
 #'other_taxa$taxon[1:5]<-"A" #Randomly assign a few species to taxon A
 #'other_taxa$taxon[6:10]<-"B" #Randomly assign a few species to taxon B
 #'tax_nodes <- 
 #'  BIEN_phylogeny_label_nodes(phylogeny = phylogeny,
-#'                             family = F,genus = F,other_taxa = other_taxa)
-#'plot.phylo(x = tax_nodes,show.tip.label = F,show.node.label = T)}
+#'                             family = FALSE, genus = FALSE, other_taxa = other_taxa)
+#'plot.phylo(x = tax_nodes,show.tip.label = FALSE,show.node.label = TRUE)}
 #' @family phylogeny functions
 #' @importFrom ape getMRCA
 #' @export
@@ -3563,7 +3686,7 @@ BIEN_metadata_citation <- function(dataframe = NULL,
     citation[[2]]<-gsub(citation[[2]],pattern = "note", replacement = "\nnote")
     citation[[2]]<-iconv(citation[[2]],to="ASCII//TRANSLIT")
     citation[[2]]<-gsub(citation[[2]],pattern = '\n}\"', replacement = '\n}')
-    citation[[2]]<-gsub(citation[[2]],pattern = '\"\\\nurl', replacement = '\"\\url',fixed = T)
+    citation[[2]]<-gsub(citation[[2]],pattern = '\"\\\nurl', replacement = '\"\\url', fixed = TRUE)
     
     if(length(unique(sources$source_name[which(sources$is_herbarium==1)]))>0){
       citation[[3]]<-paste("We acknowledge the herbaria that contributed data to this work: ",paste(unique(sources$source_name[which(sources$is_herbarium==1)]),collapse = ", "),".",collapse = "",sep="")
@@ -3696,7 +3819,7 @@ BIEN_metadata_citation <- function(dataframe = NULL,
     citation[[2]]<-gsub(citation[[2]],pattern = "note", replacement = "\nnote")
     citation[[2]]<-iconv(citation[[2]],to="ASCII//TRANSLIT")
     citation[[2]]<-gsub(citation[[2]],pattern = '\n}\"', replacement = '\n}')
-    citation[[2]]<-gsub(citation[[2]],pattern = '\"\\\nurl', replacement = '\"\\url',fixed = T)
+    citation[[2]]<-gsub(citation[[2]],pattern = '\"\\\nurl', replacement = '\"\\url', fixed = TRUE)
     citation[[3]]<-data.frame()
     ack_trait_sources<-trait.sources[which(trait.sources$access=='public (notify the PIs)'),]
     ack_trait_sources<-ack_trait_sources[c('project_pi','project_pi_contact','access','source_citation','citation_bibtex')]
@@ -3791,11 +3914,11 @@ BIEN_metadata_list_political_names <- function(...){
 #' BIEN_stem_species("Abies amabilis")
 #' species_vector<-c("Abies amabilis", "Acer nigrum")
 #' BIEN_stem_species(species_vector)
-#' BIEN_stem_species(species_vector,all.taxonomy=TRUE)}
+#' BIEN_stem_species(species_vector,all.taxonomy = TRUE)}
 #' @family stem functions
 #' @export
 BIEN_stem_species <- function(species,
-                              cultivated =FALSE,
+                              cultivated = FALSE,
                               new.world = NULL,
                               all.taxonomy = FALSE,
                               native.status = FALSE,
@@ -3861,7 +3984,7 @@ BIEN_stem_species <- function(species,
 #' BIEN_stem_family(family = "Marantaceae")
 #' family_vector<-c("Marantaceae", "Buxaceae")
 #' BIEN_stem_family(family = family_vector)
-#' BIEN_stem_family(family = family_vector, all.taxonomy=TRUE, native.status=T)}
+#' BIEN_stem_family(family = family_vector, all.taxonomy = TRUE, native.status = TRUE)}
 #' @family stem functions
 #' @export
 BIEN_stem_family <- function(family,
@@ -3930,7 +4053,7 @@ BIEN_stem_family <- function(family,
 #' BIEN_stem_genus(genus = "Tovomita")
 #' genus_vector<-c("Tovomita", "Myrcia")
 #' BIEN_stem_genus(genus = genus_vector)
-#' BIEN_stem_genus(genus = genus_vector, all.taxonomy=TRUE)}
+#' BIEN_stem_genus(genus = genus_vector, all.taxonomy = TRUE)}
 #' @family stem functions
 #' @export
 BIEN_stem_genus <- function(genus,

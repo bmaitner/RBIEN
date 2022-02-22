@@ -8,7 +8,7 @@ BIEN_trait_family(
   family,
   all.taxonomy = FALSE,
   political.boundaries = FALSE,
-  source.citation = F,
+  source.citation = FALSE,
   ...
 )
 }

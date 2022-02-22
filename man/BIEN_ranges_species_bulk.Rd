@@ -8,7 +8,8 @@ BIEN_ranges_species_bulk(
   species = NULL,
   directory = NULL,
   batch_size = 1000,
-  return_directory = TRUE
+  return_directory = TRUE,
+  use_parallel = FALSE
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ BIEN_ranges_species_bulk(
 \item{batch_size}{The number of ranges to download at once.}
 
 \item{return_directory}{Should the directory be returned? Default is TRUE}
+
+\item{use_parallel}{Logical.  Should batches be downloaded in parallel?  If set to TRUE, AND if parallel and foreach are available, parallel processing of downloads will use n-1 clusters.}
 }
 \value{
 Optionally, the directory to which the files were saved.
