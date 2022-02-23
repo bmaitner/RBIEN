@@ -19,7 +19,7 @@ NULL
   
   
   suppressWarnings(x <- try(readLines("https://raw.githubusercontent.com/bmaitner/RBIEN/master/NOTES", warn = FALSE), silent = TRUE))
-  if(class(x)=="character"){
+  if(inherits(class(x),"character")){
     if(length(x) != 0){
       packageStartupMessage(x, appendLF = TRUE)  
       
