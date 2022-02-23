@@ -60,7 +60,7 @@
 >Please ensure that you do not use more than 2 cores in your examples,
 vignettes, etc.
 
-* None of our tests, vignettes, or examples use multiple cores
+* None of our tests, vignettes, or examples use multiple cores.  We only have one function that can optionally use parallel processing, but this does the processing sequentially by default.
 
 > Please fix and resubmit.
 
