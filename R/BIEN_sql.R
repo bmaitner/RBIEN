@@ -191,7 +191,6 @@
  
   
   
-  
   host <- 'vegbiendev.nceas.ucsb.edu'
   dbname <- 'public_vegbien'
   user <- 'public_bien'
