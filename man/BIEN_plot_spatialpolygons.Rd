@@ -49,11 +49,12 @@ US FIA coordinates have been fuzzed and swapped, for more details see: https://w
 }
 \examples{
 \dontrun{
+library(rgdal)
 BIEN_plot_state(country="United States", state="Colorado")
 BIEN_plot_state(country="United States",state= c("Colorado","California"))
 library(rgdal)
 BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
-sp<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
+sp <- readOGR(dsn = ".",layer = "Carnegiea_gigantea")
 saguaro_plot_data<-BIEN_plot_spatialpolygons(spatialpolygons=sp)}
 }
 \seealso{

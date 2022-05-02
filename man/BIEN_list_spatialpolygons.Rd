@@ -31,8 +31,9 @@ We recommend using \code{\link[rgdal]{readOGR}} to load spatial data.  Other met
 }
 \examples{
 \dontrun{
+library(rgdal)
 BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
-shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
+shape <- readOGR(dsn = ".",layer = "Carnegiea_gigantea")
 #spatialpolygons should be read with readOGR(), see note.
 species_list<-BIEN_list_spatialpolygons(spatialpolygons=shape)}
 }

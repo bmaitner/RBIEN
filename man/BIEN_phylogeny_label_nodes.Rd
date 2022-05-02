@@ -49,7 +49,7 @@ other_taxa <- as.data.frame(matrix(nrow = 10,ncol = 2))
 colnames(other_taxa)<-c("taxon","species")
 other_taxa$taxon[1:5]<-"A" #Randomly assign a few species to taxon A
 other_taxa$taxon[6:10]<-"B" #Randomly assign a few species to taxon B
-tax_nodes <- 
+tax_nodes <-
  BIEN_phylogeny_label_nodes(phylogeny = phylogeny,
                             family = FALSE, genus = FALSE, other_taxa = other_taxa)
 plot.phylo(x = tax_nodes,show.tip.label = FALSE,show.node.label = TRUE)}

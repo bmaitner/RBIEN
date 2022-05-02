@@ -53,7 +53,7 @@ We recommend using \code{\link[rgdal]{readOGR}} to load spatial data
 \dontrun{
 library(rgdal)
 BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
-sp<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
+sp <- readOGR(dsn = ".",layer = "Carnegiea_gigantea")
 #SpatialPolygons should be read with readOGR().
 species_occurrences<-BIEN_occurrence_spatialpolygons(spatialpolygons=sp)}
 }
