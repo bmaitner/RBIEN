@@ -23,19 +23,19 @@ BIEN_ranges_skinny_ranges_to_richness_raster takes in "skinny" range data and co
 
 #Make a raster that will be used to calculate richness
 template_raster <- raster::raster(
-crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
+crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84
  +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
  ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
 
 #Download ranges and convert to a "skinny" format
 skinny_ranges <- BIEN_ranges_shapefile_to_skinny(
-directory = BIEN_ranges_species_bulk(species = c("Acer rubrum"), 
+directory = BIEN_ranges_species_bulk(species = c("Acer rubrum"),
 raster = template_raster)
 
-#Convert from skinny format to richness raster                                                 
+#Convert from skinny format to richness raster
 richness_raster<- BIEN_ranges_skinny_ranges_to_richness_raster(
  skinny_ranges = skinny_ranges,raster = template_raster)
- 
+
  plot(richness_raster)
 }
 }

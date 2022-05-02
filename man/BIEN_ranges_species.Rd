@@ -49,7 +49,7 @@ BIEN_ranges_species("Abies_lasiocarpa",temp_dir)
 
 #Reading files
 
-Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
+Abies_poly <- readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
 
 #Plotting files
 plot(Abies_poly)#plots the range, but doesn't mean much without any reference
