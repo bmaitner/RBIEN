@@ -1947,37 +1947,45 @@ BIEN_ranges_list <- function( ...){
 #' @return Matrix containing 2 columns: 1) Species name; and 2) the raster cell number it occurs within.
 #' @examples \dontrun{
 #' BIEN_ranges_shapefile_to_skinny(directory = BIEN_ranges_species_bulk(species = c("Acer rubrum")),
-#' raster = raster::raster(crs=CRS( 
-#' "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
-#'  +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
-#' ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
+#' raster = terra::rast(crs = "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
+#' +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",
+#'            extent = terra::ext(c(-5261554,5038446,-7434988,7165012 )),
+#'            resolution =c(100000,100000)
+#'            )
 #' )
 #' }
 #' @family range functions
-#' @importFrom sf read_sf st_transform
+#' @importFrom sf read_sf st_transform st_crs
 #' @importFrom fasterize fasterize
-#' @importFrom raster getValues setValues
+#' @importFrom raster raster
+#' @importFrom terra values
 #' @export
 BIEN_ranges_shapefile_to_skinny <- function(directory,
                                             raster,
                                             skinny_ranges_file = NULL){
   
   
-  range_maps <- list.files(path = directory,pattern = ".shp",
+  range_maps <- list.files(path = directory,
+                           pattern = ".shp",
                            full.names = TRUE,
                            recursive = TRUE)
   
   skinny_occurrences <- NULL
   
+  raster <- raster(raster) #can be removed once fasterize is updated to include terra
+  
   for(i in range_maps){
     
     #print(i)
-    map_i<-read_sf(i)  
-    map_i<-st_transform(x = map_i,crs = paste(raster@crs))
-    raster_i<-fasterize(sf = map_i,raster = raster, fun = "any")
+    raster_i <- read_sf(i) |>
+      st_transform(crs = st_crs(raster)) |>
+      fasterize(raster = raster,
+                fun = "any")
     
-    if(length(which(getValues(raster_i) > 0)) > 0){
-      skinny_occurrences<-rbind(skinny_occurrences, cbind(map_i$Species, which(getValues(raster_i) > 0)))
+    if(length(which(values(raster_i) > 0)) > 0){
+      skinny_occurrences <- rbind(skinny_occurrences,
+                                  cbind(read_sf(i)$Species,
+                                        which(values(raster_i) > 0)))
     }#end if statement
   }#end i loop
   
@@ -1986,7 +1994,8 @@ BIEN_ranges_shapefile_to_skinny <- function(directory,
   #Save skinny occurrences if filename specified
   
   if(!is.null(skinny_ranges_file)){
-    saveRDS(object = skinny_occurrences,file = skinny_ranges_file)  
+    saveRDS(object = skinny_occurrences,
+            file = skinny_ranges_file)  
   }
   
   #return skinny occurrences
@@ -2005,11 +2014,11 @@ BIEN_ranges_shapefile_to_skinny <- function(directory,
 #' @examples \dontrun{
 #' 
 #' 
-#' #Make a raster that will be used to calculate richness
-#' template_raster <- raster::raster(
-#' crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
-#'  +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
-#'  ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
+#' template_raster <- terra::rast(
+#'   crs = "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
+#'   +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",
+#'   ext = ext(c(-5261554, 5038446, -7434988, 7165012 )),
+#'   resolution =  c(100000, 100000))
 #' 
 #' #Download ranges and convert to a "skinny" format
 #' skinny_ranges <- BIEN_ranges_shapefile_to_skinny(
@@ -2024,16 +2033,19 @@ BIEN_ranges_shapefile_to_skinny <- function(directory,
 #' }
 #' @family range functions
 #' @export
+#' @importFrom terra values
 BIEN_ranges_skinny_ranges_to_richness_raster <- function(skinny_ranges,
                                                          raster){
   
   #Create empty output raster
-  output_raster <- raster
-  output_raster <- setValues(x = output_raster,values = NA)
+    output_raster <- raster
+    terra::values(output_raster) <- NA #note that if this "terra::" is omitted, cran checks raise a note
   
   #iterate through all cells with at least one occurrence, record 
   
-  output_raster[as.numeric(unique(skinny_ranges[,2]))] <- sapply(X = unique(skinny_ranges[,2]),FUN = function(x){ length(unique(skinny_ranges[which(skinny_ranges[,2]==x),1]))} )
+  output_raster[as.numeric(unique(skinny_ranges[,2]))] <-
+    sapply(X = unique(skinny_ranges[,2]),
+           FUN = function(x){ length(unique(skinny_ranges[which(skinny_ranges[,2] == x), 1]))} )
   
   #return output raster  
   

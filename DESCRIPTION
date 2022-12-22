@@ -1,6 +1,6 @@
 Package: BIEN
 Title: Tools for Accessing the Botanical Information and Ecology Network Database
-Version: 1.2.5
+Version: 1.2.6
 Authors@R: person("Brian", "Maitner", email = "bmaitner@gmail.com", role = c("aut", "cre"))
 Description: Provides Tools for Accessing the Botanical Information and Ecology Network Database.  The BIEN database contains cleaned and standardized botanical data including occurrence, trait, plot and taxonomic data (See <https://bien.nceas.ucsb.edu/bien/> for more Information).  This package provides functions that query the BIEN database by constructing and executing optimized SQL queries.
 Depends:
@@ -18,6 +18,7 @@ Imports:
     sf,
     fasterize,
     raster,
+    terra,
     doParallel,
     parallel,
     foreach
@@ -28,4 +29,4 @@ Suggests:
     maptools,
     maps
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.2

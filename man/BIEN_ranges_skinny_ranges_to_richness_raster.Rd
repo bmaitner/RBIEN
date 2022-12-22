@@ -21,11 +21,11 @@ BIEN_ranges_skinny_ranges_to_richness_raster takes in "skinny" range data and co
 \dontrun{
 
 
-#Make a raster that will be used to calculate richness
-template_raster <- raster::raster(
-crs=CRS( "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
- +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"),
- ext=extent(c(-5261554,5038446,-7434988,7165012 )),resolution=  c(100000,100000))
+template_raster <- terra::rast(
+  crs = "+proj=laea +lat_0=15 +lon_0=-80 +x_0=0 +y_0=0 +datum=WGS84 
+  +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0",
+  ext = ext(c(-5261554, 5038446, -7434988, 7165012 )),
+  resolution =  c(100000, 100000))
 
 #Download ranges and convert to a "skinny" format
 skinny_ranges <- BIEN_ranges_shapefile_to_skinny(
