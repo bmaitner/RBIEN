@@ -63,7 +63,7 @@ plot(Abies_poly[1],
      add = TRUE) #adds the range of Abies lasiocarpa to the map
 
 # Getting data from the files (currently only species names and a BIEN ID field)
-Abies_poly$species#gives the species name associated with "Abies_poly"}#' @family range functions
+Abies_poly$species#gives the species name associated with "Abies_poly"}#'
 }
 \seealso{
 Other range functions: 

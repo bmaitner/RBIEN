@@ -1229,10 +1229,10 @@ BIEN_occurrence_box<-function(min.lat,
 #'      add = TRUE) #adds the range of Abies lasiocarpa to the map
 #' 
 #' # Getting data from the files (currently only species names and a BIEN ID field)
-#' Abies_poly$species#gives the species name associated with "Abies_poly"}#' @family range functions
+#' Abies_poly$species#gives the species name associated with "Abies_poly"}#'
+#' @family range functions
 #' @importFrom sf st_as_sf st_write
 #' @export
-#' @family range functions
 BIEN_ranges_species <- function(species,
                                 directory = NULL,
                                 matched = TRUE,
