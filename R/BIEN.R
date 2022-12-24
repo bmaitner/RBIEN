@@ -1426,49 +1426,66 @@ BIEN_ranges_species_bulk <- function(species = NULL,
 #' @template ranges
 #' @return Range maps for all available species within the specified genera.
 #' @examples \dontrun{
-#' library(rgdal)
 #' library(maps)
-#' genus_vector<-c("Abies","Acer")
+#' library(sf)
+#' 
+#' genus_vector <- c("Abies","Acer")
+#' 
 #' temp_dir <- file.path(tempdir(), "BIEN_temp")#Set a working directory
+#' 
 #' BIEN_ranges_genus(genus_vector)
-#' BIEN_ranges_genus(genus_vector,match_names_only = TRUE)
-#' BIEN_ranges_genus(genus_vector,temp_dir)#saves ranges to a specified working directory
+#' 
+#' BIEN_ranges_genus(genus = genus_vector,
+#'                   match_names_only = TRUE)
+#' 
+#' BIEN_ranges_genus(genus = genus_vector,
+#'                   directory = temp_dir) #saves ranges to a specified working directory
+#' 
 #' BIEN_ranges_genus("Abies")
-#' BIEN_ranges_genus("Abies",temp_dir)
-#'
+#' 
+#' BIEN_ranges_genus(genus = "Abies",
+#'                   directory = temp_dir)
+#' 
 #' #Reading files
 #' 
-#' Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
+#' Abies_poly <- read_sf(dsn = temp_dir,layer = "Abies_lasiocarpa")
 #' 
 #' #Plotting files
-#' plot(Abies_poly)#plots the range, but doesn't mean much without any reference
-#' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
-#' plot(Abies_poly,col="forest green",add = TRUE) #adds the range of Abies lasiocarpa to the map
-#'
-#' #Getting data from the files (currently only species names)
-#' Abies_poly$Species#gives the species name associated with "Abies_poly"}
+#' 
+#' plot(Abies_poly[1]) #plots the range, but doesn't mean much without any reference
+#' 
+#' map('world', fill = TRUE, col = "grey") #plots a world map (WGS84 projection), in grey
+#' 
+#' plot(Abies_poly[1],
+#'      col="forest green",
+#'      add = TRUE) #adds the range of Abies lasiocarpa to the map
+#' 
+#' # Getting data from the files (currently only species names)
+#' 
+#' Abies_poly$species#gives the species name associated with "Abies_poly"
+#' }
 #' @family range functions
-#' @importFrom sp SpatialPolygonsDataFrame
+#' @importFrom sf st_as_sf st_write
 #' @export
-BIEN_ranges_genus<-function(genus,
-                            directory = NULL,
-                            matched = TRUE,
-                            match_names_only = FALSE,
-                            include.gid = FALSE,
-                            ...){
-
+BIEN_ranges_genus <- function(genus,
+                              directory = NULL,
+                              matched = TRUE,
+                              match_names_only = FALSE,
+                              include.gid = FALSE,
+                              ...){
+  
   .is_char(genus)
   .is_log(matched)
   .is_log(match_names_only)
   .is_log(include.gid)
   
   #modify the genus list to make searching easier
-  genus<-paste("(",genus,"_",")",sep = "")
+    genus <- paste("(",genus,"_",")",sep = "")
   
   if(match_names_only == FALSE){
     #record original working directory,change to specified directory if given
     if(is.null(directory)){
-      directory<-getwd()
+      directory <- getwd()
     }
     
     
@@ -1478,28 +1495,42 @@ BIEN_ranges_genus<-function(genus,
     
     # create query to retrieve
     df <- .BIEN_sql(query, ...)
+    #df <- .BIEN_sql(query)
     
-    if(length(df)==0){
+    if(length(df) == 0){
       message("No species matched")
     }else{
       
       for(l in 1:length(df$species)){
-        Species<-df$species[l]
-        sp_range<-readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         
-        #convert shapepoly into a spatialpolygon dataframe(needed to save)
-        spdf<-as.data.frame(Species)
-        spdf<-SpatialPolygonsDataFrame(sp_range,spdf)
+        sp_range <- st_as_sf(x = df[l,, drop = FALSE],
+                             wkt = "st_astext",
+                             crs = "epsg:4326")
         
         #Make sure that the directory doesn't have a "/" at the end-this confuses rgdal.  Probably a more eloquent way to do this with regex...
-        if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
-          directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
-        }
+        # if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
+        #   directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
+        # }
         
         if(include.gid == TRUE){
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",overwrite_layer = TRUE)
+          
+          st_write(obj = sp_range,
+                   dsn = directory,
+                   layer = paste(df$species[l],"_",df$gid[l],sep=""),
+                   driver = "ESRI Shapefile",
+                   append = FALSE,
+                   quiet=TRUE)
+          
+          
         }else{
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",overwrite_layer = TRUE)  
+          
+          st_write(obj = sp_range,
+                   dsn = directory,
+                   layer = paste(df$species[l]),
+                   driver = "ESRI Shapefile",
+                   append = FALSE,
+                   quiet=TRUE)
+          
         }
         
         #save output
@@ -1507,13 +1538,14 @@ BIEN_ranges_genus<-function(genus,
       }#for species in df loop
     }#else
     
-    #setwd(wd) #return wd to original
-    
     #list matched species
     if(matched == TRUE){
-      found<-as.data.frame(df$species)
+      
+      found <- as.data.frame(df$species)
       return(found)
+      
     }#matched = true
+    
   }#match names only if statement
   
   if(match_names_only == TRUE){
@@ -1524,10 +1556,14 @@ BIEN_ranges_genus<-function(genus,
     df <- .BIEN_sql(query, ...)
     
     if(length(df) == 0){
+      
       message("No species matched")
+      
     }else{
+      
       found<-as.data.frame(df$species)
       return(found)
+      
     }
     
   } #matched_names_only == TRUE
@@ -1550,7 +1586,7 @@ BIEN_ranges_genus<-function(genus,
 #' BIEN_ranges_box(42,43,-85,-84,species.names.only = TRUE)
 #' BIEN_ranges_box(42,43,-85,-84,directory = temp_dir)}
 #' @family range functions
-#' @importFrom sp SpatialPolygonsDataFrame
+#' @importFrom sf st_as_sf st_write
 #' @export
 BIEN_ranges_box <- function(min.lat,
                             max.lat,
@@ -1562,7 +1598,7 @@ BIEN_ranges_box <- function(min.lat,
                             crop.ranges = FALSE,
                             include.gid = FALSE,
                             ...){
-
+  
   .is_num(min.lat)
   .is_num(max.lat)
   .is_num(min.long)
@@ -1575,42 +1611,57 @@ BIEN_ranges_box <- function(min.lat,
     
     #record original working directory,change to specified directory if given
     if(is.null(directory)){
-      directory<-getwd()
+      directory <- getwd()
     }    
     
     # set the query
+    
     if(crop.ranges){
-      query<-paste("SELECT ST_AsText(ST_intersection(geom,ST_MakeEnvelope(",min.long, ",",min.lat,",",max.long,",",max.lat,",4326))),species,gid FROM ranges WHERE st_intersects(ST_MakeEnvelope(",min.long, ",",min.lat,",",max.long,",",max.lat,",4326),geom)") 
+      
+      query <- paste("SELECT ST_AsText(ST_intersection(geom,ST_MakeEnvelope(",min.long, ",",min.lat,",",max.long,",",max.lat,",4326))),species,gid FROM ranges WHERE st_intersects(ST_MakeEnvelope(",min.long, ",",min.lat,",",max.long,",",max.lat,",4326),geom)") 
+      
     }else{
-      query<-paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE st_intersects(ST_MakeEnvelope(",min.long, ",",min.lat,",",max.long,",",max.lat,",4326),geom)")  
+      
+      query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE st_intersects(ST_MakeEnvelope(",min.long, ",",min.lat,",",max.long,",",max.lat,",4326),geom)")
+      
     }
     
     # create query to retrieve
-    df <- .BIEN_sql(query, ...)
     
-    if(length(df)==0){
+    df <- .BIEN_sql(query, ...)
+    #df <- .BIEN_sql(query)
+    
+    if(nrow(df) == 0){
+      
       message("No species matched")
+      
     }else{
       
       for(l in 1:length(df$species)){
-        Species<-df$species[l]
-        sp_range<-readWKT(df$st_astext[l],p4s="+init=epsg:4326")
         
-        #convert shapepoly into a spatialpolygon dataframe(needed to save)
-        spdf<-as.data.frame(Species)
-        spdf<-SpatialPolygonsDataFrame(sp_range,spdf)
-              
-        #Make sure that the directory doesn't have a "/" at the end-this confuses rgdal.  Probably a more eloquent way to do this with regex...
-        if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
-          directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
-        }
+        sp_range <- st_as_sf(x = df[l,, drop = FALSE],
+                             wkt = "st_astext",
+                             crs = "epsg:4326")
         
         if(include.gid == TRUE){
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",
-                          overwrite_layer = TRUE)
+          
+          st_write(obj = sp_range,
+                   dsn = directory,
+                   layer = paste(df$species[l],"_",df$gid[l],sep=""),
+                   driver = "ESRI Shapefile",
+                   append = FALSE,
+                   quiet=TRUE)
+          
+          
         }else{
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",
-                          overwrite_layer = TRUE)  
+          
+          st_write(obj = sp_range,
+                   dsn = directory,
+                   layer = paste(df$species[l]),
+                   driver = "ESRI Shapefile",
+                   append = FALSE,
+                   quiet=TRUE)
+          
         }
         
         #save output
@@ -1618,8 +1669,8 @@ BIEN_ranges_box <- function(min.lat,
       }#for species in df loop
       
       if(return.species.list){
-        return(df[,2])  
-      }#if return.species.list  
+        return(df$species)  
+      }#if return.species.list
       
     }#else
     
@@ -1633,14 +1684,19 @@ BIEN_ranges_box <- function(min.lat,
     df <- .BIEN_sql(query, ...)
     
     if(length(df) == 0){
+      
       message("No species found")
+      
     }else{
+      
       return(df)
       
     }
     
   } #species.names.only == TRUE
 }
+
+
 #######################################
 #'Download range maps that intersect the range of a given species.
 #'

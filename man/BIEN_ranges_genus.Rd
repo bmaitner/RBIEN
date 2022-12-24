@@ -37,27 +37,44 @@ Details on the construction of BIEN range maps is available at https://bien.ncea
 }
 \examples{
 \dontrun{
-library(rgdal)
 library(maps)
-genus_vector<-c("Abies","Acer")
+library(sf)
+
+genus_vector <- c("Abies","Acer")
+
 temp_dir <- file.path(tempdir(), "BIEN_temp")#Set a working directory
+
 BIEN_ranges_genus(genus_vector)
-BIEN_ranges_genus(genus_vector,match_names_only = TRUE)
-BIEN_ranges_genus(genus_vector,temp_dir)#saves ranges to a specified working directory
+
+BIEN_ranges_genus(genus = genus_vector,
+                  match_names_only = TRUE)
+
+BIEN_ranges_genus(genus = genus_vector,
+                  directory = temp_dir) #saves ranges to a specified working directory
+
 BIEN_ranges_genus("Abies")
-BIEN_ranges_genus("Abies",temp_dir)
+
+BIEN_ranges_genus(genus = "Abies",
+                  directory = temp_dir)
 
 #Reading files
 
-Abies_poly<-readOGR(dsn = temp_dir,layer = "Abies_lasiocarpa")
+Abies_poly <- read_sf(dsn = temp_dir,layer = "Abies_lasiocarpa")
 
 #Plotting files
-plot(Abies_poly)#plots the range, but doesn't mean much without any reference
-map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
-plot(Abies_poly,col="forest green",add = TRUE) #adds the range of Abies lasiocarpa to the map
 
-#Getting data from the files (currently only species names)
-Abies_poly$Species#gives the species name associated with "Abies_poly"}
+plot(Abies_poly[1]) #plots the range, but doesn't mean much without any reference
+
+map('world', fill = TRUE, col = "grey") #plots a world map (WGS84 projection), in grey
+
+plot(Abies_poly[1],
+     col="forest green",
+     add = TRUE) #adds the range of Abies lasiocarpa to the map
+
+# Getting data from the files (currently only species names)
+
+Abies_poly$species#gives the species name associated with "Abies_poly"
+}
 }
 \seealso{
 Other range functions: 
