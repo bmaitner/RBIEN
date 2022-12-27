@@ -1828,38 +1828,45 @@ BIEN_ranges_intersect_species <- function(species,
 #######################################
 #'Download range maps that intersect a user-supplied SpatialPolygons object.
 #'
-#'BIEN_ranges_spatialpolygons extracts range maps that intersect a specified SpatialPolygons or SpatialPolygonsDataFrame object.
-#' @param spatialpolygons An object of class SpatialPolygonsDataFrame or SpatialPolygons.
+#'BIEN_ranges_sf extracts range maps that intersect a specified simple features (sf) object.
+#' @param sf An object of class sf.
 #' @param crop.ranges Should the ranges be cropped to the focal area? Default is FALSE.
 #' @template ranges_spatial
-#' @return All range maps that intersect the user-supplied shapefile.
-#' @note We recommend using \code{\link[rgdal]{readOGR}} to load spatial data.  Other methods may cause problems related to handling holes in polygons.
+#' @return All range maps that intersect the user-supplied sf object.
 #' @examples \dontrun{
-#' library(rgdal)
-#' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
-#' shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
-#' #spatialpolygons should be read with readOGR(), see note.
-#' BIEN_ranges_spatialpolygons(spatialpolygons = shape) 
+#' 
+#' # Here we use a range map as our example polygon
+#' 
+#' BIEN_ranges_species("Carnegiea gigantea") #saves ranges to the current working directory
+#' 
+#' # Read in the polygon  with sf   
+#' sf <- sf::st_read(dsn = ".",
+#'                   layer = "Carnegiea_gigantea")
+#' 
+#' BIEN_ranges_sf(sf = sf,
+#'                limit = 10) #We use the limit argument to return only 10 range maps.  Omit the limit to get all ranges
+#' 
 #' #Note that this will save many SpatialPolygonsDataFrames to the working directory.
 #' }
 #' @family range functions
-#' @importFrom rgeos readWKT writeWKT
-#' @importFrom sp SpatialPolygonsDataFrame
+#' @importFrom sf st_geometry st_as_text st_as_sf st_write
 #' @export
-BIEN_ranges_spatialpolygons<-function(spatialpolygons,
-                                      directory = NULL,
-                                      species.names.only = FALSE,
-                                      return.species.list = TRUE,
-                                      crop.ranges = FALSE,
-                                      include.gid = FALSE,
-                                      ...){
-
+BIEN_ranges_sf <- function(sf,
+                           directory = NULL,
+                           species.names.only = FALSE,
+                           return.species.list = TRUE,
+                           crop.ranges = FALSE,
+                           include.gid = FALSE,
+                           ...){
+  
   .is_log(return.species.list)
   .is_log(species.names.only)
   .is_log(crop.ranges)
   .is_log(include.gid)
   
-  wkt <- writeWKT(spatialpolygons)
+  wkt <- sf |>
+    st_geometry() |>
+    st_as_text()
   
   if(species.names.only == FALSE){
     
@@ -1870,59 +1877,66 @@ BIEN_ranges_spatialpolygons<-function(spatialpolygons,
     
     # set the query
     if(crop.ranges){
-      query <- paste("SELECT ST_AsText(ST_intersection(geom,ST_GeographyFromText('SRID=4326;",paste(wkt),"'))),species,gid FROM ranges WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom)") 
+      
+      query <- paste("SELECT ST_AsText(ST_intersection(geom,ST_GeographyFromText('SRID=4326;",paste(wkt),"'))),species,gid FROM ranges WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom) ;") 
+      
     }else{
-      query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom)")  
+      
+      query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom) ;")  
+      
     }
     
     # create query to retrieve
-    df <- .BIEN_sql(query)
+    
+    df <- .BIEN_sql(query, ...)
     
     
     if(length(df) == 0){
+      
       message("No species matched")
+      
     }else{
       
       for(l in 1:length(df$species)){
-        Species <- df$species[l]
-        sp_range <- readWKT(df$st_astext[l],p4s="+init=epsg:4326")
-        if(!is.null(sp_range)){
-          
-          #convert shapepoly into a spatialpolygon dataframe(needed to save)
-          spdf <- as.data.frame(Species)
-          spdf <- SpatialPolygonsDataFrame(sp_range,spdf)
-          
-          #Make sure that the directory doesn't have a "/" at the end-this confuses rgdal.  Probably a more eloquent way to do this with regex...
-          if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
-            directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
-          }
-          
-          if(include.gid == TRUE){
-            rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",
-                            overwrite_layer = TRUE)
-          }else{
-            rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",
-                            overwrite_layer = TRUE)  
-          }
-          
-          #save output
-        }#if sp_range is not null  
-      }#for species in df loop
-      if(return.species.list){
         
-        return(df[,2])  
-      }#if return.species.list  
-      
+        sp_range <- st_as_sf(x = df[l,, drop = FALSE],
+                             wkt = "st_astext",
+                             crs = "epsg:4326")
+        
+        if(include.gid == TRUE){
+          
+          st_write(obj = sp_range,
+                   dsn = directory,
+                   layer = paste(df$species[l],"_",df$gid[l],sep=""),
+                   driver = "ESRI Shapefile",
+                   append = FALSE,
+                   quiet=TRUE)
+          
+          
+        }else{
+          
+          st_write(obj = sp_range,
+                   dsn = directory,
+                   layer = paste(df$species[l]),
+                   driver = "ESRI Shapefile",
+                   append = FALSE,
+                   quiet=TRUE)
+          
+        }
+        
+        #save output
+        
+      }#for species in df loop
     }#else
     
   }#species names only if statement
   
   if(species.names.only == TRUE){
     
-    query <- paste("SELECT species FROM ranges WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom)")  
+    query <- paste("SELECT species FROM ranges WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom) ;")  
     
     # create query to retrieve
-    df <- .BIEN_sql(query)
+    df <- .BIEN_sql(query, ...)
     
     if(length(df) == 0){
       message("No species found")

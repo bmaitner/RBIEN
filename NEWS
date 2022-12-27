@@ -2,6 +2,7 @@ BIEN 1.2.6
 ===============
 ## NEW FEATURES
 * Migrating from using raster and sp to terra and sf.  Raster is still retained for use with fasterize (which does not currently support terra).
+* Added new function BIEN_ranges_sf, which replaces BIEN_ranges_spatialpolygons
 
 BIEN 1.2.5
 ===============

@@ -59,9 +59,9 @@ Other range functions:
 \code{\link{BIEN_ranges_intersect_species}()},
 \code{\link{BIEN_ranges_list}()},
 \code{\link{BIEN_ranges_load_species}()},
+\code{\link{BIEN_ranges_sf}()},
 \code{\link{BIEN_ranges_shapefile_to_skinny}()},
 \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
-\code{\link{BIEN_ranges_spatialpolygons}()},
 \code{\link{BIEN_ranges_species_bulk}()},
 \code{\link{BIEN_ranges_species}()}
 }
