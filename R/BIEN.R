@@ -1967,47 +1967,43 @@ BIEN_ranges_sf <- function(sf,
 #' plot(xanthium_strumarium,col="forest green",add = TRUE) #adds the range of X. strumarium
 #' plot(abies_maps[1,], add = TRUE, col ="light green")}
 #' @family range functions
-#' @importFrom rgeos readWKT
-#' @importFrom sp SpatialPolygonsDataFrame SpatialPolygons CRS
+#' @importFrom sf st_as_sf
 #' @export
 BIEN_ranges_load_species <- function(species,
                                      ...){
-
+  
   .is_char(species)
   
   #make sure there are no spaces in the species names
-  species<-gsub(" ","_",species)
+  
+  species <- gsub(" ","_",species)
   
   # set the query
-  query <- paste("SELECT ST_AsText(geom),species,gid FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species ;")
+  
+  query <- paste("SELECT ST_AsText(geom) as geometry,species,gid FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species ;")
   
   # create query to retrieve
   df <- .BIEN_sql(query, ...)
+  #df <- .BIEN_sql(query)
   
   if(length(df) == 0){
     
     message("No species matched")
+    return(invisible(NULL))
     
   }else{
     
-    poly <- list()
-    for(l in 1:length(df$species)){
-      Species<-df$species[l]
-      #sp_range<-readWKT(df$st_astext[l])
-      poly[[l]]<-readWKT(df$st_astext[l],p4s="+init=epsg:4326")
-      methods::slot(object = poly[[l]]@polygons[[1]],name = "ID")<-as.character(df$gid[l])#assigns a unique ID to each species' polygon
-      
-    }#for species in df loop
+    poly <- st_as_sf(x = df,
+                     wkt = "geometry",
+                     crs = "epsg:4326")
     
+    return(poly) 
     
   }#else
   
-  poly <- SpatialPolygons(unlist(lapply(poly, function(x) x@polygons)))
-  poly <- SpatialPolygonsDataFrame(Sr = poly,data = df['species'],match.ID = FALSE)    
-  poly@proj4string <- CRS(projargs = "+init=epsg:4326")
-  return(poly) 
   
 }
+
 
 ###############################
 #'List available range maps
