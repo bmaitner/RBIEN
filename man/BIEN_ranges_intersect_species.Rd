@@ -44,7 +44,8 @@ temp_dir <- file.path(tempdir(), "BIEN_temp") #Set a working directory
 BIEN_ranges_intersect_species(species = "Carnegiea_gigantea",
 directory = temp_dir,include.focal = TRUE)
 species_vector<-c("Carnegiea_gigantea","Echinocereus coccineus")
-BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
+BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)
+}
 }
 \seealso{
 Other range functions: 
@@ -57,8 +58,5 @@ Other range functions:
 \code{\link{BIEN_ranges_spatialpolygons}()},
 \code{\link{BIEN_ranges_species_bulk}()},
 \code{\link{BIEN_ranges_species}()}
-}
-\author{
-Daniel Guaderrama
 }
 \concept{range functions}

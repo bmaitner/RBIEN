@@ -1710,11 +1710,10 @@ BIEN_ranges_box <- function(min.lat,
 #' BIEN_ranges_intersect_species(species = "Carnegiea_gigantea",
 #' directory = temp_dir,include.focal = TRUE)
 #' species_vector<-c("Carnegiea_gigantea","Echinocereus coccineus")
-#' BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)}
+#' BIEN_ranges_intersect_species(species = species_vector,species.names.only = TRUE)
+#' }
 #' @family range functions
-#' @author Daniel Guaderrama
-#' @importFrom rgeos readWKT
-#' @importFrom sp SpatialPolygonsDataFrame
+#' @importFrom sf st_as_sf st_write
 #' @export
 BIEN_ranges_intersect_species <- function(species,
                                           directory = NULL,
@@ -1723,7 +1722,7 @@ BIEN_ranges_intersect_species <- function(species,
                                           return.species.list = TRUE,
                                           include.gid = FALSE,
                                           ...){
-
+  
   .is_char(species)
   .is_log(species.names.only)
   .is_log(include.focal)
@@ -1733,6 +1732,7 @@ BIEN_ranges_intersect_species <- function(species,
   species <- gsub(" ","_",species)
   
   #set query chunk to include focal species
+  
   if(include.focal){
     focal.query <- ""  
   }else{
@@ -1742,6 +1742,7 @@ BIEN_ranges_intersect_species <- function(species,
   if(species.names.only == FALSE){
     
     #set directory for saving
+    
     if(is.null(directory)){
       directory <- getwd()
     }  
@@ -1751,31 +1752,42 @@ BIEN_ranges_intersect_species <- function(species,
     
     # create query to retrieve
     df <- .BIEN_sql(query, ...)
+    #df <- .BIEN_sql(query)
+    #df <- .BIEN_sql(query,limit = limit)
     
     if(length(df) == 0){
+      
       message("No species matched")
+      
     }else{
       
-      for(l in 1:length(df$intersecting_species)){
-        Species <- df$intersecting_species[l]
+      for(l in 1:nrow(df)){
         
-        sp_range <- readWKT(df$geom[l],p4s="+init=epsg:4326")
-        
-        #convert shapepoly into a spatialpolygon dataframe
-        spdf <- as.data.frame(Species)
-        spdf <- SpatialPolygonsDataFrame(sp_range,spdf)
-        
-        #Make sure that the directory doesn't have a "/" at the end-this confuses rgdal.  Probably a more eloquent way to do this with regex...
-        if(unlist(strsplit(directory,""))[length(unlist(strsplit(directory,"")))]=="/"){
-          directory<-paste(unlist(strsplit(directory,""))[-length(unlist(strsplit(directory,"")))],collapse = "")
-        }
+        sp_range <- st_as_sf(x = df[l,, drop = FALSE],
+                             wkt = "geom",
+                             crs = "epsg:4326")
         
         if(include.gid == TRUE){
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l],"_",df$gid[l],sep=""),driver = "ESRI Shapefile",
-                          overwrite_layer = TRUE)
+          
+          suppressWarnings(
+            st_write(obj = sp_range,
+                     dsn = directory,
+                     layer = paste(df$species[l],"_",df$gid[l],sep=""),
+                     driver = "ESRI Shapefile",
+                     append = FALSE,
+                     quiet=TRUE))
+          
+          
         }else{
-          rgdal::writeOGR(obj = spdf,dsn = directory,layer = paste(df$species[l]),driver = "ESRI Shapefile",
-                          overwrite_layer = TRUE)  
+          
+          suppressWarnings(
+            st_write(obj = sp_range,
+                     dsn = directory,
+                     layer = paste(df$species[l]),
+                     driver = "ESRI Shapefile",
+                     append = FALSE,
+                     quiet=TRUE))
+          
         }
         
         #save output
@@ -1783,24 +1795,28 @@ BIEN_ranges_intersect_species <- function(species,
       }#for species in df loop
       
       if(return.species.list){
-        return(df[,1:2])  
-      }    
+        
+        return(df$species)
+        
+      }#if return.species.list
       
     }#else
-    
     
   }#species names only if statement
   
   if(species.names.only == TRUE){
     
-    query<- paste("SELECT b.species AS focal_species, a.species AS intersecting_species FROM ranges AS a, (SELECT species, geom FROM ranges WHERE species in (",paste(shQuote(species, type = "sh"),collapse = ', '),")) b WHERE", focal.query," ST_Intersects(a.geom, b.geom) ;")  
+    query <- paste("SELECT b.species AS focal_species, a.species AS intersecting_species FROM ranges AS a, (SELECT species, geom FROM ranges WHERE species in (",paste(shQuote(species, type = "sh"),collapse = ', '),")) b WHERE", focal.query," ST_Intersects(a.geom, b.geom) ;")  
     
     
     # create query to retrieve
+    
     df <- .BIEN_sql(query, ...)
     
     if(length(df) == 0){
+      
       message("No species found")
+      
     }else{
       return(df)
       
