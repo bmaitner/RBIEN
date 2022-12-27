@@ -19,7 +19,7 @@ Please read the data usage agreement, available at: https://bien.nceas.ucsb.edu/
 
 Please be aware of quality and appropriateness of BIEN data for the analyses that you may wish to perform or information that you would like to obtain
 
-Versioning - data available via BIENdata.org and the the BIEN R package (BIEN) are being updated and improved. This is an active collaborative group who is aiming to continue to improve the quality of botanical information and data. As a result, users should take note of the verison number (using the function BIEN_metadata_database_version() ) and be sure to check back periodically for updates.  Checking for new results to a query can be done using the function BIEN_metadata_match_data(). 
+Versioning - data available via BIENdata.org and the the BIEN R package (BIEN) are being updated and improved. This is an active collaborative group who is aiming to continue to improve the quality of botanical information and data. As a result, users should take note of the version number (using the function BIEN_metadata_database_version() ) and be sure to check back periodically for updates.  Checking for new results to a query can be done using the function BIEN_metadata_match_data(). 
 
 Data quality - All data are presented ‘as is’.  Default BIEN downloads return all data associated with a given taxonomic name string. There may be additional issues associated with a given name string. Please be aware that data returned may also include data whose geographic coordinates and cultivated status are uncertain or unverifiable. 
 
@@ -67,14 +67,14 @@ For full information on each function, see the associated help file.
 * `BIEN_occurrence_species` Returns all occurrence records for a specified species
 * `BIEN_occurrence_state` Returns all occurrences records within a given state/province
 * `BIEN_occurrence_occurrences_per_species` Returns data on the number of occurrence records for species in the BIEN database
-  `BIEN_occurrence_spatialpolygons` Returns occurrence records falling within the boundaries of a SpatialPolygons object.
+  `BIEN_occurrence_sf` Returns occurrence records falling within the boundaries of an sf object.
 
 ###BIEN_ranges functions
 * `BIEN_ranges_genus` Downloads range maps for all the species within a given genus/genera
 * `BIEN_ranges_species` Downloads range maps for given species
 * `BIEN_ranges_box` Downloads range maps intersecting a given GIS bounding box
 * `BIEN_ranges_list` Lists available range maps
-  `BIEN_ranges_spatialpolygons` Downloads range maps intersecting a user-supplied SpatialPolygons object.
+  `BIEN_ranges_sf` Downloads range maps intersecting a user-supplied sf object.
 
 ###BIEN_trait functions
 * `BIEN_trait_family` Returns all available trait data for given families

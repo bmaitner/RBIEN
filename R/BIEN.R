@@ -70,31 +70,40 @@ BIEN_occurrence_species<-function(species,
 
 ##############
 
-#'Extract occurrence data for specified SpatialPolygons or SpatialPolygonsDataFrame
+#'Extract occurrence data for specified sf polygon
 #'
-#'BIEN_occurrence_spatialpolygons downloads occurrence records falling within a user-specified SpatialPolygons or SpatialPolygonsDataFrame.
-#' @param spatialpolygons An object of class SpatialPolygons or SpatialPolygonsDataFrame.  Note that the file must be in WGS84.
+#'BIEN_occurrence_sf downloads occurrence records falling within a user-specified sf polygon
+#' @param sf An object of class SpatialPolygons or SpatialPolygonsDataFrame.  Note that the file must be in WGS84.
 #' @template occurrence
 #' @return Dataframe containing occurrence records for the specified species.
-#' @note We recommend using \code{\link[rgdal]{readOGR}} to load spatial data
 #' @examples \dontrun{
-#' library(rgdal)
-#' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
-#' sp<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
-#' #SpatialPolygons should be read with readOGR().
-#' species_occurrences<-BIEN_occurrence_spatialpolygons(spatialpolygons=sp)}
+#' library(sf)  
+#' 
+#' # first, we download an example shapefile to use (a species range)
+#' 
+#' BIEN_ranges_species("Carnegiea gigantea")#saves range to the current working directory
+#' 
+#' # load the range map as an sf object
+#' 
+#' sf <- st_read(dsn = ".",layer = "Carnegiea_gigantea")
+#' 
+#' # get the occurrences that occur within the polygon.  Note that here we limit the download to 1000 records to make it a bit faster and smaller
+#' 
+#' species_occurrences <- BIEN_occurrence_sf(sf = sf, limit = 1000)
+#' }
 #' @family occurrence functions
 #' @export
-BIEN_occurrence_spatialpolygons<-function(spatialpolygons,
-                                          cultivated = FALSE,
-                                          new.world = NULL,
-                                          all.taxonomy = FALSE,
-                                          native.status = FALSE,
-                                          natives.only = TRUE,
-                                          observation.type = FALSE,
-                                          political.boundaries = FALSE,
-                                          collection.info = FALSE,
-                                          ...){
+BIEN_occurrence_sf <- function(sf,
+                               cultivated = FALSE,
+                               new.world = NULL,
+                               all.taxonomy = FALSE,
+                               native.status = FALSE,
+                               natives.only = TRUE,
+                               observation.type = FALSE,
+                               political.boundaries = FALSE,
+                               collection.info = FALSE,
+                               ...){
+  
   .is_log(cultivated)
   .is_log_or_null(new.world)
   .is_log(all.taxonomy)
@@ -104,11 +113,20 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,
   .is_log(natives.only)
   .is_log(collection.info)
   
-  wkt<-writeWKT(spatialpolygons)
-  long_min<-spatialpolygons@bbox[1,1]
-  long_max<-spatialpolygons@bbox[1,2]
-  lat_min<-spatialpolygons@bbox[2,1]
-  lat_max<-spatialpolygons@bbox[2,2]
+  # Convert the sf to wkt (needed for sql query)  
+  wkt <- sf |>
+    st_geometry() |>
+    st_as_text()
+  
+  # Get bounding box of sf (used as a sort of index to make query a bit faster)
+  sf_bbox <-
+    sf |>
+    st_bbox()
+  
+  long_min <- sf_bbox["xmin"]
+  long_max <- sf_bbox["xmax"]
+  lat_min <- sf_bbox["ymin"]
+  lat_max <- sf_bbox["xmax"]
   
   
   #set conditions for query
@@ -124,25 +142,27 @@ BIEN_occurrence_spatialpolygons<-function(spatialpolygons,
   
   # set the query
   query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," , latitude, longitude,
-                      date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,a.datasource_id",collection_$select,cultivated_$select,
-                      newworld_$select,observation_$select,"
-                  FROM 
-                        (SELECT * FROM view_full_occurrence_individual 
-                         WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
-                         AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
-                         AND observation_type IN ('plot','specimen','literature','checklist') 
-                         AND latitude BETWEEN ",lat_min," AND ",lat_max,"AND longitude BETWEEN ",long_min," AND ",long_max,") a 
-                  WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_$query,newworld_$query,natives_$query, "
-                    AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
-                    AND (is_centroid IS NULL OR is_centroid=0) AND observation_type IN ('plot','specimen','literature','checklist') 
-                    AND scrubbed_species_binomial IS NOT NULL ;")
+                        date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,a.datasource_id",collection_$select,cultivated_$select,
+                 newworld_$select,observation_$select,"
+                    FROM 
+                          (SELECT * FROM view_full_occurrence_individual 
+                           WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
+                           AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
+                           AND observation_type IN ('plot','specimen','literature','checklist') 
+                           AND latitude BETWEEN ",lat_min," AND ",lat_max,"AND longitude BETWEEN ",long_min," AND ",long_max,") a 
+                    WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_$query,newworld_$query,natives_$query, "
+                      AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
+                      AND (is_centroid IS NULL OR is_centroid=0) AND observation_type IN ('plot','specimen','literature','checklist') 
+                      AND scrubbed_species_binomial IS NOT NULL ;")
   
   # create query to retrieve
   df <- .BIEN_sql(query, ...)
   
   
   if(length(df) == 0){
+    
     message("No occurrences found")
+    
   }else{
     return(df)
     
