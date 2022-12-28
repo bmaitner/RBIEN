@@ -9,9 +9,6 @@ Depends:
 License: MIT + file LICENSE
 LazyData: true
 Imports:
-    rgeos,
-    rgdal,
-    sp,
     DBI,
     ape,
     methods,
@@ -26,7 +23,6 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    maptools,
     maps
 VignetteBuilder: knitr
 RoxygenNote: 7.2.2

@@ -57,7 +57,7 @@ For full information on each function, see the associated help file.
 * `BIEN_list_country` Produces species lists by country
 * `BIEN_list_county` Produces species lists by county
 * `BIEN_list_state` Produces species lists by state/province
-  `BIEN_list_spatialpolygons` Produces species lists using a SpatialPolygons object
+* `BIEN_list_sf` Produces species lists using an sf object
 
 ###BIEN_occurrence functions
 * `BIEN_occurrence_box`  Returns all occurence records within a GIS bounding box 
@@ -67,14 +67,14 @@ For full information on each function, see the associated help file.
 * `BIEN_occurrence_species` Returns all occurrence records for a specified species
 * `BIEN_occurrence_state` Returns all occurrences records within a given state/province
 * `BIEN_occurrence_occurrences_per_species` Returns data on the number of occurrence records for species in the BIEN database
-  `BIEN_occurrence_sf` Returns occurrence records falling within the boundaries of an sf object.
+* `BIEN_occurrence_sf` Returns occurrence records falling within the boundaries of an sf object.
 
 ###BIEN_ranges functions
 * `BIEN_ranges_genus` Downloads range maps for all the species within a given genus/genera
 * `BIEN_ranges_species` Downloads range maps for given species
 * `BIEN_ranges_box` Downloads range maps intersecting a given GIS bounding box
 * `BIEN_ranges_list` Lists available range maps
-  `BIEN_ranges_sf` Downloads range maps intersecting a user-supplied sf object.
+* `BIEN_ranges_sf` Downloads range maps intersecting a user-supplied sf object.
 
 ###BIEN_trait functions
 * `BIEN_trait_family` Returns all available trait data for given families

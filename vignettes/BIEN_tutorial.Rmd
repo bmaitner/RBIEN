@@ -223,7 +223,7 @@ Xanthium_strumarium_range <- BIEN_ranges_load_species(species = "Xanthium struma
 
 ```
 
-The range map is now in our global environment as a SpatialPolygonsDataFrame.  Let's plot the map and see what it looks like.
+The range map is now in our global environment as an sf object.  Let's plot the map and see what it looks like.
 
 ```{r xs-range-map}
 

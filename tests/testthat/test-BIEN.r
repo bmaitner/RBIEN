@@ -125,7 +125,8 @@ test_that("Occurrence functions return a dataframe",{
                                    limit = 10),
              is_a("data.frame"))
  
- expect_that(BIEN_occurrence_spatialpolygons( BIEN_ranges_load_species(species = "Aa argyrolepis"), limit = 100),
+ expect_that(BIEN_occurrence_sf( BIEN_ranges_load_species(species = "Aa argyrolepis"),
+                                              limit = 10),
              is_a("data.frame"))
  
  # expect_that(BIEN_occurrence_records_per_species(),
@@ -205,13 +206,13 @@ test_that("Plot functions return a dataframe",{
 
 #Ranges
 
-test_that("Ranges functions return a SpatialPolygonsDataFrame",{
+test_that("Ranges functions return an sf",{
   
   skip_if_offline()
   
   expect_that(BIEN_ranges_load_species(species = "Abies amabilis",
                                        schema = schema),
-              is_a("SpatialPolygonsDataFrame"))
+              is_a("sf"))
   
 })
 
