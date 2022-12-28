@@ -50,7 +50,9 @@ sf <- sf::st_read(dsn = ".",
                   layer = "Carnegiea_gigantea")
 
 BIEN_ranges_sf(sf = sf,
-               limit = 10) #We use the limit argument to return only 10 range maps.  Omit the limit to get all ranges
+               limit = 10) 
+               # We use the limit argument to return only 10 range maps.
+               # Omit the limit argument to get all ranges
 
 #Note that this will save many shapefiles to the working directory.
 }
