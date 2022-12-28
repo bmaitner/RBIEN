@@ -127,7 +127,7 @@ BIEN_occurrence_sf <- function(sf,
   long_min <- sf_bbox["xmin"]
   long_max <- sf_bbox["xmax"]
   lat_min <- sf_bbox["ymin"]
-  lat_max <- sf_bbox["xmax"]
+  lat_max <- sf_bbox["ymax"]
   
   
   #set conditions for query
@@ -567,36 +567,50 @@ BIEN_list_all<-function( ...){
 }
 ###########################
 
-#'Extract a list of species within a given spatialpolygon.
+#'Extract a list of species within a given sf polygon.
 #'
-#'BIEN_list_spatialpolygons produces a list of all species with occurrence record falling within a user-supplied SpatialPolygons or SpatialPolygonsDataFrame.
-#' @param spatialpolygons An object of class SpatialPolygonsDataFrame.  Note that the object must be in WGS84.
+#'BIEN_list_sf produces a list of all species with occurrence records falling within a user-supplied sf object.
+#' @param sf An object of class ff.  Note that the object must be in WGS84.
 #' @template list
-#' @return Dataframe containing a list of all species with occurrences in the supplied SpatialPolygons object.
-#' @note We recommend using \code{\link[rgdal]{readOGR}} to load spatial data.  Other methods may cause problems related to handling holes in polygons.
+#' @return Dataframe containing a list of all species with occurrences in the supplied sf object.
 #' @examples \dontrun{
-#' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
-#' shape<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
-#' #spatialpolygons should be read with readOGR(), see note.
-#' species_list<-BIEN_list_spatialpolygons(spatialpolygons=shape)}
+#' library(sf)
+#' 
+#' BIEN_ranges_species("Carnegiea gigantea") # saves ranges to the current working directory
+#' 
+#' sf <- st_read(dsn = ".",
+#'               layer = "Carnegiea_gigantea")
+#' 
+#' species_list <- BIEN_list_sf(sf = sf)
+#' }
 #' @family list functions
-#' @importFrom rgeos writeWKT
+#' @importFrom sf st_geometry st_as_text st_bbox
 #' @export
-BIEN_list_spatialpolygons <- function(spatialpolygons,
-                                      cultivated = FALSE,
-                                      new.world = NULL,
-                                      ...){
+BIEN_list_sf <- function(sf,
+                         cultivated = FALSE,
+                         new.world = NULL,
+                         ...){
+  
   .is_log(cultivated)
   .is_log_or_null(new.world)
   
-  wkt <- writeWKT(spatialpolygons)
-  long_min <- spatialpolygons@bbox[1,1]
-  long_max <- spatialpolygons@bbox[1,2]
-  lat_min <- spatialpolygons@bbox[2,1]
-  lat_max <- spatialpolygons@bbox[2,2]
+  # Convert the sf to wkt (needed for sql query)  
+  wkt <- sf |>
+    st_geometry() |>
+    st_as_text()
   
+  # Get bounding box of sf (used as a sort of index to make query a bit faster)
+  sf_bbox <-
+    sf |>
+    st_bbox()
+  
+  long_min <- sf_bbox["xmin"]
+  long_max <- sf_bbox["xmax"]
+  lat_min <- sf_bbox["ymin"]
+  lat_max <- sf_bbox["ymax"]  
   
   # adjust for optional parameters
+  
   if(!cultivated){
     
     cultivated_query <- "AND (is_cultivated_observation = 0 OR is_cultivated_observation IS NULL)"
@@ -608,17 +622,8 @@ BIEN_list_spatialpolygons <- function(spatialpolygons,
     
   }
   
-  #if(!new.world){
-  #  newworld_query<-""
-  #  newworld_select<-",is_new_world"
-  #}else{
-  #  newworld_query<-"AND is_new_world = 1 "
-  #  newworld_select<-""
-  #}
-  
   newworld_ <- .newworld_check(new.world)
   
-
   #rangeQuery <- paste("SELECT species FROM ranges WHERE species in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ORDER BY species ;")
   query <- paste("SELECT DISTINCT scrubbed_species_binomial",cultivated_select,newworld_$select ,"
                 FROM  
@@ -630,11 +635,14 @@ BIEN_list_spatialpolygons <- function(spatialpolygons,
                WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_query,newworld_$query ," ;")
   
   # create query to retrieve
-  df <- .BIEN_sql(query,...)
+  
+  df <- .BIEN_sql(query, ...)
+  #df <- .BIEN_sql(query)
   
   if(length(df) == 0){
     
     message("No species found")
+    return(invisible(NULL))
     
   }else{
     
@@ -1849,7 +1857,7 @@ BIEN_ranges_intersect_species <- function(species,
 }
 
 #######################################
-#'Download range maps that intersect a user-supplied SpatialPolygons object.
+#'Download range maps that intersect a user-supplied sf object.
 #'
 #'BIEN_ranges_sf extracts range maps that intersect a specified simple features (sf) object.
 #' @param sf An object of class sf.
@@ -1869,7 +1877,7 @@ BIEN_ranges_intersect_species <- function(species,
 #' BIEN_ranges_sf(sf = sf,
 #'                limit = 10) #We use the limit argument to return only 10 range maps.  Omit the limit to get all ranges
 #' 
-#' #Note that this will save many SpatialPolygonsDataFrames to the working directory.
+#' #Note that this will save many shapefiles to the working directory.
 #' }
 #' @family range functions
 #' @importFrom sf st_geometry st_as_text st_as_sf st_write
@@ -1985,10 +1993,11 @@ BIEN_ranges_sf <- function(sf,
 #' xanthium_strumarium <- BIEN_ranges_load_species(species = "Xanthium strumarium")
 #' 
 #' #Plotting files
-#' plot(abies_maps) # plots the spatialpolygons, but doesn't mean much without any reference
+#' plot(abies_maps) # plots the sf, but doesn't mean much without any reference
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 #' plot(xanthium_strumarium,col="forest green",add = TRUE) #adds the range of X. strumarium
-#' plot(abies_maps[1,], add = TRUE, col ="light green")}
+#' plot(abies_maps[1,], add = TRUE, col ="light green")
+#' }
 #' @family range functions
 #' @importFrom sf st_as_sf
 #' @export

@@ -42,7 +42,7 @@ BIEN_list_country(country_vector)}
 Other list functions: 
 \code{\link{BIEN_list_all}()},
 \code{\link{BIEN_list_county}()},
-\code{\link{BIEN_list_spatialpolygons}()},
+\code{\link{BIEN_list_sf}()},
 \code{\link{BIEN_list_state}()}
 }
 \concept{list functions}

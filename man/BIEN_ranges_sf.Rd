@@ -2,7 +2,7 @@
 % Please edit documentation in R/BIEN.R
 \name{BIEN_ranges_sf}
 \alias{BIEN_ranges_sf}
-\title{Download range maps that intersect a user-supplied SpatialPolygons object.}
+\title{Download range maps that intersect a user-supplied sf object.}
 \usage{
 BIEN_ranges_sf(
   sf,
@@ -52,7 +52,7 @@ sf <- sf::st_read(dsn = ".",
 BIEN_ranges_sf(sf = sf,
                limit = 10) #We use the limit argument to return only 10 range maps.  Omit the limit to get all ranges
 
-#Note that this will save many SpatialPolygonsDataFrames to the working directory.
+#Note that this will save many shapefiles to the working directory.
 }
 }
 \seealso{

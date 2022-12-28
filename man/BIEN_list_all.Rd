@@ -23,7 +23,7 @@ species_list<-BIEN_list_all()}
 Other list functions: 
 \code{\link{BIEN_list_country}()},
 \code{\link{BIEN_list_county}()},
-\code{\link{BIEN_list_spatialpolygons}()},
+\code{\link{BIEN_list_sf}()},
 \code{\link{BIEN_list_state}()}
 }
 \concept{list functions}
