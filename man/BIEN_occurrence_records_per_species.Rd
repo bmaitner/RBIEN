@@ -28,7 +28,7 @@ Other occurrence functions:
 \code{\link{BIEN_occurrence_county}()},
 \code{\link{BIEN_occurrence_family}()},
 \code{\link{BIEN_occurrence_genus}()},
-\code{\link{BIEN_occurrence_spatialpolygons}()},
+\code{\link{BIEN_occurrence_sf}()},
 \code{\link{BIEN_occurrence_species}()},
 \code{\link{BIEN_occurrence_state}()}
 }

@@ -73,9 +73,9 @@ BIEN_occurrence_species<-function(species,
 #'Extract occurrence data for specified sf polygon
 #'
 #'BIEN_occurrence_sf downloads occurrence records falling within a user-specified sf polygon
-#' @param sf An object of class SpatialPolygons or SpatialPolygonsDataFrame.  Note that the file must be in WGS84.
+#' @param sf An object of class sf. Note that the projection must be WGS84.
 #' @template occurrence
-#' @return Dataframe containing occurrence records for the specified species.
+#' @return Dataframe containing occurrence records falling within the polygon.
 #' @examples \dontrun{
 #' library(sf)  
 #' 
@@ -87,11 +87,12 @@ BIEN_occurrence_species<-function(species,
 #' 
 #' sf <- st_read(dsn = ".",layer = "Carnegiea_gigantea")
 #' 
-#' # get the occurrences that occur within the polygon.  Note that here we limit the download to 1000 records to make it a bit faster and smaller
+#' # get the occurrences that occur within the polygon.
 #' 
-#' species_occurrences <- BIEN_occurrence_sf(sf = sf, limit = 1000)
+#' species_occurrences <- BIEN_occurrence_sf(sf = sf)
 #' }
 #' @family occurrence functions
+#' @importFrom sf st_geometry st_as_text st_bbox
 #' @export
 BIEN_occurrence_sf <- function(sf,
                                cultivated = FALSE,
@@ -131,14 +132,14 @@ BIEN_occurrence_sf <- function(sf,
   
   #set conditions for query
   
-  cultivated_<-.cultivated_check(cultivated)  
-  newworld_<-.newworld_check(new.world)
-  taxonomy_<-.taxonomy_check(all.taxonomy)  
-  native_<-.native_check(native.status)
-  observation_<-.observation_check(observation.type)
-  political_<-.political_check(political.boundaries)  
-  natives_<-.natives_check(natives.only)
-  collection_<-.collection_check(collection.info)
+  cultivated_ <- .cultivated_check(cultivated)  
+  newworld_ <- .newworld_check(new.world)
+  taxonomy_ <- .taxonomy_check(all.taxonomy)  
+  native_ <- .native_check(native.status)
+  observation_ <- .observation_check(observation.type)
+  political_ <- .political_check(political.boundaries)  
+  natives_ <- .natives_check(natives.only)
+  collection_ <- .collection_check(collection.info)
   
   # set the query
   query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," , latitude, longitude,
@@ -162,8 +163,10 @@ BIEN_occurrence_sf <- function(sf,
   if(length(df) == 0){
     
     message("No occurrences found")
+    return(invisible(NULL))
     
   }else{
+    
     return(df)
     
   }
@@ -1974,15 +1977,15 @@ BIEN_ranges_sf <- function(sf,
 #'BIEN_ranges_load_species returns spatial data for the specified species.
 #' @param species A single species or a vector of species.
 #' @param ... Additional arguments passed to internal functions.
-#' @return A SpatialPolygonsDataFrame containing range maps for the specified species.
+#' @return A sf containing range maps for the specified species.
 #' @examples \dontrun{
 #' library(maps)
 #' species_vector<-c("Abies_lasiocarpa","Abies_amabilis")
-#' abies_maps<-BIEN_ranges_load_species(species = species_vector)
-#' xanthium_strumarium<-BIEN_ranges_load_species(species = "Xanthium strumarium")
+#' abies_maps <- BIEN_ranges_load_species(species = species_vector)
+#' xanthium_strumarium <- BIEN_ranges_load_species(species = "Xanthium strumarium")
 #' 
 #' #Plotting files
-#' plot(abies_maps)#plots the spatialpolygons, but doesn't mean much without any reference
+#' plot(abies_maps) # plots the spatialpolygons, but doesn't mean much without any reference
 #' map('world', fill = TRUE, col = "grey")#plots a world map (WGS84 projection), in grey
 #' plot(xanthium_strumarium,col="forest green",add = TRUE) #adds the range of X. strumarium
 #' plot(abies_maps[1,], add = TRUE, col ="light green")}
@@ -3023,33 +3026,36 @@ BIEN_plot_state <- function(country = NULL,
   }
 ###############################
 
-#'Download plot data from specified spatialPolygons object.
+#'Download plot data from specified sf object.
 #'
-#'BIEN_plot_spatialpolygons downloads all plot data falling within a supplied spatialPolygon.
-#' @param spatialpolygons An object of class SpatialPolygons or SpatialPolygonsDataFrame.  Note that the file must be in WGS84.
+#'BIEN_plot_sf downloads all plot data falling within a supplied sf polygon.
+#' @param sf An object of class sf.  Note that the projection must be WGS84.
 #' @template plot
-#' @return A dataframe containing all data from the specified spatialPolygon.
+#' @return A dataframe containing all plot data from within the specified sf polygon.
 #' @examples \dontrun{
-#' BIEN_plot_state(country="United States", state="Colorado")
-#' BIEN_plot_state(country="United States",state= c("Colorado","California"))
-#' library(rgdal)
-#' BIEN_ranges_species("Carnegiea gigantea")#saves ranges to the current working directory
-#' sp<-readOGR(dsn = ".",layer = "Carnegiea_gigantea")
-#' saguaro_plot_data<-BIEN_plot_spatialpolygons(spatialpolygons=sp)}
+#' library(sf)
+#' 
+#' BIEN_ranges_species("Carnegiea gigantea") #saves ranges to the current working directory
+#' 
+#' sf <- st_read(dsn = ".",
+#'               layer = "Carnegiea_gigantea")
+#' 
+#' saguaro_plot_data <- BIEN_plot_sf(sf = sf)
+#' }
 #' @family plot functions
-#' @importFrom rgeos writeWKT
+#' @importFrom sf st_geometry st_as_text
 #' @export
-BIEN_plot_spatialpolygons <- function(spatialpolygons,
-                                      cultivated = FALSE,
-                                      new.world = NULL,
-                                      all.taxonomy = FALSE,
-                                      native.status = FALSE,
-                                      natives.only = TRUE,
-                                      political.boundaries = TRUE,
-                                      collection.info = FALSE,
-                                      all.metadata = FALSE,
-                                      ...){
-
+BIEN_plot_sf <- function(sf,
+                         cultivated = FALSE,
+                         new.world = NULL,
+                         all.taxonomy = FALSE,
+                         native.status = FALSE,
+                         natives.only = TRUE,
+                         political.boundaries = TRUE,
+                         collection.info = FALSE,
+                         all.metadata = FALSE,
+                         ...){
+  
   .is_log(cultivated)
   .is_log_or_null(new.world)
   .is_log(all.taxonomy)
@@ -3060,45 +3066,58 @@ BIEN_plot_spatialpolygons <- function(spatialpolygons,
   .is_log(all.metadata)
   
   
-  wkt<-writeWKT(spatialpolygons)
+  # Convert the sf to wkt (needed for sql query)
+  
+  wkt <- sf |>
+    st_geometry() |>
+    st_as_text()
   
   #set conditions for query
-  cultivated_<-.cultivated_check_plot(cultivated)
-  newworld_<-.newworld_check_plot(new.world)
-  taxonomy_<-.taxonomy_check_plot(all.taxonomy)
-  native_<-.native_check_plot(native.status)
-  natives_<-.natives_check_plot(natives.only)
-  collection_<-.collection_check_plot(collection.info)
-  md_<-.md_check_plot(all.metadata)
+  
+  cultivated_ <- .cultivated_check_plot(cultivated)
+  newworld_ <- .newworld_check_plot(new.world)
+  taxonomy_ <- .taxonomy_check_plot(all.taxonomy)
+  native_ <- .native_check_plot(native.status)
+  natives_ <- .natives_check_plot(natives.only)
+  collection_ <- .collection_check_plot(collection.info)
+  md_ <- .md_check_plot(all.metadata)
   
   if(!political.boundaries){
-    political_select<-"view_full_occurrence_individual.country,"
+    
+    political_select <- "view_full_occurrence_individual.country,"
+    
   }else{
-    political_select<-"view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
+    
+    political_select <- "view_full_occurrence_individual.country,view_full_occurrence_individual.state_province,view_full_occurrence_individual.county,view_full_occurrence_individual.locality,"
+    
   }
   
   
   # set the query
+  
   query <- paste("SELECT ",political_select," view_full_occurrence_individual.plot_name,subplot, view_full_occurrence_individual.elevation_m, 
-                    view_full_occurrence_individual.plot_area_ha,view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count",
-                    taxonomy_$select,native_$select," ,view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,
-                    view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,
-                    collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,md_$select,"
-                 FROM 
-                    (SELECT * FROM view_full_occurrence_individual ",
-                    "WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom) ",cultivated_$query,newworld_$query,natives_$query,  "
-                        AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (view_full_occurrence_individual.is_geovalid = 1 ) 
-                        AND (view_full_occurrence_individual.georef_protocol is NULL OR view_full_occurrence_individual.georef_protocol<>'county centroid') 
-                        AND (view_full_occurrence_individual.is_centroid IS NULL OR view_full_occurrence_individual.is_centroid=0) 
-                        AND observation_type='plot' 
-                        AND view_full_occurrence_individual.scrubbed_species_binomial IS NOT NULL ) as view_full_occurrence_individual 
-                 JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
-                 ;")
+                      view_full_occurrence_individual.plot_area_ha,view_full_occurrence_individual.sampling_protocol,recorded_by, scrubbed_species_binomial,individual_count",
+                 taxonomy_$select,native_$select," ,view_full_occurrence_individual.latitude, view_full_occurrence_individual.longitude,view_full_occurrence_individual.date_collected,
+                      view_full_occurrence_individual.datasource,view_full_occurrence_individual.dataset,view_full_occurrence_individual.dataowner,custodial_institution_codes,
+                      collection_code,view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,md_$select,"
+                   FROM 
+                      (SELECT * FROM view_full_occurrence_individual ",
+                 "WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),geom) ",cultivated_$query,newworld_$query,natives_$query,  "
+                          AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND (view_full_occurrence_individual.is_geovalid = 1 ) 
+                          AND (view_full_occurrence_individual.georef_protocol is NULL OR view_full_occurrence_individual.georef_protocol<>'county centroid') 
+                          AND (view_full_occurrence_individual.is_centroid IS NULL OR view_full_occurrence_individual.is_centroid=0) 
+                          AND observation_type='plot' 
+                          AND view_full_occurrence_individual.scrubbed_species_binomial IS NOT NULL ) as view_full_occurrence_individual 
+                   JOIN plot_metadata ON (view_full_occurrence_individual.plot_metadata_id=plot_metadata.plot_metadata_id)
+                   ;")
   
   # create query to retrieve
+  
   return(.BIEN_sql(query, ...))
+  #return(.BIEN_sql(query))
   
 }
+
 
 
 

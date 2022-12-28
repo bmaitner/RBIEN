@@ -75,6 +75,6 @@ Other plot functions:
 \code{\link{BIEN_plot_metadata}()},
 \code{\link{BIEN_plot_name}()},
 \code{\link{BIEN_plot_sampling_protocol}()},
-\code{\link{BIEN_plot_spatialpolygons}()}
+\code{\link{BIEN_plot_sf}()}
 }
 \concept{plot functions}
