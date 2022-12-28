@@ -15,7 +15,7 @@ BIEN_ranges_species_bulk(
 \arguments{
 \item{species}{A vector of species or NULL (the default).  If NULL, all available ranges will be used.}
 
-\item{directory}{The directory where range shapefiles will be stored.  If NULL, a temporary directoray will be used.}
+\item{directory}{The directory where range shapefiles will be stored.  If NULL, a temporary directory will be used.}
 
 \item{batch_size}{The number of ranges to download at once.}
 
@@ -27,7 +27,7 @@ BIEN_ranges_species_bulk(
 Optionally, the directory to which the files were saved.
 }
 \description{
-BIEN_ranges_species_bulk downloads ranges for a large number of species using parrallel processing.
+BIEN_ranges_species_bulk downloads ranges for a large number of species using parallel processing.
 }
 \note{
 This function may take a long time (hours) to run depending on the number of cores, download speed, etc.

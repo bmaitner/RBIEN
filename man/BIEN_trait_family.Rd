@@ -38,6 +38,7 @@ BIEN_trait_family(family_vector)}
 \seealso{
 Other trait functions: 
 \code{\link{BIEN_trait_country}()},
+\code{\link{BIEN_trait_genus}()},
 \code{\link{BIEN_trait_list}()},
 \code{\link{BIEN_trait_mean}()},
 \code{\link{BIEN_trait_species}()},

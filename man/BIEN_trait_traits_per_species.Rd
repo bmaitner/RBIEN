@@ -25,6 +25,7 @@ trait_observation_counts<-BIEN_trait_traits_per_species()}
 Other trait functions: 
 \code{\link{BIEN_trait_country}()},
 \code{\link{BIEN_trait_family}()},
+\code{\link{BIEN_trait_genus}()},
 \code{\link{BIEN_trait_list}()},
 \code{\link{BIEN_trait_mean}()},
 \code{\link{BIEN_trait_species}()},

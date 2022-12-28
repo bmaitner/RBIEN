@@ -30,6 +30,7 @@ BIEN_trait_mean(species=c("Poa annua","Juncus trifidus"),trait="leaf dry mass pe
 Other trait functions: 
 \code{\link{BIEN_trait_country}()},
 \code{\link{BIEN_trait_family}()},
+\code{\link{BIEN_trait_genus}()},
 \code{\link{BIEN_trait_list}()},
 \code{\link{BIEN_trait_species}()},
 \code{\link{BIEN_trait_traitbyfamily}()},

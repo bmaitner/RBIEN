@@ -7,7 +7,7 @@
 BIEN_ranges_shapefile_to_skinny(directory, raster, skinny_ranges_file = NULL)
 }
 \arguments{
-\item{directory}{The directory where range shapefiles will be stored.  If NULL, a tempprary directoray will be used.}
+\item{directory}{The directory where range shapefiles will be stored.  If NULL, a temporary directory will be used.}
 
 \item{raster}{A raster (which must have a CRS specified) to be used for rasterizing the ranges.}
 

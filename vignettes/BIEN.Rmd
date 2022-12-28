@@ -36,9 +36,9 @@ Function names in the BIEN package follow a naming convention which was designed
 * Functions to download occurrence records begin with the prefix "BIEN_occurrence_"
 * Functions to download range maps begin with the prefix "BIEN_ranges_"
 * Functions to download trait data begin with the prefix "BIEN_trait_"
-* Functions to download species lists (or other li) begin with the prefix "BIEN_list_"
-* Functions to download plot data begin with the prefic "BIEN_plot_"
-* Functions to download stem data begin with the prefic "BIEN_stem_"
+* Functions to download species lists (or other lists) begin with the prefix "BIEN_list_"
+* Functions to download plot data begin with the prefix "BIEN_plot_"
+* Functions to download stem data begin with the prefix "BIEN_stem_"
 * Functions to download taxonomic information begin with the prefix "BIEN_taxonomy_"
 * Functions to download phylogenies begin with the prefix "BIEN_phylogeny_"
 * Functions to access metadata begin with the prefix "BIEN_metadata_"
@@ -60,7 +60,7 @@ For full information on each function, see the associated help file.
 * `BIEN_list_sf` Produces species lists using an sf object
 
 ###BIEN_occurrence functions
-* `BIEN_occurrence_box`  Returns all occurence records within a GIS bounding box 
+* `BIEN_occurrence_box`  Returns all occurrence records within a GIS bounding box 
 * `BIEN_occurrence_country` Returns all occurrence records within a given country
 * `BIEN_occurrence_family` Returns all occurrence records for a specified family
 * `BIEN_occurrence_genus` Returns all occurrence records for a specified genus

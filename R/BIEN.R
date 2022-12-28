@@ -1374,9 +1374,9 @@ BIEN_ranges_species <- function(species,
 
 #'Extract range data for large numbers of species
 #'
-#'BIEN_ranges_species_bulk downloads ranges for a large number of species using parrallel processing.
+#'BIEN_ranges_species_bulk downloads ranges for a large number of species using parallel processing.
 #' @param species A vector of species or NULL (the default).  If NULL, all available ranges will be used.
-#' @param directory The directory where range shapefiles will be stored.  If NULL, a temporary directoray will be used.
+#' @param directory The directory where range shapefiles will be stored.  If NULL, a temporary directory will be used.
 #' @param batch_size The number of ranges to download at once.
 #' @param return_directory Should the directory be returned? Default is TRUE
 #' @param use_parallel Logical.  Should batches be downloaded in parallel?  If set to TRUE, AND if parallel and foreach are available, parallel processing of downloads will use n-1 clusters.
@@ -2065,7 +2065,7 @@ BIEN_ranges_list <- function( ...){
 #'Extract range data and convert to smaller "skinny" format
 #'
 #'BIEN_ranges_shapefile_to_skinny converts ranges to a "skinny" format to save space.
-#' @param directory The directory where range shapefiles will be stored.  If NULL, a tempprary directoray will be used.
+#' @param directory The directory where range shapefiles will be stored.  If NULL, a temporary directory will be used.
 #' @param raster A raster (which must have a CRS specified) to be used for rasterizing the ranges.
 #' @param skinny_ranges_file A filename that will be used to write the skinny ranges will be written to (RDS format).  If NULL, this will not be written.
 #' @return Matrix containing 2 columns: 1) Species name; and 2) the raster cell number it occurs within.
@@ -2502,7 +2502,7 @@ BIEN_trait_traitbyfamily <- function(family,
 #' BIEN_trait_genus("Acer")
 #' genus_vector <- c("Acer","Abies")
 #' BIEN_trait_genus(genus_vector)}
-#' @family trait funcitons
+#' @family trait functions
 #' @export
 BIEN_trait_genus <- function(genus,
                              all.taxonomy = FALSE,

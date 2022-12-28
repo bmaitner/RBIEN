@@ -46,6 +46,7 @@ BIEN_trait_traitbygenus(trait=trait_vector,genus=genus_vector)}
 Other trait functions: 
 \code{\link{BIEN_trait_country}()},
 \code{\link{BIEN_trait_family}()},
+\code{\link{BIEN_trait_genus}()},
 \code{\link{BIEN_trait_list}()},
 \code{\link{BIEN_trait_mean}()},
 \code{\link{BIEN_trait_species}()},
