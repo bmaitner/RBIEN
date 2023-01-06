@@ -15,3 +15,4 @@
 * This update replaces dependencies on raster and sp with dependencies on terra and sf (where possible).
 
 ## Response to previous comments
+*Previous version caused a note on Debian, presumably due to a change in how the news file is rendered
