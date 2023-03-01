@@ -15,6 +15,7 @@ BIEN_occurrence_country(
   observation.type = FALSE,
   political.boundaries = FALSE,
   collection.info = FALSE,
+  only.geovalid = TRUE,
   ...
 )
 }
@@ -38,6 +39,8 @@ BIEN_occurrence_country(
 \item{political.boundaries}{Return information on political boundaries for an observation? The default value is FALSE.}
 
 \item{collection.info}{Return additional information about collection and identification? The default value is FALSE.}
+
+\item{only.geovalid}{Should the returned records be limited to those with validated coordinates?  Default is TRUE}
 
 \item{...}{Additional arguments passed to internal functions.}
 }

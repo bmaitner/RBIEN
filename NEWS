@@ -1,6 +1,12 @@
 # Development Version
 ===============
 
+# BIEN 1.2.7
+===============
+## NEW FEATURES
+* Added only.geovalid argument to BIEN_occurrence_country
+
+
 # BIEN 1.2.6
 ===============
 ## NEW FEATURES

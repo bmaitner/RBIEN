@@ -919,6 +919,7 @@ BIEN_occurrence_state <- function(country = NULL,
 #' @param country A single country or a vector of country.
 #' @param country.code A single country code or a vector of country codes equal in length to the vector of states/province codes.
 #' @template occurrence
+#' @param only.geovalid Should the returned records be limited to those with validated coordinates?  Default is TRUE
 #' @note Political division (or political division code) spelling needs to be exact and case-sensitive, see \code{\link{BIEN_metadata_list_political_names}} for a list of political divisions and associated codes.
 #' @return Dataframe containing occurrence records for the specified country.
 #' @examples \dontrun{
@@ -937,6 +938,7 @@ BIEN_occurrence_country <- function(country = NULL,
                                     observation.type = FALSE,
                                     political.boundaries = FALSE,
                                     collection.info = FALSE,
+                                    only.geovalid = TRUE,
                                     ...){
 
   .is_char(country)
@@ -949,6 +951,7 @@ BIEN_occurrence_country <- function(country = NULL,
   .is_log(observation.type)
   .is_log(political.boundaries)
   .is_log(collection.info)
+  .is_log(only.geovalid)
   if(is.null(country)& is.null(country.code)) {
     stop("Please supply either a country or 2-digit ISO code")}
   
@@ -962,6 +965,8 @@ BIEN_occurrence_country <- function(country = NULL,
     political_ <- .political_check(political.boundaries)  
     natives_ <- .natives_check(natives.only)
     collection_ <- .collection_check(collection.info)
+    geovalid_<-.geovalid_check(only.geovalid)
+    
   
   
   # set the query
@@ -969,10 +974,10 @@ BIEN_occurrence_country <- function(country = NULL,
   
   if(is.null(country.code)){query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,
                                                   datasource,dataset,dataowner,custodial_institution_codes,collection_code,
-                                                  view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,"
+                                                  view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,geovalid_$select, "
                                            FROM view_full_occurrence_individual 
-                                           WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query," 
-                                            AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 
+                                           WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query, geovalid_$query," 
+                                            AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi')
                                             AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
                                             AND observation_type IN ('plot','specimen','literature','checklist') ;")
   
