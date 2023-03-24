@@ -5,6 +5,7 @@
 ===============
 ## NEW FEATURES
 * Added only.geovalid argument to BIEN_occurrence_country
+* Added only.geovalid argument to BIEN_occurrence_family
 
 
 # BIEN 1.2.6
