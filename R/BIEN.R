@@ -1799,7 +1799,12 @@ BIEN_ranges_intersect_species <- function(species,
     }  
     
     # set the query
-    query <- paste("SELECT b.species AS focal_species, a.species AS intersecting_species,a.species,a.gid, ST_AsText(a.geom) AS geom FROM ranges AS a, (SELECT species, geom FROM ranges WHERE species in (",paste(shQuote(species, type = "sh"),collapse = ', '),")) b WHERE", focal.query," ST_Intersects(a.geom, b.geom) ;")  
+    query <- paste("SELECT b.species AS focal_species, a.species 
+                   AS intersecting_species,a.species,a.gid, ST_AsText(a.geom) 
+                   AS geom 
+                   FROM ranges AS a, (SELECT species, geom 
+                                      FROM ranges 
+                                      WHERE species in (",paste(shQuote(species, type = "sh"),collapse = ', '),")) b WHERE", focal.query," ST_Intersects(a.geom, b.geom) ;")  
     
     # create query to retrieve
     df <- .BIEN_sql(query, ...)
@@ -2675,7 +2680,12 @@ BIEN_occurrence_records_per_species <- function(species = NULL,
   
   if(is.null(species)){    
     # set the query
-    query <- paste("SELECT DISTINCT scrubbed_species_binomial,count(*) FROM view_full_occurrence_individual WHERE is_geovalid = 1 AND latitude IS NOT NULL AND LONGITUDE IS NOT NULL GROUP BY scrubbed_species_binomial ;")
+    query <- paste("SELECT DISTINCT scrubbed_species_binomial,count(*)
+                   FROM view_full_occurrence_individual
+                   WHERE is_geovalid = 1
+                    AND latitude IS NOT NULL
+                    AND LONGITUDE IS NOT NULL
+                   GROUP BY scrubbed_species_binomial ;")
   }
   
   if(is.character(species)){

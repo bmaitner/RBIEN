@@ -1,10 +1,13 @@
-<!--
-%\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{BIEN tutorial}
-%\VignetteEncoding{UTF-8}
--->
 ---
 title: "BIEN tutorial"
+author: "Brian Maitner"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{BIEN R package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  
 ---
 
 ```{r setup, include = FALSE}
@@ -36,7 +39,7 @@ The function names follow a consistent naming strategy, and mostly consist of 3 
 As a complete example, the function `BIEN_occurrence_species` returns occurrence records for a given species (or set of species).
 
 # Function Families
-Currently we have 9 function families in RBIEN.  These are sets of functions that access a given type of data.
+Currently we have 9 function families in BIEN.  These are sets of functions that access a given type of data.
 
 1. occurrence records (`BIEN_occurrence_...`)
 2. range maps (`BIEN_ranges_...`)
@@ -378,7 +381,7 @@ Note that the units have been standardized and that there is a full set of attri
 
 # Taxonomy Data
 
-While there are existing packages that query taxonomic data (e.g. those included in the excellent taxize package), the RBIEN taxonomy functions access the taxonomic information that underlies the BIEN database, ensuring consistency.
+While there are existing packages that query taxonomic data (e.g. those included in the excellent taxize package), the BIEN taxonomy functions access the taxonomic information that underlies the BIEN database, ensuring consistency.
 
 1. `BIEN_taxonomy_family` Downloads all taxonomic information for a given family.
 
