@@ -987,14 +987,23 @@ BIEN_occurrence_country <- function(country = NULL,
   # set the query
   
   
-  if(is.null(country.code)){query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude,date_collected,
-                                                  datasource,dataset,dataowner,custodial_institution_codes,collection_code,
-                                                  view_full_occurrence_individual.datasource_id",collection_$select,cultivated_$select,newworld_$select,observation_$select,geovalid_$select, "
-                                           FROM view_full_occurrence_individual 
-                                           WHERE country in (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",cultivated_$query,newworld_$query,natives_$query, geovalid_$query," 
-                                            AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi')
-                                            AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
-                                            AND observation_type IN ('plot','specimen','literature','checklist') ;")
+  if(is.null(country.code)){
+      query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,
+                      political_$select, native_$select,", latitude,
+                      longitude,date_collected, datasource, dataset ,dataowner,
+                      custodial_institution_codes,collection_code,
+                      view_full_occurrence_individual.datasource_id",
+                      collection_$select, cultivated_$select,
+                      newworld_$select, observation_$select, geovalid_$select, "
+                    FROM view_full_occurrence_individual
+                    WHERE country in
+                    (", paste(shQuote(country, type = "sh"),collapse = ', '), ")",
+                    cultivated_$query,newworld_$query,natives_$query,
+                    geovalid_$query," 
+                    AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi')
+                    AND (georef_protocol is NULL OR georef_protocol<>'county centroid')
+                    AND (is_centroid IS NULL OR is_centroid=0)",
+                    observation_$query,";")
   
   }else{
     query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,political_$select,native_$select,", latitude, longitude, 
@@ -1004,9 +1013,9 @@ BIEN_occurrence_country <- function(country = NULL,
                    WHERE country in (SELECT country FROM country WHERE iso in (", paste(shQuote(country.code, type = "sh"),collapse = ', '), ")) 
                       ",cultivated_$query,newworld_$query,natives_$query," 
                       AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 
-                      AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
-                      AND observation_type IN ('plot','specimen','literature','checklist')  
-                      AND scrubbed_species_binomial IS NOT NULL ;")
+                      AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0)",
+                      observation_$query, 
+                      "AND scrubbed_species_binomial IS NOT NULL ;")
     
     
   }
