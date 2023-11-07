@@ -967,8 +967,10 @@ BIEN_occurrence_country <- function(country = NULL,
   .is_log(political.boundaries)
   .is_log(collection.info)
   .is_log(only.geovalid)
+  
   if(is.null(country)& is.null(country.code)) {
-    stop("Please supply either a country or 2-digit ISO code")}
+    stop("Please supply either a country or 2-digit ISO code")
+    }
   
   #set conditions for query
     

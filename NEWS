@@ -3,10 +3,13 @@
 
 # BIEN 1.2.7
 ===============
+## BUG FIXES
+* Update to internal function BIEN_sql to make sure dbClearResults is called.
+
 ## NEW FEATURES
 * Added only.geovalid argument to BIEN_occurrence_country
 * Added only.geovalid argument to BIEN_occurrence_family
-
+* Updated error messages regarding query execuation with more granularity
 
 # BIEN 1.2.6
 ===============

@@ -218,13 +218,54 @@
 # Execute the query
   
   if(fetch.query){
+
+    # Send the query
     
-    suppressWarnings(
+          suppressWarnings(
+            
+            
+            res <-  tryCatch(expr = dbSendQuery(conn = con,
+                                                statement = query),
+                            error = function(e){e}
+            )
+          )
+        
+        if("error" %in% class(res)){
+          
+          message("\n There was an error in the SQL query or the SQL query could not be sent (e.g., due to connection issues).")
+          
+          suppressWarnings(
+            
+            db_cleared <- tryCatch(expr = dbClearResult(res = res),
+                     error = function(e){e}
+            )
+          )   
+          
+          dbDisconnect(con)
+          
+          return(invisible(NULL))
+          
+        }
+    
+    # Fetch the query    
+        suppressWarnings(
+          
+          df <-  tryCatch(expr = dbFetch(res = res),
+                          error = function(e){e}
+                          )
+          ) 
+  
+    # Clear the query results
+        
+      suppressWarnings(
+        
+        db_cleared <- tryCatch(expr = dbClearResult(res = res),
+                        error = function(e){e}
+        )
+      )   
+  
+    
       
-      df <-  tryCatch(expr = dbFetch(res = dbSendQuery(conn = con,
-                                                       statement = query)),
-                      error = function(e){e}
-      ))
     
   }else{
     
@@ -252,7 +293,7 @@
   
   if("error" %in% class(df)){
     
-    message("\nThere was a problem with the query. This is most often due to internet connection issues, but may also be due other factors such as an outdated version of the package.")
+    message("\nThe query was properly executed, but there was a problem retreiving the query results. This may be due to internet connection issues.")
     
     return(invisible(NULL))
     
