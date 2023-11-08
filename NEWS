@@ -10,6 +10,7 @@
 * Added only.geovalid argument to BIEN_occurrence_country
 * Added only.geovalid argument to BIEN_occurrence_family
 * Updated error messages regarding query execuation with more granularity
+* Removed ORDER BY statements to optimize query speed
 
 # BIEN 1.2.6
 ===============
