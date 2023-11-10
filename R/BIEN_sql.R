@@ -199,6 +199,13 @@
   drv <- dbDriver('PostgreSQL')
   # establish connection with database
   
+  if(return.query){
+    query <- gsub(pattern = "\n", replacement = "", query)
+    query <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl = TRUE)
+    return(query)
+  }
+  
+  
   con <- dbConnect(drv,
                    host = host,
                    dbname = dbname,
@@ -206,12 +213,6 @@
                    password = password)
   
   
-  if(return.query){
-    query <- gsub(pattern = "\n", replacement = "", query)
-    query <- gsub("(?<=[\\s])\\s*|^\\s+|\\s+$", "", query, perl = TRUE)
-    dbDisconnect(con)
-    return(query)
-  }
 
 
 
