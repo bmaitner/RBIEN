@@ -19,6 +19,7 @@
 #' @param schema An alternative schema to be accessed.  Used for testing purposes.
 #' @param print.query Should  the query used be printed?  Default is FALSE
 #' @param fetch.query If TRUE (the default) query is executed using dbFetch.  If FALSE, dbGetQuery is used.
+#' @param record_limit The number of records to download at once. Defaults to 10000
 #' @note Using fetch.query = TRUE provides better error handling, but fetch.query = FALSE results in a more useful (but uncatchable) error.
 #' @import RPostgreSQL
 #' @importFrom DBI dbDriver dbFetch
@@ -44,7 +45,8 @@
                       return.query = FALSE,
                       schema = NULL,
                       print.query = FALSE,
-                      fetch.query = TRUE){
+                      fetch.query = TRUE,
+                      record_limit = 10000 ){
   
   .is_char(query)
 
@@ -248,13 +250,49 @@
           
         }
     
+    
+    
+    
+    
+    
     # Fetch the query    
-        suppressWarnings(
-          
-          df <-  tryCatch(expr = dbFetch(res = res),
-                          error = function(e){e}
-                          )
-          ) 
+        # suppressWarnings(
+        #   
+        #   df <-  tryCatch(expr = dbFetch(res = res),
+        #                   error = function(e){e}
+        #                   )
+        #   )
+    
+    
+    
+    df <- NULL
+    batch <- 1
+    
+    while(!dbHasCompleted(res)){
+      
+      message("Getting page ", batch, " of records")
+      
+      df_x <-  tryCatch(expr = dbFetch(res = res,
+                                       n = record_limit),
+                        error = function(e){e}
+      )
+      
+      #check for errors
+      if("error" %in% class(df_x)){
+        
+        message("Error fetching page ", batch, " of records.")
+        dbClearResult(res)
+        return(invisible(NULL))
+      }
+      
+      df_x |>
+        rbind(df) -> df
+      
+      batch = batch+1
+      
+      
+    }
+    
   
     # Clear the query results
         

@@ -22,7 +22,8 @@
   return.query = FALSE,
   schema = NULL,
   print.query = FALSE,
-  fetch.query = TRUE
+  fetch.query = TRUE,
+  record_limit = 10000
 )
 }
 \arguments{
@@ -61,6 +62,8 @@
 \item{print.query}{Should  the query used be printed?  Default is FALSE}
 
 \item{fetch.query}{If TRUE (the default) query is executed using dbFetch.  If FALSE, dbGetQuery is used.}
+
+\item{record_limit}{The number of records to download at once. Defaults to 10000}
 }
 \value{
 A dataframe returned by the query.
