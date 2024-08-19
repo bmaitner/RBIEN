@@ -7,10 +7,9 @@
 #' 
 #' @references Maitner BS, Boyle B, Casler N, et al. The BIEN R package: A tool to access the Botanical Information and Ecology Network (BIEN) Database. Methods Ecol Evol. 2018;9:373-379. https://doi.org/10.1111/2041-210X.12861
 #' 
-#' @docType package
 #' @name BIEN
 #' @aliases BIEN-package
-NULL
+"_PACKAGE"
 ###################
 
 

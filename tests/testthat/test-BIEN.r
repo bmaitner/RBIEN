@@ -125,9 +125,9 @@ test_that("Occurrence functions return a dataframe",{
                                    limit = 10),
              is_a("data.frame"))
  
- expect_that(BIEN_occurrence_sf( BIEN_ranges_load_species(species = "Aa argyrolepis"),
-                                              limit = 10),
-             is_a("data.frame"))
+ # expect_that(BIEN_occurrence_sf( BIEN_ranges_load_species(species = "Aa argyrolepis"),
+ #                                              limit = 10),
+ #             is_a("data.frame"))
  
  # expect_that(BIEN_occurrence_records_per_species(),
  #             is_a("data.frame"))

@@ -44,10 +44,10 @@ Other trait functions:
 \code{\link{BIEN_trait_list}()},
 \code{\link{BIEN_trait_mean}()},
 \code{\link{BIEN_trait_species}()},
+\code{\link{BIEN_trait_trait}()},
 \code{\link{BIEN_trait_traitbyfamily}()},
 \code{\link{BIEN_trait_traitbygenus}()},
 \code{\link{BIEN_trait_traitbyspecies}()},
-\code{\link{BIEN_trait_traits_per_species}()},
-\code{\link{BIEN_trait_trait}()}
+\code{\link{BIEN_trait_traits_per_species}()}
 }
 \concept{trait functions}

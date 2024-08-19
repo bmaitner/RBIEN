@@ -2095,8 +2095,8 @@ BIEN_ranges_list <- function( ...){
 #' }
 #' @family range functions
 #' @importFrom sf read_sf st_transform st_crs
-#' @importFrom fasterize fasterize
-#' @importFrom raster raster
+#' @importFrom terra rasterize
+#' @importFrom terra rast
 #' @importFrom terra values
 #' @export
 BIEN_ranges_shapefile_to_skinny <- function(directory,
@@ -2111,19 +2111,18 @@ BIEN_ranges_shapefile_to_skinny <- function(directory,
   
   skinny_occurrences <- NULL
   
-  raster <- raster(raster) #can be removed once fasterize is updated to include terra
+  raster <- rast(raster)
   
   for(i in range_maps){
     
     #print(i)
     raster_i <- read_sf(i) |>
       st_transform(crs = st_crs(raster)) |>
-      fasterize(raster = raster,
-                fun = "any")
+      rasterize(y = raster)
     
     if(length(which(values(raster_i) > 0)) > 0){
       skinny_occurrences <- rbind(skinny_occurrences,
-                                  cbind(read_sf(i)$Species,
+                                  cbind(read_sf(i)$species,
                                         which(values(raster_i) > 0)))
     }#end if statement
   }#end i loop

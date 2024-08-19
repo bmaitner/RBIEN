@@ -66,7 +66,7 @@ Other range functions:
 \code{\link{BIEN_ranges_load_species}()},
 \code{\link{BIEN_ranges_shapefile_to_skinny}()},
 \code{\link{BIEN_ranges_skinny_ranges_to_richness_raster}()},
-\code{\link{BIEN_ranges_species_bulk}()},
-\code{\link{BIEN_ranges_species}()}
+\code{\link{BIEN_ranges_species}()},
+\code{\link{BIEN_ranges_species_bulk}()}
 }
 \concept{range functions}

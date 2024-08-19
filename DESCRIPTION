@@ -12,8 +12,6 @@ Imports:
     DBI,
     ape,
     sf,
-    fasterize,
-    raster,
     terra,
     doParallel,
     parallel,
@@ -24,4 +22,5 @@ Suggests:
     testthat,
     maps
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
+Encoding: UTF-8

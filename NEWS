@@ -5,6 +5,7 @@
 ===============
 ## BUG FIXES
 * Update to internal function BIEN_sql to make sure dbClearResults is called.
+* Removed dependcies on raster, rgeos, and fasterize
 
 ## NEW FEATURES
 * Added only.geovalid argument to BIEN_occurrence_country
