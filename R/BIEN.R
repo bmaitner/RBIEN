@@ -4064,6 +4064,42 @@ BIEN_metadata_list_political_names <- function(...){
   
 }
 
+####################
+
+#'Download data dictionaries
+#'
+#'BIEN_metadata_data_dictionaries downloads the data dictionaries for the BIEN database.
+#' @param ... Additional arguments passed to internal functions.
+#' @return A list containing data.frames containing different data dictionaries.
+#' "Tables" contains information on the contents of tables.
+#' "Columns" contains information on the contents of columns within tables.
+#' "Values" contains information on some of the values that are used to populated columns, particularly where these may be unclear.
+#' "rbien" contains information on some of the values returned by the BIEN R package.
+#' @family metadata functions
+#' @examples \dontrun{
+#' BIEN_metadata_data_dictionaries()}
+#' @keywords internal
+BIEN_metadata_data_dictionaries <- function(...){
+  
+  tables <- .BIEN_sql("SELECT * from data_dictionary_tables",...)
+  columns <- .BIEN_sql("SELECT * from data_dictionary_columns",...)
+  values <- .BIEN_sql("SELECT * from data_dictionary_values",...)
+  rbien <- .BIEN_sql("SELECT * from data_dictionary_rbien",...)
+  
+  
+  
+  data_dictionary <- list(tables =tables,
+                          columns = columns,
+                          values = values,
+                          rbien = rbien)
+  
+  
+  return(data_dictionary)
+  
+}
+
+
+
 ################################
 
 ############################

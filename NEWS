@@ -13,6 +13,7 @@
 * Updated error messages regarding query execuation with more granularity
 * Removed ORDER BY statements to optimize query speed
 * Updated code to download in batches, providing at least some measure of progress update (should also help with some timeout issues on large queries)
+* Added an internal function BIEN_metadata_data_dictionaries to provide metadata about some of the fields.
 
 # BIEN 1.2.6
 ===============

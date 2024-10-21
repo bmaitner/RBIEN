@@ -33,6 +33,7 @@ Other plot functions:
 
 Other metadata functions: 
 \code{\link{BIEN_metadata_citation}()},
+\code{\link{BIEN_metadata_data_dictionaries}()},
 \code{\link{BIEN_metadata_database_version}()},
 \code{\link{BIEN_metadata_list_political_names}()},
 \code{\link{BIEN_metadata_match_data}()},
