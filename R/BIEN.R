@@ -3864,7 +3864,9 @@ BIEN_metadata_citation <- function(dataframe = NULL,
     citation[[2]]<-gsub(citation[[2]],pattern = '\"\\\nurl', replacement = '\"\\url', fixed = TRUE)
     
     if(length(unique(sources$source_name[which(sources$is_herbarium==1)]))>0){
-      citation[[3]]<-paste("We acknowledge the herbaria that contributed data to this work: ",paste(unique(sources$source_name[which(sources$is_herbarium==1)]),collapse = ", "),".",collapse = "",sep="")
+      citation[[3]]<-paste("We acknowledge the herbaria that contributed data to this work: ",
+                           paste(unique(sources$source_name[which(sources$is_herbarium==1)])|>sort(),
+                                 collapse = ", "),".",collapse = "",sep="")
     }
     if(length(unique(sources$source_name[which(sources$is_herbarium==1)]))==0){
       citation[[3]]<-data.frame()
