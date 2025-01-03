@@ -141,18 +141,27 @@ BIEN_occurrence_sf <- function(sf,
   collection_ <- .collection_check(collection.info)
   
   # set the query
-  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,political_$select," , latitude, longitude,
-                        date_collected,datasource,dataset,dataowner,custodial_institution_codes,collection_code,a.datasource_id",collection_$select,cultivated_$select,
+  query <- paste("SELECT scrubbed_species_binomial",taxonomy_$select,native_$select,
+                  political_$select," ,
+                  latitude, longitude, date_collected,datasource,dataset,
+                 dataowner,custodial_institution_codes,collection_code,
+                 a.datasource_id",collection_$select,cultivated_$select,
                  newworld_$select,observation_$select,"
                     FROM 
                           (SELECT * FROM view_full_occurrence_individual 
                            WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
-                           AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') AND (is_centroid IS NULL OR is_centroid=0) 
-                           AND observation_type IN ('plot','specimen','literature','checklist') 
+                           AND is_geovalid = 1
+                           AND (georef_protocol is NULL OR georef_protocol<>'county centroid')
+                           AND (is_centroid IS NULL OR is_centroid=0)
                            AND latitude BETWEEN ",lat_min," AND ",lat_max,"AND longitude BETWEEN ",long_min," AND ",long_max,") a 
-                    WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",cultivated_$query,newworld_$query,natives_$query, "
-                      AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi') AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
-                      AND (is_centroid IS NULL OR is_centroid=0) AND observation_type IN ('plot','specimen','literature','checklist') 
+                    WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",
+                      cultivated_$query,
+                      newworld_$query,
+                      natives_$query,
+                      observation_$query, "
+                      AND higher_plant_group NOT IN ('Algae','Bacteria','Fungi')
+                      AND is_geovalid = 1 AND (georef_protocol is NULL OR georef_protocol<>'county centroid') 
+                      AND (is_centroid IS NULL OR is_centroid=0) 
                       AND scrubbed_species_binomial IS NOT NULL ;")
   
   # create query to retrieve
@@ -3865,10 +3874,13 @@ BIEN_metadata_citation <- function(dataframe = NULL,
     citation[[4]]<-citation[[4]][c('primary_contact_fullname','primary_contact_email','access_conditions','source_fullname','source_citation')]
     
     if(!is.null(trait.dataframe)){
+      if(length(which(trait.sources$access=='public (notify the PIs)'))>0){
+        
       ack_trait_sources<-trait.sources[which(trait.sources$access=='public (notify the PIs)'),]
       ack_trait_sources<-ack_trait_sources[c('project_pi','project_pi_contact','access','source_citation','citation_bibtex')]
       colnames(ack_trait_sources)<-c('primary_contact_fullname','primary_contact_email','access_conditions','source_fullname','source_citation')
       citation[[4]]<-rbind(citation[[4]],ack_trait_sources)
+      }
     }
     
     
