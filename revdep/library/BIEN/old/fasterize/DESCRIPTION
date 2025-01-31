@@ -1,0 +1,44 @@
+Package: fasterize
+Title: Fast Polygon to Raster Conversion
+Version: 1.1.0
+Authors@R: c(
+    person("Noam", "Ross", , "ross@ecohealthalliance.org",
+           role = c("aut"),
+           comment=c("Original author", ORCID = "0000-0002-2136-0000")),
+    person("Michael", "Sumner",, "mdsumner@gmail.com", role = c("cre", "ctb"),
+           comment=c(ORCID = "0000-0002-2471-7511")),
+    person("Jeroen", "Ooms", role = "ctb"),
+    person("Antoine", "Stevens", role = "ctb"),
+    person("EcoHealth Alliance", role="cph"),
+    person("USAID PREDICT", role = "fnd"))
+Description: Provides a drop-in replacement for rasterize() from the 'raster'
+   package that takes polygon vector or data frame objects, and is much faster. 
+   There is support for the main options provided by the rasterize() function, 
+   including setting the field used and background value, and options for 
+   aggregating multi-layer rasters. Uses the scan line algorithm attributed to
+   Wylie et al. (1967) <doi:10.1145/1465611.1465619>.
+License: MIT + file LICENSE
+URL: https://github.com/ecohealthalliance/fasterize
+BugReports: https://github.com/ecohealthalliance/fasterize/issues
+RoxygenNote: 7.3.2
+Suggests: testthat, microbenchmark, knitr, rmarkdown, spelling, geos
+Depends: R (>= 3.3.0)
+Imports: Rcpp, raster (>= 2.8-3), wk
+LinkingTo: Rcpp, RcppArmadillo
+Encoding: UTF-8
+VignetteBuilder: knitr
+Language: en-US
+NeedsCompilation: yes
+Packaged: 2024-10-01 06:18:41 UTC; mdsumner
+Author: Noam Ross [aut] (Original author,
+    <https://orcid.org/0000-0002-2136-0000>),
+  Michael Sumner [cre, ctb] (<https://orcid.org/0000-0002-2471-7511>),
+  Jeroen Ooms [ctb],
+  Antoine Stevens [ctb],
+  EcoHealth Alliance [cph],
+  USAID PREDICT [fnd]
+Maintainer: Michael Sumner <mdsumner@gmail.com>
+Repository: CRAN
+Date/Publication: 2024-10-01 13:30:02 UTC
+Built: R 4.4.2; x86_64-w64-mingw32; 2025-01-30 02:45:48 UTC; windows
+Archs: x64
