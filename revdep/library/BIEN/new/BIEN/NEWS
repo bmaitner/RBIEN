@@ -16,6 +16,7 @@
 * Removed ORDER BY statements to optimize query speed
 * Updated code to download in batches, providing at least some measure of progress update (should also help with some timeout issues on large queries)
 * Added an internal function BIEN_metadata_data_dictionaries to provide metadata about some of the fields.
+* Updated dependency to include R >= 4.1.0, since the code uses |>
 
 # BIEN 1.2.6
 ===============

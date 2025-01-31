@@ -1,18 +1,18 @@
 # Platform
 
-|field    |value                                 |
-|:--------|:-------------------------------------|
-|version  |R version 4.4.2 (2024-10-31 ucrt)     |
-|os       |Windows 11 x64 (build 22631)          |
-|system   |x86_64, mingw32                       |
-|ui       |RStudio                               |
-|language |(EN)                                  |
-|collate  |English_United States.utf8            |
-|ctype    |English_United States.utf8            |
-|tz       |America/New_York                      |
-|date     |2025-01-31                            |
-|rstudio  |2024.12.0+467 Kousa Dogwood (desktop) |
-|pandoc   |NA                                    |
+|field    |value                                                                              |
+|:--------|:----------------------------------------------------------------------------------|
+|version  |R version 4.4.2 (2024-10-31 ucrt)                                                  |
+|os       |Windows 11 x64 (build 22631)                                                       |
+|system   |x86_64, mingw32                                                                    |
+|ui       |RStudio                                                                            |
+|language |(EN)                                                                               |
+|collate  |English_United States.utf8                                                         |
+|ctype    |English_United States.utf8                                                         |
+|tz       |America/New_York                                                                   |
+|date     |2025-01-31                                                                         |
+|rstudio  |2024.12.0+467 Kousa Dogwood (desktop)                                              |
+|pandoc   |3.2 @ C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools/ (via rmarkdown) |
 
 # Dependencies
 

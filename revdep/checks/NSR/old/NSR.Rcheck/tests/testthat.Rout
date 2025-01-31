@@ -29,5 +29,5 @@ Type 'q()' to quit R.
 > 
 > proc.time()
    user  system elapsed 
-   0.21    0.03    1.09 
+   0.09    0.03    1.03 
 Ran 20/20 deferred expressions

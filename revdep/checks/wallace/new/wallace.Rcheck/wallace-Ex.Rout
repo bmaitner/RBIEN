@@ -888,7 +888,7 @@ Transferring extent user-defined polygon buffered by 1 degrees.
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.25 0.08 1.18 NA NA 
+Time elapsed:  0.38 0 1.21 NA NA 
 > grDevices::dev.off()
 null device 
           1 

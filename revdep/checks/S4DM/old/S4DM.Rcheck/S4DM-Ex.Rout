@@ -455,7 +455,7 @@ detaching 'package:sf', 'package:terra'
 
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.59 0.05 4.78 NA NA 
+Time elapsed:  1.33 0.16 4.46 NA NA 
 > grDevices::dev.off()
 null device 
           1 
