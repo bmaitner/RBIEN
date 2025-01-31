@@ -10,3 +10,5 @@ NOTES
 ^old_versions$
 ^tutorials$
 ^CRAN-SUBMISSION$
+.git
+.github
