@@ -1,0 +1,49 @@
+http_interactions:
+- request:
+    method: post
+    uri: https://nsrapi.xyz/nsr_wsb.php
+    body:
+      encoding: ''
+      string: '{"opts":{"mode":"dd"}}'
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      charset: UTF-8
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Wed, 09 Oct 2024 20:35:11 GMT
+      server: Apache
+      access-control-allow-origin: '*'
+      content-length: '2484'
+      content-type: application/json
+    body:
+      encoding: ''
+      file: no
+      string: '[{"dd":{"col_name":"ID","ordinal_position":"1","data_type":"Positive
+        integer","description":"Integer idenfier (primary key) of each observation,
+        preserves order submitted"}},{"dd":{"col_name":"family","ordinal_position":"2","data_type":"Text","description":"Family
+        submitted (or inferred from genus or species)"}},{"dd":{"col_name":"genus","ordinal_position":"3","data_type":"Text","description":"Genus
+        submitted (or inferred from species)"}},{"dd":{"col_name":"species","ordinal_position":"4","data_type":"Text","description":"Species
+        name submitted"}},{"dd":{"col_name":"country","ordinal_position":"5","data_type":"Text","description":"Country
+        of observation"}},{"dd":{"col_name":"state_province","ordinal_position":"6","data_type":"Text","description":"State\/province
+        of observation (optional)"}},{"dd":{"col_name":"county_parish","ordinal_position":"7","data_type":"Text","description":"County\/parish
+        of observation (optional)"}},{"dd":{"col_name":"poldiv_full","ordinal_position":"8","data_type":"Text","description":"Concatenated
+        country:state-province:county-parish"}},{"dd":{"col_name":"poldiv_type","ordinal_position":"9","data_type":"Text","description":"Type
+        of the lowest political division submitted"}},{"dd":{"col_name":"native_status_country","ordinal_position":"10","data_type":"Text","description":"Native
+        status for country"}},{"dd":{"col_name":"native_status_state_province","ordinal_position":"11","data_type":"Text","description":"Native
+        status for state-province"}},{"dd":{"col_name":"native_status_county_parish","ordinal_position":"12","data_type":"Text","description":"Native
+        status for county-parish"}},{"dd":{"col_name":"native_status","ordinal_position":"13","data_type":"Text","description":"Native
+        status within lowest political division for which checklist opinion is available"}},{"dd":{"col_name":"native_status_reason","ordinal_position":"14","data_type":"Text","description":"Reason
+        native_status code was assigned"}},{"dd":{"col_name":"native_status_sources","ordinal_position":"15","data_type":"Text","description":"Checklist
+        sources consulted"}},{"dd":{"col_name":"isIntroduced","ordinal_position":"16","data_type":"Integer
+        (0|1)","description":"Simplified overall native status (1=introduced,  0=native,
+        blank=status unknown)"}},{"dd":{"col_name":"is_cultivated_taxon","ordinal_position":"17","data_type":"Integer
+        (0|1)","description":"Is species known to be cultivated in region of observation?  (1=cultivated,  0=wild
+        or status unknown)"}}]'
+  recorded_at: 2024-10-09 20:35:11 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

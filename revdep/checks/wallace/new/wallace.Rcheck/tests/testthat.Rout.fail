@@ -1,0 +1,145 @@
+
+R version 4.4.2 (2024-10-31 ucrt) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> Sys.setenv("R_TEST" = "")
+> library(testthat)
+> library(wallace)
+Loading required package: shiny
+Loading required package: leaflet
+> 
+> test_check("wallace")
+trying URL 'https://www.dropbox.com/sh/kijh17ehg8v3uv8/AADWJOs0_8zQmhc0XJxJE9a2a/bio%20%23baseline_Modern%281950-1999%29%23%20CCSM_LGM%2821ka%29.txt?dl=1'
+Content type 'application/binary' length 86163749 bytes (82.2 MB)
+==================================================
+downloaded 82.2 MB
+
+trying URL 'https://geodata.ucdavis.edu/climate/worldclim/2_1/base/wc2.1_10m_bio.zip'
+Content type 'application/zip' length 49869449 bytes (47.6 MB)
+==================================================
+downloaded 47.6 MB
+
+  |                                                                              |                                                                      |   0%
+Failed with error:  '.onLoad failed in loadNamespace() for 'rJava', details:
+  call: fun(libname, pkgname)
+  error: JAVA_HOME cannot be determined from the Registry'
+Reading layer `Bassaricyon_neblina' from data source 
+  `C:\Users\bmaitner\Desktop\current_projects\RBIEN\revdep\checks\wallace\new\wallace.Rcheck\wallace\extdata\shp\Bassaricyon_neblina.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 1 feature and 1 field
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -79.47486 ymin: -1.15418 xmax: -74.50839 ymax: 6.83333
+CRS:           NA
+Reading layer `Bassaricyon_neblina' from data source 
+  `C:\Users\bmaitner\Desktop\current_projects\RBIEN\revdep\checks\wallace\new\wallace.Rcheck\wallace\extdata\shp\Bassaricyon_neblina.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 1 feature and 1 field
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -79.47486 ymin: -1.15418 xmax: -74.50839 ymax: 6.83333
+CRS:           NA
+Reading layer `Bassaricyon_neblina' from data source 
+  `C:\Users\bmaitner\Desktop\current_projects\RBIEN\revdep\checks\wallace\new\wallace.Rcheck\wallace\extdata\shp\Bassaricyon_neblina.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 1 feature and 1 field
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -79.47486 ymin: -1.15418 xmax: -74.50839 ymax: 6.83333
+CRS:           NA
+  |                                                                              |                                                                      |   0%
+Failed with error:  '.onLoad failed in loadNamespace() for 'rJava', details:
+  call: fun(libname, pkgname)
+  error: JAVA_HOME cannot be determined from the Registry'
+Failed with error:  '.onLoad failed in loadNamespace() for 'rJava', details:
+  call: fun(libname, pkgname)
+  error: JAVA_HOME cannot be determined from the Registry'
+Failed with error:  '.onLoad failed in loadNamespace() for 'rJava', details:
+  call: fun(libname, pkgname)
+  error: JAVA_HOME cannot be determined from the Registry'
+Reading layer `Bassaricyon_neblina' from data source 
+  `C:\Users\bmaitner\Desktop\current_projects\RBIEN\revdep\checks\wallace\new\wallace.Rcheck\wallace\extdata\shp\Bassaricyon_neblina.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 1 feature and 1 field
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -79.47486 ymin: -1.15418 xmax: -74.50839 ymax: 6.83333
+CRS:           NA
+Reading layer `Bassaricyon_neblina' from data source 
+  `C:\Users\bmaitner\Desktop\current_projects\RBIEN\revdep\checks\wallace\new\wallace.Rcheck\wallace\extdata\shp\Bassaricyon_neblina.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 1 feature and 1 field
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -79.47486 ymin: -1.15418 xmax: -74.50839 ymax: 6.83333
+CRS:           NA
+Reading layer `Bassaricyon_neblina' from data source 
+  `C:\Users\bmaitner\Desktop\current_projects\RBIEN\revdep\checks\wallace\new\wallace.Rcheck\wallace\extdata\shp\Bassaricyon_neblina.shp' 
+  using driver `ESRI Shapefile'
+Simple feature collection with 1 feature and 1 field
+Geometry type: POLYGON
+Dimension:     XY
+Bounding box:  xmin: -79.47486 ymin: -1.15418 xmax: -74.50839 ymax: 6.83333
+CRS:           NA
+[ FAIL 4 | WARN 1 | SKIP 5 | PASS 231 ]
+
+══ Skipped tests (5) ═══════════════════════════════════════════════════════════
+• On CRAN (5): 'test_envs_ecoClimate.R:23:3', 'test_envs_ecoClimate.R:46:3',
+  'test_envs_worldclim.R:27:3', 'test_occs_queryDb.R:85:3',
+  'test_occs_queryDb.R:85:3'
+
+══ Failed tests ════════════════════════════════════════════════════════════════
+── Error ('test_model_maxent.R:49:3'): (code run outside of `test_that()`) ─────
+Error: Package rJava cannot load. Please download the latest version of Java, and make sure it is the correct version (e.g. 64-bit for a 64-bit system). After installing, try "library(rJava)". If it loads properly, restart Wallace and try again. If it does not, please consult www.github.com/wallaceecomod/wallace for more tips on getting rJava to work.
+Backtrace:
+    ▆
+ 1. ├─wallace::model_maxent(...) at test_model_maxent.R:49:3
+ 2. │ └─logger %>% ...
+ 3. └─wallace::writeLog(...)
+── Error ('test_xfer_area.R:26:1'): (code run outside of `test_that()`) ────────
+Error in `.local(object, ...)`: maxent(silent = TRUE) is not TRUE
+Backtrace:
+    ▆
+ 1. └─wallace::xfer_area(...) at test_xfer_area.R:26:1
+ 2.   ├─wallace::smartProgress(...)
+ 3.   ├─dismo::predict(...)
+ 4.   └─dismo::predict(...)
+ 5.     └─dismo (local) .local(object, ...)
+ 6.       └─base::stopifnot(maxent(silent = TRUE))
+── Error ('test_xfer_time.R:29:1'): (code run outside of `test_that()`) ────────
+Error in `.local(object, ...)`: maxent(silent = TRUE) is not TRUE
+Backtrace:
+    ▆
+ 1. └─wallace::xfer_time(...) at test_xfer_time.R:29:1
+ 2.   ├─wallace::smartProgress(...)
+ 3.   ├─dismo::predict(...)
+ 4.   └─dismo::predict(...)
+ 5.     └─dismo (local) .local(object, ...)
+ 6.       └─base::stopifnot(maxent(silent = TRUE))
+── Error ('test_xfer_userEnvs.R:22:1'): (code run outside of `test_that()`) ────
+Error in `.local(object, ...)`: maxent(silent = TRUE) is not TRUE
+Backtrace:
+    ▆
+ 1. └─wallace::xfer_userEnvs(...) at test_xfer_userEnvs.R:22:1
+ 2.   ├─wallace::smartProgress(...)
+ 3.   ├─dismo::predict(...)
+ 4.   └─dismo::predict(...)
+ 5.     └─dismo (local) .local(object, ...)
+ 6.       └─base::stopifnot(maxent(silent = TRUE))
+
+[ FAIL 4 | WARN 1 | SKIP 5 | PASS 231 ]
+Error: Test failures
+Execution halted

@@ -1,0 +1,91 @@
+http_interactions:
+- request:
+    method: post
+    uri: https://gvsapi.xyz/gvs_api.php
+    body:
+      encoding: ''
+      string: '{"opts":{"mode":"dd"}}'
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      charset: UTF-8
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Tue, 03 Dec 2024 21:59:35 GMT
+      server: Apache
+      access-control-allow-origin: '*'
+      content-length: '7784'
+      content-type: application/json
+    body:
+      encoding: ''
+      file: no
+      string: '[{"mode":"resolve","col_name":"id","ordinal_position":"1","data_type":"Integer","description":"Unique
+        sequential integer identifier, created by GVS"},{"mode":"resolve","col_name":"latitude_verbatim","ordinal_position":"2","data_type":"Text","description":"Verbatim
+        latitude as submitted"},{"mode":"resolve","col_name":"longitude_verbatim","ordinal_position":"3","data_type":"Text","description":"Verbatim
+        longitude as submitted"},{"mode":"resolve","col_name":"latitude","ordinal_position":"4","data_type":"Floating-point
+        numeric","description":"Decimal latitude resolved by GVS"},{"mode":"resolve","col_name":"longitude","ordinal_position":"5","data_type":"Floating-point
+        numeric","description":"Decimal longitude resolved by GVS"},{"mode":"resolve","col_name":"user_id","ordinal_position":"6","data_type":"Text","description":"User-provided
+        identifier (optional)"},{"mode":"resolve","col_name":"gid_0","ordinal_position":"7","data_type":"Text","description":"GADM
+        identifier of the country (admin 0)"},{"mode":"resolve","col_name":"country","ordinal_position":"8","data_type":"Text","description":"GADM
+        country name"},{"mode":"resolve","col_name":"gid_1","ordinal_position":"9","data_type":"Text","description":"GADM
+        identifier of the state\/province (admin_1 political division)"},{"mode":"resolve","col_name":"state","ordinal_position":"10","data_type":"Text","description":"GADM
+        state\/province name"},{"mode":"resolve","col_name":"gid_2","ordinal_position":"11","data_type":"Text","description":"GADM
+        identifier of the county\/parish (admin_2 political division)"},{"mode":"resolve","col_name":"county","ordinal_position":"12","data_type":"Text","description":"GADM
+        county\/parish name"},{"mode":"resolve","col_name":"country_cent_dist","ordinal_position":"13","data_type":"Floating-point
+        numeric","description":"Distance in km of the point from the country centroid"},{"mode":"resolve","col_name":"country_cent_dist_relative","ordinal_position":"14","data_type":"Floating-point
+        numeric","description":"Distance of resolved point from centroid, relative
+        to farthest point on country perimiter"},{"mode":"resolve","col_name":"country_cent_type","ordinal_position":"15","data_type":"Text","description":"Type
+        of centroid"},{"mode":"resolve","col_name":"country_cent_dist_max","ordinal_position":"16","data_type":"Floating-point
+        numeric","description":"Distance in km of the farthest possible point from
+        the centroid, as measured along the country boundary."},{"mode":"resolve","col_name":"is_country_centroid","ordinal_position":"17","data_type":"Boolean
+        (0|1) or NULL","description":"Is the submitted point likely a country centroid?
+        1=Yes, NULL\/blank=No."},{"mode":"resolve","col_name":"state_cent_dist","ordinal_position":"18","data_type":"Floating-point
+        numeric","description":"Distance in km of the point from the state centroid"},{"mode":"resolve","col_name":"state_cent_dist_relative","ordinal_position":"19","data_type":"Floating-point
+        numeric","description":"Distance of resolved point from centroid, relative
+        to farthest point on state perimiter"},{"mode":"resolve","col_name":"state_cent_type","ordinal_position":"20","data_type":"Text","description":"Type
+        of centroid"},{"mode":"resolve","col_name":"state_cent_dist_max","ordinal_position":"21","data_type":"Floating-point
+        numeric","description":"Distance in km of the farthest possible point from
+        the centroid, as measured along the state boundary."},{"mode":"resolve","col_name":"is_state_centroid","ordinal_position":"22","data_type":"Boolean
+        (0|1) or NULL","description":"Is the submitted point likely a state centroid?
+        1=Yes, NULL\/blank=No."},{"mode":"resolve","col_name":"county_cent_dist","ordinal_position":"23","data_type":"Floating-point
+        numeric","description":"Distance in km of the point from the county centroid"},{"mode":"resolve","col_name":"county_cent_dist_relative","ordinal_position":"24","data_type":"Floating-point
+        numeric","description":"Distance of resolved point from centroid, relative
+        to farthest point on county perimiter"},{"mode":"resolve","col_name":"county_cent_type","ordinal_position":"25","data_type":"Text","description":"Type
+        of centroid"},{"mode":"resolve","col_name":"county_cent_dist_max","ordinal_position":"26","data_type":"Floating-point
+        numeric","description":"Distance in km of the farthest possible point from
+        the centroid, as measured along the county boundary."},{"mode":"resolve","col_name":"is_county_centroid","ordinal_position":"27","data_type":"Boolean
+        (0|1) or NULL","description":"Is the submitted point likely a county centroid?
+        1=Yes, NULL\/blank=No."},{"mode":"resolve","col_name":"subpoly_cent_dist","ordinal_position":"28","data_type":"Floating-point
+        numeric","description":"Distance in km of the point from a subpolygon centroid,
+        for countries consisting of discrete subpolygons, such as islands."},{"mode":"resolve","col_name":"subpoly_cent_dist_relative","ordinal_position":"29","data_type":"Floating-point
+        numeric","description":"Distance of resolved point from subpolygon centroid,
+        relative to farthest point on the subpolygon perimiter"},{"mode":"resolve","col_name":"subpoly_cent_type","ordinal_position":"30","data_type":"Text","description":"Type
+        of centroid"},{"mode":"resolve","col_name":"subpoly_cent_dist_max","ordinal_position":"31","data_type":"Floating-point
+        numeric","description":"Distance in km of the farthest possible point from
+        the centroid, as measured along the subpolygon boundary."},{"mode":"resolve","col_name":"is_subpoly_centroid","ordinal_position":"32","data_type":"Boolean
+        (0|1) or NULL","description":"Is the submitted point likely a subpolygon centroid?
+        1=Yes, NULL\/blank=No."},{"mode":"resolve","col_name":"centroid_dist_km","ordinal_position":"33","data_type":"Floating-point
+        numeric","description":"Distance in km to the most likely centroid corresponding
+        to the submitted point, if any"},{"mode":"resolve","col_name":"centroid_dist_relative","ordinal_position":"34","data_type":"Floating-point
+        numeric","description":"Distance of resolved point from most likely centroid,
+        relative to farthest point on political division perimiter"},{"mode":"resolve","col_name":"centroid_type","ordinal_position":"35","data_type":"Text","description":"Type
+        of the most likely centroid corresponding to the submitted point, if any"},{"mode":"resolve","col_name":"centroid_dist_max_km","ordinal_position":"36","data_type":"Floating-point
+        numeric","description":"Distance in km of the farthest possible point from
+        the most likly centroid, as measured along the political division boundary."},{"mode":"resolve","col_name":"centroid_poldiv","ordinal_position":"37","data_type":"Text","description":"Political
+        division of the most likely centroid, if applicable"},{"mode":"resolve","col_name":"max_dist","ordinal_position":"38","data_type":"Integer","description":"Maximum
+        absolute distance (km) to centroid for submitted point to qualify as centroid"},{"mode":"resolve","col_name":"max_dist_rel","ordinal_position":"39","data_type":"Floating-point
+        numeric","description":"Maximum relative distance to centroid for submitted
+        point to qualify as centroid (relative to distance from centroid to farthest
+        point on political division boundary)"},{"mode":"resolve","col_name":"latlong_err","ordinal_position":"40","data_type":"Text","description":"Errors
+        detected in submitted point, if any"},{"mode":"resolve","col_name":"coordinate_decimal_places","ordinal_position":"41","data_type":"Integer","description":"Number
+        of decimal places of the submitted coordinates (lowest of the two values,
+        if different)"},{"mode":"resolve","col_name":"coordinate_inherent_uncertainty_m","ordinal_position":"42","data_type":"Floating-point
+        numeric","description":"Inherent uncertainty in m of the submitted geocoordinates,
+        given the decimal places submitted."}]'
+  recorded_at: 2024-12-03 21:59:32 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

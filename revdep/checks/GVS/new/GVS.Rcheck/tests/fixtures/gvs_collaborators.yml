@@ -1,0 +1,33 @@
+http_interactions:
+- request:
+    method: post
+    uri: https://gvsapi.xyz/gvs_api.php
+    body:
+      encoding: ''
+      string: '{"opts":{"mode":"collaborators"}}'
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      charset: UTF-8
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Tue, 03 Dec 2024 21:59:34 GMT
+      server: Apache
+      access-control-allow-origin: '*'
+      content-length: '807'
+      content-type: application/json
+    body:
+      encoding: ''
+      file: no
+      string: '[{"collaborator_name":"BIEN","collaborator_name_full":"The Botanical
+        Information and Ecology Network","collaborator_url":"https:\/\/bien.nceas.ucsb.edu\/bien\/","description":null,"logo_path":"images\/bien.png"},{"collaborator_name":"NCEAS","collaborator_name_full":"The
+        National Center for Ecological Analysis and Synthesis","collaborator_url":"https:\/\/www.nceas.ucsb.edu\/","description":null,"logo_path":"images\/nceas.png"},{"collaborator_name":"University
+        of Arizona","collaborator_name_full":"The University of Arizona","collaborator_url":"https:\/\/www.arizona.edu\/","description":null,"logo_path":"images\/UA.png"},{"collaborator_name":"NSF","collaborator_name_full":"The
+        National Science Foundation","collaborator_url":"https:\/\/www.nsf.gov\/","description":null,"logo_path":"images\/nsf.png"}]'
+  recorded_at: 2024-12-03 21:59:32 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

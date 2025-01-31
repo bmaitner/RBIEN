@@ -1,0 +1,467 @@
+
+R version 4.4.2 (2024-10-31 ucrt) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "S4DM"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('S4DM')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("ensemble_range_map")
+> ### * ensemble_range_map
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ensemble_range_map
+> ### Title: Generate ensemble predictions from S4DM range maps
+> ### Aliases: ensemble_range_map
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("evaluate_range_map")
+> ### * evaluate_range_map
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: evaluate_range_map
+> ### Title: Evaluate S4DM range map quality
+> ### Aliases: evaluate_range_map
+> 
+> ### ** Examples
+> 
+> {
++ 
++ # load in sample data
++ 
++  library(S4DM)
++  library(terra)
++ 
++  # occurrence points
++    data("sample_points")
++    occurrences <- sample_points
++ 
++  # environmental data
++    env <- rast(system.file('ex/sample_env.tif', package="S4DM"))
++ 
++  # rescale the environmental data
++ 
++    env <- scale(env)
++ 
++ # Evaluate a gaussian/gaussian model calculated with the numbag approach
++ # using 10 bootstrap replicates.
++ 
++  evaluate_range_map(occurrences = occurrences,
++                     env = env,
++                     method = NULL,
++                     presence_method = "gaussian",
++                     background_method = "gaussian",
++                     bootstrap = "numbag",
++                     bootstrap_reps = 10,
++                     quantile = 0.05,
++                     constraint_regions = NULL,
++                     background_buffer_width = 100000)
++ 
++ 
++ 
++ }
+terra 1.8.15
+Found more than one class "kcca" in cache; using the first, from namespace 'flexclust'
+Also defined by 'kernlab'
+Found more than one class "kcca" in cache; using the first, from namespace 'flexclust'
+Also defined by 'kernlab'
+$fold_results
+  fold training_AUC training_pAUC_specificity training_pAUC_sensitivity
+1    1    0.7098237                 0.6485267                 0.5704939
+2    2    0.7096788                 0.6020812                 0.5772797
+3    3    0.8042265                 0.6667849                 0.7134038
+4    4    0.7512193                 0.6544663                 0.5875223
+5    5    0.6880406                 0.6111638                 0.5648393
+  testing_AUC testing_pAUC_specificity testing_pAUC_sensitivity testing_DOR
+1   0.8091309                0.5448152                0.8456833         Inf
+2   0.8577204                0.7404449                0.7568878    5.925430
+3   0.5792685                0.6252021                       NA    1.367158
+4   0.6220651                       NA                0.6886967         Inf
+5   0.8334870                0.7230123                0.7128211    3.203454
+  testing_prediction_accuracy testing_sensitivity testing_specificity
+1                   0.4005214           1.0000000           0.4001098
+2                   0.4260834           0.8888889           0.4255115
+3                   0.4508298           0.6250000           0.4506385
+4                   0.4383919           1.0000000           0.4380063
+5                   0.3485597           0.8571429           0.3480708
+  testing_correlation testing_kappa
+1        1.894898e-02  0.0009143277
+2        5.048992e-02  0.0013487690
+3        2.410805e-02  0.0003018289
+4        2.953418e-05  0.0010682586
+5        4.683361e-02  0.0006040218
+
+$overall_results
+   full_AUC full_pAUC_specificity full_pAUC_sensitivity full_correlation
+1 0.7951235             0.6456031              0.708467        0.1064957
+
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:terra'
+
+> nameEx("fit_density_ratio")
+> ### * fit_density_ratio
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fit_density_ratio
+> ### Title: Fit density-ratio distribution models in a plug-and-play
+> ###   framework.
+> ### Aliases: fit_density_ratio
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fit_plug_and_play")
+> ### * fit_plug_and_play
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fit_plug_and_play
+> ### Title: Fit presence-background distribution models in a plug-and-play
+> ###   framework.
+> ### Aliases: fit_plug_and_play
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_env_bg")
+> ### * get_env_bg
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_env_bg
+> ### Title: Extract background data for SDM fitting.
+> ### Aliases: get_env_bg
+> 
+> ### ** Examples
+> 
+> {
++ 
++ # load in sample data
++ 
++  library(S4DM)
++  library(terra)
++ 
++  # occurrence points
++    data("sample_points")
++    occurrences <- sample_points
++ 
++  # environmental data
++    env <- rast(system.file('ex/sample_env.tif', package="S4DM"))
++ 
++  # rescale the environmental data
++ 
++    env <- scale(env)
++ 
++ bg_data <- get_env_bg(coords = occurrences,
++                       env = env,
++                       method = "buffer",
++                       width = 100000)
++ 
++ 
++ }
+terra 1.8.15
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:terra'
+
+> nameEx("get_env_pres")
+> ### * get_env_pres
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_env_pres
+> ### Title: Extract presence data for SDM fitting.
+> ### Aliases: get_env_pres
+> 
+> ### ** Examples
+> 
+>  {
++ 
++ # load in sample data
++ 
++  library(S4DM)
++  library(terra)
++ 
++  # occurrence points
++    data("sample_points")
++    occurrences <- sample_points
++ 
++  # environmental data
++    env <- rast(system.file('ex/sample_env.tif', package="S4DM"))
++ 
++  # rescale the environmental data
++ 
++    env <- scale(env)
++ 
++ env_pres <- get_env_pres(coords = occurrences,
++                         env = env)
++ 
++ }
+terra 1.8.15
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:terra'
+
+> nameEx("make_range_map")
+> ### * make_range_map
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: make_range_map
+> ### Title: Make a range map using plug-and-play modeling.
+> ### Aliases: make_range_map
+> 
+> ### ** Examples
+> 
+> {
++ 
++ # load in sample data
++ 
++  library(S4DM)
++  library(terra)
++ 
++  # occurrence points
++    data("sample_points")
++    occurrences <- sample_points
++ 
++  # environmental data
++    env <- rast(system.file('ex/sample_env.tif', package="S4DM"))
++ 
++  # rescale the environmental data
++ 
++    env <- scale(env)
++ 
++    map <- make_range_map(occurrences = occurrences,
++                          env = env,
++                          method = "gaussian",
++                          presence_method = NULL,
++                          background_method = NULL,
++                          bootstrap = "none",
++                          bootstrap_reps = 100,
++                          quantile = 0.05,
++                          background_buffer_width = 100000)
++ 
++    plot(map)
++ 
++ 
++ }
+terra 1.8.15
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:terra'
+
+> nameEx("sdm_threshold")
+> ### * sdm_threshold
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: sdm_threshold
+> ### Title: Thresholds a continuous relative occurrence rate raster to
+> ###   create a binary raster.
+> ### Aliases: sdm_threshold
+> 
+> ### ** Examples
+> 
+> {
++ 
++ # load in sample data
++ 
++ library(S4DM)
++ library(terra)
++ 
++ # occurrence points
++   data("sample_points")
++   occurrences <- sample_points
++ 
++ # environmental data
++   env <- rast(system.file('ex/sample_env.tif', package="S4DM"))
++ 
++ # rescale the environmental data
++ 
++   env <- scale(env)
++ 
++  bg_data <- get_env_bg(coords = occurrences,
++                        env = env,
++                        method = "buffer",
++                        width = 100000)
++ 
++  pres_data <- get_env_pres(coords = occurrences,
++                            env = env)
++ 
++  pnp_model <-fit_plug_and_play(presence = pres_data$env,
++                    background = bg_data$env,
++                    method = "gaussian")
++ 
++  pnp_continuous <- project_plug_and_play(pnp_model = pnp_model,
++                                          data = bg_data$env)
++ 
++  #Make an empty raster to populate
++  out_raster <- env[[1]]
++  values(out_raster) <- NA
++ 
++  # use the bg_data for indexing
++  out_raster[bg_data$bg_cells] <- pnp_continuous
++ 
++  plot(out_raster)
++ 
++  #convert to a binary raster
++ 
++  out_raster_binary <-
++    sdm_threshold(prediction_raster = out_raster,
++                occurrence_sf = pres_data$occurrence_sf,
++                quantile = 0.05,
++                return_binary = TRUE)
++ 
++  plot(out_raster_binary)
++ 
++ }
+terra 1.8.15
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:terra'
+
+> nameEx("stratify_random")
+> ### * stratify_random
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: stratify_random
+> ### Title: Split data for k-fold spatially stratified cross validation
+> ### Aliases: stratify_random
+> 
+> ### ** Examples
+> 
+> {
++ 
++ # load in sample data
++ 
++  library(S4DM)
++  library(terra)
++  library(sf)
++ 
++  # occurrence points
++    data("sample_points")
++    occurrences <- sample_points
++ 
++ 
++  occurrences <- st_as_sf(x = occurrences,coords = c(1,2))
++ 
++ 
++ random_folds <- stratify_random(occurrence_sf = occurrences,
++                                nfolds = 5)
++ 
++ 
++ }
+terra 1.8.15
+Linking to GEOS 3.12.2, GDAL 3.9.3, PROJ 9.4.1; sf_use_s2() is TRUE
+> 
+> 
+> 
+> cleanEx()
+
+detaching 'package:sf', 'package:terra'
+
+> nameEx("stratify_spatial")
+> ### * stratify_spatial
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: stratify_spatial
+> ### Title: Split data for k-fold spatially stratified cross validation
+> ### Aliases: stratify_spatial
+> 
+> ### ** Examples
+> 
+> {
++ 
++ # load in sample data
++ 
++  library(S4DM)
++  library(terra)
++  library(sf)
++ 
++  # occurrence points
++    data("sample_points")
++    occurrences <- sample_points
++ 
++ 
++  occurrences <- st_as_sf(x = occurrences,coords = c(1,2))
++ 
++ manual <- stratify_spatial(occurrence_sf = occurrences,nfolds = 5,nsubclusters = 5)
++ default <- stratify_spatial(occurrence_sf = occurrences)
++ 
++ 
++ }
+terra 1.8.15
+Linking to GEOS 3.12.2, GDAL 3.9.3, PROJ 9.4.1; sf_use_s2() is TRUE
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+
+detaching 'package:sf', 'package:terra'
+
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  1.59 0.05 4.78 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

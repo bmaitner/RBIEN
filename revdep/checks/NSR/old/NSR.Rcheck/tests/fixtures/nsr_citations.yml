@@ -1,0 +1,103 @@
+http_interactions:
+- request:
+    method: post
+    uri: https://nsrapi.xyz/nsr_wsb.php
+    body:
+      encoding: ''
+      string: '{"opts":{"mode":"citations"}}'
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      charset: UTF-8
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Wed, 09 Oct 2024 20:35:10 GMT
+      server: Apache
+      access-control-allow-origin: '*'
+      content-length: '6152'
+      content-type: application/json
+    body:
+      encoding: ''
+      file: no
+      string: '[{"citations":{"source":"nsr.app","citation":"@misc{nsr.app, author
+        = {Boyle, B. L. and Maitner, B. and Barbosa, G. C. and Rethvick, S. Y. B.
+        and Enquist, B. J.}, journal = {Botanical Information and Ecology Network},
+        title = {Native Species Resolver}, year = {2024}, url = {https:\/\/nsr.biendata.org\/},
+        note = {Accessed <date_of_access>} }"}},{"citations":{"source":"conosur","citation":"@article{conosur,
+        abstract = {The checklist of the vascular plants of the Southern Cone presents
+        updated information of 19,787 taxa and 44,943 synonyms, distributed in 2,679
+        genera and 318 families. This checklist was prepared, and its permanently
+        updated, using the database \"Documenta Florae Australis\", with the contribution
+        of numerous researchers and institutions, and constitutes the bases for the
+        Flora of Argentina, currently under preparation. Here we evaluate the current
+        knowledge of vascular plants in the Southern Cone and provide a summary of
+        the ongoing Flora of Argentina, and the significance of these projects for
+        the World Flora on line and to the botanical studies in the region.}, author
+        = {Zuloaga, Fernando O. and Belgrano, Manuel J.}, doi = {10.1590\/2175-7860201566405},
+        file = {:Users\/bboyle\/Documents\/reprints\/Zuloana_belgrano_2015.pdf:pdf},
+        issn = {21757860}, journal = {Rodriguesia}, keywords = {Endemism,Flora,South
+        America,Southern Cone}, number = {4}, pages = {989--1024}, title = {{The catalogue
+        of vascular plants of the southern cone and the Flora of Argentina: Their
+        contribution to the World Flora}}, volume = {66}, year = {2015} }\\n"}},{"citations":{"source":"flbr","citation":"@article{flbr,
+        author = {Flora e Funga do Brasil}, journal = {Instituto de Pesquisas Jardim
+        Botanico do Rio de Janeiro}, note = {Dataset\/Checklist.}, title = {Flora
+        e Funga do Brasil project - Projeto Flora e Funga do Brasil}, volume = {v393.404},
+        year = {2024}, doi = {10.15468\/1mtkaw}, url = {http:\/\/ipt.jbrj.gov.br\/jbrj\/resource?r=lista_especies_flora_brasil#downloads},
+        version = {2024-08-01} }\\n"}},{"citations":{"source":"fwi","citation":"@article{fwi,
+        author = {Acevedo-Rodr{''{i}}guez, P. and Strong, M.T.}, title = {{Catalogue
+        of the seed plants of the West Indies}}, url = {https:\/\/naturalhistory2.si.edu\/botany\/WestIndies\/},
+        urldate = {2017-08-23}, year = {2007} }\\n"}},{"citations":{"source":"mab","citation":"@book{mab,title={Mabberley''s
+        plant-book: a portable dictionary of plants, their classifications and uses.},author={Mabberley,
+        David John and others},number={Ed. 3},year={2008},publisher={Cambridge University
+        Press}}"}},{"citations":{"source":"mexico","citation":"@article{mexico, author
+        = {Villase{~{n}}or, Jos{''{e}} Luis}, doi = {10.1016\/j.rmb.2016.06.017},
+        issn = {18703453}, journal = {Revista Mexicana de Biodiversidad}, keywords
+        = {Biodiversity,Biomes,Endemism,Flora of Mexico,Floristic studies,Inventories},
+        number = {3}, pages = {559--902}, title = {{Cat{''{a}}logo de las plantas
+        vasculares nativas de M{''{e}}xico}}, volume = {87}, year = {2016} }\\n"}},{"citations":{"source":"newguinea","citation":"@article{newguinea,
+        author={C{''a}mara-Leret, Rodrigo and Frodin, David G. and Adema, Frits and
+        Anderson, Christiane and Appelhans, Marc S. and Argent, George and Arias Guerrero,
+        Susana and Ashton, Peter and Baker, William J. and Barfod, Anders S. and Barrington,
+        David and Borosova, Renata and Bramley, Gemma L. C. and Briggs, Marie and
+        Buerki, Sven and Cahen, Daniel and Callmander, Martin W. and Cheek, Martin
+        and Chen, Cheng-Wei and Conn, Barry J. and Coode, Mark J. E. and Darbyshire,
+        Iain and Dawson, Sally and Dransfield, John and Drinkell, Clare and Duyfjes,
+        Brigitta and Ebihara, Atsushi and Ezedin, Zacky and Fu, Long-Fei and Gideon,
+        Osia and Girmansyah, Deden and Govaerts, Rafa{\"e}l and Fortune-Hopkins, Helen
+        and Hassemer, Gustavo and Hay, Alistair and Heatubun, Charlie D. and Hind,
+        D. J. Nicholas and Hoch, Peter and Homot, Peter and Hovenkamp, Peter and Hughes,
+        Mark and Jebb, Matthew and Jennings, Laura and Jimbo, Tiberius and Kessler,
+        Michael and Kiew, Ruth and Knapp, Sandra and Lamei, Penniel and Lehnert, Marcus
+        and Lewis, Gwilym P. and Linder, Hans Peter and Lindsay, Stuart and Low, Yee
+        Wen and Lucas, Eve and Mancera, Jeffrey P. and Monro, Alexandre K. and Moore,
+        Alison and Middleton, David J. and Nagamasu, Hidetoshi and Newman, Mark F.
+        and Nic Lughadha, Eimear and Melo, Pablo H. A. and Ohlsen, Daniel J. and Pannell,
+        Caroline M. and Parris, Barbara and Pearce, Laura and Penneys, Darin S. and
+        Perrie, Leon R. and Petoe, Peter and Poulsen, Axel Dalberg and Prance, Ghillean
+        T. and Quakenbush, J. Peter and Raes, Niels and Rodda, Michele and Rogers,
+        Zachary S. and Schuiteman, Andr{''e} and Schwartsburd, Pedro and Scotland,
+        Robert W. and Simmons, Mark P. and Simpson, David A. and Stevens, Peter and
+        Sundue, Michael and Testo, Weston and Trias-Blasi, Anna and Turner, Ian and
+        Utteridge, Timothy and Walsingham, Lesley and Webber, Bruce L. and Wei, Ran
+        and Weiblen, George D. and Weigend, Maximilian and Weston, Peter and de Wilde,
+        Willem and Wilkie, Peter and Wilmot-Dear, Christine M. and Wilson, Hannah
+        P. and Wood, John R. I. and Zhang, Li-Bing and van Welzen, Peter C.}, title={New
+        Guinea has the world''s richest island flora}, journal={Nature}, year={2020},
+        month={Aug}, day={01}, volume={584}, number={7822}, pages={579-583}, issn={1476-4687},
+        doi={10.1038\/s41586-020-2549-5}, url={https:\/\/doi.org\/10.1038\/s41586-020-2549-5}
+        }\\n"}},{"citations":{"source":"powo","citation":"@misc{powo, author = {POWO},
+        booktitle = {Facilitated by the Royal Botanic Gardens, Kew}, title = {{Plants
+        of the World Online. Version 13.}}, url = {https:\/\/powo.science.kew.org\/},
+        urldate = {2024-09-16}, year = {2024} }\\n"}},{"citations":{"source":"vascan","citation":"@misc{vascan,
+        author = {Brouillet, L. and Desmet, P. and Coursol, F. and Meades, S.J. and
+        Favreau, M. and Anions, M. and B{''{e}}lisle, P. and Gendreau, C. and Shorthouse,
+        D. and contributors}, doi = {http:\/\/doi.org\/10.3897\/phytokeys.25.3100},
+        title = {{Database of Vascular Plants of Canada (VASCAN)}}, url = {http:\/\/data.canadensys.net\/vascan},
+        urldate = {16 September 2024.}, year = {2024} }\\n"}}]'
+  recorded_at: 2024-10-09 20:35:11 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

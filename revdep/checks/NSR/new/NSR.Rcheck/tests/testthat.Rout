@@ -1,0 +1,33 @@
+
+R version 4.4.2 (2024-10-31 ucrt) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(NSR)
+> 
+> 
+> test_check("NSR")
+[ FAIL 0 | WARN 0 | SKIP 1 | PASS 12 ]
+
+══ Skipped tests (1) ═══════════════════════════════════════════════════════════
+• On CRAN (1): 'test-NSR_metadata.R:6:3'
+
+[ FAIL 0 | WARN 0 | SKIP 1 | PASS 12 ]
+> 
+> proc.time()
+   user  system elapsed 
+   0.51    0.10    1.04 
+Ran 20/20 deferred expressions

@@ -1,0 +1,31 @@
+http_interactions:
+- request:
+    method: post
+    uri: https://nsrapi.xyz/nsr_wsb.php
+    body:
+      encoding: ''
+      string: '{"opts":{"mode":"resolve"},"data":[["Acer rubrum","Canada","Ontario",null,1]]}'
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      charset: UTF-8
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Wed, 09 Oct 2024 20:35:13 GMT
+      server: Apache
+      access-control-allow-origin: '*'
+      content-length: '500'
+      content-type: application/json
+    body:
+      encoding: ''
+      file: no
+      string: '{"id":["family","genus","species","country","state_province","county_parish","poldiv_full","poldiv_type","native_status_country","native_status_state_province","native_status_county_parish","native_status","native_status_reason","native_status_sources","isIntroduced","isCultivatedNSR","is_cultivated_taxon","user_id"],"2356":["Sapindaceae","Acer","Acer
+        rubrum","Canada","Ontario","","Canada:Ontario","state_province","N","N","","N","Native
+        to region, as per checklist","powo, usda","0","0","0","1"]}'
+  recorded_at: 2024-10-09 20:35:13 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

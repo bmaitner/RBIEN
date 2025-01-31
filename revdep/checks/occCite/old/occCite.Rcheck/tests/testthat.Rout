@@ -1,0 +1,103 @@
+
+R version 4.4.2 (2024-10-31 ucrt) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(occCite)
+> 
+> test_check("occCite")
+	
+ OccCite query occurred on: 20 June, 2024
+	
+ User query type: User-supplied list of taxa.
+	
+ Sources for taxonomic rectification: GBIF Backbone Taxonomy
+ 	
+	
+ Taxonomic cleaning results: 	
+
+         Input Name                Best Match Taxonomic Databases w/ Matches
+1 Protea cynaroides Protea cynaroides (L.) L.         GBIF Backbone Taxonomy
+	
+ Sources for occurrence data: gbif, bien
+ 	
+                    Species Occurrences Sources
+1 Protea cynaroides (L.) L.        2334      17
+	
+ GBIF dataset DOIs: 	
+
+                    Species GBIF Access Date           GBIF DOI
+1 Protea cynaroides (L.) L.       2022-03-02 10.15468/dl.ztbx8c
+	
+ OccCite query occurred on: 20 June, 2024
+	
+ User query type: User-supplied list of taxa.
+	
+ Sources for taxonomic rectification: GBIF Backbone Taxonomy
+ 	
+	
+ Taxonomic cleaning results: 	
+
+         Input Name                Best Match Taxonomic Databases w/ Matches
+1 Protea cynaroides Protea cynaroides (L.) L.         GBIF Backbone Taxonomy
+	
+ Sources for occurrence data: gbif
+ 	
+                    Species Occurrences Sources
+1 Protea cynaroides (L.) L.        2189      13
+	
+ GBIF dataset DOIs: 	
+
+                    Species GBIF Access Date           GBIF DOI
+1 Protea cynaroides (L.) L.       2022-03-02 10.15468/dl.ztbx8c
+	
+ OccCite query occurred on: 20 June, 2024
+	
+ User query type: User-supplied list of taxa.
+	
+ Sources for taxonomic rectification: GBIF Backbone Taxonomy
+ 	
+	
+ Taxonomic cleaning results: 	
+
+         Input Name                Best Match Taxonomic Databases w/ Matches
+1 Protea cynaroides Protea cynaroides (L.) L.         GBIF Backbone Taxonomy
+	
+ Sources for occurrence data: bien
+ 	
+                    Species Occurrences Sources
+1 Protea cynaroides (L.) L.         145       4
+[ FAIL 0 | WARN 0 | SKIP 20 | PASS 123 ]
+
+══ Skipped tests (20) ══════════════════════════════════════════════════════════
+• On CRAN (15): 'test-GBIFLoginManager.R:6:3', 'test-GBIFLoginManager.R:19:3',
+  'test-GBIFtableCleanup.R:6:3', 'test-gbifRetriever.R:6:3',
+  'test-gbifRetriever.R:29:3', 'test-getBIENpoints.R:6:3',
+  'test-getBIENpoints.R:28:3', 'test-getGBIFpoints.R:6:3',
+  'test-getGBIFpoints.R:24:3', 'test-occCitation.R:26:3',
+  'test-prevGBIFdownload.R:6:3', 'test-prevGBIFdownload.R:34:3',
+  'test-tabGBIF.R:9:3', 'test-tabGBIF.R:24:3', 'test-tabGBIF.R:48:3'
+• empty test (1): 'test-occCitePrint.R:4:1'
+• httr::http_error("https://resolver.globalnames.org/data_sources.json") is
+  TRUE (3): 'test-studyTaxonList.R:17:3', 'test-studyTaxonList.R:52:3',
+  'test-taxonRectification.R:31:3'
+• internet connection established (1): 'test-occCitation.R:115:3'
+
+[ FAIL 0 | WARN 0 | SKIP 20 | PASS 123 ]
+> 
+> proc.time()
+   user  system elapsed 
+   0.79    0.07   10.48 

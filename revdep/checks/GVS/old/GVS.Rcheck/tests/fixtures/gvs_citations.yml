@@ -1,0 +1,35 @@
+http_interactions:
+- request:
+    method: post
+    uri: https://gvsapi.xyz/gvs_api.php
+    body:
+      encoding: ''
+      string: '{"opts":{"mode":"citations"}}'
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      charset: UTF-8
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Tue, 03 Dec 2024 21:59:34 GMT
+      server: Apache
+      access-control-allow-origin: '*'
+      content-length: '517'
+      content-type: application/json
+    body:
+      encoding: ''
+      file: no
+      string: '[{"source":"gvs.app","citation":"@misc{gvs, author = {Boyle, B. L.
+        and Maitner, B. and Park, D. S. and Rethvick, S. Y. B. and Enquist, B. J.},
+        journal = {Botanical Information and Ecology Network}, title = {Geocoordinate
+        Validation Service}, year = 2024, url = {https:\/\/gvs.biendata.org\/}} "},{"source":"GADM","citation":"@misc{gadm,
+        author= {{University of California, Berkeley, Museum of Vertebrate Zoology}},
+        title = {Global Administrative Areas}, url = {https:\/\/gadm.org\/}, note
+        = {Accessed May 6, 2022}}"}]'
+  recorded_at: 2024-12-03 21:59:32 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

@@ -1,0 +1,37 @@
+http_interactions:
+- request:
+    method: post
+    uri: https://nsrapi.xyz/nsr_wsb.php
+    body:
+      encoding: ''
+      string: '{"opts":{"mode":"dd_ns"}}'
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      charset: UTF-8
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Wed, 09 Oct 2024 20:35:11 GMT
+      server: Apache
+      access-control-allow-origin: '*'
+      content-length: '880'
+      content-type: application/json
+    body:
+      encoding: ''
+      file: no
+      string: '[{"dd_ns":{"val":"P","ordinal_position":"1","description":"Present
+        in checklist for region of observation but no explicit status assigned"}},{"dd_ns":{"val":"N","ordinal_position":"2","description":"Native
+        to region of observation"}},{"dd_ns":{"val":"Ne","ordinal_position":"3","description":"Native
+        and endemic to region of observation"}},{"dd_ns":{"val":"A","ordinal_position":"4","description":"Absent
+        from all checklists for region of observation"}},{"dd_ns":{"val":"I","ordinal_position":"5","description":"Introduced,
+        as declared in checklist for region of observation"}},{"dd_ns":{"val":"Ie","ordinal_position":"6","description":"Endemic
+        to other region and therefore introduced in region of observation"}},{"dd_ns":{"val":"UNK","ordinal_position":"7","description":"Unknown,
+        no checklists available for region of observation and taxon not known to be
+        endemic elsewhere"}}]'
+  recorded_at: 2024-10-09 20:35:11 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

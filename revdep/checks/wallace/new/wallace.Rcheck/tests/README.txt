@@ -1,0 +1,1 @@
+Before running tests library(testthat) and library(wallace) must be called. Tests are separated by function inside the testthat folder. They can be run at the same time by runnin test_dir() from the run_test.R file.

@@ -1,0 +1,35 @@
+http_interactions:
+- request:
+    method: post
+    uri: https://nsrapi.xyz/nsr_wsb.php
+    body:
+      encoding: ''
+      string: '{"opts":{"mode":"meta"}}'
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      charset: UTF-8
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      date: Wed, 09 Oct 2024 20:35:15 GMT
+      server: Apache
+      access-control-allow-origin: '*'
+      content-length: '737'
+      content-type: application/json
+    body:
+      encoding: ''
+      file: no
+      string: '[{"meta":{"app_version":"3.0","db_version":"3.0","db_version_comments":"Integrate
+        past hotfixes, remove enquist, update powo, flbr, conosur, vascan","db_modified_date":"2024-09-25","db_full_build_date":"2024-09-25","code_version":"3.0","code_version_release_date":"2024-09-25","code_version_comments":"Modifications
+        to support more complete metadata and schema changes to source powo","citation":"@misc{nsr.app,
+        author = {Boyle, B. L. and Maitner, B. and Barbosa, G. C. and Rethvick, S.
+        Y. B. and Enquist, B. J.}, journal = {Botanical Information and Ecology Network},
+        title = {Native Species Resolver}, year = {2024}, url = {https:\/\/nsr.biendata.org\/},
+        note = {Accessed <date_of_access>} }","publication":"","logo_path":"images\/"}}]'
+  recorded_at: 2024-10-09 20:35:15 GMT
+  recorded_with: vcr/1.6.0, webmockr/1.0.0

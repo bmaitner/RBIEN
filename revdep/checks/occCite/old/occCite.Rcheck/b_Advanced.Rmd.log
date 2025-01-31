@@ -1,0 +1,156 @@
+
+> library(ape)
+
+> library(occCite)
+
+> knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+
+> knitr::opts_knit$set(root.dir = system.file("extdata/", 
++     package = "occCite"))
+
+> data(myOccCiteObject)
+
+> myOldOccCiteObject <- myOccCiteObject
+
+> head(myOldOccCiteObject@occResults$`Protea cynaroides`$GBIF$OccurrenceTable)
+               name longitude  latitude coordinateUncertaintyInMeters day month
+1 Protea cynaroides  18.43928 -33.95440                             8  17     2
+2 Protea cynaroides  22.12754 -33.91561                             4  11     2
+3 Protea cynaroides  18.43927 -33.95429                             8  17     2
+4 Protea cynaroides  18.43254 -34.29275                            31   6     2
+5 Protea cynaroides  18.42429 -34.02934                          2167  10     2
+6 Protea cynaroides  18.43529 -34.10545                             2   8     2
+  year                           datasetKey dataService
+1 2022 50c9509d-22c7-4a22-a47d-8c48425ef4a7        GBIF
+2 2022 50c9509d-22c7-4a22-a47d-8c48425ef4a7        GBIF
+3 2022 50c9509d-22c7-4a22-a47d-8c48425ef4a7        GBIF
+4 2022 50c9509d-22c7-4a22-a47d-8c48425ef4a7        GBIF
+5 2022 50c9509d-22c7-4a22-a47d-8c48425ef4a7        GBIF
+6 2022 50c9509d-22c7-4a22-a47d-8c48425ef4a7        GBIF
+                              datasetName
+1 iNaturalist Research-grade Observations
+2 iNaturalist Research-grade Observations
+3 iNaturalist Research-grade Observations
+4 iNaturalist Research-grade Observations
+5 iNaturalist Research-grade Observations
+6 iNaturalist Research-grade Observations
+
+> summary(myOldOccCiteObject)
+	
+ OccCite query occurred on: 20 June, 2024
+	
+ User query type: User-supplied list of taxa.
+	
+ Sources for taxonomic rectification: GBIF Backbone Taxonomy
+ 	
+	
+ Taxonomic cleaning results: 	
+
+         Input Name                Best Match Taxonomic Databases w/ Matches
+1 Protea cynaroides Protea cynaroides (L.) L.         GBIF Backbone Taxonomy
+	
+ Sources for occurrence data: gbif, bien
+ 	
+                    Species Occurrences Sources
+1 Protea cynaroides (L.) L.        2334      17
+	
+ GBIF dataset DOIs: 	
+
+                    Species GBIF Access Date           GBIF DOI
+1 Protea cynaroides (L.) L.       2022-03-02 10.15468/dl.ztbx8c
+
+> myOldOccCitations <- occCitation(myOldOccCiteObject)
+
+> print(myOldOccCitations)
+Writing 5 Bibtex entries ... OK
+Results written to file 'temp.bib'
+AFFOUARD A, JOLY A, LOMBARDO J, CHAMP J, GOEAU H, CHOUET M, GRESSE H, BONNET P (2023). Pl@ntNet observations. Version 1.8. Pl@ntNet. https://doi.org/10.15468/gtebaa. Accessed via GBIF on 2022-03-02.
+AFFOUARD A, JOLY A, LOMBARDO J, CHAMP J, GOEAU H, CHOUET M, GRESSE H, BOTELLA C, BONNET P (2023). Pl@ntNet automatically identified occurrences. Version 1.8. Pl@ntNet. https://doi.org/10.15468/mma2ec. Accessed via GBIF on 2022-03-02.
+Chamberlain, S., Barve, V., Mcglinn, D., Oldoni, D., Desmet, P., Geffert, L., Ram, K. (2025). rgbif: Interface to the Global Biodiversity Information Facility API. R package version 3.8.1. https://CRAN.R-project.org/package = rgbif.
+Chamberlain, S., Boettiger, C. (2017). R Python, and Ruby clients for GBIF species occurrence data. PeerJ PrePrints.
+Fatima Parker-Allie, Ranwashe F (2018). PRECIS. South African National Biodiversity Institute. https://doi.org/10.15468/rckmn2. Accessed via GBIF on 2022-03-02.
+MNHN, Chagnoux S (2025). The vascular plants collection (P) at the Herbarium of the Muséum national d'Histoire Naturelle (MNHN - Paris). Version 69.397. MNHN - Museum national d'Histoire naturelle. https://doi.org/10.15468/nc6rxy. Accessed via GBIF on 2022-03-02.
+MNHN. Accessed via BIEN on NA.
+Maitner, B. (2023). . R package version 1.2.6. https://CRAN.R-project.org/package = BIEN.
+Missouri Botanical Garden,Herbarium. Accessed via BIEN on NA.
+Observation.org (2025). Observation.org, Nature data from around the World. https://doi.org/10.15468/5nilie. Accessed via GBIF on 2022-03-02.
+Owens, H., Merow, C., Maitner, B., Kass, J., Barve, V., Guralnick, R. (2025). occCite: Querying and Managing Large Biodiversity Occurrence Datasets. R package version 0.5.9. https://CRAN.R-project.org/package = occCite.
+Ranwashe F (2024). Botanical Database of Southern Africa (BODATSA): Botanical Collections. Version 1.26. South African National Biodiversity Institute. https://doi.org/10.15468/2aki0q. Accessed via GBIF on 2022-03-02.
+Rob Cubey (2022). Royal Botanic Garden Edinburgh Living Plant Collections (E). Royal Botanic Garden Edinburgh. https://doi.org/10.15468/bkzv1l. Accessed via GBIF on 2022-03-02.
+SANBI. Accessed via BIEN on NA.
+Senckenberg (2020). African Plants - a photo guide. https://doi.org/10.15468/r9azth. Accessed via GBIF on 2022-03-02.
+Taylor S (2019). G. S. Torrey Herbarium at the University of Connecticut (CONN). University of Connecticut. https://doi.org/10.15468/w35jmd. Accessed via GBIF on 2022-03-02.
+Team}, {.C. (2024). R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing, Vienna, Austria. https://www.R-project.org/.
+Teisher J, Stimmel H (2025). Tropicos MO Specimen Data. Missouri Botanical Garden. https://doi.org/10.15468/hja69f. Accessed via GBIF on 2022-03-02.
+Tela Botanica. Carnet en Ligne. https://doi.org/10.15468/rydcn2. Accessed via GBIF on 2022-03-02.
+UConn. Accessed via BIEN on NA.
+iNaturalist contributors, iNaturalist (2025). iNaturalist Research-grade Observations. iNaturalist.org. https://doi.org/10.15468/ab3s5x. Accessed via GBIF on 2022-03-02.
+naturgucker.de. NABU|naturgucker. https://doi.org/10.15468/uc1apo. Accessed via GBIF on 2022-03-02.
+
+
+> library(ape)
+
+> treeFile <- system.file("extdata/Fish_12Tax_time_calibrated.tre", 
++     package = "occCite")
+
+> phylogeny <- ape::read.nexus(treeFile)
+
+> tree <- ape::extract.clade(phylogeny, 22)
+
+> myPhyOccCiteObject <- studyTaxonList(x = tree, datasources = "GBIF Backbone Taxonomy")
+handled warning: Package taxize unavailable. Skipping taxonomic rectification.
+handled warning: Package taxize unavailable. Skipping taxonomic rectification.
+handled warning: Package taxize unavailable. Skipping taxonomic rectification.
+
+> myPhyOccCiteObject <- occQuery(x = myPhyOccCiteObject, 
++     datasources = "gbif", GBIFDownloadDirectory = system.file("extdata/", 
++         packa .... [TRUNCATED] 
+Warning in gbifRetriever(searchTaxa[[i]]) :
+  GBIF unreachable; please try again later. 
+
+Warning in gbifRetriever(searchTaxa[[i]]) :
+  GBIF unreachable; please try again later. 
+
+Warning in gbifRetriever(searchTaxa[[i]]) :
+  GBIF unreachable; please try again later. 
+
+
+> summary(myPhyOccCiteObject)
+	
+ OccCite query occurred on: 31 January, 2025
+	
+ User query type: User-supplied phylogeny.
+	
+ Sources for taxonomic rectification: GBIF Backbone Taxonomy
+ 	
+	
+ Taxonomic cleaning results: 	
+
+                  Input Name                 Best Match
+1 Tetrapturus_angustirostris Tetrapturus_angustirostris
+2         Tetrapturus_belone         Tetrapturus_belone
+3      Tetrapturus_pfluegeri      Tetrapturus_pfluegeri
+  Taxonomic Databases w/ Matches
+1                 Not rectified.
+2                 Not rectified.
+3                 Not rectified.
+	
+ Sources for occurrence data: gbif
+ 	
+                     Species Occurrences Sources
+1 Tetrapturus_angustirostris           0       0
+2         Tetrapturus_belone           0       0
+3      Tetrapturus_pfluegeri           0       0
+	
+ GBIF dataset DOIs: 	
+
+                     Species GBIF Access Date GBIF DOI
+1 Tetrapturus_angustirostris             <NA>     <NA>
+2         Tetrapturus_belone             <NA>     <NA>
+3      Tetrapturus_pfluegeri             <NA>     <NA>
+
+> plot(myPhyOccCiteObject)
+
+  When sourcing 'b_Advanced.R':
+Error: subscript out of bounds
+Execution halted
