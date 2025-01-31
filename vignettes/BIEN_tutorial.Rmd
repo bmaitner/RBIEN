@@ -114,8 +114,7 @@ head(Xanthium_strumarium)
 
 ```
 
-The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  The meaning of some of these columns is obvious (e.g. latitude, longitude), however others may be less clear.  The meanings of these columns and the information within is explained in more detail in our data dictionary, available at 
-https://bien.nceas.ucsb.edu/bien/tools/rbien/data-dictionary/
+The default data that is returned consists of the latitude, longitude and date collected, along with a set of attribution data.  The meaning of some of these columns is obvious (e.g. latitude, longitude), however others may be less clear.  The meanings of these columns and the information within is explained in more detail in our data dictionary, which can be accesed using the function `BIEN_metadata_data_dictionaries`. 
 
 If we want more information on these occurrences, we just need to change the arguments:
 ```{r xs-occurrences-pt-2, eval = FALSE}
