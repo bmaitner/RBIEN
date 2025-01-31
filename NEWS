@@ -7,6 +7,7 @@
 * Update to internal function BIEN_sql to make sure dbClearResults is called.
 * Removed dependcies on raster, rgeos, and fasterize
 * fixed error that can occur when generating citations for traits
+* Updated internal functions to fail gracefully when database connections fail.
 
 ## NEW FEATURES
 * Added only.geovalid argument to BIEN_occurrence_country

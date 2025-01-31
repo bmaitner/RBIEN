@@ -3835,7 +3835,7 @@ BIEN_metadata_citation <- function(dataframe = NULL,
     sources<-.BIEN_sql(query, ...)
     
     citation<-list()
-    citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
+    citation[[1]]<-general<-"Public BIEN data are licensed via a CC-BY license.  Please see BIENdata.org for more information.
     The references in this list should be added to any publication using these data.  This is most easily done by specifying a bibtex_file and importing the bibtex formatted references into a reference manager.
     The acknowledgements in this list should be pasted into the acknowledgements of any resulting publications.
     Be sure to check for a 'data owners to contact' section in this list, as any authors listed there need to be contacted prior to publishing with their data."
@@ -3946,7 +3946,7 @@ BIEN_metadata_citation <- function(dataframe = NULL,
   if(is.null(dataframe) & is.null(trait.dataframe)){
     
     citation<-list()
-    citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
+    citation[[1]]<-general<-"Public BIEN data are licensed via a CC-BY license.  Please see BIENdata.org for more information.
     The references in this list should be added to any publication using these data.  This is most easily done by specifying a bibtex_file and importing the bibtex formatted references into a reference manager.
     The acknowledgements in this list should be pasted into the acknowledgements of any resulting publications.
     Be sure to check for a 'data owners to contact' section in this list, as any authors listed there need to be contacted prior to publishing with their data."
@@ -3975,7 +3975,7 @@ BIEN_metadata_citation <- function(dataframe = NULL,
   
   if((!is.null(trait.dataframe) |!is.null(trait.mean.dataframe)) & is.null(dataframe)){  
     citation<-list()
-    citation[[1]]<-general<-"Public BIEN data is licensed via a CC-BY-NC-ND license.  Please see BIENdata.org for more information.
+    citation[[1]]<-general<-"Public BIEN data are licensed via a CC-BY license.  Please see BIENdata.org for more information.
     The references in this list should be added to any publication using these data.  This is most easily done by specifying a bibtex_file and importing the bibtex formatted references into a reference manager.
     The acknowledgements in this list should be pasted into the acknowledgements of any resulting publications.
     Be sure to check for a 'data owners to contact' section in this list, as any authors listed there need to be contacted prior to publishing with their data."

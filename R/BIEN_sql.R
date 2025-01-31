@@ -208,12 +208,23 @@
   }
   
   
+# Try to connect
+
   con <- dbConnect(drv,
                    host = host,
                    dbname = dbname,
                    user = user,
                    password = password)
   
+  if("error" %in% class(con)){
+    
+    message("\n There was an error connecting to the BIEN database.")
+    
+    rm(con)
+    
+    return(invisible(NULL))
+    
+  }
   
 
 
