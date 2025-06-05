@@ -1,5 +1,12 @@
 # Development Version
 ===============
+# BIEN 1.2.8
+===============
+## BUG FIXES
+
+## NEW FEATURES
+* Added only_geovalid argument to occurrences_sf
+
 
 # BIEN 1.2.7
 ===============
