@@ -2234,7 +2234,7 @@ BIEN_trait_species <- function(species,
   source_ <- .source_check_traits(source.citation)
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,", project_pi, project_pi_contact,",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits WHERE scrubbed_species_binomial in (", paste(shQuote(species, type = "sh"),collapse = ', '), ") ;")
   
@@ -2370,7 +2370,8 @@ BIEN_trait_trait <- function(trait,
   
   
   query <- paste("SELECT 
-                 scrubbed_species_binomial, trait_name, trait_value, unit, method, latitude, longitude, elevation_m, url_source",source_$select ,",project_pi, project_pi_contact",
+                 scrubbed_species_binomial, trait_name, trait_value, unit,
+                 method, latitude, longitude, elevation_m, url_source",source_$select ,",project_pi, project_pi_contact,",
                  political_$select, taxonomy_$select,", access, id 
                  FROM agg_traits WHERE trait_name in (", paste(shQuote(trait, type = "sh"),collapse = ', '), ") ;")
 
