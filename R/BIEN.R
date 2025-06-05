@@ -169,9 +169,7 @@ BIEN_occurrence_sf <- function(sf,
                     FROM 
                           (SELECT * FROM view_full_occurrence_individual 
                            WHERE higher_plant_group NOT IN ('Algae','Bacteria','Fungi') 
-                           AND is_geovalid = 1
                            AND (georef_protocol is NULL OR georef_protocol<>'county centroid')
-                           AND (is_centroid IS NULL OR is_centroid=0)
                            AND latitude BETWEEN ",lat_min," AND ",lat_max,"AND longitude BETWEEN ",long_min," AND ",long_max,") a 
                     WHERE st_intersects(ST_GeographyFromText('SRID=4326;",paste(wkt),"'),a.geom)",
                       cultivated_$query,
