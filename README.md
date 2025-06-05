@@ -2,7 +2,7 @@
 Tools for accessing the Botanical Information and Ecology Network (BIEN) database
 
 # News:
-BIEN is back up on CRAN.
+Stay tuned!
 
 ## Installing
 To install the development version of BIEN from Github:
