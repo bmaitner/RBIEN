@@ -2,7 +2,7 @@
 Tools for accessing the Botanical Information and Ecology Network (BIEN) database
 
 # News:
-Stay tuned!
+New license: We've updated the license on the BIEN data to a CC-BY license.  If you are using the Github version of the R package, this change will be reflected when you use the function BIEN_metadata_citation().  A forthcoming publication will also detail this change (and other updates to associated data products and software).
 
 ## Installing
 To install the development version of BIEN from Github:
