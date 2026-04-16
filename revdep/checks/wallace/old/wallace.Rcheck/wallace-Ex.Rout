@@ -23,7 +23,9 @@ Type 'q()' to quit R.
 > options(pager = "console")
 > library('wallace')
 Loading required package: shiny
+Warning: package 'shiny' was built under R version 4.4.3
 Loading required package: leaflet
+Warning: package 'leaflet' was built under R version 4.4.3
 > 
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
@@ -888,7 +890,7 @@ Transferring extent user-defined polygon buffered by 1 degrees.
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.18 0 1.2 NA NA 
+Time elapsed:  1.03 0.14 1.2 NA NA 
 > grDevices::dev.off()
 null device 
           1 

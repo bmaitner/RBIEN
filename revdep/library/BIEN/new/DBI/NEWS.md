@@ -1,5 +1,34 @@
 <!-- NEWS.md is maintained by https://fledge.cynkra.com, contributors should not edit this file -->
 
+# DBI 1.3.0 (2026-02-11)
+
+## Features
+
+- Add support for OpenTelemetry via the otel and otelsdk packages (@shikokuchuo, #551).
+
+## Bug fixes
+
+- `dbWithTransaction()` calls `dbRollback()` also on interrupt (@klin333, #528).
+
+- `dbQuoteLiteral()` uses the format `"%Y-%m-%d %H:%M:%S%z"` which is understood by more databases (#486).
+
+## Documentation
+
+- Add "Supported By Posit" badge to website (@krlmlr).
+
+- Render specification with newest pandoc (#568).
+
+- Add new generics to specification.
+
+## Performance
+
+- Avoid unnecessary computation in default `dbUnquoteIdentifier()` method (@MichaelChirico, #515).
+
+## Breaking changes
+
+- Many generics in the package are now a `"nonstandardGeneric"` instead of a `"standardGeneric"`: The `def` argument to `methods::setClass()` changed from a direct call to `methods::standardGeneric()` to a function that wraps `methods::standardGeneric()`. This should not affect most users, but became apparent with the tests in the dittodb package failing and is listed here for completeness. See <https://github.com/ropensci/dittodb/pull/197> for detail.
+
+
 # DBI 1.2.3 (2024-06-02)
 
 ## Bug fixes
@@ -357,7 +386,7 @@ Internal
 * New package maintainer: Kirill Müller.
 
 * `dbGetInfo()` gains a default method that extracts the information from
-  `dbGetStatement()`, `dbGetRowsAffected()`, `dbHasCompleted()`, and 
+  `dbGetStatement()`, `dbGetRowsAffected()`, `dbHasCompleted()`, and
   `dbGetRowCount()`. This means that most drivers should no longer need to
   implement `dbGetInfo()` (which may be deprecated anyway at some point) (#55).
 
@@ -371,24 +400,24 @@ Internal
 
 * New generic `dbBind()` for binding values to a parameterised query.
 
-* DBI gains a number of SQL generation functions. These make it easier to 
+* DBI gains a number of SQL generation functions. These make it easier to
   write backends by implementing common operations that are slightly
-  tricky to do absolutely correctly. 
-  
+  tricky to do absolutely correctly.
+
     * `sqlCreateTable()` and `sqlAppendTable()` create tables from a data
       frame and insert rows into an existing table. These will power most
       implementations of `dbWriteTable()`. `sqlAppendTable()` is useful
       for databases that support parameterised queries.
-      
+
     * `sqlRownamesToColumn()` and `sqlColumnToRownames()` provide a standard
       way of translating row names to and from the database.
-      
+
     * `sqlInterpolate()` and `sqlParseVariables()` allows databases without
       native parameterised queries to use parameterised queries to avoid
       SQL injection attacks.
-      
+
     * `sqlData()` is a new generic that converts a data frame into a data
-      frame suitable for sending to the database. This is used to (e.g.) 
+      frame suitable for sending to the database. This is used to (e.g.)
       ensure all character vectors are encoded as UTF-8, or to convert
       R varible types (like factor) to types supported by the database.
 
@@ -403,11 +432,11 @@ Internal
 * New concrete `ANSIConnection` class and `ANSI()` function to generate a dummy
   ANSI compliant connection useful for testing.
 
-* Default `dbQuoteString()` and `dbQuoteIdentifer()` methods now use 
+* Default `dbQuoteString()` and `dbQuoteIdentifer()` methods now use
   `encodeString()` so that special characters like `\n` are correctly escaped.
   `dbQuoteString()` converts `NA` to (unquoted) NULL.
 
-* The initial DBI proposal and DBI version 1 specification are now included as 
+* The initial DBI proposal and DBI version 1 specification are now included as
   a vignette. These are there mostly for historical interest.
 
 * The new `DBItest` package is described in the vignette.
@@ -428,15 +457,15 @@ Internal
 
 ## New and enhanced generics
 
-* `dbIsValid()` returns a logical value describing whether a connection or 
+* `dbIsValid()` returns a logical value describing whether a connection or
   result set (or other object) is still valid. (#12).
 
 * `dbQuoteString()` and `dbQuoteIdentifier()` to implement database specific
   quoting mechanisms.
 
-* `dbFetch()` added as alias to `fetch()` to provide consistent name. 
-  Implementers should define methods for both `fetch()` and `dbFetch()` until 
-  `fetch()` is deprecated in 2015. For now, the default method for `dbFetch()` 
+* `dbFetch()` added as alias to `fetch()` to provide consistent name.
+  Implementers should define methods for both `fetch()` and `dbFetch()` until
+  `fetch()` is deprecated in 2015. For now, the default method for `dbFetch()`
   calls `fetch()`.
 
 * `dbBegin()` begins a transaction (#17). If not supported, DB specific
@@ -444,7 +473,7 @@ Internal
 
 ## New default methods
 
-* `dbGetStatement()`, `dbGetRowsAffected()`, `dbHasCompleted()`, and 
+* `dbGetStatement()`, `dbGetRowsAffected()`, `dbHasCompleted()`, and
   `dbGetRowCount()` gain default methods that extract the appropriate elements
   from `dbGetInfo()`. This means that most drivers should no longer need to
   implement these methods (#13).
@@ -454,21 +483,21 @@ Internal
 
 ## Deprecated features
 
-* The following functions are soft-deprecated. They are going away, 
+* The following functions are soft-deprecated. They are going away,
   and developers who use the DBI should begin preparing. The formal deprecation
-  process will begin in July 2015, where these function will emit warnings 
+  process will begin in July 2015, where these function will emit warnings
   on use.
 
     * `fetch()` is replaced by `dbFetch()`.
 
-    * `make.db.names()`, `isSQLKeyword()` and `SQLKeywords()`: a black list 
-      based approach is fundamentally flawed; instead quote strings and 
+    * `make.db.names()`, `isSQLKeyword()` and `SQLKeywords()`: a black list
+      based approach is fundamentally flawed; instead quote strings and
       identifiers with `dbQuoteIdentifier()` and `dbQuoteString()`.
-  
+
 * `dbGetDBIVersion()` is deprecated since it's now just a thin wrapper
   around `packageVersion("DBI")`.
 
-* `dbSetDataMappings()` (#9) and `dbCallProc()` (#7) are deprecated as no 
+* `dbSetDataMappings()` (#9) and `dbCallProc()` (#7) are deprecated as no
   implementations were ever provided.
 
 ## Other improvements
@@ -526,7 +555,7 @@ Internal
 
 * Had to do a substantial re-formatting of the documentation
   due to incompatibilities introduced in 1.8.0 S4 method
-  documentation. The contents were not changed (modulo fixing 
+  documentation. The contents were not changed (modulo fixing
   a few typos).  Thanks to Kurt Hornik and John Chambers for
   their help.
 
@@ -536,14 +565,14 @@ Internal
 
 # Version 0.1-5
 
-* Removed duplicated setGeneric("dbSetDataMappings") 
+* Removed duplicated setGeneric("dbSetDataMappings")
 
 # Version 0.1-4
 
 * Removed the "valueClass" from some generic functions, namely,
   dbListConnections, dbListResults, dbGetException, dbGetQuery,
   and dbGetInfo.  The reason is that methods for these generics
-  could potentially return different classes of objects (e.g., 
+  could potentially return different classes of objects (e.g.,
   the call dbGetInfo(res) could return a list of name-value pairs,
   while dbGetInfo(res, "statement") could be a character vector).
 

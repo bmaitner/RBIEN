@@ -4,7 +4,7 @@
 * R was compiled by
     gcc.exe (GCC) 13.3.0
     GNU Fortran (GCC) 13.3.0
-* running under: Windows 11 x64 (build 22631)
+* running under: Windows 11 x64 (build 26100)
 * using session charset: UTF-8
 * using options '--no-manual --no-build-vignettes'
 * checking for file 'wallace/DESCRIPTION' ... OK
@@ -17,7 +17,11 @@
 * checking for executable files ... OK
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
-* checking whether package 'wallace' can be installed ... OK
+* checking whether package 'wallace' can be installed ... WARNING
+Found the following significant warnings:
+  Warning: package 'shiny' was built under R version 4.4.3
+  Warning: package 'leaflet' was built under R version 4.4.3
+See 'C:/Users/bmaitner/Desktop/current_projects/RBIEN/revdep/checks/wallace/old/wallace.Rcheck/00install.out' for details.
 * checking installed package size ... OK
 * checking package directory ... OK
 * checking DESCRIPTION meta-information ... OK
@@ -52,7 +56,6 @@
   Running 'testthat.R'
 Running the tests in 'tests/testthat.R' failed.
 Last 13 lines of output:
-   6.       └─base::stopifnot(maxent(silent = TRUE))
   ── Error ('test_xfer_userEnvs.R:22:1'): (code run outside of `test_that()`) ────
   Error in `.local(object, ...)`: maxent(silent = TRUE) is not TRUE
   Backtrace:
@@ -64,8 +67,9 @@ Last 13 lines of output:
    5.     └─dismo (local) .local(object, ...)
    6.       └─base::stopifnot(maxent(silent = TRUE))
   
-  [ FAIL 4 | WARN 1 | SKIP 5 | PASS 231 ]
-  Error: Test failures
+  [ FAIL 7 | WARN 3 | SKIP 11 | PASS 150 ]
+  Error:
+  ! Test failures.
   Execution halted
 * DONE
-Status: 1 ERROR
+Status: 1 ERROR, 1 WARNING

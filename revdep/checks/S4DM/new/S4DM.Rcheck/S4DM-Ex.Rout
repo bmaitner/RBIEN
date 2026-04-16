@@ -87,7 +87,8 @@ Type 'q()' to quit R.
 + 
 + 
 + }
-terra 1.8.15
+Warning: package 'terra' was built under R version 4.4.3
+terra 1.9.11
 Found more than one class "kcca" in cache; using the first, from namespace 'flexclust'
 Also defined by 'kernlab'
 Found more than one class "kcca" in cache; using the first, from namespace 'flexclust'
@@ -197,7 +198,8 @@ detaching 'package:terra'
 + 
 + 
 + }
-terra 1.8.15
+Warning: package 'terra' was built under R version 4.4.3
+terra 1.9.11
 > 
 > 
 > 
@@ -238,7 +240,8 @@ detaching 'package:terra'
 +                         env = env)
 + 
 + }
-terra 1.8.15
+Warning: package 'terra' was built under R version 4.4.3
+terra 1.9.11
 > 
 > 
 > 
@@ -289,7 +292,8 @@ detaching 'package:terra'
 + 
 + 
 + }
-terra 1.8.15
+Warning: package 'terra' was built under R version 4.4.3
+terra 1.9.11
 > 
 > 
 > 
@@ -362,7 +366,8 @@ detaching 'package:terra'
 +  plot(out_raster_binary)
 + 
 + }
-terra 1.8.15
+Warning: package 'terra' was built under R version 4.4.3
+terra 1.9.11
 > 
 > 
 > 
@@ -402,8 +407,10 @@ detaching 'package:terra'
 + 
 + 
 + }
-terra 1.8.15
-Linking to GEOS 3.12.2, GDAL 3.9.3, PROJ 9.4.1; sf_use_s2() is TRUE
+Warning: package 'terra' was built under R version 4.4.3
+terra 1.9.11
+Warning: package 'sf' was built under R version 4.4.3
+Linking to GEOS 3.13.0, GDAL 3.10.1, PROJ 9.5.1; sf_use_s2() is TRUE
 > 
 > 
 > 
@@ -442,8 +449,10 @@ detaching 'package:sf', 'package:terra'
 + 
 + 
 + }
-terra 1.8.15
-Linking to GEOS 3.12.2, GDAL 3.9.3, PROJ 9.4.1; sf_use_s2() is TRUE
+Warning: package 'terra' was built under R version 4.4.3
+terra 1.9.11
+Warning: package 'sf' was built under R version 4.4.3
+Linking to GEOS 3.13.0, GDAL 3.10.1, PROJ 9.5.1; sf_use_s2() is TRUE
 > 
 > 
 > 
@@ -455,7 +464,7 @@ detaching 'package:sf', 'package:terra'
 
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  1.29 0.04 4.66 NA NA 
+Time elapsed:  6.58 0.58 7.42 NA NA 
 > grDevices::dev.off()
 null device 
           1 

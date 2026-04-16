@@ -1,0 +1,46 @@
+
+> knitr::opts_chunk$set(collapse = TRUE, comment = "#>", 
++     eval = F, warning = FALSE)
+
+> knitr::include_graphics("vignettes_img/paranapine2.jpeg")
+[1] "vignettes_img/paranapine2.jpeg"
+attr(,"class")
+[1] "knit_image_paths" "knit_asis"       
+
+> library(RuHere)
+
+> set_gbif_credentials(gbif_username = "your_username", 
++     gbif_email = "your_email@domain.com", gbif_password = "your_password", 
++     verbose = .... [TRUNCATED] 
+
+> set_specieslink_credentials(specieslink_key = "your_api_key", 
++     verbose = FALSE)
+
+> output_dir <- file.path(tempdir(), "occ_data")
+
+> dir.create(output_dir)
+
+> gbif_prep <- prepare_gbif_download(species = "Araucaria angustifolia")
+
+> gbif_prep
+  with_coordinates n_records                species usageKey
+1             3215     15866 Araucaria angustifolia  2684940
+                           scientificName          canonicalName
+1 Araucaria angustifolia (Bertol.) Kuntze Araucaria angustifolia
+        authorship    rank      code   status genericName specificEpithet
+1 (Bertol.) Kuntze SPECIES BOTANICAL ACCEPTED   Araucaria    angustifolia
+        type                                         formattedName matchType
+1 SCIENTIFIC <i>Araucaria</i> <i>angustifolia</i> (Bertol.) Kuntze     EXACT
+  confidence timeTaken kingdom       phylum     class   order        family
+1         97        16 Plantae Tracheophyta Pinopsida Pinales Araucariaceae
+      genus kingdomKey phylumKey classKey orderKey familyKey genusKey
+1 Araucaria          6   7707728      194      640      3924  2684910
+  speciesKey value          verbatim_name verbatim_subfamily
+1    2684940 FALSE Araucaria angustifolia              FALSE
+
+> gbif_req <- request_gbif(gbif_info = gbif_prep, hasCoordinate = TRUE, 
++     hasGeospatialIssue = FALSE)
+
+  When sourcing 'obtaining_data.R':
+Error: 401 - Unauthorized
+Execution halted

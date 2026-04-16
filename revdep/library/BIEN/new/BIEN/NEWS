@@ -1,5 +1,27 @@
 # Development Version
 ===============
+# BIEN 1.2.8
+===============
+## BUG FIXES
+* BIEN_sql.R: wrapped dbConnect() in tryCatch() and return invisible(NULL) with
+  an informative message that includes the underlying PostgreSQL error text.
+* test-BIEN.r: added a cached BIEN-specific availability check and replaced the
+  generic offline skips.
+* BIEN_tutorial.Rmd: made vignette chunks auto-skip when the BIEN database
+  cannot be reached.
+* Update some of the BIEN_trait functions, fixing a bug related to comma
+  placement.
+
+## NEW FEATURES
+* Added only_geovalid argument to occurrences_sf
+
+
+# BIEN 1.2.7
+===============
+## BUG FIXES
+
+## NEW FEATURES
+
 
 # BIEN 1.2.7
 ===============

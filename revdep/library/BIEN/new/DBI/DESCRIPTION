@@ -1,7 +1,7 @@
 Package: DBI
 Title: R Database Interface
-Version: 1.2.3
-Date: 2024-06-02
+Version: 1.3.0
+Date: 2026-02-11
 Authors@R: c(
     person("R Special Interest Group on Databases (R-SIG-DB)", role = "aut"),
     person("Hadley", "Wickham", role = "aut"),
@@ -17,29 +17,30 @@ License: LGPL (>= 2.1)
 URL: https://dbi.r-dbi.org, https://github.com/r-dbi/DBI
 BugReports: https://github.com/r-dbi/DBI/issues
 Depends: methods, R (>= 3.0.0)
-Suggests: arrow, blob, covr, DBItest, dbplyr, downlit, dplyr, glue,
-        hms, knitr, magrittr, nanoarrow (>= 0.3.0.1), RMariaDB,
-        rmarkdown, rprojroot, RSQLite (>= 1.1-2), testthat (>= 3.0.0),
-        vctrs, xml2
+Suggests: arrow, blob, callr, covr, DBItest (>= 1.8.2), dbplyr,
+        downlit, dplyr, glue, hms, knitr, magrittr, nanoarrow (>=
+        0.3.0.1), otel, otelsdk, RMariaDB, rmarkdown, rprojroot,
+        RSQLite (>= 1.1-2), testthat (>= 3.0.0), vctrs, xml2
 VignetteBuilder: knitr
 Config/autostyle/scope: line_breaks
 Config/autostyle/strict: false
 Config/Needs/check: r-dbi/DBItest
-Encoding: UTF-8
-RoxygenNote: 7.3.1
 Config/Needs/website: r-dbi/DBItest, r-dbi/dbitemplate, adbi,
         AzureKusto, bigrquery, DatabaseConnector, dittodb, duckdb,
         implyr, lazysf, odbc, pool, RAthena, IMSMWU/RClickhouse, RH2,
         RJDBC, RMariaDB, RMySQL, RPostgres, RPostgreSQL, RPresto,
         RSQLite, sergeant, sparklyr, withr
 Config/testthat/edition: 3
+Encoding: UTF-8
+RoxygenNote: 7.3.3.9000
 NeedsCompilation: no
-Packaged: 2024-06-02 20:26:05 UTC; kirill
+Packaged: 2026-02-24 17:22:33 UTC; kirill
 Author: R Special Interest Group on Databases (R-SIG-DB) [aut],
   Hadley Wickham [aut],
-  Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>),
+  Kirill Müller [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-1416-3412>),
   R Consortium [fnd]
 Maintainer: Kirill Müller <kirill@cynkra.com>
 Repository: CRAN
-Date/Publication: 2024-06-02 21:50:02 UTC
-Built: R 4.4.2; ; 2025-01-30 01:42:46 UTC; windows
+Date/Publication: 2026-02-25 06:31:27 UTC
+Built: R 4.4.3; ; 2026-04-15 01:34:20 UTC; windows

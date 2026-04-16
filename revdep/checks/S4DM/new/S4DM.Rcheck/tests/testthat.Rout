@@ -16,17 +16,19 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library(testthat)
+Warning message:
+package 'testthat' was built under R version 4.4.3 
 > library(S4DM)
 > 
 > 
 > test_check("S4DM")
-[ FAIL 0 | WARN 0 | SKIP 1 | PASS 46 ]
+[ FAIL 0 | WARN 2 | SKIP 1 | PASS 46 ]
 
 ══ Skipped tests (1) ═══════════════════════════════════════════════════════════
 • On CRAN (1): 'test-pnp.R:150:3'
 
-[ FAIL 0 | WARN 0 | SKIP 1 | PASS 46 ]
+[ FAIL 0 | WARN 2 | SKIP 1 | PASS 46 ]
 > 
 > proc.time()
    user  system elapsed 
-  21.42    2.35   80.96 
+ 144.31   11.15  157.79 

@@ -1,0 +1,2332 @@
+
+R version 4.4.2 (2024-10-31 ucrt) -- "Pile of Leaves"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "RuHere"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> options(pager = "console")
+> library('RuHere')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("available_datasets")
+> ### * available_datasets
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: available_datasets
+> ### Title: Check the available distribution datasets for a set of species
+> ### Aliases: available_datasets
+> 
+> ### ** Examples
+> 
+> # Set directory where datasets were saved
+> # Here, we'll use the directory where the example datasets are stored
+> datadir <- system.file("extdata", "datasets",  package = "RuHere")
+> # Check available datasets
+> d <- available_datasets(data_dir = datadir,
++                         species = c("Araucaria angustifolia",
++                                     "Handroanthus serratifolius",
++                                     "Cyanocorax caeruleus"))
+> # Check available datasets and return distribution
+> d2 <- available_datasets(data_dir = datadir,
++                          species = c("Araucaria angustifolia",
++                                      "Handroanthus serratifolius",
++                                      "Cyanocorax caeruleus"),
++                          return_distribution = TRUE)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bien_here")
+> ### * bien_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bien_here
+> ### Title: Download species distribution information from BIEN
+> ### Aliases: bien_here
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("bind_here")
+> ### * bind_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: bind_here
+> ### Title: Bind occurrences after standardizing columns
+> ### Aliases: bind_here
+> 
+> ### ** Examples
+> 
+> # Import and standardize GBIF
+> data("occ_gbif", package = "RuHere") #Import data example
+> gbif_standardized <- format_columns(occ_gbif, metadata = "gbif")
+> # Import and standardize SpeciesLink
+> data("occ_splink", package = "RuHere") #Import data example
+> splink_standardized <- format_columns(occ_splink, metadata = "specieslink")
+> # Import and standardize BIEN
+> data("occ_bien", package = "RuHere") #Import data example
+> bien_standardized <- format_columns(occ_bien, metadata = "bien")
+> # Import and standardize idigbio
+> data("occ_idig", package = "RuHere") #Import data example
+> idig_standardized <- format_columns(occ_idig, metadata = "idigbio")
+> # Merge all
+> all_occ <- bind_here(gbif_standardized, splink_standardized,
++                       bien_standardized, idig_standardized)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("check_countries")
+> ### * check_countries
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: check_countries
+> ### Title: Check if the records fall in the country assigned in the
+> ###   metadata
+> ### Aliases: check_countries
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere") #Import data example
+> # Standardize country names
+> occ_country <- standardize_countries(occ = occurrences,
++                                      return_dictionary = FALSE)
+> # Check whether records fall within assigned countries
+> occ_country_checked <- check_countries(occ = occ_country,
++                                        country_column = "country_suggested")
+Warning in check_countries(occ = occ_country, country_column = "country_suggested") :
+  The following countries listed in the 'country_suggested' column were absent in the world map used for validation: NA
+Testing countries...
+54 records fall in wrong countries
+> 
+> 
+> 
+> cleanEx()
+> nameEx("check_states")
+> ### * check_states
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: check_states
+> ### Title: Check if the records fall in the state assigned in the metadata
+> ### Aliases: check_states
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere") #Import data example
+> # Subset occurrences for Araucaria angustifolia
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Standardize country names
+> occ_country <- standardize_countries(occ = occ,
++                                      return_dictionary = FALSE)
+> # Standardize state names
+> occ_state <- standardize_states(occ = occ_country,
++                                 country_column = "country_suggested",
++                                 return_dictionary = FALSE)
+> # Check whether records fall within assigned states
+> occ_state_checked <- check_states(occ = occ_state,
++                                     state_column = "state_suggested")
+Warning in check_states(occ = occ_state, state_column = "state_suggested") :
+  The following states listed in the 'state_suggested' column were absent in the world map used for validation: NA, mexico
+Testing states...
+13 records fall in wrong states
+> 
+> 
+> 
+> cleanEx()
+> nameEx("country_dictionary")
+> ### * country_dictionary
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: country_dictionary
+> ### Title: Country dictionary for standardizing country names and codes
+> ### Aliases: country_dictionary
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(country_dictionary)
+> 
+> head(country_dictionary$country_name)
+                 country_name        country_suggested
+1                        fiji                     fiji
+2 united republic of tanzania                 tanzania
+3              western sahara                w. sahara
+4                      canada                   canada
+5    united states of america united states of america
+6                  kazakhstan               kazakhstan
+> head(country_dictionary$country_code)
+  country_code        country_suggested
+1          FJI                     fiji
+2          TZA                 tanzania
+3          SAH                w. sahara
+4          CAN                   canada
+5          US1 united states of america
+6          KA1               kazakhstan
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("country_from_coords")
+> ### * country_from_coords
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: country_from_coords
+> ### Title: Extract country from coordinates
+> ### Aliases: country_from_coords
+> 
+> ### ** Examples
+> 
+> # Import and standardize GBIF
+> data("occ_gbif", package = "RuHere") #Import data example
+> gbif_standardized <- format_columns(occ_gbif, metadata = "gbif")
+> gbif_countries <- country_from_coords(occ = gbif_standardized)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("create_metadata")
+> ### * create_metadata
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: create_metadata
+> ### Title: Create metadata template
+> ### Aliases: create_metadata
+> 
+> ### ** Examples
+> 
+> # Load data example
+> # Occurrences of Puma concolor from the atlanticr R package
+> data("puma_atlanticr", package = "RuHere")
+> # Create metadata to standardize the occurrences
+> puma_metadata <- create_metadata(occ = puma_atlanticr,
++                                  scientificName = "actual_species_name",
++                                  decimalLongitude = "longitude",
++                                  decimalLatitude = "latitude",
++                                  elevation = "altitude",
++                                  country = "country",
++                                  stateProvince = "state",
++                                  municipality = "municipality",
++                                  locality = "study_location",
++                                  year = "year_finish",
++                                  habitat = "vegetation_type",
++                                  datasetName = "reference")
+> # Now, we can use this metadata to standardize the columns
+> puma_occ <- format_columns(occ = puma_atlanticr, metadata = puma_metadata,
++                            binomial_from = "actual_species_name",
++                            data_source = "atlanticr")
+Warning in FUN(X[[i]], ...) : NAs introduced by coercion
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("cultivated")
+> ### * cultivated
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: cultivated
+> ### Title: Dictionary of terms used to flag cultivated individuals
+> ### Aliases: cultivated
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(cultivated)
+> 
+> cultivated$cultivated
+ [1] "cultivated"        "cultivada"         "cultivado"        
+ [4] "cultivato"         "cultivad"          "under cultivation"
+ [7] "exotic"            "exótica"           "plantada"         
+[10] "plantado"          "planted"           "plantio"          
+[13] "arboreto"          "arboretum"         "pomar"            
+[16] "área de visitação" "cult\\."           "cant\\. [a-z]"    
+[19] "cant [A-Z]"        "cant\\. [0-9]"     "cant \\. [0-9]"   
+[22] "cant [0-9]"        "\\(cult\\)"        "\\(cult \\)"      
+[25] "in cultivo"        "in cultis"         " quadra [a-z]"    
+[28] "quadra [a-z] do"   "naturalised"       "em experimento de"
+> cultivated$not_cultivated
+ [1] "nativa"               "espontânea"           "pastagem cultivada"  
+ [4] "área do arboreto"     "presença de exóticas" " área cultivada"     
+ [7] " cultivated area"     "no plantada"          "no cultivada"        
+[10] "not cultivated"       "not planted"         
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fake_data")
+> ### * fake_data
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fake_data
+> ### Title: Fake occurrence data for testing coordinate validation functions
+> ### Aliases: fake_data
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(fake_data)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("faunabr_here")
+> ### * faunabr_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: faunabr_here
+> ### Title: Download the latest version of the Fauna do Brazil (Taxonomic
+> ###   Catalog of the Brazilian Fauna)
+> ### Aliases: faunabr_here
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fix_countries")
+> ### * fix_countries
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fix_countries
+> ### Title: Identify and correct coordinates based on country information
+> ### Aliases: fix_countries
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere") # Import example data
+> 
+> # Standardize country names
+> occ_country <- standardize_countries(occ = occurrences,
++                                      return_dictionary = FALSE)
+> 
+> # Check whether records fall within the assigned countries
+> occ_country_checked <- check_countries(occ = occ_country,
++                                        country_column = "country_suggested")
+Warning in check_countries(occ = occ_country, country_column = "country_suggested") :
+  The following countries listed in the 'country_suggested' column were absent in the world map used for validation: NA
+Testing countries...
+54 records fall in wrong countries
+> 
+> # Fix records with incorrect or misassigned countries
+> occ_country_fixed <- fix_countries(occ = occ_country_checked,
++                                    country_column = "country_suggested")
+Task 1 of 7: testing if longitude is inverted
+0 coordinates with longitude inverted
+Task 2 of 7: testing if latitude is inverted
+0 coordinates with latitude inverted
+Task 3 of 7: testing if longitude and latitude are inverted
+1 coordinates with longitude and latitude inverted
+Task 4 of 7: testing if longitude and latitude are swapped
+1 coordinates with longitude and latitude swapped
+Task 5 of 7: testing if longitude and latitude are swapped -
+            with longitude inverted
+0 coordinates with longitude and latitude swapped and latitude inverted
+Task 6 of 7: testing if longitude and latitude are swapped - with latitude inverted
+0 coordinates with longitude and latitude swapped and longitude inverted
+Task 7 of 7: testing if longitude and latitude are swapped - with longitude latitude inverted
+0 coordinates with longitude and latitude swapped and inverted
+> 
+> 
+> 
+> cleanEx()
+> nameEx("fix_states")
+> ### * fix_states
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: fix_states
+> ### Title: Identify and correct coordinates based on state information
+> ### Aliases: fix_states
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere") # Import example data
+> # Subset records of Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Standardize country names
+> occ_country <- standardize_countries(occ = occ,
++                                      return_dictionary = FALSE)
+> 
+> # Standardize state names
+> occ_state <- standardize_states(occ = occ_country,
++                                 country_column = "country_suggested",
++                                 return_dictionary = FALSE)
+> 
+> # Check whether records fall within the assigned states
+> occ_states_checked <- check_states(occ = occ_state,
++                                    state_column = "state_suggested")
+Warning in check_states(occ = occ_state, state_column = "state_suggested") :
+  The following states listed in the 'state_suggested' column were absent in the world map used for validation: NA, mexico
+Testing states...
+13 records fall in wrong states
+> 
+> # Fix records with incorrect or misassigned states
+> occ_states_fixed <- fix_states(occ = occ_states_checked,
++                                state_column = "state_suggested")
+Task 1 of 7: testing if longitude is inverted
+0 coordinates with longitude inverted
+Task 2 of 7: testing if latitude is inverted
+0 coordinates with latitude inverted
+Task 3 of 7: testing if longitude and latitude are inverted
+1 coordinates with longitude and latitude inverted
+Task 4 of 7: testing if longitude and latitude are swapped
+0 coordinates with longitude and latitude swapped
+Task 5 of 7: testing if longitude and latitude are swapped -
+            with latitude inverted
+0 coordinates with longitude and latitude swapped and latitude inverted
+Task 6 of 7: testing if longitude and latitude are swapped - with latitude inverted
+0 coordinates with longitude and latitude swapped and longitude inverted
+Task 7 of 7: testing if longitude and latitude are swapped - with longitude latitude inverted
+0 coordinates with longitude and latitude swapped and inverted
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_bien")
+> ### * flag_bien
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_bien
+> ### Title: Identify records outside natural ranges according to BIEN
+> ### Aliases: flag_bien
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Filter occurrences for golden trumpet tree
+> occ <- occurrences[occurrences$species == "Handroanthus serratifolius", ]
+> # Set folder where distributional datasets were saved
+> # Here, just a sample provided in the package
+> # You must run 'bien_here()' beforehand to download the necessary data files
+> dataset_dir <- system.file("extdata/datasets", package = "RuHere")
+> 
+> # Flag records using BIEN specialist information
+> occ_bien <- flag_bien(data_dir = dataset_dir, occ = occ)
+Checking the distribution from 1 of 1 species
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_colors")
+> ### * flag_colors
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_colors
+> ### Title: Color palette for flagged records
+> ### Aliases: flag_colors
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(flag_colors)
+> 
+> # View all flag categories and their colors
+> flag_colors
+                Wrong country                   Wrong state 
+                    "#E69F00"                     "#56B4E9" 
+                   Cultivated                        Fossil 
+                    "#16FF32"                       "black" 
+                  Inaturalist               Outside florabr 
+                    "#F0E442"                     "#782AB6" 
+              Outside faunabr                  Outside WCVP 
+                    "#782AB6"                     "#D55E00" 
+                 Outside IUCN                  Outside BIEN 
+                    "#CC79A7"                     "#0072B2" 
+                   Duplicated                    No flagged 
+                    "#FFFF80"                     "#009E73" 
+             Invalid lat-long                Equal lat-long 
+                     "gray22"                     "#F7E1A0" 
+                Zero lat-long              Capital centroid 
+                    "#85660d"                         "red" 
+                  Out of year     Country-Province centroid 
+                     "gray10"                     "orange3" 
+                     Open sea                    Urban area 
+                   "darkblue"                        "gray" 
+                      Outlier             GBIF headquarters 
+                       "pink"                     "#B00068" 
+     Biodiversity Institution Artificial Hotspot Occurrence 
+                  "firebrick"                     "#2ED9FF" 
+              Geo-Thinned out               Env-Thinned out 
+                        "red"                        "gold" 
+             Forcibly removed                     consensus 
+                     "gray25"                   "chocolate" 
+          Invalid coordinates 
+                    "#8B0A50" 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_consensus")
+> ### * flag_consensus
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_consensus
+> ### Title: Get consensus across multiple flags
+> ### Aliases: flag_consensus
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occ_flagged", package = "RuHere")
+> 
+> # Get consensus using florabr, wcvp, and iucn flags
+>  # Valid (TRUE) only when all flags are TRUE
+> occ_consensus_all <- flag_consensus(occ = occ_flagged,
++                                     flags = c("florabr", "wcvp", "iucn"),
++                                     consensus_rule = "all_true")
+> # Valid (TRUE) when at least one flag is TRUE
+> occ_consensus_any <- flag_consensus(occ = occ_flagged,
++                                     flags = c("florabr", "wcvp", "iucn"),
++                                     consensus_rule = "any_true")
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_cultivated")
+> ### * flag_cultivated
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_cultivated
+> ### Title: Flag occurrence records of cultived individuals
+> ### Aliases: flag_cultivated
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Flag fossil records
+> occ_cultivated <- flag_cultivated(occ = occurrences)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_duplicates")
+> ### * flag_duplicates
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_duplicates
+> ### Title: Flag duplicated records
+> ### Aliases: flag_duplicates
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Duplicate some records as example
+> occurrences <- rbind(occurrences[1:1000, ], occurrences[1:100,])
+> # Flag duplicates
+> occ_dup <- flag_duplicates(occ = occurrences)
+> sum(!occ_dup$duplicated_flag) #Number of duplicated records
+[1] 100
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_env_moran")
+> ### * flag_env_moran
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_env_moran
+> ### Title: Select Environmentally Thinned Occurrences Using Moran's I
+> ###   Autocorrelation
+> ### Aliases: flag_env_moran
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Subset occurrences from Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Load example of raster variables
+> data("worldclim", package = "RuHere")
+> # Unwrap Packed raster
+> r <- terra::unwrap(worldclim)
+> # Select thinned occurrences
+> occ_env_moran <- flag_env_moran(occ = occ,
++                                   n_bins = c(5, 10, 20, 30, 40, 50),
++                                   env_layers = r)
+Filtering records...
+Calculating spatial autocorrelation using Moran Index...
+> # Selected number of bins
+> occ_env_moran$n_bins
+[1] "50"
+> # Number of flagged and unflagged records
+> sum(occ_env_moran$occ$thin_env_flag) #Retained
+[1] 691
+> sum(!occ_env_moran$occ$thin_env_flag) #Flagged for thinning out
+[1] 233
+> # Results os the spatial autocorrelation analysis
+> occ_env_moran$imoran
+                  species n_bins     bio_1     bio_7    bio_12 median_moran
+5  Araucaria angustifolia      5 0.2443818 0.3288289 0.1647230    0.2443818
+10 Araucaria angustifolia     10 0.2093983 0.3634131 0.1693231    0.2093983
+20 Araucaria angustifolia     20 0.1655434 0.3455124 0.1727638    0.1727638
+30 Araucaria angustifolia     30 0.1723510 0.3503620 0.1751458    0.1751458
+40 Araucaria angustifolia     40 0.1716318 0.3369794 0.1716155    0.1716318
+50 Araucaria angustifolia     50 0.1681880 0.3367401 0.1750636    0.1750636
+   mean_moran min_moran max_moran n_filtered all_records prop_lost
+5   0.2459779 0.1647230 0.3288289         57         924 0.9383117
+10  0.2473782 0.1693231 0.3634131        197         924 0.7867965
+20  0.2279399 0.1655434 0.3455124        478         924 0.4826840
+30  0.2326196 0.1723510 0.3503620        617         924 0.3322511
+40  0.2267422 0.1716155 0.3369794        660         924 0.2857143
+50  0.2266639 0.1681880 0.3367401        691         924 0.2521645
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_faunabr")
+> ### * flag_faunabr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_faunabr
+> ### Title: Identify records outside natural ranges according to Fauna do
+> ###   Brasil
+> ### Aliases: flag_faunabr
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Get only occurrences from Azure Jay
+> occ <- occurrences[occurrences$species == "Cyanocorax caeruleus", ]
+> # Set folder where distributional datasets were saved
+> # Here, just a sample provided in the package
+> # You must run 'faunabr_here()' beforehand to download the necessary data files for your species
+> dataset_dir <- system.file("extdata/datasets", package = "RuHere")
+> # Flag records using faunabr specialist information
+> occ_fauna <- flag_faunabr(data_dir = dataset_dir, occ = occ)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_florabr")
+> ### * flag_florabr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_florabr
+> ### Title: Identify records outside natural ranges according to Flora e
+> ###   Funga do Brasil
+> ### Aliases: flag_florabr
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Get only occurrences from Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Set folder where distributional datasets were saved
+> # Here, just a sample provided in the package
+> # You must run 'florabr_here()' beforehand to download the necessary data files for your species
+> dataset_dir <- system.file("extdata/datasets", package = "RuHere")
+> 
+> # Flag records using specialist information from Flora do Brasil
+> occ_flora <- flag_florabr(data_dir = dataset_dir, occ = occ)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_fossil")
+> ### * flag_fossil
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_fossil
+> ### Title: Flag fossil records
+> ### Aliases: flag_fossil
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Flag fossil records
+> occ_fossil <- flag_fossil(occ = occurrences)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_geo_moran")
+> ### * flag_geo_moran
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_geo_moran
+> ### Title: Select Spatially Thinned Occurrences Using Moran's I
+> ###   Autocorrelation
+> ### Aliases: flag_geo_moran
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Subset occurrences from Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Load example of raster variables
+> data("worldclim", package = "RuHere")
+> # Unwrap Packed raster
+> r <- terra::unwrap(worldclim)
+> # Select thinned occurrences
+> occ_geo_moran <- flag_geo_moran(occ = occ, d = c(5, 10, 20, 30),
++                                   env_layers = r)
+Filtering records...
+Calculating spatial autocorrelation using Moran Index...
+> # Selected distance
+> occ_geo_moran$distance
+[1] "30"
+> # Number of flagged and unflagged records
+> sum(occ_geo_moran$occ$thin_geo_flag) #Retained
+[1] 297
+> sum(!occ_geo_moran$occ$thin_geo_flag) #Flagged for thinning out
+[1] 627
+> # Results os the spatial autocorrelation analysis
+> occ_geo_moran$imoran
+                  species Distance     bio_1     bio_7    bio_12 median_moran
+5  Araucaria angustifolia        5 0.1678046 0.3300641 0.1719100    0.1719100
+10 Araucaria angustifolia       10 0.1511561 0.3003992 0.1665782    0.1665782
+20 Araucaria angustifolia       20 0.1318548 0.2699369 0.1473847    0.1473847
+30 Araucaria angustifolia       30 0.1072336 0.2590974 0.1499994    0.1499994
+   mean_moran min_moran max_moran n_filtered all_records prop_lost
+5   0.2232595 0.1678046 0.3300641        836         924 0.0952381
+10  0.2060445 0.1511561 0.3003992        621         924 0.3279221
+20  0.1830588 0.1318548 0.2699369        407         924 0.5595238
+30  0.1721101 0.1072336 0.2590974        297         924 0.6785714
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_inaturalist")
+> ### * flag_inaturalist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_inaturalist
+> ### Title: Flag occurrence records sourced from iNaturalist
+> ### Aliases: flag_inaturalist
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Flag only iNaturalist records without Research Grade
+> occ_inat <- flag_inaturalist(occ = occurrences, research_grade = FALSE)
+> table(occ_inat$inaturalist_flag) # Number of records flagged (FALSE)
+
+TRUE 
+4080 
+> # Flag all iNaturalist records (including Research Grade)
+> occ_inat <- flag_inaturalist(occ = occurrences, research_grade = TRUE)
+> table(occ_inat$inaturalist_flag) # Number of records flagged (FALSE)
+
+FALSE  TRUE 
+  869  3211 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_iucn")
+> ### * flag_iucn
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_iucn
+> ### Title: Identify records outside natural ranges according to the IUCN
+> ### Aliases: flag_iucn
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Get only occurrences from Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Set folder where distributional datasets were saved
+> # Here, just a sample provided in tha package
+> # You must run 'iucn_here()' beforehand to download the necessary data files
+> dataset_dir <- system.file("extdata/datasets", package = "RuHere")
+> 
+> # Flag records using IUCN specialist information
+> occ_iucn <- flag_iucn(data_dir = dataset_dir, occ = occ)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_wcvp")
+> ### * flag_wcvp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_wcvp
+> ### Title: Identify records outside natural ranges according to the World
+> ###   Checklist of Vascular Plants
+> ### Aliases: flag_wcvp
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Filter occurrences for Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Set folder where distributional datasets were saved
+> # Here, just a sample provided in the package
+> # You must run 'wcvp_here()' beforehand to download the necessary data files
+> dataset_dir <- system.file("extdata/datasets", package = "RuHere")
+> 
+> # Flag records using WCVP specialist information
+> occ_wcvp <- flag_wcvp(data_dir = dataset_dir, occ = occ)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("flag_year")
+> ### * flag_year
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: flag_year
+> ### Title: Flag records outside a year range
+> ### Aliases: flag_year
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Flag records collected before 1980 and after 2010
+> occ_year <- flag_year(occ = occurrences, lower_limit = 1980,
++                       upper_limit = 2010)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("florabr_here")
+> ### * florabr_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: florabr_here
+> ### Title: Download the latest version of Flora e Funga do Brasil database
+> ### Aliases: florabr_here
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("format_columns")
+> ### * format_columns
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: format_columns
+> ### Title: Format and standardize column names and data types of an
+> ###   occurrence dataset
+> ### Aliases: format_columns
+> 
+> ### ** Examples
+> 
+> # Example with GBIF
+> data("occ_gbif", package = "RuHere") #Import data example
+> gbif_standardized <- format_columns(occ_gbif, metadata = "gbif")
+> # Example with SpeciesLink
+> data("occ_splink", package = "RuHere") #Import data example
+> splink_standardized <- format_columns(occ_splink, metadata = "specieslink")
+> # Example with BIEN
+> data("occ_bien", package = "RuHere") #Import data example
+> bien_standardized <- format_columns(occ_bien, metadata = "bien")
+> # Example with idigbio
+> data("occ_idig", package = "RuHere") #Import data example
+> idig_standardized <- format_columns(occ_idig, metadata = "idigbio")
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_bien")
+> ### * get_bien
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_bien
+> ### Title: Download occurrence records from BIEN
+> ### Aliases: get_bien
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_env_bins")
+> ### * get_env_bins
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_env_bins
+> ### Title: Identify Environmental Blocks and Group Nearby Records in
+> ###   Environmental Space
+> ### Aliases: get_env_bins
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Get only occurrences from Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Load example of raster variables
+> data("worldclim", package = "RuHere")
+> # Unwrap Packed raster
+> r <- terra::unwrap(worldclim)
+> # Get bins
+> b <- get_env_bins(occ = occ, env_layers = r, n_bins = 5)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_idigbio")
+> ### * get_idigbio
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_idigbio
+> ### Title: get_idigbio
+> ### Aliases: get_idigbio
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_specieslink")
+> ### * get_specieslink
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_specieslink
+> ### Title: Download occurrence records from SpeciesLink
+> ### Aliases: get_specieslink
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Retrieve records for Arecaceae in São Paulo
+> ##D res <- get_specieslink(
+> ##D   family = "Arecaceae",
+> ##D   country = "Brazil",
+> ##D   stateProvince = "São Paulo",
+> ##D   basisOfRecord = "PreservedSpecimen",
+> ##D   limit = 10
+> ##D )
+> ##D 
+> ##D # Save results as compressed CSV
+> ##D get_specieslink(
+> ##D   family = "Arecaceae",
+> ##D   country = "Brazil",
+> ##D   save = TRUE,
+> ##D   dir = tempdir(),
+> ##D   filename = "arecaceae_sp",
+> ##D   compress = TRUE
+> ##D )
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ggmap_here")
+> ### * ggmap_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ggmap_here
+> ### Title: Static Visualization of Occurrence Flags with ggplot
+> ### Aliases: ggmap_here
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occ_flagged", package = "RuHere")
+> # Visualize all flags with ggplot
+> ggmap_here(occ = occ_flagged)
+> # Visualize each flag in a separate panel
+> ggmap_here(occ = occ_flagged, facet_wrap = TRUE)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ggrid_here")
+> ### * ggrid_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ggrid_here
+> ### Title: Static Visualization of Richness and Trait Maps
+> ### Aliases: ggrid_here
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occ_flagged", package = "RuHere")
+> 
+> # Simple richness map
+> r_records <- richness_here(occ_flagged, summary = "records", res = 2)
+> ggrid_here(r_records)
+> 
+> # Density of specific flags
+> # Let's see where 'florabr' flags are concentrated
+> r_flags <- richness_here(occ_flagged, summary = "records",
++                          field = "florabr_flag",
++                          field_name = "Records flagged by florabr",
++                          fun = function(x, ...) sum(!x, na.rm = TRUE),
++                          res = 2)
+> ggrid_here(r_flags)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("import_gbif")
+> ### * import_gbif
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: import_gbif
+> ### Title: Import a download requested from GBIF
+> ### Aliases: import_gbif
+> 
+> ### ** Examples
+> 
+>  ## Not run: 
+> ##D # Prepare data to request GBIF download
+> ##D gbif_prepared <- prepare_gbif_download(species = "Araucaria angustifolia")
+> ##D # Submit a request to download occurrences
+> ##D gbif_requested <- request_gbif(gbif_info = gbif_prepared)
+> ##D # Check progress
+> ##D rgbif::occ_download_wait(gbif_requested)
+> ##D # After succeeded, import data
+> ##D occ_gbif <- import_gbif(request_key = gbif_requested)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("iucn_here")
+> ### * iucn_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: iucn_here
+> ### Title: Download species distribution information from IUCN
+> ### Aliases: iucn_here
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Define a directory to save the data
+> ##D data_dir <- tempdir() # Here, a temporary directory
+> ##D 
+> ##D # Download species distribution information from IUCN
+> ##D iucn_here(data_dir = data_dir, species = "Araucaria angustifolia")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("map_here")
+> ### * map_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: map_here
+> ### Title: Interactive Visualization of Occurrence Flags with mapview
+> ### Aliases: map_here
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("moranfast")
+> ### * moranfast
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: moranfast
+> ### Title: Fast Moran's I Autocorrelation Index
+> ### Aliases: moranfast
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Filter occurrences of Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Load example of raster variables
+> data("worldclim", package = "RuHere")
+> # Unwrap Packed raster
+> r <- terra::unwrap(worldclim)
+> # Extract values for bio_1
+> bio_1 <- terra::extract(r$bio_1,
++                         occ[, c("decimalLongitude", "decimalLatitude")],
++                         ID = FALSE, xy = TRUE)
+> #Remove NAs
+> bio_1 <- na.omit(bio_1)
+> # Convert values to numeric
+> v <- as.numeric(bio_1$bio_1)
+> # Compute geographic distance matrix
+> d <- fields::rdist.earth(x1 = as.matrix(bio_1[, c("x", "y")]), miles = FALSE)
+> # Inverse-distance weights
+> d <- 1/d
+> # Fill diagonal with 0
+> diag(d) <- 0
+> # Remove finite values
+> d[is.infinite(d)] <- 0
+> # Compute Moran's I
+> m <- moranfast(x = v, weight = d, scale = TRUE)
+> # Print results
+> m
+$observed
+[1] 0.1793113
+
+$expected
+[1] -0.00128866
+
+$sd
+[1] 0.009381633
+
+$p.value
+[1] 0
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("occ_bien")
+> ### * occ_bien
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: occ_bien
+> ### Title: Occurrence records of Yellow Trumpet Tree from BIEN
+> ### Aliases: occ_bien
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> # View dataset
+> head(occ_bien)
+   scrubbed_species_binomial native_status               native_status_reason
+1 Handroanthus serratifolius             N Native to region, as per checklist
+2 Handroanthus serratifolius             N Native to region, as per checklist
+3 Handroanthus serratifolius             N Native to region, as per checklist
+4 Handroanthus serratifolius             N Native to region, as per checklist
+5 Handroanthus serratifolius             N Native to region, as per checklist
+6 Handroanthus serratifolius             N Native to region, as per checklist
+  native_status_sources is_introduced native_status_country
+1   conosur, flbr, powo             0                     N
+2        powo, tropicos             0                     N
+3                  powo             0                     N
+4   conosur, flbr, powo             0                     N
+5   conosur, flbr, powo             0                     N
+6                  powo             0                     N
+  native_status_state_province native_status_county_parish  country
+1                            N                        <NA>   Brazil
+2                         <NA>                        <NA>  Bolivia
+3                         <NA>                        <NA> Colombia
+4                            N                        <NA>   Brazil
+5                            N                        <NA>   Brazil
+6                         <NA>                        <NA>     Peru
+  state_province county                                            locality
+1       Amazonas   <NA> Reserva Florestal Ducke, Manaus-Itacoatiara, km 26.
+2           <NA>   <NA>                                                <NA>
+3          Cesar   <NA>                                         Campoalegre
+4      Tocantins   <NA>                Faz. São Judas - Porto Nacional - TO
+5          Goias   <NA>                                            Luziânia
+6           <NA>   <NA>                                        Puerto Ocopa
+  elevation_m  latitude longitude date_collected datasource
+1          NA  -2.88000 -59.97000     1995-08-04       GBIF
+2          NA -14.55278 -68.68686           <NA>     traits
+3          NA  10.11333 -73.78639     2017-09-04       GBIF
+4          NA -10.80000 -48.41667     2016-08-29       GBIF
+5          NA -16.25250 -47.95030           <NA>       GBIF
+6         600 -11.22430 -74.41720           <NA>    dryflor
+                                                            dataset
+1                                                                US
+2                                                            traits
+3 Patrimonio Natural Fondo para la Biodiversidad y Áreas Protegidas
+4                                                              UEFS
+5                                                               UnB
+6                                                           dryflor
+                                                          dataowner
+1                                                                US
+2                                                            traits
+3 Patrimonio Natural Fondo para la Biodiversidad y Áreas Protegidas
+4                                                              UEFS
+5                                                               UnB
+6                                                           dryflor
+                                        custodial_institution_codes
+1                                                                US
+2                                                              <NA>
+3 Patrimonio Natural Fondo para la Biodiversidad y Áreas Protegidas
+4                                                              UEFS
+5                                                               UnB
+6                                                              <NA>
+  collection_code datasource_id catalog_number
+1          Botany          4885     2284210913
+2            <NA>            NA        1544595
+3            <NA>          1516     1829119958
+4           HUEFS          1909     1837839064
+5              UB          3029     1087243702
+6            <NA>            NA           <NA>
+                               recorded_by record_number identified_by
+1 M. Costa, P. A. Assunçao & E. C. Pereira           333          <NA>
+2                                     <NA>          <NA>          <NA>
+3           Cesar Barbosa | Linda J. Ortíz          <NA>          <NA>
+4                          Chagas, D.B.das           132          <NA>
+5                                Incógnito         12149    Gentry, AH
+6                                     <NA>          <NA>          <NA>
+  date_identified identification_remarks is_cultivated_observation
+1            <NA>                   <NA>                        NA
+2            <NA>                   <NA>                        NA
+3            <NA>                   <NA>                        NA
+4            <NA>                   <NA>                        NA
+5            <NA>                   <NA>                        NA
+6            <NA>                   <NA>                        NA
+  is_cultivated_in_region is_location_cultivated  observation_type
+1                       0                     NA          specimen
+2                       0                     NA  trait occurrence
+3                       0                     NA human observation
+4                       0                     NA          specimen
+5                       0                     NA          specimen
+6                       0                     NA        occurrence
+> 
+> # Number of records
+> nrow(occ_bien)
+[1] 1791
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("occ_flagged")
+> ### * occ_flagged
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: occ_flagged
+> ### Title: Flagged occurrence records of _Araucaria angustifolia_
+> ### Aliases: occ_flagged
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> # First rows
+> head(occ_flagged)
+# A tibble: 6 × 28
+  species       decimalLongitude decimalLatitude states biome endemism inside_br
+  <chr>                    <dbl>           <dbl> <chr>  <chr> <chr>    <lgl>    
+1 Araucaria an…            -49.3           -25.4 MG;MS… Atla… Non-end… NA       
+2 Araucaria an…            -42.5           -22.3 MG;MS… Atla… Non-end… NA       
+3 Araucaria an…            -51.5           -28.3 MG;MS… Atla… Non-end… NA       
+4 Araucaria an…            -54.0           -26.5 MG;MS… Atla… Non-end… NA       
+5 Araucaria an…            -51.2           -29.7 MG;MS… Atla… Non-end… NA       
+6 Araucaria an…            -52.0           -29.1 MG;MS… Atla… Non-end… NA       
+# ℹ 21 more variables: inside_state <lgl>, inside_biome <lgl>, record_id <chr>,
+#   country <chr>, country_suggested <chr>, correct_country <lgl>,
+#   stateProvince <chr>, state_suggested <chr>, correct_state <lgl>,
+#   year <dbl>, basisOfRecord <chr>, occurrenceRemarks <chr>, habitat <chr>,
+#   datasetName <chr>, data_source <chr>, florabr_flag <lgl>, wcvp_flag <lgl>,
+#   iucn_flag <lgl>, cultivated_flag <lgl>, inaturalist_flag <lgl>,
+#   duplicated_flag <lgl>
+> 
+> # Count flagged vs. unflagged records
+> table(occ_flagged$correct_country)
+
+FALSE  TRUE 
+    6  2610 
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("occ_gbif")
+> ### * occ_gbif
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: occ_gbif
+> ### Title: Occurrence records of _Araucaria angustifolia_ from GBIF
+> ### Aliases: occ_gbif
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> # Preview dataset
+> head(occ_gbif)
+# A tibble: 6 × 21
+  acceptedScientificName           collectionCode catalogNumber decimalLongitude
+  <chr>                            <chr>          <chr>                    <dbl>
+1 Araucaria angustifolia (Bertol.… ALTA-VP        74703                    -52.8
+2 Araucaria angustifolia (Bertol.… HCF            43511                    -52.3
+3 Araucaria angustifolia (Bertol.… Observations   326380478                -48.0
+4 Araucaria angustifolia (Bertol.… Observations   327335877                -49.2
+5 Araucaria angustifolia (Bertol.… Observations   326095249                -49.0
+6 Araucaria angustifolia (Bertol.… Observations   326823098                -49.0
+# ℹ 17 more variables: decimalLatitude <dbl>,
+#   coordinateUncertaintyInMeters <dbl>, elevation <dbl>, countryCode <chr>,
+#   stateProvince <chr>, municipality <chr>, locality <chr>, year <int>,
+#   eventDate <chr>, recordedBy <chr>, identifiedBy <chr>, basisOfRecord <chr>,
+#   occurrenceRemarks <chr>, habitat <chr>, datasetName <chr>,
+#   datasetKey <chr>, speciesKey <int>
+> 
+> # Number of cleaned records
+> nrow(occ_gbif)
+[1] 2989
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("occ_idig")
+> ### * occ_idig
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: occ_idig
+> ### Title: Occurrence records of azure jay from iDigBio
+> ### Aliases: occ_idig
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> # First rows
+> head(occ_idig)
+  UberH3 aggs associatedsequences barcodevalue      basisofrecord bed
+1     NA   NA                NULL           NA machineobservation  NA
+2     NA   NA                NULL           NA  preservedspecimen  NA
+3     NA   NA                NULL           NA  preservedspecimen  NA
+4     NA   NA                NULL           NA  preservedspecimen  NA
+5     NA   NA                NULL           NA machineobservation  NA
+6     NA   NA                NULL           NA  preservedspecimen  NA
+         canonicalname catalognumber class  collectioncode
+1 cyanocorax caeruleus       0005478  aves            fnjv
+2 cyanocorax caeruleus         29487  aves           birds
+3 cyanocorax caeruleus         52342  aves           birds
+4 cyanocorax caeruleus     12.crv.34  aves collection maës
+5 cyanocorax caeruleus       0050394  aves            fnjv
+6 cyanocorax caeruleus        178589  aves             orn
+                                                                             collectionid
+1                                                         https://specieslink.net/col/238
+2                                                                                    <NA>
+3 https://scientific-collections.gbif.org/collection/bf635c34-0569-4fb7-ad9c-91d821bac9e4
+4                                                                                  1929.1
+5                                                         https://specieslink.net/col/238
+6                                                                                    <NA>
+  collectionname                     collector commonname commonnames
+1             NA alexandre luis padovan aleixo       <NA>        NULL
+2             NA                          <NA>       <NA>        NULL
+3             NA                partridge, w h       <NA>        NULL
+4             NA               sans collecteur       <NA>        NULL
+5             NA                luiz dos anjos       <NA>        NULL
+6             NA                       camargo       <NA>        NULL
+      continent coordinateuncertainty   country countrycode county
+1 south america                    NA    brazil         bra   <NA>
+2 south america                  1469  paraguay         pry   <NA>
+3 south america                    NA argentina         arg   <NA>
+4          <NA>                    NA      <NA>        <NA>   <NA>
+5 south america                    NA    brazil         bra   <NA>
+6 south america                  3036    brazil         bra   <NA>
+                             datasetid             datecollected
+1 7ddf754f-d193-4cc9-b351-99906754a03b 1995-03-08T00:00:00+00:00
+2 7ddf754f-d193-4cc9-b351-99906754a03b 1901-08-23T00:00:00+00:00
+3 7ddf754f-d193-4cc9-b351-99906754a03b 1959-08-25T00:00:00+00:00
+4                                 <NA> 1909-06-25T00:00:00+00:00
+5 7ddf754f-d193-4cc9-b351-99906754a03b 2002-12-26T00:00:00+00:00
+6 7ddf754f-d193-4cc9-b351-99906754a03b 1934-10-10T00:00:00+00:00
+                      datemodified       dqs earliestageorloweststage
+1 2025-05-23T18:36:26.002398+00:00 0.2318841                       NA
+2 2025-05-23T18:13:47.213183+00:00 0.2463768                       NA
+3 2025-07-24T17:48:49.086870+00:00 0.3188406                       NA
+4 2017-02-20T09:01:11.593455+00:00 0.2463768                       NA
+5 2025-05-23T18:36:26.002398+00:00 0.2463768                       NA
+6 2025-10-29T16:28:32.411713+00:00 0.2898551                       NA
+  earliesteonorlowesteonothem earliestepochorlowestseries
+1                          NA                        <NA>
+2                          NA                        <NA>
+3                          NA                        <NA>
+4                          NA                        <NA>
+5                          NA                        <NA>
+6                          NA                        <NA>
+  earliesteraorlowesterathem earliestperiodorlowestsystem
+1                         NA                         <NA>
+2                         NA                         <NA>
+3                         NA                         <NA>
+4                         NA                         <NA>
+5                         NA                         <NA>
+6                         NA                         <NA>
+                                      etag  eventdate   family fieldnumber
+1 d4cd02bb4a594a94541a6af6dcad819a10015103 1995-03-08 corvidae        <NA>
+2 b6bf9b574b4c9b53e4de4f85a713b1c9cbb8f1c6 1901-08-23 corvidae        <NA>
+3 c886e564e36d73ce63fc051b52c121662d7b8c96 1959-08-25 corvidae        <NA>
+4 cfac449459e9f92f607d77141bea36968ed2da8d  1909-6-25 corvidae        <NA>
+5 8a84b83ceee954cc5f0a5a792f5904abf49312db 2002-12-26 corvidae        <NA>
+6 cd336080ae997a693fc65558fca43abd9f1311f6 1934-10-10 corvidae        <NA>
+                                                                                                                                                                                                                                                                                                                                                                           flags
+1     dwc_taxonrank_added, dwc_multimedia_added, gbif_reference_added, idigbio_isocountrycode_added, gbif_canonicalname_added, dwc_taxonomicstatus_added, gbif_genericname_added, dwc_datasetid_added, dwc_continent_added, dwc_parentnameusageid_added, dwc_scientificnameauthorship_added, dwc_taxonid_added, gbif_vernacularname_added, gbif_taxon_corrected, dwc_order_added
+2                                        dwc_scientificnameauthorship_added, dwc_taxonrank_replaced, dwc_taxonomicstatus_added, gbif_genericname_added, dwc_datasetid_added, gbif_taxon_corrected, dwc_multimedia_added, dwc_taxonid_added, idigbio_isocountrycode_added, gbif_vernacularname_added, gbif_canonicalname_added, gbif_reference_added, dwc_parentnameusageid_added
+3                geopoint_low_precision, dwc_multimedia_added, dwc_taxonrank_replaced, dwc_taxonomicstatus_added, gbif_genericname_added, dwc_datasetid_added, gbif_taxon_corrected, dwc_parentnameusageid_added, dwc_scientificnameauthorship_added, dwc_taxonid_added, idigbio_isocountrycode_added, gbif_vernacularname_added, gbif_canonicalname_added, gbif_reference_added
+4                                                                                                                                                                                                                                                                                                                                                         geopoint_datum_missing
+5     dwc_taxonrank_added, dwc_multimedia_added, gbif_reference_added, dwc_scientificnameauthorship_added, idigbio_isocountrycode_added, gbif_canonicalname_added, dwc_taxonomicstatus_added, gbif_genericname_added, dwc_datasetid_added, dwc_continent_added, dwc_parentnameusageid_added, dwc_taxonid_added, gbif_vernacularname_added, gbif_taxon_corrected, dwc_order_added
+6 geopoint_datum_error, rev_geocode_eez, dwc_taxonrank_added, gbif_reference_added, gbif_genericname_added, dwc_datasetid_added, dwc_scientificnameauthorship_replaced, gbif_vernacularname_added, dwc_parentnameusageid_added, idigbio_isocountrycode_added, dwc_taxonomicstatus_added, dwc_taxonid_added, dwc_multimedia_added, gbif_taxon_corrected, gbif_canonicalname_added
+  formation      genus geologicalcontextid       lon       lat group hasImage
+1        NA cyanocorax                  NA        NA        NA    NA    FALSE
+2        NA cyanocorax                  NA -56.95254 -25.66729    NA    FALSE
+3        NA cyanocorax                  NA -53.90000 -26.47000    NA    FALSE
+4        NA cyanocorax                  NA -46.63639 -23.54770    NA    FALSE
+5        NA cyanocorax                  NA -51.33667 -23.76056    NA    FALSE
+6        NA cyanocorax                  NA -47.95000 -25.01667    NA    FALSE
+  hasMedia
+1    FALSE
+2    FALSE
+3    FALSE
+4    FALSE
+5    FALSE
+6    FALSE
+                                                                                       highertaxon
+1                                                                                             <NA>
+2                                                                                             <NA>
+3                               animalia | chordata | aves | passeriformes | corvidae | cyanocorax
+4                                                                                             <NA>
+5                                                                                             <NA>
+6 animalia chordata vertebrata aves neornithes passeriformes oscines corvidae cyanocorax caeruleus
+  highestbiostratigraphiczone individualcount infraspecificepithet
+1                          NA               1                   NA
+2                          NA              NA                   NA
+3                          NA              NA                   NA
+4                          NA               1                   NA
+5                          NA              NA                   NA
+6                          NA               1                   NA
+  institutioncode
+1         unicamp
+2            ummz
+3            lacm
+4            boum
+5         unicamp
+6             mcz
+                                                                             institutionid
+1                                                                                     <NA>
+2                                                                                     <NA>
+3 https://scientific-collections.gbif.org/institution/2fc908ba-e775-49e2-bffe-6b9041c3b70f
+4                                                                                     <NA>
+5                                                                                     <NA>
+6                                                     b4640710-8e03-11d8-b956-b8a03c50a862
+  institutionname  kingdom latestageorhigheststage latesteonorhighesteonothem
+1              NA animalia                      NA                         NA
+2              NA animalia                      NA                         NA
+3              NA animalia                      NA                         NA
+4              NA animalia                      NA                         NA
+5              NA animalia                      NA                         NA
+6              NA animalia                      NA                         NA
+  latestepochorhighestseries latesteraorhighesterathem
+1                         NA                        NA
+2                         NA                        NA
+3                         NA                        NA
+4                         NA                        NA
+5                         NA                        NA
+6                         NA                        NA
+  latestperiodorhighestsystem lithostratigraphicterms
+1                          NA                      NA
+2                          NA                      NA
+3                          NA                      NA
+4                          NA                      NA
+5                          NA                      NA
+6                          NA                      NA
+                                                       locality
+1                                    parque estadual intervales
+2                                                       sapucay
+3                                                       tobunas
+4                                                     sao paulo
+5 fragmento florestal próximo ao parque estadual mata dos godoy
+6                                                       cananea
+  lowestbiostratigraphiczone maxdepth maxelevation mediarecords member mindepth
+1                         NA       NA           NA         NULL     NA       NA
+2                         NA       NA           NA         NULL     NA       NA
+3                         NA       NA           NA         NULL     NA       NA
+4                         NA       NA          760         NULL     NA       NA
+5                         NA       NA           NA         NULL     NA       NA
+6                         NA       NA           NA         NULL     NA       NA
+  minelevation municipality                             occurrenceid
+1           NA  sete barras https://specieslink.net/guid/238/0005478
+2           NA         <NA>     b3101421-f924-11e2-b158-782bcb84bc75
+3           NA         <NA>     5bf19932-d3e8-46db-b996-53379ca09ca5
+4           NA         <NA>                                12.crv.34
+5           NA     londrina https://specieslink.net/guid/238/0050394
+6           NA         <NA>                           mcz:orn:178589
+          order   phylum query
+1 passeriformes chordata    NA
+2 passeriformes chordata    NA
+3 passeriformes chordata    NA
+4 passeriformes chordata    NA
+5 passeriformes chordata    NA
+6 passeriformes chordata    NA
+                                                                                                                                       recordids
+1                                                                 5caa5b0d-24b7-4c69-9c7b-089f343b7efc\\https://specieslink.net/guid/238/0005478
+2 4a32531f-1580-499f-bd48-5b0ef4cc5722\\urn:catalog:ummz:birds:29487, 4a32531f-1580-499f-bd48-5b0ef4cc5722\\b3101421-f924-11e2-b158-782bcb84bc75
+3                                                                     2d853a6d-50ec-4931-8e91-48fc2491fdee\\5bf19932-d3e8-46db-b996-53379ca09ca5
+4                                                                                                3172ee72-4b10-4d6b-b4b3-f3319b25c60d\\12.crv.34
+5                                                                 5caa5b0d-24b7-4c69-9c7b-089f343b7efc\\https://specieslink.net/guid/238/0050394
+6                                                                                           271a9ce9-c6d3-4b63-a722-cb0adc48863f\\mcz:orn:178589
+  recordnumber                            recordset       scientificname size
+1         <NA> 5caa5b0d-24b7-4c69-9c7b-089f343b7efc Cyanocorax caeruleus   NA
+2         <NA> 4a32531f-1580-499f-bd48-5b0ef4cc5722 Cyanocorax caeruleus   NA
+3        19784 2d853a6d-50ec-4931-8e91-48fc2491fdee Cyanocorax caeruleus   NA
+4         <NA> 3172ee72-4b10-4d6b-b4b3-f3319b25c60d Cyanocorax caeruleus   NA
+5         <NA> 5caa5b0d-24b7-4c69-9c7b-089f343b7efc Cyanocorax caeruleus   NA
+6         <NA> 271a9ce9-c6d3-4b63-a722-cb0adc48863f Cyanocorax caeruleus   NA
+  specificepithet startdayofyear stateprovince taxonid taxonomicstatus
+1       caeruleus             67     são paulo 2482560        accepted
+2       caeruleus            235     paraguari 2482560        accepted
+3       caeruleus            237 misiones prov 2482560        accepted
+4       caeruleus            176          <NA> 2482560        accepted
+5       caeruleus            360        paraná 2482560        accepted
+6       caeruleus            283     sao paulo 2482560        accepted
+  taxonrank typestatus                                 uuid verbatimeventdate
+1   species       <NA> 000d87f1-db3e-4784-91d2-91aec34abf85              <NA>
+2   species       <NA> 02ffadca-502b-469f-8d4a-299a7d8e91a5              <NA>
+3   species       <NA> 0408655e-5896-4e2e-8507-becfd903a0e1       25 aug 1959
+4   species       <NA> 0538e125-8fa4-412b-89c8-a44f38f46731     1909, 25 juin
+5   species       <NA> 0ccf5483-4c82-4214-aa7b-3e2523fddde6              <NA>
+6   species       <NA> 0d86f91a-6916-4432-93b1-d18c36cf015d        10/10/1934
+                                           verbatimlocality version waterbody
+1                                                      <NA>      NA      <NA>
+2                                                      <NA>      NA      <NA>
+3 | south america | argentina | misiones prov |  |  tobunas      NA      <NA>
+4                                                      <NA>      NA      <NA>
+5                                                      <NA>      NA      <NA>
+6                 south america, brazil, sao paulo, cananea      NA      <NA>
+> 
+> # Number of cleaned records
+> nrow(occ_idig)
+[1] 33
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("occ_splink")
+> ### * occ_splink
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: occ_splink
+> ### Title: Occurrence records of azure jay from SpeciesLink
+> ### Aliases: occ_splink
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> # First rows
+> head(occ_splink)
+        scientificname collectioncode catalognumber decimallongitude
+1 Cyanocorax caeruleus          CSUEL       LDA 171                0
+2 Cyanocorax caeruleus          CSUEL       LDA 218                0
+3 Cyanocorax caeruleus          CSUEL       LDA 114                0
+4 Cyanocorax caeruleus          CSUEL       LDA 145                0
+5 Cyanocorax caeruleus          CSUEL       LDA 148                0
+6 Cyanocorax caeruleus          CSUEL       LDA 151                0
+  decimallatitude maximumelevationinmeters country stateprovince   county
+1               0                     <NA>    <NA>          <NA>     <NA>
+2               0                     <NA>    <NA>          <NA>     <NA>
+3               0                     <NA>    <NA>            PR Palmeira
+4               0                     <NA>    <NA>          <NA>     <NA>
+5               0                     <NA>    <NA>            PR Palmeira
+6               0                     <NA>    <NA>            PR Palmeira
+                            locality yearcollected recordedby identifiedby
+1                               <NA>          1986       <NA>         <NA>
+2                               <NA>          1986       <NA>         <NA>
+3 Fazenda Santa Rita - Palmeira - PR          1986       <NA>         <NA>
+4                               <NA>          1986       <NA>         <NA>
+5 Fazenda Santa Rita - Palmeira - PR          1986       <NA>         <NA>
+6 Fazenda Santa Rita - Palmeira - PR          1986       <NA>         <NA>
+  basisofrecord
+1          <NA>
+2          <NA>
+3          <NA>
+4          <NA>
+5          <NA>
+6          <NA>
+                                                                                                                                                                                                                                                         occurrenceremarks
+1                                                                                                                                                                               <nO>OBS.: Bel sendo acariciada no pescoço ; gritos de proximidade ; de reconhecimento</nO>
+2                                                                                                                                                                                                                                        <nO>OBS.: Bel ; movimentação</nO>
+3                                                                                                                                               <nO>HABITAT: Floresta de araucária ; estrato médio e superior OBS.: indivíduos adultos próximos do ninho ; espontâneo</nO>
+4                                                                                                                                                   <nO>HABITAT: cativeiro OBS.: a- vocalização de Sara recebendo comida do Michael ; b- soto-voce - Andrew (sozinho)</nO>
+5 <nO>HABITAT: a 100m do ninho OBS.: perseguiam um gavião (provavlemente Buteo magnirostris) ; as gralhas permaneceream em um pinheiro sobre o local onde estava escondido o gavião ; a última sequencia se refere à perseguição do gavião e teve início no momento d</nO>
+6                                                                                                                                                                                                                                                                     <NA>
+> 
+> # Number of cleaned records
+> nrow(occ_splink)
+[1] 361
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("occurrences")
+> ### * occurrences
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: occurrences
+> ### Title: Integrated occurrence dataset for three example species
+> ### Aliases: occurrences
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> # Show the first rows
+> head(occurrences)
+  record_id                species catalogNumber decimalLongitude
+1   gbif_83 Araucaria angustifolia     323502165        -49.26743
+2   gbif_85 Araucaria angustifolia     325575408        -42.49838
+3   gbif_86 Araucaria angustifolia     325217148        -42.53397
+4   gbif_90 Araucaria angustifolia     322837754        -49.66112
+5   gbif_91 Araucaria angustifolia     322601546        -46.68649
+6   gbif_92 Araucaria angustifolia     276301823        -49.38901
+  decimalLatitude country  stateProvince locality year     basisOfRecord
+1       -25.42535      BR         Paraná          2025 HUMAN_OBSERVATION
+2       -22.30930      BR Rio de Janeiro          2025 HUMAN_OBSERVATION
+3       -22.06159      BR Rio de Janeiro          2025 HUMAN_OBSERVATION
+4       -27.18439      BR Santa Catarina          2025 HUMAN_OBSERVATION
+5       -23.33256      BR      São Paulo          2025 HUMAN_OBSERVATION
+6       -25.59535      BR         Paraná          2025 HUMAN_OBSERVATION
+  occurrenceRemarks habitat                             datasetName data_source
+1                           iNaturalist research-grade observations        gbif
+2                           iNaturalist research-grade observations        gbif
+3                           iNaturalist research-grade observations        gbif
+4                           iNaturalist research-grade observations        gbif
+5                           iNaturalist research-grade observations        gbif
+6                           iNaturalist research-grade observations        gbif
+> 
+> # Number of occurrences per species
+> table(occurrences$species)
+
+    Araucaria angustifolia       Cyanocorax caeruleus 
+                       924                       1035 
+Handroanthus serratifolius 
+                      2121 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot_env_bins")
+> ### * plot_env_bins
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot_env_bins
+> ### Title: Plot Environmental Bins (2D Projection)
+> ### Aliases: plot_env_bins
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Get only occurrences from Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Load example of raster variables
+> data("worldclim", package = "RuHere")
+> # Unwrap Packed raster
+> r <- terra::unwrap(worldclim)
+> # Get bins
+> b <- get_env_bins(occ = occ, env_layers = r, n_bins = 10)
+> # Plot
+> plot_env_bins(b, x_var = "bio_1", y_var = "bio_12",
++               xlab = "Temperature", ylab = "Precipitation")
+Warning: Removed 147 rows containing missing values or values outside the scale range
+(`geom_point()`).
+> 
+> 
+> 
+> cleanEx()
+> nameEx("prepare_gbif_download")
+> ### * prepare_gbif_download
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: prepare_gbif_download
+> ### Title: Prepare data to request GBIF download
+> ### Aliases: prepare_gbif_download
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("prepared_metadata")
+> ### * prepared_metadata
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: prepared_metadata
+> ### Title: Metadata templates used internally by 'format_columns()'
+> ### Aliases: prepared_metadata
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> # View template for GBIF records
+> prepared_metadata$gbif
+          scientificName collectionCode catalogNumber decimalLongitude
+1 acceptedScientificName collectionCode catalogNumber decimalLongitude
+  decimalLatitude coordinateUncertaintyInMeters elevation     country
+1 decimalLatitude coordinateUncertaintyInMeters elevation countryCode
+  stateProvince municipality locality year eventDate recordedBy identifiedBy
+1 stateProvince municipality locality year eventDate recordedBy identifiedBy
+  basisOfRecord occurrenceRemarks habitat datasetName datasetKey        key
+1 basisOfRecord occurrenceRemarks habitat datasetName datasetKey speciesKey
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("puma_atlanticr")
+> ### * puma_atlanticr
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: puma_atlanticr
+> ### Title: Occurrence records of _Puma concolor_ from AtlanticR
+> ### Aliases: puma_atlanticr
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> # Preview first rows
+> head(puma_atlanticr)
+# A tibble: 6 × 40
+  id    reference_paper_number country state         municipality study_location
+  <chr>                  <dbl> <chr>   <chr>         <chr>        <chr>         
+1 AML03                      3 Brazil  sao_paulo     Botucatu     Fazenda Exper…
+2 AML04                      4 Brazil  santa_catari… Ipumirim     Atlantic fore…
+3 AML05                      5 Brazil  santa_catari… Sao Domingos Parque Estadu…
+4 AML07                      5 Brazil  santa_catari… Antonio Car… RPPN Caraguata
+5 AML10                      5 Brazil  santa_catari… Sideropolis  Reserva Parti…
+6 AML11                      5 Brazil  santa_catari… Urupema      RPPN Serra da…
+# ℹ 34 more variables: latitude <dbl>, longitude <dbl>, precision <chr>,
+#   size_ha <chr>, temperature <chr>, altitude <chr>, annual_rainfall <chr>,
+#   vegetation_type <chr>, protect_area <chr>, matrix <chr>, reference <chr>,
+#   publication_year <dbl>, type_of_publication <chr>, month_start <chr>,
+#   year_start <dbl>, month_finish <chr>, year_finish <dbl>,
+#   total_of_months <dbl>, sampling_habitat <chr>, effort <dbl>,
+#   effort_method <chr>, method <chr>, order <chr>, genus_on_paper <chr>, …
+> 
+> # Count occurrences per year
+> table(puma_atlanticr$year)
+Warning: Unknown or uninitialised column: `year`.
+< table of extent 0 >
+> 
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("remove_accent")
+> ### * remove_accent
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: remove_accent
+> ### Title: Remove accents and special characters from strings
+> ### Aliases: remove_accent
+> 
+> ### ** Examples
+> 
+> remove_accent(c("Colômbia", "São Paulo"))
+[1] "Colombia"  "Sao Paulo"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("remove_flagged")
+> ### * remove_flagged
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: remove_flagged
+> ### Title: Remove flagged records
+> ### Aliases: remove_flagged
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occ_flagged", package = "RuHere")
+> 
+> # Remove all flagged records
+> occ_valid <- remove_flagged(occ = occ_flagged)
+> 
+> # Remove flagged records and force removal of some unflagged records
+> to_remove <- c("gbif_5987", "specieslink_2301", "gbif_18761")
+> occ_valid2 <- remove_flagged(occ = occ_flagged,
++                              force_remove = to_remove)
+> 
+> # Remove flagged records but keep some flagged ones
+> to_keep <- c("gbif_14501", "gbif_12002", "gbif_5168")
+> occ_valid3 <- remove_flagged(occ = occ_flagged,
++                             force_keep = to_keep)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("remove_invalid_coordinates")
+> ### * remove_invalid_coordinates
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: remove_invalid_coordinates
+> ### Title: Identify and remove invalid coordinates
+> ### Aliases: remove_invalid_coordinates
+> 
+> ### ** Examples
+> 
+> # Create fake data example
+> occ <- data.frame("species" = "spp",
++                   "decimalLongitude" = c(10, -190, 20, 50, NA),
++                   "decimalLatitude" = c(20, 20, 240, 50, NA))
+> # Split valid and invalid coordinates
+> occ_valid <- remove_invalid_coordinates(occ)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("request_gbif")
+> ### * request_gbif
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: request_gbif
+> ### Title: Submit a request to download occurrence data from GBIF.
+> ### Aliases: request_gbif
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Prepare data to request GBIF download
+> ##D gbif_prepared <- prepare_gbif_download(species = "Araucaria angustifolia")
+> ##D # Submit a request to download occurrences
+> ##D gbif_requested <- request_gbif(gbif_info = gbif_prepared)
+> ##D # Check progress
+> ##D rgbif::occ_download_wait(gbif_requested)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("richness_here")
+> ### * richness_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: richness_here
+> ### Title: Species Richness and Occurrence Summary Mapping
+> ### Aliases: richness_here
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occ_flagged", package = "RuHere")
+> 
+> # Mapping the density of records
+> r_density <- richness_here(occ_flagged, summary = "records", res = 0.5)
+> ggrid_here(r_density)
+> 
+> # We can also summarize key features:
+> # 1. Identifying problematic regions by summing error flags
+> # We create a variable to store the sum of logical flags (TRUE = 1, FALSE = 0)
+> total_flags <- occ_flagged$florabr_flag +
++  occ_flagged$wcvp_flag +
++  occ_flagged$iucn_flag +
++  occ_flagged$cultivated_flag +
++  occ_flagged$inaturalist_flag +
++  occ_flagged$duplicated_flag
+> names(total_flags) <- occ_flagged$record_id
+> 
+> # Using summary = "records" with to see the average accumulation of errors
+> # with fun = mean to see the average accumulation
+> r_flags <- richness_here(occ_flagged, summary = "records",
++                         field = total_flags,
++                         field_name = "Number of flags",
++                         fun = mean, res = 0.5)
+> ggrid_here(r_flags)
+> 
+> # 2. Or we can summarize organisms traits spatially
+> # Simulating a trait (e.g., mass) for each unique record
+> spp <- unique(occ_flagged$record_id)
+> sim_mass <- setNames(runif(length(spp), 10, 50), spp)
+> 
+> r_trait <- richness_here(occ_flagged, summary = "records",
++                         field = sim_mass, field_name = "Mass",
++                         fun = mean, res = 0.5)
+> ggrid_here(r_trait)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("set_gbif_credentials")
+> ### * set_gbif_credentials
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: set_gbif_credentials
+> ### Title: Store GBIF credentials
+> ### Aliases: set_gbif_credentials
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D set_gbif_credentials(gbif_username = "my_username",
+> ##D                      gbif_email = "my_email@example.com",
+> ##D                      gbif_password = "my_password")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("set_iucn_credentials")
+> ### * set_iucn_credentials
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: set_iucn_credentials
+> ### Title: Store SpeciesLink credential
+> ### Aliases: set_iucn_credentials
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D set_iucn_credentials(iucn_key = "my_key")
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("set_specieslink_credentials")
+> ### * set_specieslink_credentials
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: set_specieslink_credentials
+> ### Title: Store SpeciesLink credential
+> ### Aliases: set_specieslink_credentials
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D set_specieslink_credentials(specieslink_key = "my_key")
+> ## End(Not run)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("spatial_kde")
+> ### * spatial_kde
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: spatial_kde
+> ### Title: Kernel Density Estimation (Heatmap) for occurrence data
+> ### Aliases: spatial_kde
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occ_flagged", package = "RuHere")
+> # Remove flagged records
+> occ <- remove_flagged(occ_flagged)
+> # Generate heatmap
+> heatmap <- spatial_kde(occ = occ, resolution = 0.25, buffer_extent = 50,
++                        radius = 2)
+> # Plot heatmap with terra
+> terra::plot(heatmap)
+> # Plot heatmap with ggplot
+> ggmap_here(occ = occ, heatmap = heatmap)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("spatialize")
+> ### * spatialize
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: spatialize
+> ### Title: Spatialize occurrence records
+> ### Aliases: spatialize
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Spatialize the occurrence records
+> pts <- spatialize(occurrences)
+> # Plot the resulting SpatVector
+> terra::plot(pts)
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("standardize_countries")
+> ### * standardize_countries
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: standardize_countries
+> ### Title: Standardize country names
+> ### Aliases: standardize_countries
+> 
+> ### ** Examples
+> 
+> # Import and standardize GBIF
+> data("occ_gbif", package = "RuHere") #Import data example
+> gbif_standardized <- format_columns(occ_gbif, metadata = "gbif")
+> # Import and standardize SpeciesLink
+> data("occ_splink", package = "RuHere") #Import data example
+> splink_standardized <- format_columns(occ_splink, metadata = "specieslink")
+> # Import and standardize BIEN
+> data("occ_bien", package = "RuHere") #Import data example
+> bien_standardized <- format_columns(occ_bien, metadata = "bien")
+> # Import and standardize idigbio
+> data("occ_idig", package = "RuHere") #Import data example
+> idig_standardized <- format_columns(occ_idig, metadata = "idigbio")
+> # Merge all
+> all_occ <- bind_here(gbif_standardized, splink_standardized,
++                      bien_standardized, idig_standardized)
+> # Standardize countries
+> occ_standardized <- standardize_countries(occ = all_occ)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("standardize_states")
+> ### * standardize_states
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: standardize_states
+> ### Title: Standardize state names
+> ### Aliases: standardize_states
+> 
+> ### ** Examples
+> 
+> # Import and standardize GBIF
+> data("occ_gbif", package = "RuHere") #Import data example
+> gbif_standardized <- format_columns(occ_gbif, metadata = "gbif")
+> # Import and standardize SpeciesLink
+> data("occ_splink", package = "RuHere") #Import data example
+> splink_standardized <- format_columns(occ_splink, metadata = "specieslink")
+> # Import and standardize BIEN
+> data("occ_bien", package = "RuHere") #Import data example
+> bien_standardized <- format_columns(occ_bien, metadata = "bien")
+> # Import and standardize idigbio
+> data("occ_idig", package = "RuHere") #Import data example
+> idig_standardized <- format_columns(occ_idig, metadata = "idigbio")
+> # Merge all
+> all_occ <- bind_here(gbif_standardized, splink_standardized,
++                      bien_standardized, idig_standardized)
+> # Standardize countries
+> occ_standardized <- standardize_countries(occ = all_occ)
+> # Standardize states
+> occ_standardized2 <- standardize_states(occ = occ_standardized$occ)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("states")
+> ### * states
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: states
+> ### Title: Administrative Units (States, Provinces, and Regions)
+> ### Aliases: states
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(states)
+> states <- terra::unwrap(states)
+> terra::plot(states)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("states_dictionary")
+> ### * states_dictionary
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: states_dictionary
+> ### Title: States dictionary for standardizing state and province names and
+> ###   codes
+> ### Aliases: states_dictionary
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(states_dictionary)
+> head(states_dictionary$states_name)
+        state_name  state_suggested   country
+1       entre rios       entre rios argentina
+2 kalimantan timur kalimantan timur indonesia
+3            sabah            sabah  malaysia
+4            salta            salta argentina
+5            jujuy            jujuy argentina
+6     an nabatiyah     an nabatiyah   lebanon
+> head(states_dictionary$states_code)
+  state_code  state_suggested   country
+1         ER       entre rios argentina
+2         KI kalimantan timur indonesia
+3         SA            sabah  malaysia
+4         SA            salta argentina
+5         JY            jujuy argentina
+6         NA     an nabatiyah   lebanon
+> 
+> 
+> 
+> cleanEx()
+> nameEx("states_from_coords")
+> ### * states_from_coords
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: states_from_coords
+> ### Title: Extract state from coordinates
+> ### Aliases: states_from_coords
+> 
+> ### ** Examples
+> 
+> # Import and standardize GBIF
+> data("occ_gbif", package = "RuHere") #Import data example
+> gbif_standardized <- format_columns(occ_gbif, metadata = "gbif")
+> gbif_states <- states_from_coords(occ = gbif_standardized)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summarize_flags")
+> ### * summarize_flags
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summarize_flags
+> ### Title: Summarize flags
+> ### Aliases: summarize_flags
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occ_flagged", package = "RuHere")
+> # Summarize flags
+> sum_flags <- summarize_flags(occ = occ_flagged)
+> # Plot
+> sum_flags$plot_summary
+> 
+> 
+> 
+> cleanEx()
+> nameEx("thin_env")
+> ### * thin_env
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: thin_env
+> ### Title: Flag records that are close to each other in the enviromnetal
+> ###   space
+> ### Aliases: thin_env
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Get only occurrences from Araucaria
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Load example of raster variables
+> data("worldclim", package = "RuHere")
+> # Unwrap Packed raster
+> r <- terra::unwrap(worldclim)
+> # Flag records that are close to each other in the enviromnetal space
+> occ_env_thin <- thin_env(occ = occ, env_layers = r)
+> # Number of flagged (redundant) records
+> sum(!occ_env_thin$thin_env_flag) #Number of flagged records
+[1] 867
+> 
+> 
+> 
+> cleanEx()
+> nameEx("thin_geo")
+> ### * thin_geo
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: thin_geo
+> ### Title: Flag records that are close to each other in the geographic
+> ###   space
+> ### Aliases: thin_geo
+> 
+> ### ** Examples
+> 
+> # Load example data
+> data("occurrences", package = "RuHere")
+> # Subset occurrences for Araucaria angustifolia
+> occ <- occurrences[occurrences$species == "Araucaria angustifolia", ]
+> # Thin records using a 10 km distance threshold
+> occ_thin <- thin_geo(occ = occ, d = 10)
+Removing 1 invalid records
+> sum(!occ_thin$thin_geo_flag)  # Number of records flagged for removal
+[1] 235
+> # Prioritizing more recent records within each cluster
+> occ_thin_recent <- thin_geo(occ = occ, d = 10, prioritary_column = "year")
+Removing 1 invalid records
+> sum(!occ_thin_recent$thin_geo_flag)  # Number of records flagged for removal
+[1] 235
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("wcvp_here")
+> ### * wcvp_here
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: wcvp_here
+> ### Title: Download distribution data from the World Checklist of Vascular
+> ###   Plants (WCVP)
+> ### Aliases: wcvp_here
+> 
+> ### ** Examples
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("world")
+> ### * world
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: world
+> ### Title: World Countries
+> ### Aliases: world
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(world)
+> world <- terra::unwrap(world)
+> terra::plot(world)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("worldclim")
+> ### * worldclim
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: worldclim
+> ### Title: Bioclimatic Variables from WorldClim (bio_1, bio_7, bio_12)
+> ### Aliases: worldclim
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> data(worldclim)
+> bioclim <- terra::unwrap(worldclim)
+> terra::plot(bioclim)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  37.57 4.36 48.68 NA NA 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')
