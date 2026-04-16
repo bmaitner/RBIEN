@@ -9,6 +9,8 @@
   generic offline skips.
 * BIEN_tutorial.Rmd: made vignette chunks auto-skip when the BIEN database
   cannot be reached.
+* Update some of the BIEN_trait functions, fixing a bug related to comma
+  placement.
 
 ## NEW FEATURES
 * Added only_geovalid argument to occurrences_sf
