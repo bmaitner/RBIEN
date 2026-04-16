@@ -1,5 +1,5 @@
 Package: sf
-Version: 1.0-19
+Version: 1.1-0
 Title: Simple Features for R
 Authors@R: 
     c(person(given = "Edzer",
@@ -47,11 +47,14 @@ Authors@R:
              role = "ctb",
              comment = c(ORCID = "0000-0002-9415-4582"))
 			 )
-Description: Support for simple features, a standardized way to
-    encode spatial vector data. Binds to 'GDAL' for reading and writing
-    data, to 'GEOS' for geometrical operations, and to 'PROJ' for
-    projection conversions and datum transformations. Uses by default the 's2'
-    package for spherical geometry operations on ellipsoidal (long/lat) coordinates.
+Description: Support for simple feature access, a standardized way to
+    encode and analyze spatial vector data. Binds to 'GDAL' 
+	<doi:10.5281/zenodo.5884351> for reading and writing data, to 'GEOS'
+    <doi:10.5281/zenodo.11396894> for geometrical operations,
+    and to 'PROJ' <doi:10.5281/zenodo.5884394> for projection
+    conversions and datum transformations. Uses by default the 's2'
+    package for geometry operations on geodetic (long/lat degree)
+	coordinates.
 License: GPL-2 | MIT + file LICENSE
 URL: https://r-spatial.github.io/sf/, https://github.com/r-spatial/sf
 BugReports: https://github.com/r-spatial/sf/issues
@@ -63,13 +66,13 @@ Suggests: blob, nanoarrow, covr, dplyr (>= 1.0.0), ggplot2, knitr,
         odbc, pbapply, pillar, pool, raster, rlang, rmarkdown,
         RPostgres (>= 1.1.0), RPostgreSQL, RSQLite, sp (>= 1.2-4),
         spatstat (>= 2.0-1), spatstat.geom, spatstat.random,
-        spatstat.linnet, spatstat.utils, stars (>= 0.2-0), terra,
+        spatstat.linnet, spatstat.utils, stars (>= 0.6-0), terra,
         testthat (>= 3.0.0), tibble (>= 1.4.1), tidyr (>= 1.2.0),
         tidyselect (>= 1.0.0), tmap (>= 2.0), vctrs, wk (>= 0.9.0)
 LinkingTo: Rcpp
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Config/testthat/edition: 2
 Config/needs/coverage: XML
 SystemRequirements: GDAL (>= 2.0.1), GEOS (>= 3.4.0), PROJ (>= 4.8.0),
@@ -87,22 +90,23 @@ Collate: 'RcppExports.R' 'init.R' 'import-standalone-s3-register.R'
         'm_range.R' 'shift_longitude.R' 'make_grid.R' 's2.R' 'terra.R'
         'geos-overlayng.R' 'break_antimeridian.R'
 NeedsCompilation: yes
-Packaged: 2024-11-05 07:54:08 UTC; edzer
-Author: Edzer Pebesma [aut, cre] (<https://orcid.org/0000-0001-8049-7069>),
-  Roger Bivand [ctb] (<https://orcid.org/0000-0003-2392-6140>),
+Packaged: 2026-02-23 19:06:55 UTC; edzer
+Author: Edzer Pebesma [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-8049-7069>),
+  Roger Bivand [ctb] (ORCID: <https://orcid.org/0000-0003-2392-6140>),
   Etienne Racine [ctb],
   Michael Sumner [ctb],
   Ian Cook [ctb],
   Tim Keitt [ctb],
   Robin Lovelace [ctb],
   Hadley Wickham [ctb],
-  Jeroen Ooms [ctb] (<https://orcid.org/0000-0002-4035-0289>),
+  Jeroen Ooms [ctb] (ORCID: <https://orcid.org/0000-0002-4035-0289>),
   Kirill Müller [ctb],
   Thomas Lin Pedersen [ctb],
   Dan Baston [ctb],
-  Dewey Dunnington [ctb] (<https://orcid.org/0000-0002-9415-4582>)
+  Dewey Dunnington [ctb] (ORCID: <https://orcid.org/0000-0002-9415-4582>)
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Repository: CRAN
-Date/Publication: 2024-11-05 17:00:02 UTC
-Built: R 4.4.2; x86_64-w64-mingw32; 2025-01-30 03:11:21 UTC; windows
+Date/Publication: 2026-02-24 07:50:02 UTC
+Built: R 4.4.3; x86_64-w64-mingw32; 2026-04-15 03:38:15 UTC; windows
 Archs: x64

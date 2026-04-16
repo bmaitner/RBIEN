@@ -1,3 +1,72 @@
+# version 1.1-0
+
+* add `gdal_compressors()` to query GDAL compressor and decomporessor capabilities
+
+* `st_cast.sfc()` deals with zero-length objects; #2584
+
+* rewrite/migrate `vctrs` methods for `sf` and `sfc`; #2568, #2584, w. help from @DavisVaughan
+
+* `st_agr()` and `st_agr<-()` better handle multiple geometry columns
+
+* for an `sfc` object `x`, `x[0]` retains the class of `x`; #2568
+
+* When sampling a degenerate (zero length) line, a warning is raised rather than a message; #2575
+
+# version 1.0-24
+
+* `gdal_write()` handles drivers that only have a `CreateCopy()` option; https://github.com/r-spatial/stars/issues/762 
+
+* if `datum` is missing in a call to `st_graticule()`, a graticule by default will try to use the geographic coordinate reference system of arguments `x` or `crs`; when nothing is found there it falls back to `OGC:CRS84` (WGS84).
+
+* the figure margins parameter `mar` can be specified in a call to `plot.sf()`; #2558
+
+* fix class label setting in `[.sf()`; #2557
+
+# version 1.0-23
+
+* allow tests reading blosc compressed Zarr files to fail
+
+* `st_as_sf.data.frame()` sets `z_range` and `m_range` if needed; https://github.com/geoarrow/geoarrow-r/issues/75
+
+# version 1.0-22
+
+* `st_combine()` on `POINT` geometries ignores empty points; #2551
+
+* handle empty points better in `st_point()`, `st_as_sf.data.frame()` and `st_distance()`; https://github.com/r-spatial/s2/issues/289
+
+* for unprojected lines, `st_line_interpolate()` requires distance values with degree units; #2542
+
+* `unique.sfc()` added; #2546
+
+* for geodetic coordinates, `st_perimeter()` uses ellipsoidal computation if `sf_use_s2()` is `FALSE`; #2541
+
+* `st_as_sf.owin()` and `st_as_sfc.owin()` no longer ignore `crs` argument; #2532
+
+* clarify approximation errors in `st_buffer()` and how they differ for the GEOS or S2 backends, with examples by David Kaplan @dmkaplan2000; #2528
+
+# version 1.0-21
+
+* `st_crs(..., parameters = TRUE)` returns base geographic CRS as `gcs_crs`; #2524
+
+* loading `sf` no longer initializes the RNG state; see https://github.com/r-quantities/units/issues/409
+
+* fix `st_sample()` on geodetic coordinates; #2515
+
+* use `compareVersion()` consistently to compare GDAL versions; #2512
+
+# version 1.0-20
+
+* `st_buffer()` on geodetic coordinates with negative buffer distance now automatically switches to using GEOS, while giving a warning; #1987
+
+* `st_interpolate_aw()` fixes bug when a GEOMETRYCOLLECTION contains multiple POLYGON structures; found by @mtennekes
+
+* `st_buffer()` for geodetic coordinates allows `max_dist` and `min_level` 
+   to be specified by feature; #2488 and https://github.com/r-spatial/s2/pull/264
+
+* `distinct.sf()` allows for comparing exact equality of geometries when `exact = TRUE`; #2484
+
+* `st_minimum_bounding_circle()` returns geometries representing the smallest circle that contains the input; #2473
+
 # version 1.0-19
 
 * fix type checks in C++ GDAL area and length computation functions, anticipating GDAL 3.10.0; #2466, #2468, #2469 by @rsbivand and @rouault
@@ -677,7 +746,7 @@
 
 * fix plotting of `sf` objects without attributes; #755
 
-* add reference to the [R Journal article](https://journal.r-project.org/archive/2018/RJ-2018-009/index.html) in CITATION
+* add reference to the [R Journal article](https://journal.r-project.org/articles/RJ-2018-009/index.html) in CITATION
 
 # version 0.6-3
 
