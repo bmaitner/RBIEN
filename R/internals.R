@@ -231,7 +231,7 @@
 
 if(political.boundaries){
 
-  select <- "region, country, state_province, locality_description"
+  select <- ", region, country, state_province, locality_description"
 
 }else{
 
@@ -255,7 +255,7 @@ if(political.boundaries){
   
 if(all.taxonomy){
 
-  select <- "verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
+  select <- ", verbatim_family, verbatim_scientific_name, name_submitted, family_matched, name_matched, name_matched_author, 
     higher_plant_group, tnrs_warning, matched_taxonomic_status, scrubbed_taxonomic_status, scrubbed_family, scrubbed_genus, 
     scrubbed_specific_epithet, scrubbed_taxon_name_no_author, scrubbed_taxon_canonical, 
     scrubbed_author, scrubbed_taxon_name_with_author, scrubbed_species_binomial_with_morphospecies"
@@ -282,7 +282,7 @@ if(all.taxonomy){
   
   if(source.citation){
 
-    select <- ",source_citation"
+    select <- ", source_citation"
     
   }else{
 
