@@ -3,11 +3,36 @@
 #Normal testing
 schema <- "public"
 
+bien_connection_available <- local({
+  available <- NULL
+  
+  function(){
+    if(!is.null(available)){
+      return(available)
+    }
+    
+    available <<- !is.null(
+      tryCatch(expr = BIEN:::.BIEN_sql("SELECT 1;"),
+               error = function(e){NULL})
+    )
+    
+    available
+  }
+})
+
+skip_if_bien_unavailable <- function(){
+  testthat::skip_if_offline()
+  
+  if(!bien_connection_available()){
+    testthat::skip("BIEN database is unavailable or refusing connections.")
+  }
+}
+
 #List tests
 
 test_that("List functions return a dataframe",{
   
-  skip_if_offline()
+  skip_if_bien_unavailable()
   
   expect_that(BIEN_list_all(schema = schema),
               is_a("data.frame"))
@@ -34,7 +59,7 @@ test_that("List functions return a dataframe",{
 #Metadata tests
 test_that("Metadata functions return a dataframe",{
   
-  skip_if_offline()
+  skip_if_bien_unavailable()
   
   expect_that(BIEN_metadata_database_version(schema = schema),
               is_a("data.frame"))
@@ -43,7 +68,7 @@ test_that("Metadata functions return a dataframe",{
 
 test_that("Metadata_citation function returns a list",{
   
-  skip_if_offline()
+  skip_if_bien_unavailable()
   
   expect_that(BIEN_metadata_citation(),
               is_a("list"))
@@ -80,7 +105,7 @@ test_that("Metadata_citation function returns a list",{
 #Occurrence tests
 test_that("Occurrence functions return a dataframe",{
   
- skip_if_offline()
+ skip_if_bien_unavailable()
   
  skip_on_cran()
   
@@ -139,7 +164,7 @@ test_that("Occurrence functions return a dataframe",{
 #Phylogeny
 test_that("Phylogeny functions return a phylogeny",{
   
-  skip_if_offline()
+  skip_if_bien_unavailable()
   
   expect_that(BIEN_phylogeny_complete(n_phylogenies = 2,
                                       schema = schema),
@@ -153,7 +178,7 @@ test_that("Phylogeny functions return a phylogeny",{
 #Plot
 test_that("Plot functions return a dataframe",{
   
-  skip_if_offline()
+  skip_if_bien_unavailable()
   
   skip_on_cran()
   
@@ -208,7 +233,7 @@ test_that("Plot functions return a dataframe",{
 
 test_that("Ranges functions return an sf",{
   
-  skip_if_offline()
+  skip_if_bien_unavailable()
   
   expect_that(BIEN_ranges_load_species(species = "Abies amabilis",
                                        schema = schema),
@@ -220,7 +245,7 @@ test_that("Ranges functions return an sf",{
 
 test_that("Stem functions return a dataframe",{
   
-  skip_if_offline()
+  skip_if_bien_unavailable()
   
   skip_on_cran()
   
@@ -249,7 +274,7 @@ test_that("Stem functions return a dataframe",{
 #Taxonomy
 test_that("Taxonomy functions return a dataframe",{
   
-  skip_if_offline()
+  skip_if_bien_unavailable()
   
   
   expect_that(BIEN_taxonomy_family("Cactaceae",
@@ -270,7 +295,7 @@ test_that("Taxonomy functions return a dataframe",{
 
 test_that("Trait functions return a dataframe",{
   
-  skip_if_offline()
+  skip_if_bien_unavailable()
   
   
   expect_that(BIEN_trait_family("Cactaceae",

@@ -210,21 +210,22 @@
   
 # Try to connect
 
-  con <- dbConnect(drv,
-                   host = host,
-                   dbname = dbname,
-                   user = user,
-                   password = password)
+    con <- tryCatch(expr = dbConnect(drv,
+                                     host = host,
+                                     dbname = dbname,
+                                     user = user,
+                                     password = password),
+                    error = function(e){e}
+    )
   
-  if("error" %in% class(con)){
+    if("error" %in% class(con)){
     
-    message("\n There was an error connecting to the BIEN database.")
+      message("\nUnable to connect to the BIEN database. The remote PostgreSQL service may be unavailable or refusing connections.\n",
+              conditionMessage(con))
     
-    rm(con)
+      return(invisible(NULL))
     
-    return(invisible(NULL))
-    
-  }
+    }
   
 
 
@@ -250,7 +251,7 @@
           
           suppressWarnings(
             
-            db_cleared <- tryCatch(expr = dbClearResult(res = res),
+            tryCatch(expr = dbClearResult(res = res),
                      error = function(e){e}
             )
           )   
@@ -309,7 +310,7 @@
         
       suppressWarnings(
         
-        db_cleared <- tryCatch(expr = dbClearResult(res = res),
+        tryCatch(expr = dbClearResult(res = res),
                         error = function(e){e}
         )
       )   
