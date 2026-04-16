@@ -149,7 +149,7 @@ test_that("Phylogeny functions return a phylogeny",{
   
 })
 
-#Plot
+# Plot
 test_that("Plot functions return a dataframe",{
   
   skip_if_bien_unavailable()
@@ -203,7 +203,7 @@ test_that("Plot functions return a dataframe",{
  
  })
 
-#Ranges
+# Ranges
 
 test_that("Ranges functions return an sf",{
   
@@ -215,7 +215,7 @@ test_that("Ranges functions return an sf",{
   
 })
 
-#Stem
+# Stem
 
 test_that("Stem functions return a dataframe",{
   
@@ -245,7 +245,7 @@ test_that("Stem functions return a dataframe",{
 
 })
 
-#Taxonomy
+# Taxonomy
 test_that("Taxonomy functions return a dataframe",{
   
   skip_if_bien_unavailable()
