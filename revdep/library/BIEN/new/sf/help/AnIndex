@@ -39,6 +39,7 @@ full_join.sf	tidyverse
 gather.sf	tidyverse
 gdal	gdal
 gdal_addo	gdal_addo
+gdal_compressors	gdal_compressors
 gdal_create	gdal
 gdal_crs	gdal
 gdal_extract	gdal
@@ -327,6 +328,7 @@ st_make_grid	st_make_grid
 st_make_valid	valid
 st_make_valid.sfc	valid
 st_make_valid.sfg	valid
+st_minimum_bounding_circle	geos_unary
 st_minimum_rotated_rectangle	geos_unary
 st_multilinestring	st
 st_multipoint	st
@@ -445,13 +447,6 @@ ungroup.sf	tidyverse
 unite.sf	tidyverse
 unnest.sf	tidyverse
 valid	valid
-vctrs	vctrs
-vec_cast.sfc	vctrs
-vec_cast.sfc.default	vctrs
-vec_cast.sfc.sfc	vctrs
-vec_ptype2.sfc	vctrs
-vec_ptype2.sfc.default	vctrs
-vec_ptype2.sfc.sfc	vctrs
 write_sf	st_write
 [.sf	sf
 [.sfc	sfc

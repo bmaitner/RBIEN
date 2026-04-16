@@ -1,3 +1,84 @@
+# version 1.0-1
+
+* Add internal workaround for udunits2 bug with parsing of units that contain
+  "per", e.g. "percent" or "person"; #414
+
+* Update minimum Rcpp version; #421
+
+* Fix `print` methods for `units` and `mixed_units`, which now correctly return
+  invisibly the object being printed; #422
+
+* Wrap all pointers to avoid memory leaks derived from errors.
+
+* Check for exception propagation in udunits2; #423
+
+* Fix `ud_convert()` for empty input vectors; #428
+
+# version 1.0-0
+
+* Breaking change: a new tokenizer fixes longstanding issues with parsing
+  complex unit expressions, but may break existing code that relied on the
+  previous (buggy) behavior. The major change is that now numbers are
+  consistently treated as prefixes, so that units like `ml / min / 1.73m^2`
+  used in physiology are now correctly parsed as `ml / (min * 1.73 * m^2)`.
+  See `?as_units` for details; #416 addressing #221, #383
+
+* Printing: follow NIST recommendations. In particular, numerator and
+  denominator are separated by a single slash, and a parenthesis is used when
+  the denominator contains several symbols (see example above); #86
+
+* Vectorize `ud_*()` helpers; #405 addressing #404
+
+* Loading units no longer initializes the RNG state; #409
+
+* Fix scale training in `ggplot2` scales; #412
+
+* Add `scale_{type}_units()` scales for additional continuous aesthetics
+  (colour, fill, alpha, size, linewidth); #369
+
+* Implement `matrixOps.units`, with support for `%*%` (R >= 4.3.0); #226
+
+* New `convert_to_base()` implements conversion to base units; #132 @jamarav
+
+# version 0.8-7
+
+* Deep copy of `ud_convert()` input to avoid side effects; #403
+
+* Set C++17 standard for old versions of R; #402
+
+# version 0.8-6
+
+* Add methods for `cbind` and `rbind`; fixes #311
+
+* Performance improvements in `data.frame` methods; suggested in #361 @grcatlin
+
+* Fix `weighted.mean.units` for unitless objects; #363
+
+* Fix incorrect use of `round()` in `%%` and `%/%` methods; #365 @UchidaMizuki
+
+* Fix `ggplot2` deprecation warnings; #367
+
+* Fix `hist()` error; #368
+
+* Add support for `lims()` in `ggplot2` scales; #370
+
+* Fix simplification of inverse units; #378
+
+* Replace call to `Rf_error()` with `Rcpp::stop()`; RcppCore/Rcpp#1247
+
+* Fix UBs in the C++ glue code; #380
+
+* Add support for `brew` path discovery in macOS; #384
+
+* Several performance improvements; #387, #388, #393, #400 addressing #386, #389
+
+* Improve `keep_units()` helper for more general usage scenarios;
+  #394 @d-morrison addressing #392
+
+* Add `ud_convert()` to convert units of a vector; #399 @dlebauer addressing #398
+
+* Fix `scale_units` for upcoming version of ggplot2; #401
+
 # version 0.8-5
 
 * avoid -Wformat-security warning on CRAN

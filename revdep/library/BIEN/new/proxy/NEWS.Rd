@@ -1,5 +1,18 @@
 \name{NEWS}
 \title{News for Package \pkg{proxy}}
+
+\section{Changes in version 0.4-28}{
+    \itemize{
+      \item Add ORCID IDs
+      \item add [.dist method that allows 2d-indexing.
+      \item remove names method which did not conform with single indexing.
+      \item add proxy prefix to registry classes (registry_entry, registry_field) to avoid clash with registry package
+      \item use long data type for indexing in C code
+      \item remove dim dist method
+    }
+   
+}
+
 \section{Changes in version 0.4-27}{
     \itemize{
         \item cosmetic changes in help pages

@@ -1,5 +1,5 @@
 Package: units
-Version: 0.8-5
+Version: 1.0-1
 Title: Measurement Units for R Vectors
 Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"), email = "edzer.pebesma@uni-muenster.de", comment = c(ORCID = "0000-0001-8049-7069")),
     person("Thomas", "Mailund", role = "aut", email = "mailund@birc.au.dk"),
@@ -8,12 +8,12 @@ Authors@R: c(person("Edzer", "Pebesma", role = c("aut", "cre"), email = "edzer.p
     person("Iñaki", "Ucar", role = "aut", email = "iucar@fedoraproject.org", comment = c(ORCID = "0000-0001-6403-5550")),
     person("Thomas Lin", "Pedersen", role = "ctb")
     )
-Depends: R (>= 3.0.2)
+Depends: R (>= 3.5.0)
 Imports: Rcpp
-LinkingTo: Rcpp (>= 0.12.10)
+LinkingTo: Rcpp (>= 1.1.0)
 Suggests: NISTunits, measurements, xml2, magrittr, pillar (>= 1.3.0),
         dplyr (>= 1.0.0), vctrs (>= 0.3.1), ggplot2 (> 3.2.1), testthat
-        (>= 3.0.0), vdiffr, knitr, rmarkdown
+        (>= 3.0.0), vdiffr, knitr, rvest, rmarkdown
 VignetteBuilder: knitr
 Description: Support for measurement units in R vectors, matrices
     and arrays: automatic propagation, conversion, derivation
@@ -29,19 +29,20 @@ License: GPL-2
 URL: https://r-quantities.github.io/units/,
         https://github.com/r-quantities/units
 BugReports: https://github.com/r-quantities/units/issues
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.3
 Encoding: UTF-8
 Config/testthat/edition: 3
 NeedsCompilation: yes
-Packaged: 2023-11-28 13:38:39 UTC; edzer
-Author: Edzer Pebesma [aut, cre] (<https://orcid.org/0000-0001-8049-7069>),
+Packaged: 2026-03-09 14:34:42 UTC; edzer
+Author: Edzer Pebesma [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-8049-7069>),
   Thomas Mailund [aut],
   Tomasz Kalinowski [aut],
   James Hiebert [ctb],
-  Iñaki Ucar [aut] (<https://orcid.org/0000-0001-6403-5550>),
+  Iñaki Ucar [aut] (ORCID: <https://orcid.org/0000-0001-6403-5550>),
   Thomas Lin Pedersen [ctb]
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Repository: CRAN
-Date/Publication: 2023-11-28 16:10:02 UTC
-Built: R 4.4.2; x86_64-w64-mingw32; 2025-01-30 02:25:19 UTC; windows
+Date/Publication: 2026-03-11 11:20:02 UTC
+Built: R 4.4.3; x86_64-w64-mingw32; 2026-04-13 01:44:18 UTC; windows
 Archs: x64

@@ -2,6 +2,11 @@
 \title{News for Package \pkg{e1071}}
 \newcommand{\cpkg}{\href{https://CRAN.R-project.org/package=#1}{\pkg{#1}}}
 
+\section{Changes in version 1.7-17}{
+\itemize{
+    \item fix author url in vignettes
+    }
+}
 \section{Changes in version 1.7-16}{
   \itemize{
     \item fix bug in svmdoc vignette

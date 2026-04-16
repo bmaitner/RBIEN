@@ -1,3 +1,23 @@
+# Development Version
+===============
+
+# BIEN 1.2.7
+===============
+## BUG FIXES
+* Update to internal function BIEN_sql to make sure dbClearResults is called.
+* Removed dependcies on raster, rgeos, and fasterize
+* fixed error that can occur when generating citations for traits
+* Updated internal functions to fail gracefully when database connections fail.
+
+## NEW FEATURES
+* Added only.geovalid argument to BIEN_occurrence_country
+* Added only.geovalid argument to BIEN_occurrence_family
+* Updated error messages regarding query execuation with more granularity
+* Removed ORDER BY statements to optimize query speed
+* Updated code to download in batches, providing at least some measure of progress update (should also help with some timeout issues on large queries)
+* Added an internal function BIEN_metadata_data_dictionaries to provide metadata about some of the fields.
+* Updated dependency to include R >= 4.1.0, since the code uses |>
+
 # BIEN 1.2.6
 ===============
 ## NEW FEATURES

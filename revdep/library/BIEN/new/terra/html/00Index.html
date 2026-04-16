@@ -12,10 +12,10 @@
 <div style="text-align: center;">
 <a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
 <a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
-</div><h2>Documentation for package &lsquo;terra&rsquo; version 1.8-15</h2>
+</div><h2>Documentation for package &lsquo;terra&rsquo; version 1.9-11</h2>
 
 <ul><li><a href="../DESCRIPTION">DESCRIPTION file</a>.</li>
-<li><a href="../NEWS">Package NEWS</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
 </ul>
 
 <h2>Help Pages</h2>
@@ -75,6 +75,8 @@
 <td>Categorical rasters</td></tr>
 <tr><td style="width: 25%;"><a href="factors.html">addCats-method</a></td>
 <td>Categorical rasters</td></tr>
+<tr><td style="width: 25%;"><a href="add_abline.html">add_abline</a></td>
+<td>add vertical and/or horizontal lines to a map made with terra</td></tr>
 <tr><td style="width: 25%;"><a href="box.html">add_box</a></td>
 <td>draw a box</td></tr>
 <tr><td style="width: 25%;"><a href="grid.html">add_grid</a></td>
@@ -91,6 +93,10 @@
 <td>Aggregate raster or vector data</td></tr>
 <tr><td style="width: 25%;"><a href="aggregate.html">aggregate-method</a></td>
 <td>Aggregate raster or vector data</td></tr>
+<tr><td style="width: 25%;"><a href="agitate.html">agitate</a></td>
+<td>Add noise to (jitter) a SpatVector of points</td></tr>
+<tr><td style="width: 25%;"><a href="agitate.html">agitate-method</a></td>
+<td>Add noise to (jitter) a SpatVector of points</td></tr>
 <tr><td style="width: 25%;"><a href="align.html">align</a></td>
 <td>Align a SpatExtent</td></tr>
 <tr><td style="width: 25%;"><a href="align.html">align-method</a></td>
@@ -100,17 +106,17 @@
 <tr><td style="width: 25%;"><a href="summarize-generics.html">all-method</a></td>
 <td>Summarize</td></tr>
 <tr><td style="width: 25%;"><a href="all.equal.html">all.equal</a></td>
-<td>Compare two SpatRasters for equality</td></tr>
+<td>Compare two SpatRaster, SpatVector, or SpatExtent objects for equality</td></tr>
 <tr><td style="width: 25%;"><a href="all.equal.html">all.equal-method</a></td>
-<td>Compare two SpatRasters for equality</td></tr>
+<td>Compare two SpatRaster, SpatVector, or SpatExtent objects for equality</td></tr>
 <tr><td style="width: 25%;"><a href="summarize-generics.html">allNA</a></td>
 <td>Summarize</td></tr>
 <tr><td style="width: 25%;"><a href="summarize-generics.html">allNA-method</a></td>
 <td>Summarize</td></tr>
 <tr><td style="width: 25%;"><a href="animate.html">animate</a></td>
-<td>Animate a SpatRaster</td></tr>
+<td>Animate a map</td></tr>
 <tr><td style="width: 25%;"><a href="animate.html">animate-method</a></td>
-<td>Animate a SpatRaster</td></tr>
+<td>Animate a map</td></tr>
 <tr><td style="width: 25%;"><a href="summarize-generics.html">any</a></td>
 <td>Summarize</td></tr>
 <tr><td style="width: 25%;"><a href="summarize-generics.html">any-method</a></td>
@@ -135,6 +141,8 @@
 <td>Arithmetic</td></tr>
 <tr><td style="width: 25%;"><a href="arith-generic.html">Arith-methods</a></td>
 <td>Arithmetic</td></tr>
+<tr><td style="width: 25%;"><a href="ar_info.html">ar_info</a></td>
+<td>ar_info</td></tr>
 <tr><td style="width: 25%;"><a href="coerce.html">as.array</a></td>
 <td>Coercion to vector, matrix or array</td></tr>
 <tr><td style="width: 25%;"><a href="coerce.html">as.array-method</a></td>
@@ -287,6 +295,10 @@
 <td>Centroids</td></tr>
 <tr><td style="width: 25%;"><a href="centroids.html">centroids-method</a></td>
 <td>Centroids</td></tr>
+<tr><td style="width: 25%;"><a href="chunk.html">chunk</a></td>
+<td>Make a SpatRaster method memory-safe</td></tr>
+<tr><td style="width: 25%;"><a href="chunk.html">chunk-method</a></td>
+<td>Make a SpatRaster method memory-safe</td></tr>
 <tr><td style="width: 25%;"><a href="clamp.html">clamp</a></td>
 <td>Clamp values</td></tr>
 <tr><td style="width: 25%;"><a href="clamp.html">clamp-method</a></td>
@@ -303,6 +315,8 @@
 <td>SpatVector geometric properties</td></tr>
 <tr><td style="width: 25%;"><a href="width.html">clearance-method</a></td>
 <td>SpatVector geometric properties</td></tr>
+<tr><td style="width: 25%;"><a href="gdal.html">clearVSIcache</a></td>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
 <tr><td style="width: 25%;"><a href="click.html">click</a></td>
 <td>Query by clicking on a map</td></tr>
 <tr><td style="width: 25%;"><a href="click.html">click-method</a></td>
@@ -434,6 +448,22 @@
 <td>depth of SpatRaster layers</td></tr>
 <tr><td style="width: 25%;"><a href="depth.html">depth&lt;--method</a></td>
 <td>depth of SpatRaster layers</td></tr>
+<tr><td style="width: 25%;"><a href="depth.html">depthName</a></td>
+<td>depth of SpatRaster layers</td></tr>
+<tr><td style="width: 25%;"><a href="depth.html">depthName-method</a></td>
+<td>depth of SpatRaster layers</td></tr>
+<tr><td style="width: 25%;"><a href="depth.html">depthName&lt;-</a></td>
+<td>depth of SpatRaster layers</td></tr>
+<tr><td style="width: 25%;"><a href="depth.html">depthName&lt;--method</a></td>
+<td>depth of SpatRaster layers</td></tr>
+<tr><td style="width: 25%;"><a href="depth.html">depthUnit</a></td>
+<td>depth of SpatRaster layers</td></tr>
+<tr><td style="width: 25%;"><a href="depth.html">depthUnit-method</a></td>
+<td>depth of SpatRaster layers</td></tr>
+<tr><td style="width: 25%;"><a href="depth.html">depthUnit&lt;-</a></td>
+<td>depth of SpatRaster layers</td></tr>
+<tr><td style="width: 25%;"><a href="depth.html">depthUnit&lt;--method</a></td>
+<td>depth of SpatRaster layers</td></tr>
 <tr><td style="width: 25%;"><a href="describe.html">describe</a></td>
 <td>describe</td></tr>
 <tr><td style="width: 25%;"><a href="describe.html">describe-method</a></td>
@@ -527,9 +557,9 @@
 <tr><td style="width: 25%;"><a href="readwrite.html">fileBlocksize</a></td>
 <td>Read from, or write to, file</td></tr>
 <tr><td style="width: 25%;"><a href="fill.html">fillHoles</a></td>
-<td>Remove holes from polygons</td></tr>
+<td>Remove or extract holes from polygons, or fill holes in raster data</td></tr>
 <tr><td style="width: 25%;"><a href="fill.html">fillHoles-method</a></td>
-<td>Remove holes from polygons</td></tr>
+<td>Remove or extract holes from polygons, or fill holes in raster data</td></tr>
 <tr><td style="width: 25%;"><a href="fillTime.html">fillTime</a></td>
 <td>Fill time gaps in a SpatRaster</td></tr>
 <tr><td style="width: 25%;"><a href="fillTime.html">fillTime-method</a></td>
@@ -592,9 +622,9 @@
 <tr><td style="width: 25%;"><a href="gaps.html">gaps-method</a></td>
 <td>Find gaps between polygons</td></tr>
 <tr><td style="width: 25%;"><a href="gdal.html">gdal</a></td>
-<td>GDAL version, supported file formats, and cache size</td></tr>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
 <tr><td style="width: 25%;"><a href="gdal.html">gdalCache</a></td>
-<td>GDAL version, supported file formats, and cache size</td></tr>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
 <tr><td style="width: 25%;"><a href="geometry.html">geom</a></td>
 <td>Get the geometry (coordinates) of a SpatVector</td></tr>
 <tr><td style="width: 25%;"><a href="geometry.html">geom-method</a></td>
@@ -604,7 +634,7 @@
 <tr><td style="width: 25%;"><a href="geomtype.html">geomtype-method</a></td>
 <td>Geometry type of a SpatVector</td></tr>
 <tr><td style="width: 25%;"><a href="gdal.html">getGDALconfig</a></td>
-<td>GDAL version, supported file formats, and cache size</td></tr>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
 <tr><td style="width: 25%;"><a href="makeTiles.html">getTileExtents</a></td>
 <td>Make tiles or get their extents</td></tr>
 <tr><td style="width: 25%;"><a href="makeTiles.html">getTileExtents-method</a></td>
@@ -668,9 +698,9 @@
 
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="identical.html">identical</a></td>
-<td>Compare two SpatRasters for equality</td></tr>
+<td>Compare two SpatRaster, SpatVector or SpatExtent objects for equality</td></tr>
 <tr><td style="width: 25%;"><a href="identical.html">identical-method</a></td>
-<td>Compare two SpatRasters for equality</td></tr>
+<td>Compare two SpatRaster, SpatVector or SpatExtent objects for equality</td></tr>
 <tr><td style="width: 25%;"><a href="ifelse.html">ifel</a></td>
 <td>ifelse for SpatRasters</td></tr>
 <tr><td style="width: 25%;"><a href="ifelse.html">ifel-method</a></td>
@@ -729,6 +759,10 @@
 <td>Raster value types</td></tr>
 <tr><td style="width: 25%;"><a href="compare-generics.html">is.finite-method</a></td>
 <td>Compare and logical methods</td></tr>
+<tr><td style="width: 25%;"><a href="is.flipped.html">is.flipped</a></td>
+<td>Is a SpatRaster is flipped</td></tr>
+<tr><td style="width: 25%;"><a href="is.flipped.html">is.flipped-method</a></td>
+<td>Is a SpatRaster is flipped</td></tr>
 <tr><td style="width: 25%;"><a href="compare-generics.html">is.infinite-method</a></td>
 <td>Compare and logical methods</td></tr>
 <tr><td style="width: 25%;"><a href="is.bool.html">is.int</a></td>
@@ -749,6 +783,10 @@
 <td>Find and remove geometries that are NA</td></tr>
 <tr><td style="width: 25%;"><a href="compare-generics.html">is.nan-method</a></td>
 <td>Compare and logical methods</td></tr>
+<tr><td style="width: 25%;"><a href="is.bool.html">is.num</a></td>
+<td>Raster value types</td></tr>
+<tr><td style="width: 25%;"><a href="is.bool.html">is.num-method</a></td>
+<td>Raster value types</td></tr>
 <tr><td style="width: 25%;"><a href="geomtype.html">is.points</a></td>
 <td>Geometry type of a SpatVector</td></tr>
 <tr><td style="width: 25%;"><a href="geomtype.html">is.points-method</a></td>
@@ -808,7 +846,7 @@
 <tr><td style="width: 25%;"><a href="factors.html">levels&lt;--method</a></td>
 <td>Categorical rasters</td></tr>
 <tr><td style="width: 25%;"><a href="gdal.html">libVersion</a></td>
-<td>GDAL version, supported file formats, and cache size</td></tr>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
 <tr><td style="width: 25%;"><a href="linearUnits.html">linearUnits</a></td>
 <td>Linear units of the coordinate reference system</td></tr>
 <tr><td style="width: 25%;"><a href="linearUnits.html">linearUnits-method</a></td>
@@ -926,18 +964,10 @@
 <td>Summarize</td></tr>
 <tr><td style="width: 25%;"><a href="summarize-generics.html">min-method</a></td>
 <td>Summarize</td></tr>
-<tr><td style="width: 25%;"><a href="convhull.html">minCircle</a></td>
-<td>Convex, concave, rectangular and circular hulls</td></tr>
-<tr><td style="width: 25%;"><a href="convhull.html">minCircle-method</a></td>
-<td>Convex, concave, rectangular and circular hulls</td></tr>
 <tr><td style="width: 25%;"><a href="minmax.html">minmax</a></td>
 <td>Get or compute the minimum and maximum cell values</td></tr>
 <tr><td style="width: 25%;"><a href="minmax.html">minmax-method</a></td>
 <td>Get or compute the minimum and maximum cell values</td></tr>
-<tr><td style="width: 25%;"><a href="convhull.html">minRect</a></td>
-<td>Convex, concave, rectangular and circular hulls</td></tr>
-<tr><td style="width: 25%;"><a href="convhull.html">minRect-method</a></td>
-<td>Convex, concave, rectangular and circular hulls</td></tr>
 <tr><td style="width: 25%;"><a href="modal.html">modal</a></td>
 <td>modal value</td></tr>
 <tr><td style="width: 25%;"><a href="modal.html">modal-method</a></td>
@@ -975,6 +1005,10 @@
 <td>Names of Spat* objects</td></tr>
 <tr><td style="width: 25%;"><a href="names.html">names&lt;--method</a></td>
 <td>Names of Spat* objects</td></tr>
+<tr><td style="width: 25%;"><a href="summarize-generics.html">nany</a></td>
+<td>Summarize</td></tr>
+<tr><td style="width: 25%;"><a href="summarize-generics.html">nany-method</a></td>
+<td>Summarize</td></tr>
 <tr><td style="width: 25%;"><a href="dimensions.html">ncell</a></td>
 <td>Dimensions of a SpatRaster or SpatVector and related objects</td></tr>
 <tr><td style="width: 25%;"><a href="dimensions.html">ncell-method</a></td>
@@ -1137,6 +1171,12 @@
 <td>Change the coordinate reference system</td></tr>
 <tr><td style="width: 25%;"><a href="project.html">project-method</a></td>
 <td>Change the coordinate reference system</td></tr>
+<tr><td style="width: 25%;"><a href="gdal.html">projNetwork</a></td>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
+<tr><td style="width: 25%;"><a href="gdal.html">projPaths</a></td>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
+<tr><td style="width: 25%;"><a href="gdal.html">proj_ok</a></td>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
 </table>
 
 <h2><a id="Q">-- Q --</a></h2>
@@ -1386,8 +1426,12 @@
 <td>Change values in-place</td></tr>
 <tr><td style="width: 25%;"><a href="inplace.html">set.values-method</a></td>
 <td>Change values in-place</td></tr>
+<tr><td style="width: 25%;"><a href="inplace.html">set.window</a></td>
+<td>Change values in-place</td></tr>
+<tr><td style="width: 25%;"><a href="inplace.html">set.window-method</a></td>
+<td>Change values in-place</td></tr>
 <tr><td style="width: 25%;"><a href="gdal.html">setGDALconfig</a></td>
-<td>GDAL version, supported file formats, and cache size</td></tr>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
 <tr><td style="width: 25%;"><a href="minmax.html">setMinMax</a></td>
 <td>Get or compute the minimum and maximum cell values</td></tr>
 <tr><td style="width: 25%;"><a href="minmax.html">setMinMax-method</a></td>
@@ -1420,6 +1464,10 @@
 <td>simplifyGeom geometries</td></tr>
 <tr><td style="width: 25%;"><a href="simplify.html">simplifyGeom-method</a></td>
 <td>simplifyGeom geometries</td></tr>
+<tr><td style="width: 25%;"><a href="factors.html">simplifyLevels</a></td>
+<td>Categorical rasters</td></tr>
+<tr><td style="width: 25%;"><a href="factors.html">simplifyLevels-method</a></td>
+<td>Categorical rasters</td></tr>
 <tr><td style="width: 25%;"><a href="dimensions.html">size</a></td>
 <td>Dimensions of a SpatRaster or SpatVector and related objects</td></tr>
 <tr><td style="width: 25%;"><a href="dimensions.html">size-method</a></td>
@@ -1557,6 +1605,10 @@
 <td>Add labels to a map</td></tr>
 <tr><td style="width: 25%;"><a href="text.html">text-method</a></td>
 <td>Add labels to a map</td></tr>
+<tr><td style="width: 25%;"><a href="thresh.html">thresh</a></td>
+<td>Thresholding</td></tr>
+<tr><td style="width: 25%;"><a href="thresh.html">thresh-method</a></td>
+<td>Thresholding</td></tr>
 <tr><td style="width: 25%;"><a href="collapse.html">tighten</a></td>
 <td>tighten SpatRaster or SpatRasterDataset objects</td></tr>
 <tr><td style="width: 25%;"><a href="collapse.html">tighten-method</a></td>
@@ -1610,6 +1662,8 @@
 <td>units of SpatRaster or SpatRasterDataSet</td></tr>
 <tr><td style="width: 25%;"><a href="units.html">units&lt;--method</a></td>
 <td>units of SpatRaster or SpatRasterDataSet</td></tr>
+<tr><td style="width: 25%;"><a href="gdal.html">unloadGDALdrivers</a></td>
+<td>GDAL version, supported file formats, cache size, and PROJ coordinate transformation control</td></tr>
 <tr><td style="width: 25%;"><a href="serialize.html">unserialize</a></td>
 <td>saveRDS and serialize for SpatVector and SpatRaster*</td></tr>
 <tr><td style="width: 25%;"><a href="serialize.html">unserialize-method</a></td>
@@ -1746,9 +1800,9 @@
 
 <table style="width: 100%;">
 <tr><td style="width: 25%;"><a href="xapp.html">xapp</a></td>
-<td>Apply a function to the cells of a two SpatRasters</td></tr>
+<td>Apply a function to the cells of two SpatRasters</td></tr>
 <tr><td style="width: 25%;"><a href="xapp.html">xapp-method</a></td>
-<td>Apply a function to the cells of a two SpatRasters</td></tr>
+<td>Apply a function to the cells of two SpatRasters</td></tr>
 <tr><td style="width: 25%;"><a href="xyCellFrom.html">xFromCell</a></td>
 <td>Coordinates from a row, column or cell number and vice versa</td></tr>
 <tr><td style="width: 25%;"><a href="xyCellFrom.html">xFromCell-method</a></td>

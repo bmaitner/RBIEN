@@ -12,6 +12,7 @@ db_drivers              Drivers for which update should be 'TRUE' by
                         default
 extension_map           Map extension to driver
 gdal_addo               Add or remove overviews to/from a raster image
+gdal_compressors        List GDAL compressors and decompressors
 gdal_utils              Native interface to gdal utils
 geos_binary_ops         Geometric operations on pairs of simple feature
                         geometry sets
@@ -118,4 +119,3 @@ tidyverse               Tidyverse methods for sf objects
 transform.sf            transform method for sf objects
 valid                   Check validity or make an invalid geometry
                         valid
-vctrs                   vctrs methods for sf objects
