@@ -1,9 +1,10 @@
 ## Test environments
-* local  "Windows" "10 x64" "build 17763",  R 4.4.2
+* local  "Windows" "x86_64", "mingw32" R 4.6.0
 * win-builder
 * macOS builder
 * ubuntu-latest on GitHub
 * macos-13 on GitHub
+* macos-15 on GitHub
 * macos-latest on GitHub
 * windows-latest on GitHub
 
