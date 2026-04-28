@@ -20,6 +20,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
+    curl,
     maps
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
