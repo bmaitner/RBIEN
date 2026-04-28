@@ -12,3 +12,5 @@ NOTES
 ^CRAN-SUBMISSION$
 .git
 .github
+^\.positai$
+^\.claude$
